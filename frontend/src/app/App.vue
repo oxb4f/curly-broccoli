@@ -1,3 +1,10 @@
 <script setup></script>
 
-<template>Hello World!</template>
+<template>
+  <nav>
+    <RouterLink to="/register">Зареєструватись</RouterLink>
+    <RouterLink to="/login">Увійти</RouterLink>
+  </nav>
+
+  <RouterView />
+</template>
