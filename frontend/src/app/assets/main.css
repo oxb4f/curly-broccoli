@@ -2,3 +2,52 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import './base.css';
+
+.modal {
+  @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full;
+}
+
+.modal__background {
+  @apply absolute inset-0 w-full h-full bg-project-main-color-mute opacity-50;
+}
+
+.modal__content {
+  @apply z-10 max-w-2xl p-6 border-2 border-project-main-color-soft rounded-lg bg-white;
+}
+
+.form,
+.form__header,
+.form__content,
+.form__footer {
+  @apply w-full;
+}
+
+.form__header,
+.form__content {
+  @apply mb-6;
+}
+
+.form__header {
+  @apply flex justify-between break-all text-xl;
+}
+
+.form__close-button {
+  @apply self-start;
+}
+
+.form__item,
+.form__footer {
+  @apply flex flex-col;
+}
+
+.form__field {
+  @apply p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
+}
+
+.form__error {
+  @apply text-sm text-project-error-color;
+}
+
+.form__submit-button {
+  @apply p-2 bg-project-main-color text-project-text-color-inverted;
+}
