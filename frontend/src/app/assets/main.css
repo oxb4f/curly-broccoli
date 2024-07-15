@@ -16,7 +16,7 @@
 }
 
 .modal__window {
-  @apply z-10 w-full max-w-xl p-6 rounded-lg bg-white;
+  @apply z-10 w-full max-w-xl p-6 rounded-lg bg-project-bg-main-color;
 }
 
 .modal__header,
