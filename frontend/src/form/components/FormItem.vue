@@ -11,7 +11,13 @@ defineProps({
 <template>
   <div class="form__item">
     <label :for="fieldId"><slot></slot></label>
-    <input :id="fieldId" :type="fieldType" :class="fieldClass" :placeholder="fieldPlaceholder" />
+    <input
+      :id="fieldId"
+      :type="fieldType"
+      class="form__field"
+      :class="fieldClass"
+      :placeholder="fieldPlaceholder"
+    />
     <span class="form__error">{{ error }}</span>
   </div>
 </template>

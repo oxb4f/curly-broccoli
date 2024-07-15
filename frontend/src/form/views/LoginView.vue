@@ -6,30 +6,36 @@ import ModalWindow from '../components/ModalWindow.vue'
 
 <template>
   <ModalWindow>
-    <BasicForm>
-      <template #header><h1>Вхід</h1></template>
-      <template #content>
-        <FormItem
-          field-id="email"
-          field-type="email"
-          field-class="form__email-field"
-          field-placeholder="Ел. пошта"
-          error="Помилка"
-          >Вкажіть електронну пошту:</FormItem
-        >
-        <FormItem
-          field-id="password"
-          field-type="password"
-          field-class="form__password-field"
-          field-placeholder="Пароль"
-          error="Помилка"
-          >Вкажіть пароль:</FormItem
-        >
-      </template>
-      <template #footer>
-        <input type="submit" value="Увійти" class="form__submit-button" />
-        <span>Вперше на сайті? <RouterLink to="/register">Зареєструватись</RouterLink></span>
-      </template></BasicForm
+    <template #header></template>
+    <template #content>
+      <BasicForm>
+        <template #header><h1>Вхід</h1></template>
+        <template #content>
+          <FormItem
+            field-id="email"
+            field-type="email"
+            field-class="form__email-field"
+            field-placeholder="Ел. пошта"
+            error="Помилка"
+            >Вкажіть електронну пошту:</FormItem
+          >
+          <FormItem
+            field-id="password"
+            field-type="password"
+            field-class="form__password-field"
+            field-placeholder="Пароль"
+            error="Помилка"
+            >Вкажіть пароль:</FormItem
+          >
+        </template>
+        <template #footer>
+          <input type="submit" value="Увійти" class="form__submit-button" /> </template
+      ></BasicForm>
+    </template>
+    <template #footer>
+      <span
+        >Вперше на сайті? <RouterLink to="/register">Зареєструватись</RouterLink></span
+      ></template
     >
   </ModalWindow>
 </template>
