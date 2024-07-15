@@ -1,4 +1,4 @@
-DOCKER_REGISTRY ?= public.ecr.aws/q8t1o1a1
+DOCKER_REGISTRY ?= dev
 DOCKER_USERNAME ?= oxb4f
 APP_NAME ?= backend
 GIT_BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
@@ -38,7 +38,7 @@ ifeq ($(NO_CACHE),true)
 else
 	NO_CACHE_FLAG=
 endif
-	DOCKER_BUILDKIT=1 docker build $(PULL_FLAG) $(NO_CACHE_FLAG) --tag ${APP_IMAGE} --file ${DOCKER_FILE} --target ${TARGET} ..
+	DOCKER_BUILDKIT=1 docker build $(PULL_FLAG) $(NO_CACHE_FLAG) --tag ${APP_IMAGE} --file ${DOCKER_FILE} --target ${TARGET} .
 
 run: stop ## Start the application using Docker Compose
 ifeq ($(DETACH),true)

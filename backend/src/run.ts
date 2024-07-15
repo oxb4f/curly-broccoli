@@ -1,1 +1,1 @@
-console.log("test");
+import "./api/server";

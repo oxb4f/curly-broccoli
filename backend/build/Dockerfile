@@ -4,9 +4,7 @@ FROM oven/bun:alpine AS base
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY package.json .package.json
-
-COPY src src
+COPY package.json ./
 
 COPY bun.lockb ./
 
@@ -21,9 +19,11 @@ WORKDIR /app
 
 COPY  --from=base /app/. .
 COPY  --from=base package*.json ./
+COPY .env.defaults ./
 COPY tsconfig*.json ./
 COPY drizzle.config.ts ./
 COPY migrations ./
+COPY src ./
 
 ENTRYPOINT []
 
