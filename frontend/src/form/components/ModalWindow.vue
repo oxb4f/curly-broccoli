@@ -4,7 +4,13 @@
   <Teleport to="body">
     <div class="modal">
       <div class="modal__background"></div>
-      <div class="modal__content"><slot></slot></div>
+      <div class="modal__window">
+        <div class="modal__header">
+          <button class="modal__close-button">X</button><slot name="header"></slot>
+        </div>
+        <div class="modal__content"><slot name="content"></slot></div>
+        <div class="modal__footer"><slot name="footer"></slot></div>
+      </div>
     </div>
   </Teleport>
 </template>
