@@ -6,7 +6,6 @@ import ModalWindow from '../components/ModalWindow.vue'
 
 <template>
   <ModalWindow>
-    <template #header></template>
     <template #content>
       <BasicForm>
         <template #header><h1>Вхід</h1></template>
