@@ -3,6 +3,10 @@
 @import 'tailwindcss/utilities';
 @import './base.css';
 
+.link {
+  @apply text-project-main-color;
+}
+
 .modal {
   @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full break-all;
 }
@@ -36,22 +40,26 @@
   @apply mb-6;
 }
 
-.form__header {
-  @apply flex justify-around text-xl;
+.form__header,
+.form__footer {
+  @apply flex justify-around;
 }
 
+.form__header {
+  @apply text-xl;
+}
 .form__item {
-  @apply mb-1 flex flex-col;
+  @apply mb-2 flex flex-col;
 }
 
 .form__field {
-  @apply my-2 p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
+  @apply p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
 }
 
 .form__error {
-  @apply text-sm text-project-error-color;
+  @apply mt-2 text-sm text-project-error-color;
 }
 
 .form__submit-button {
-  @apply p-2 bg-project-main-color text-project-text-color-inverted;
+  @apply w-full p-2 rounded-md bg-project-main-color text-project-text-color-inverted cursor-pointer active:bg-project-main-color-soft;
 }
