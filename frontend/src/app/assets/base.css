@@ -1,0 +1,12 @@
+:root {
+  --project-main-color: #4f46e5;
+  --project-main-color-soft: #a5b4fc;
+  --project-main-color-mute: #c7d2fe;
+
+  --project-text-color: #000000;
+  --project-text-color-soft: #6b7280;
+  --project-text-color-mute: #9ca3af;
+  --project-text-color-inverted: #ffffff;
+
+  --project-error-color: #dc2626;
+}
