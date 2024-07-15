@@ -34,7 +34,7 @@ import ModalWindow from '../components/ModalWindow.vue'
     </template>
     <template #footer>
       <span
-        >Вперше на сайті? <RouterLink to="/register">Зареєструватись</RouterLink></span
+        >Вперше на сайті? <RouterLink class="link" to="/register">Зареєструватись</RouterLink></span
       ></template
     >
   </ModalWindow>

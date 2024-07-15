@@ -42,7 +42,7 @@ import ModalWindow from '../components/ModalWindow.vue'
       </BasicForm>
     </template>
     <template #footer>
-      <span>Вже є акаунт? <RouterLink to="/login">Увійти</RouterLink></span>
+      <span>Вже є акаунт? <RouterLink class="link" to="/login">Увійти</RouterLink></span>
     </template>
   </ModalWindow>
 </template>
