@@ -3,10 +3,17 @@
   --project-main-color-soft: #a5b4fc;
   --project-main-color-mute: #c7d2fe;
 
+  --project-bg-main-color: #ffffff;
+
   --project-text-color: #000000;
   --project-text-color-soft: #6b7280;
   --project-text-color-mute: #9ca3af;
   --project-text-color-inverted: #ffffff;
 
   --project-error-color: #dc2626;
+}
+
+body {
+  color: var(--project-text-color);
+  background-color: var(--project-bg-main-color);
 }

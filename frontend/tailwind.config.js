@@ -7,6 +7,7 @@ export default {
         'project-main-color': 'var(--project-main-color)',
         'project-main-color-soft': 'var(--project-main-color-soft)',
         'project-main-color-mute': 'var(--project-main-color-mute)',
+        'project-bg-main-color': 'var(--project-bg-main-color)',
         'project-text-color': 'var(--project-text-color)',
         'project-text-color-soft': 'var(--project-text-color-soft)',
         'project-text-color-mute': 'var(--project-text-color-mute)',
