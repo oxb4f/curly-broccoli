@@ -25,7 +25,15 @@
 }
 
 .modal__header {
-  @apply flex justify-between;
+  @apply flex;
+}
+
+.modal__close-button {
+  @apply flex-grow-0;
+}
+
+.modal__logo {
+  @apply flex-grow text-center;
 }
 
 .form,
