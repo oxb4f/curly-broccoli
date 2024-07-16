@@ -11,9 +11,9 @@ import ModalWindow from '../components/ModalWindow.vue'
         <template #header><h1>Реєстрація</h1></template>
         <template #content>
           <FormItem
-            field-id="nickname"
+            field-id="username"
             field-type="text"
-            field-class="form__nickname-field"
+            field-class="form__username-field"
             field-placeholder="Ваше ім'я"
             error="Помилка"
             >Вкажіть ім'я:</FormItem
