@@ -11,6 +11,11 @@
   @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full break-all;
 }
 
+.modal button,
+.modal input[type='submit'] {
+  @apply bg-project-main-color text-project-text-color-inverted active:bg-project-main-color-soft;
+}
+
 .modal__background {
   @apply absolute inset-0 w-full h-full bg-project-main-color-mute opacity-50;
 }
@@ -24,16 +29,16 @@
   @apply mb-6;
 }
 
-.modal__header {
-  @apply flex;
-}
-
 .modal__close-button {
-  @apply flex-grow-0;
+  @apply absolute w-7 h-7 rounded-full;
 }
 
-.modal__logo {
-  @apply flex-grow text-center;
+.logo-icon {
+  @apply w-12 h-12;
+}
+
+.modal__logo-icon {
+  @apply m-auto;
 }
 
 .form,
@@ -69,5 +74,5 @@
 }
 
 .form__submit-button {
-  @apply w-full p-2 rounded-md bg-project-main-color text-project-text-color-inverted cursor-pointer active:bg-project-main-color-soft;
+  @apply w-full p-2 rounded-md cursor-pointer;
 }
