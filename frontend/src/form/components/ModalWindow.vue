@@ -5,7 +5,7 @@ import { AcademicCapIcon, ChevronLeftIcon } from '@heroicons/vue/20/solid'
 <template>
   <Teleport to="body">
     <div class="modal">
-      <div class="modal__background"></div>
+      <div class="modal__backgdrop"></div>
       <div class="modal__window">
         <div class="modal__header">
           <button class="modal__close-button">

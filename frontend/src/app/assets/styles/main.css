@@ -16,7 +16,7 @@
   @apply bg-project-main-color text-project-text-color-inverted active:bg-project-main-color-soft;
 }
 
-.modal__background {
+.modal__backdrop {
   @apply absolute inset-0 w-full h-full bg-project-main-color-mute opacity-50;
 }
 
