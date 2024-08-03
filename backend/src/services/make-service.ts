@@ -1,5 +1,6 @@
 import type { ZodSchema } from "zod";
 import type { Context } from "./context";
+import { ServiceError } from "./errors/error";
 
 export type ActionDto<T extends Record<string, any> = Record<string, any>> = T;
 export type ActionArg<
@@ -19,8 +20,14 @@ export function makeService<T extends Record<string, any>, R>(
 ) {
 	const proxyHandler = {
 		async apply(target: TAction<T, R>, thisArg: unknown, args: [ActionArg<T>]) {
-			if (validationSchema)
-				args[0].dto = await validationSchema.parseAsync(args[0].dto);
+			if (validationSchema) {
+				const result = await validationSchema.safeParseAsync(args[0].dto);
+
+				if (!result.success)
+					ServiceError.throwValidationErrorFromZodError(result.error);
+
+				args[0].dto = result.data;
+			}
 
 			return target.apply(thisArg, args);
 		},
