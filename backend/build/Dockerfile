@@ -1,6 +1,9 @@
 ### base
 FROM oven/bun:alpine AS base
 
+RUN apk upgrade --no-cache && \
+    apk add --no-cache openssl libgcc libstdc++
+
 RUN mkdir -p /app
 WORKDIR /app
 
@@ -18,11 +21,11 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY  --from=base /app/. .
-COPY  --from=base package*.json ./
+COPY  --from=base /app/package*.json ./
+COPY  --from=base /app/node_modules ./node_modules
 COPY .env.defaults ./
 COPY tsconfig*.json ./
 COPY drizzle.config.ts ./
-COPY migrations ./
 COPY src ./
 
 ENTRYPOINT []
