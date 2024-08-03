@@ -18,11 +18,16 @@ async function create({
 	});
 
 	if (isUsersWithSameUsernameExist) {
-		ServiceError.throwDuplicatedError({
+		ServiceError.throw(ServiceError.ERROR_TYPE.DUPLICATED, {
 			message: "User with this username already exists",
-			details: [],
+			details: [
+				{
+					path: ["username"],
+					message: "Not unique",
+				},
+			],
 		});
-    }
+	}
 
 	const [user, jwtAccess, refreshToken] = await User.fromCredentials({
 		username: dto.username,
@@ -45,9 +50,9 @@ export function factory() {
 	return makeService(
 		create,
 		z.object({
-			username: z.string().trim().min(1).max(128),
-			password: z.string().trim().min(8).max(128),
-			refreshId: z.string().trim().max(255),
+			username: z.string().trim().min(1).max(128).readonly(),
+			password: z.string().trim().min(8).max(128).readonly(),
+			refreshId: z.string().trim().max(255).readonly(),
 		}),
 	);
 }

@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { Access, type JwtAccessPayload, type RefreshPayload } from "./access";
 import { Base } from "./base";
 
@@ -15,6 +16,11 @@ export type UserWithCredentialsPayload = CPayload &
 export type UserPayload = CPayload & {
 	access: Access;
 };
+
+export type LoginPayload = RefreshPayload &
+	JwtAccessPayload & {
+		password: string;
+	};
 
 export class User extends Base {
 	private _username: string;
@@ -53,6 +59,29 @@ export class User extends Base {
 		user.setAccess(payload.access);
 
 		return user;
+	}
+
+	async login(payload: LoginPayload) {
+		const access = this.getAcesss();
+
+		assert(access);
+
+		const verifyResult = await access.verifyPassword(payload.password);
+
+		if (!verifyResult) return {};
+
+		const [jwtAccess, refreshToken] = await Promise.all([
+			access.generateJwtAccess(payload.secret, payload.jwtAccessLifetime, {
+				userId: this.getId(),
+			}),
+			access.addOrReplaceRefreshToken(
+				payload.refreshId,
+				payload.secret,
+				payload.refreshLifetime,
+			),
+		]);
+
+		return { jwtAccess, refreshToken };
 	}
 
 	private setAccess(access: Access) {

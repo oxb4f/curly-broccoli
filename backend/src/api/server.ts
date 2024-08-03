@@ -1,10 +1,10 @@
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
+import { onError } from "./hooks/on-error";
 import { configPlugin } from "./plugins/config";
 import { contextPlugin } from "./plugins/context";
 import { pingRoute } from "./routes/ping";
 import { usersRoute } from "./routes/users";
-import { onError } from "./hooks/on-error";
 
 export const app = new Elysia()
 	.onError(({ error, set }) => {
