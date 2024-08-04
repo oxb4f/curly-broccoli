@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { Elysia } from "elysia";
 import { getConnection } from "../../infra/data-src/pg/connection";
-import { migrateDb } from "../../infra/data-src/pg/migration";
+import { PgAccessesRepository } from "../../infra/data-src/pg/repositories/accesses";
 import { PgUsersRepository } from "../../infra/data-src/pg/repositories/users";
 import type { Context } from "../../services/context";
 import { configPlugin } from "./config";
@@ -21,12 +21,11 @@ export const contextPlugin = new Elysia({ name: "contextPlugin" })
 
 		const dbConnection = await getConnection(dbCredentials);
 
-		await migrateDb(dbCredentials);
-
 		return {
 			context: {
 				config,
 				usersRepository: new PgUsersRepository(dbConnection),
+				accessesRepository: new PgAccessesRepository(dbConnection),
 			} satisfies Context,
 		};
 	});

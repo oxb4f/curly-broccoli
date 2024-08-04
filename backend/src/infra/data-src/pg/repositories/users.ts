@@ -9,7 +9,7 @@ import type {
 import { accesses, users } from "../schema";
 import { BaseRepository } from "./base";
 
-export type SelectAccess = typeof users.$inferSelect;
+export type SelectUser = typeof users.$inferSelect;
 
 export class PgUsersRepository
 	extends BaseRepository

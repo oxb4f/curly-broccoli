@@ -35,6 +35,11 @@ export type AccessHashedPayload = CPayload & {
 	refreshTokens: Record<string, string>;
 };
 
+export type TokensRefreshPayload = RefreshPayload &
+	JwtAccessPayload & {
+		refresh: string;
+	};
+
 export class Access extends Base {
 	private _login: string;
 	private _password: string;
@@ -95,7 +100,9 @@ export class Access extends Base {
 	): Promise<string> {
 		const refreshToken = await this.generateRefreshToken(secret, lifetime);
 
-		this._refreshTokens.set(id, await bcrypt.hash(refreshToken, SALT_ROUNDS));
+		const hashed = await bcrypt.hash(refreshToken, SALT_ROUNDS);
+
+		this._refreshTokens.set(id, hashed);
 
 		return refreshToken;
 	}
@@ -104,13 +111,29 @@ export class Access extends Base {
 		this._refreshTokens.delete(id);
 	}
 
-	async verifyRefreshToken(id: string, refreshToken: string) {
-		if (!this._refreshTokens.has(id)) return false;
+	async verifyRefreshToken(id: string, token: string, secret: string) {
+		try {
+			if (!this._refreshTokens.has(id)) return false;
 
-		return await bcrypt.compare(
-			refreshToken,
-			this._refreshTokens.get(id) as string,
-		);
+			const compareResult = await bcrypt.compare(
+				token,
+				this._refreshTokens.get(id) as string,
+			);
+
+			if (!compareResult) return false;
+
+			const verifier = createVerifier({
+				key: async () => secret,
+				ignoreExpiration: false,
+			});
+
+			await verifier(token);
+
+			return true;
+		} catch (error) {
+			if (error instanceof TokenError) return false;
+			throw error;
+		}
 	}
 
 	async verifyPassword(password: string) {
@@ -161,6 +184,27 @@ export class Access extends Base {
 			if (error instanceof TokenError) return null;
 			throw error;
 		}
+	}
+
+	async refresh(payload: TokensRefreshPayload) {
+		const verifyResult = await this.verifyRefreshToken(
+			payload.refreshId,
+			payload.refresh,
+			payload.secret,
+		);
+
+		if (!verifyResult) return {};
+
+		const [jwtAccess, refreshToken] = await Promise.all([
+			this.generateJwtAccess(payload.secret, payload.jwtAccessLifetime),
+			this.addOrReplaceRefreshToken(
+				payload.refreshId,
+				payload.secret,
+				payload.refreshLifetime,
+			),
+		]);
+
+		return { refreshToken, jwtAccess };
 	}
 
 	toPlainObject(): Readonly<Omit<CPayload, "password" | "refreshTokens">> {

@@ -47,7 +47,6 @@ export class User extends Base {
 		const jwtAccess = await access.generateJwtAccess(
 			payload.secret,
 			payload.jwtAccessLifetime,
-			{ userId: user.getId() },
 		);
 
 		return [user, jwtAccess, refreshToken];
@@ -71,9 +70,7 @@ export class User extends Base {
 		if (!verifyResult) return {};
 
 		const [jwtAccess, refreshToken] = await Promise.all([
-			access.generateJwtAccess(payload.secret, payload.jwtAccessLifetime, {
-				userId: this.getId(),
-			}),
+			access.generateJwtAccess(payload.secret, payload.jwtAccessLifetime),
 			access.addOrReplaceRefreshToken(
 				payload.refreshId,
 				payload.secret,

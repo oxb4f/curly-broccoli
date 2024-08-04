@@ -3,6 +3,7 @@ import { Elysia } from "elysia";
 import { onError } from "./hooks/on-error";
 import { configPlugin } from "./plugins/config";
 import { contextPlugin } from "./plugins/context";
+import { accessesRoute } from "./routes/accesses";
 import { pingRoute } from "./routes/ping";
 import { usersRoute } from "./routes/users";
 
@@ -15,6 +16,7 @@ export const app = new Elysia()
 	.use(contextPlugin)
 	.use(pingRoute)
 	.use(usersRoute)
+	.use(accessesRoute)
 	.listen({ port: process.env.APP_PORT }, () =>
 		console.log(`🦊 Elysia is running at :${process.env.APP_PORT}`),
 	);
