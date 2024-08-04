@@ -18,7 +18,7 @@ NO_CACHE ?= false ## Build the image without using cache. Default is false.
 TARGET ?= dev ## Build target for docker: dev, prod or test
 
 # @target run
-DETACH ?= false ## Run docker-compose in detached mode. Default is false.
+DETACH ?= false ## Run docker compose in detached mode. Default is false.
 
 BLUE := \033[1;34m
 GREEN := \033[0;32m
@@ -46,10 +46,10 @@ ifeq ($(DETACH),true)
 else
 	DETACH_FLAG=
 endif
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker-compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up $(DETACH_FLAG)
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up $(DETACH_FLAG)
 
 stop: ## Stop the application using Docker Compose
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker-compose --file ${DOCKER_COMPOSE} down --remove-orphans --volumes
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} down --remove-orphans --volumes
 
 hurl: ## Run hurl tests against the application
 	@hurl \
@@ -63,9 +63,9 @@ hurl: ## Run hurl tests against the application
 		--glob "./hurl/*.hurl"
 
 test-unit: stop ## Run unit tests against the application
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker-compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up --detach
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up --detach
 
-	docker-compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} exec --tty --interactive app sh -c "pnpm test:unit"
+	docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} exec --tty --interactive app sh -c "pnpm test:unit"
 
 help: ## Display this help message
 	@echo "Usage: make [target] [FLAGS]"

@@ -8,19 +8,22 @@
 	},
 	"dependencies": {
 		"@bogeychan/elysia-logger": "^0.1.0",
-		"@elysiajs/bearer": "^1.0.2",
+		"@elysiajs/bearer": "^1.1.1",
 		"@elysiajs/swagger": "^1.0.5",
+		"bcrypt": "^5.1.1",
 		"dotenv-defaults": "^5.0.2",
 		"drizzle-kit": "^0.23.0",
 		"drizzle-orm": "^0.32.0",
 		"elysia": "^1.0.27",
+		"fast-jwt": "^4.0.2",
 		"postgres": "^3.4.4",
 		"ts-pattern": "^5.2.0",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
-		"bun-types": "^1.1.20",
-		"@types/dotenv-defaults": "^2.0.4"
+		"@types/bcrypt": "^5.0.2",
+		"@types/dotenv-defaults": "^2.0.4",
+		"bun-types": "^1.1.20"
 	}
 }

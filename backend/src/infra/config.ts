@@ -43,9 +43,9 @@ export const configSchema = z.object({
 	POSTGRES_PORT: z.coerce.number().int().positive(),
 
 	JWT_SECRET: z.string(),
-	JWT_ACCESS_LIFETIME: z.number(),
+	JWT_ACCESS_LIFETIME: z.coerce.number(),
 
-	REFRESH_TOKEN_LIFETIME: z.number(),
+	REFRESH_TOKEN_LIFETIME: z.coerce.number(),
 });
 
 export function load(): Config {
