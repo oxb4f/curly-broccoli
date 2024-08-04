@@ -4,7 +4,8 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "bun run --watch src/run.ts",
-		"lint": "bunx @biomejs/biome check --write ./"
+		"lint": "bunx @biomejs/biome check --write ./",
+		"migrate:db": "bunx drizzle-kit migrate"
 	},
 	"dependencies": {
 		"@bogeychan/elysia-logger": "^0.1.0",
