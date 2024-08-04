@@ -60,7 +60,7 @@ hurl: ## Run hurl tests against the application
 		--insecure \
 		--error-format long \
 		--test \
-		--glob "./hurl/*.hurl"
+		--glob "./hurl/**/*.hurl"
 
 test-unit: stop ## Run unit tests against the application
 	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up --detach
