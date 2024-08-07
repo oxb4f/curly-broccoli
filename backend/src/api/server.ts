@@ -1,3 +1,4 @@
+import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { onError } from "./hooks/on-error";
@@ -11,6 +12,7 @@ export const app = new Elysia()
 	.onError(({ error, set }) => {
 		return onError(error, set);
 	})
+	.use(cors()) // FIXME: bad approach, pls change
 	.use(swagger())
 	.use(configPlugin)
 	.use(contextPlugin)

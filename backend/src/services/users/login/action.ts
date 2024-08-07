@@ -43,7 +43,7 @@ async function login({
 
 	const access = user.getAcesss();
 
-	assert(access, "Assert must exist");
+	assert(access, "Acesss must exist");
 
 	return new LoginDtoOut(user.getId(), user.getUsername(), access.getId(), {
 		access: loginResult.jwtAccess,
