@@ -1,7 +1,7 @@
 <script setup>
-import BasicForm from '../components/BasicForm.vue'
-import FormItem from '../components/FormItem.vue'
-import ModalWindow from '../components/ModalWindow.vue'
+import BasicForm from '../components/BasicForm.vue';
+import FormInputItem from '../components/FormInputItem.vue';
+import ModalWindow from '../components/ModalWindow.vue';
 </script>
 
 <template>
@@ -9,30 +9,31 @@ import ModalWindow from '../components/ModalWindow.vue'
     <template #content>
       <BasicForm>
         <template #header><h1>Реєстрація</h1></template>
+        <p>{{ form.username }}</p>
         <template #content>
-          <FormItem
+          <FormInputItem
             field-id="username"
             field-type="text"
             field-class="form__username-field"
             field-placeholder="Ваше ім'я"
             error="Помилка"
-            >Вкажіть ім'я:</FormItem
+            >Вкажіть ім'я:</FormInputItem
           >
-          <FormItem
+          <FormInputItem
             field-id="email"
             field-type="email"
             field-class="form__email-field"
             field-placeholder="Ел. пошта"
             error="Помилка"
-            >Вкажіть електронну пошту:</FormItem
+            >Вкажіть електронну пошту:</FormInputItem
           >
-          <FormItem
+          <FormInputItem
             field-id="password"
             field-type="password"
             field-class="form__password-field"
             field-placeholder="Пароль"
             error="Помилка"
-            >Вкажіть пароль:</FormItem
+            >Вкажіть пароль:</FormInputItem
           >
         </template>
         <template #footer>

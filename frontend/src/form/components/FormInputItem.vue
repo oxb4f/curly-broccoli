@@ -4,8 +4,9 @@ defineProps({
   fieldType: String,
   fieldClass: String,
   fieldPlaceholder: String,
+  fieldValue: String,
   error: String
-})
+});
 </script>
 
 <template>
@@ -17,6 +18,7 @@ defineProps({
       class="form__field"
       :class="fieldClass"
       :placeholder="fieldPlaceholder"
+      :value="fieldValue"
     />
     <span class="form__error">{{ error }}</span>
   </div>
