@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import RegisterView from '@/form/views/RegisterView.vue'
-import LoginView from '@/form/views/LoginView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import RegisterView from '@/form/views/RegisterView.vue';
+import LoginView from '@/form/views/LoginView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +19,6 @@ const router = createRouter({
       component: LoginView
     }
   ]
-})
+});
 
-export default router
+export default router;
