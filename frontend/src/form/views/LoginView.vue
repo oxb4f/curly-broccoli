@@ -11,23 +11,21 @@ import ModalWindow from '../components/ModalWindow.vue';
         <template #header><h1>Вхід</h1></template>
         <template #content>
           <FormInputItem
-            field-id="loginEmail"
-            field-type="email"
-            field-class="form__email-field"
-            field-placeholder="Ел. пошта"
-            field-value=""
+            label="Вкажіть електронну пошту:"
+            id="loginEmail"
+            type="email"
+            class="form__email-field"
+            placeholder="Ел. пошта"
             error="Помилка"
-            >Вкажіть електронну пошту:</FormInputItem
-          >
+          />
           <FormInputItem
-            field-id="loginPassword"
-            field-type="password"
-            field-class="form__password-field"
-            field-placeholder="Пароль"
-            field-value=""
+            label="Вкажіть пароль:"
+            id="loginPassword"
+            type="password"
+            class="form__password-field"
+            placeholder="Пароль"
             error="Помилка"
-            >Вкажіть пароль:</FormInputItem
-          >
+          />
         </template>
         <template #footer>
           <input type="submit" value="Увійти" class="form__submit-button" /> </template

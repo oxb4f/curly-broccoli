@@ -1,25 +1,22 @@
 <script setup>
 defineProps({
-  fieldId: String,
-  fieldType: String,
-  fieldClass: String,
-  fieldPlaceholder: String,
-  fieldValue: String,
-  error: String
+  label: {
+    type: [String, Boolean],
+    default: false
+  },
+  error: {
+    type: [String, Boolean],
+    default: false
+  }
 });
+
+const model = defineModel({ type: String });
 </script>
 
 <template>
   <div class="form__item">
-    <label :for="fieldId"><slot></slot></label>
-    <input
-      :id="fieldId"
-      :type="fieldType"
-      class="form__field"
-      :class="fieldClass"
-      :placeholder="fieldPlaceholder"
-      :value="fieldValue"
-    />
-    <span class="form__error">{{ error }}</span>
+    <label v-if="label">{{ label }}</label>
+    <input class="form__field" v-bind="$attrs" v-model="model" />
+    <span v-if="error" class="form__error">{{ error }}</span>
   </div>
 </template>
