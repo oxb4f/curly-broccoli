@@ -1,7 +1,25 @@
 <script setup>
+import { reactive } from 'vue';
 import BasicForm from '../components/BasicForm.vue';
 import FormInputItem from '../components/FormInputItem.vue';
 import ModalWindow from '../components/ModalWindow.vue';
+import ValidationError from '@/app/composables/getCustomError';
+
+const form = reactive({
+  username: '',
+  password: ''
+});
+
+const errors = reactive({
+  username: null,
+  password: null
+});
+
+function clearErrors() {
+  for (const field in errors) {
+    errors[field] = null;
+  }
+}
 
 async function _request(method, body = undefined) {
   const response = await fetch('http://localhost:8080/users/', {
@@ -14,19 +32,20 @@ async function _request(method, body = undefined) {
   });
 
   if (response.ok === true) {
+    clearErrors();
     return await response.json();
   } else {
-    console.log(error);
-
     const error = await response.json();
-    throw error;
+    const validationError = ValidationError.from(error.error);
+
+    for (const field in errors) {
+      errors[field] = validationError.details[field];
+    }
+    // form.username.error = 'new CustomError(error.error.payload)';
+    // console.dir(errors);
+    // throw error;
   }
 }
-
-_request('POST', {
-  username: '',
-  password: ''
-});
 </script>
 
 <template>
@@ -41,27 +60,38 @@ _request('POST', {
             type="text"
             class="form__username-field"
             placeholder="Ваше ім'я"
-            error="Помилка"
+            v-model="form.username"
+            :error="errors.username"
           />
-          <FormInputItem
+          <!-- <FormInputItem
             label="Вкажіть електронну пошту:"
             id="email"
             type="email"
             class="form__email-field"
             placeholder="Ел. пошта"
             error="Помилка"
-          />
+          /> -->
           <FormInputItem
             label="Вкажіть пароль:"
             id="password"
             type="password"
             class="form__password-field"
             placeholder="Пароль"
-            error="Помилка"
+            v-model="form.password"
+            :error="errors.password"
           />
         </template>
         <template #footer>
-          <input type="submit" value="Зареєструватись" class="form__submit-button" />
+          <input
+            type="submit"
+            value="Зареєструватись"
+            class="form__submit-button"
+            @click="
+              () => {
+                _request('POST', JSON.stringify(form));
+              }
+            "
+          />
         </template>
       </BasicForm>
     </template>
