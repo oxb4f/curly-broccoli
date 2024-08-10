@@ -1,7 +1,10 @@
 <script setup>
-import BaseForm from '../components/BaseForm.vue';
-import BaseInput from '../components/BaseInput.vue';
-import BaseModal from '../components/BaseModal.vue';
+import BaseForm from '@form/components/BaseForm.vue';
+import BaseFormField from '@form/components/BaseFormField.vue';
+import BaseModal from '@form/components/BaseModal.vue';
+import { useForm } from '@form/composables/useForm';
+
+const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
 </script>
 
 <template>
@@ -10,21 +13,23 @@ import BaseModal from '../components/BaseModal.vue';
       <BaseForm>
         <template #header><h1>Вхід</h1></template>
         <template #content>
-          <BaseInput
-            label="Вкажіть електронну пошту:"
-            id="loginEmail"
-            type="email"
-            class="form__email-field"
-            placeholder="Ел. пошта"
-            error="Помилка"
+          <BaseFormField
+            label="Вкажіть логін:"
+            id="username"
+            type="text"
+            class="form__username-field"
+            placeholder="Логін"
+            v-model="fields.username"
+            :error="errors.username"
           />
-          <BaseInput
+          <BaseFormField
             label="Вкажіть пароль:"
-            id="loginPassword"
+            id="password"
             type="password"
             class="form__password-field"
             placeholder="Пароль"
-            error="Помилка"
+            v-model="fields.password"
+            :error="errors.password"
           />
         </template>
         <template #footer>
