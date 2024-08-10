@@ -1,9 +1,9 @@
 <script setup>
 import { reactive } from 'vue';
-import BasicForm from '../components/BasicForm.vue';
-import FormInputItem from '../components/FormInputItem.vue';
-import ModalWindow from '../components/ModalWindow.vue';
-import ValidationError from '@/app/composables/getCustomError';
+import BaseForm from '@form/components/BaseForm.vue';
+import BaseInput from '@form/components/BaseInput.vue';
+import BaseModal from '@form/components/BaseModal.vue';
+import ValidationError from '@app/services/customErrors/validationError';
 
 const form = reactive({
   username: '',
@@ -49,12 +49,12 @@ async function _request(method, body = undefined) {
 </script>
 
 <template>
-  <ModalWindow>
+  <BaseModal>
     <template #content>
-      <BasicForm>
+      <BaseForm>
         <template #header><h1>Реєстрація</h1></template>
         <template #content>
-          <FormInputItem
+          <BaseInput
             label="Вкажіть ім'я:"
             id="username"
             type="text"
@@ -71,7 +71,7 @@ async function _request(method, body = undefined) {
             placeholder="Ел. пошта"
             error="Помилка"
           /> -->
-          <FormInputItem
+          <BaseInput
             label="Вкажіть пароль:"
             id="password"
             type="password"
@@ -93,10 +93,10 @@ async function _request(method, body = undefined) {
             "
           />
         </template>
-      </BasicForm>
+      </BaseForm>
     </template>
     <template #footer>
       <span>Вже є акаунт? <RouterLink class="link" to="/login">Увійти</RouterLink></span>
     </template>
-  </ModalWindow>
+  </BaseModal>
 </template>
