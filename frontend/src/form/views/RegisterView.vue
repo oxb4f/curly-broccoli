@@ -1,6 +1,6 @@
 <script setup>
 import BaseForm from '@form/components/BaseForm.vue';
-import BaseInput from '@form/components/BaseInput.vue';
+import BaseFormField from '@form/components/BaseFormField.vue';
 import BaseModal from '@form/components/BaseModal.vue';
 import { useForm } from '@form/composables/useForm';
 // import ValidationError from '@app/services/customErrors/validationError';
@@ -40,13 +40,12 @@ const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
       <BaseForm>
         <template #header><h1>Реєстрація</h1></template>
         <template #content>
-          <p>{{ fields.username }}</p>
-          <BaseInput
-            label="Вкажіть ім'я:"
+          <BaseFormField
+            label="Вкажіть логін:"
             id="username"
             type="text"
             class="form__username-field"
-            placeholder="Ваше ім'я"
+            placeholder="Логін"
             v-model="fields.username"
             :error="errors.username"
           />
@@ -58,7 +57,7 @@ const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
             placeholder="Ел. пошта"
             error="Помилка"
           /> -->
-          <BaseInput
+          <BaseFormField
             label="Вкажіть пароль:"
             id="password"
             type="password"
