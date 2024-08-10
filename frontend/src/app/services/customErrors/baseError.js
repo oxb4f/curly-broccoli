@@ -1,8 +1,8 @@
-class CustomError extends Error {
+export default class BaseError extends Error {
   constructor(name, details) {
     super();
 
-    Error.captureStackTrace(this, CustomError);
+    Error.captureStackTrace(this, BaseError);
 
     this.name = name ?? super.name;
     this.details = details;
@@ -20,14 +20,6 @@ class CustomError extends Error {
         return { ...object, ...toObj(detail.path, detail.message) };
       }, {}) ?? {};
 
-    console.log(details);
-
-    return new CustomError(name, details);
-  }
-}
-
-export default class ValidationError extends CustomError {
-  constructor(name, details) {
-    super(name, details);
+    return new BaseError(name, details);
   }
 }

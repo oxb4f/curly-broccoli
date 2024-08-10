@@ -1,16 +1,16 @@
 <script setup>
-import BasicForm from '../components/BasicForm.vue';
-import FormInputItem from '../components/FormInputItem.vue';
-import ModalWindow from '../components/ModalWindow.vue';
+import BaseForm from '../components/BaseForm.vue';
+import BaseInput from '../components/BaseInput.vue';
+import BaseModal from '../components/BaseModal.vue';
 </script>
 
 <template>
-  <ModalWindow>
+  <BaseModal>
     <template #content>
-      <BasicForm>
+      <BaseForm>
         <template #header><h1>Вхід</h1></template>
         <template #content>
-          <FormInputItem
+          <BaseInput
             label="Вкажіть електронну пошту:"
             id="loginEmail"
             type="email"
@@ -18,7 +18,7 @@ import ModalWindow from '../components/ModalWindow.vue';
             placeholder="Ел. пошта"
             error="Помилка"
           />
-          <FormInputItem
+          <BaseInput
             label="Вкажіть пароль:"
             id="loginPassword"
             type="password"
@@ -29,12 +29,12 @@ import ModalWindow from '../components/ModalWindow.vue';
         </template>
         <template #footer>
           <input type="submit" value="Увійти" class="form__submit-button" /> </template
-      ></BasicForm>
+      ></BaseForm>
     </template>
     <template #footer>
       <span
         >Вперше на сайті? <RouterLink class="link" to="/register">Зареєструватись</RouterLink></span
       ></template
     >
-  </ModalWindow>
+  </BaseModal>
 </template>
