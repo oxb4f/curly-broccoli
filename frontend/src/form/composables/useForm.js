@@ -5,18 +5,18 @@ export function useForm(inputs) {
 
   const errors = reactive({ ...inputs });
 
-  function clear(object) {
+  function _clear(object) {
     for (const field of Object.keys(object)) {
       object[field] = '';
     }
   }
 
   function clearFields() {
-    clear(inputs);
+    _clear(inputs);
   }
 
   function clearErrors() {
-    clear(errors);
+    _clear(errors);
   }
 
   function clearForm() {
@@ -24,11 +24,26 @@ export function useForm(inputs) {
     clearErrors();
   }
 
+  function submitForm(callback, inputs) {
+    callback(inputs)
+      .then(() => {
+        clearErrors();
+      })
+      .catch((error) => {
+        {
+          for (const field in errors) {
+            errors[field] = error.details[field];
+          }
+        }
+      });
+  }
+
   return {
     inputs,
     errors,
     clearFields,
     clearErrors,
-    clearForm
+    clearForm,
+    submitForm
   };
 }

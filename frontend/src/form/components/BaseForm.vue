@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="form">
+  <form @submit.prevent class="form">
     <div class="form__header">
       <slot name="header"></slot>
     </div>
@@ -11,5 +11,5 @@
     <div class="form__footer">
       <slot name="footer"></slot>
     </div>
-  </div>
+  </form>
 </template>
