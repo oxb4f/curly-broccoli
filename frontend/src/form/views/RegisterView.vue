@@ -1,11 +1,12 @@
 <script setup>
-import BaseForm from '@form/components/BaseForm.vue';
-import BaseFormField from '@form/components/BaseFormField.vue';
-import BaseModal from '@form/components/BaseModal.vue';
-import { useForm } from '@form/composables/useForm';
+import BaseForm from '../components/BaseForm.vue';
+import FormItem from '../components/FormItem.vue';
+import FormInput from '../components/FormInput.vue';
+import { useForm } from '../composables/useForm';
+import BaseModal from '@app/components/BaseModal.vue';
 // import ValidationError from '@app/services/customErrors/validationError';
 
-const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
+const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
 
 // async function _request(method, body = undefined) {
 //   const response = await fetch('http://localhost:8080/users/', {
@@ -40,32 +41,55 @@ const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
       <BaseForm>
         <template #header><h1>Реєстрація</h1></template>
         <template #content>
-          <BaseFormField
+          <p>{{ inputs.username }}</p>
+          <FormItem>
+            <FormInput
+              label="Вкажіть логін:"
+              id="username"
+              type="text"
+              class="form__username-input"
+              placeholder="Логін"
+              v-model="inputs.username"
+              :error="errors.username"
+            />
+          </FormItem>
+          <FormItem>
+            <FormInput
+              label="Вкажіть пароль:"
+              id="password"
+              type="password"
+              class="form__password-input"
+              placeholder="Пароль"
+              v-model="inputs.password"
+              :error="errors.password"
+            />
+          </FormItem>
+          <!-- <BaseFormField
             label="Вкажіть логін:"
             id="username"
             type="text"
-            class="form__username-field"
+            class="form__username-input"
             placeholder="Логін"
-            v-model="fields.username"
+            v-model="inputs.username"
             :error="errors.username"
-          />
+          /> -->
           <!-- <FormInputItem
             label="Вкажіть електронну пошту:"
             id="email"
             type="email"
-            class="form__email-field"
+            class="form__email-input"
             placeholder="Ел. пошта"
             error="Помилка"
           /> -->
-          <BaseFormField
+          <!-- <BaseFormField
             label="Вкажіть пароль:"
             id="password"
             type="password"
-            class="form__password-field"
+            class="form__password-input"
             placeholder="Пароль"
-            v-model="fields.password"
+            v-model="inputs.password"
             :error="errors.password"
-          />
+          /> -->
         </template>
         <template #footer>
           <input
@@ -74,7 +98,7 @@ const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
             class="form__submit-button"
             @click="
               () => {
-                _request('POST', JSON.stringify(fields));
+                _request('POST', JSON.stringify(inputs));
               }
             "
           />

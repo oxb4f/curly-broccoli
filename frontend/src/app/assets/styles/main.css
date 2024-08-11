@@ -7,6 +7,9 @@
   @apply text-project-main-color;
 }
 
+.input {
+}
+
 .modal {
   @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full break-all;
 }
@@ -61,12 +64,21 @@
 .form__header {
   @apply text-xl;
 }
+
+.form__section {
+  @apply w-full;
+}
+
 .form__item {
   @apply mb-2 flex flex-col;
 }
 
-.form__field {
-  @apply p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
+.form__item__half-size {
+  @apply align-top inline-block w-1/2;
+}
+
+.form__input {
+  @apply w-full p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
 }
 
 .form__error {
