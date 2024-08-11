@@ -35,7 +35,7 @@ const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
               v-model="inputs.password"
               :error="errors.password"
             />
-            <RouterLink class="link" to="/">Забули пароль?</RouterLink>
+            <span><RouterLink class="link" to="/">Забули пароль?</RouterLink></span>
           </FormItem>
         </template>
         <template #footer>
