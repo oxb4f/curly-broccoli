@@ -3,45 +3,19 @@ import BaseForm from '../components/BaseForm.vue';
 import FormItem from '../components/FormItem.vue';
 import FormInput from '../components/FormInput.vue';
 import { useForm } from '../composables/useForm';
-import BaseModal from '@app/components/BaseModal.vue';
-// import ValidationError from '@app/services/customErrors/validationError';
+import BaseModal from '@/app/components/BaseModal.vue';
+import { createUser } from '@/app/services/api/user';
 
-const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
-
-// async function _request(method, body = undefined) {
-//   const response = await fetch('http://localhost:8080/users/', {
-//     method: method,
-//     headers: {
-//       Accept: 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: body
-//   });
-
-//   if (response.ok === true) {
-//     clearErrors();
-//     return await response.json();
-//   } else {
-//     const error = await response.json();
-//     const validationError = ValidationError.from(error.error);
-
-//     for (const field in errors) {
-//       errors[field] = validationError.details[field];
-//     }
-//     // form.username.error = 'new CustomError(error.error.payload)';
-//     // console.dir(errors);
-//     // throw error;
-//   }
-// }
+const { inputs, errors, submitForm } = useForm({ username: '', password: '' });
 </script>
 
 <template>
   <BaseModal>
     <template #content>
-      <BaseForm>
+      <BaseForm @submit="submitForm(createUser, inputs)">
         <template #header><h1>Реєстрація</h1></template>
         <template #content>
-          <p>{{ inputs.username }}</p>
+          <!-- <p>{{ inputs.username }}</p> -->
           <FormItem>
             <FormInput
               label="Вкажіть логін:"
@@ -94,16 +68,7 @@ const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
           /> -->
         </template>
         <template #footer>
-          <input
-            type="submit"
-            value="Зареєструватись"
-            class="form__submit-button"
-            @click="
-              () => {
-                _request('POST', JSON.stringify(inputs));
-              }
-            "
-          />
+          <input type="submit" value="Зареєструватись" class="form__submit-button" />
         </template>
       </BaseForm>
     </template>

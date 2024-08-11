@@ -82,11 +82,11 @@
 }
 
 .form__input {
-  @apply w-full p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
+  @apply mb-1 w-full p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
 }
 
 .form__error {
-  @apply mt-2 text-sm text-project-error-color;
+  @apply text-sm text-project-error-color;
 }
 
 .form__submit-button {

@@ -18,6 +18,11 @@ defineProps({
 </script>
 
 <template>
-  <BaseInput :label :description v-bind="$attrs" class="form__input" />
+  <BaseInput
+    :label
+    :description="!error ? description : undefined"
+    v-bind="$attrs"
+    class="form__input"
+  />
   <span v-if="error" class="form__error">{{ error }}</span>
 </template>
