@@ -50,6 +50,7 @@ const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
               class="form__username-input"
               placeholder="Логін"
               v-model="inputs.username"
+              description="*Повинно бути не менше одного символа"
               :error="errors.username"
             />
           </FormItem>
@@ -61,6 +62,7 @@ const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
               class="form__password-input"
               placeholder="Пароль"
               v-model="inputs.password"
+              description="*Повинно бути не менше восьми символів"
               :error="errors.password"
             />
           </FormItem>
