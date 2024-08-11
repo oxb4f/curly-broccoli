@@ -1,10 +1,11 @@
 <script setup>
 import BaseForm from '@form/components/BaseForm.vue';
-import BaseFormField from '@form/components/BaseFormField.vue';
-import BaseModal from '@form/components/BaseModal.vue';
+import FormItem from '@form/components/FormItem.vue';
+import FormInput from '@form/components/FormInput.vue';
 import { useForm } from '@form/composables/useForm';
+import BaseModal from '@app/components/BaseModal.vue';
 
-const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
+const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
 </script>
 
 <template>
@@ -13,24 +14,29 @@ const { fields, errors, clearErrors } = useForm({ username: '', password: '' });
       <BaseForm>
         <template #header><h1>Вхід</h1></template>
         <template #content>
-          <BaseFormField
-            label="Вкажіть логін:"
-            id="username"
-            type="text"
-            class="form__username-field"
-            placeholder="Логін"
-            v-model="fields.username"
-            :error="errors.username"
-          />
-          <BaseFormField
-            label="Вкажіть пароль:"
-            id="password"
-            type="password"
-            class="form__password-field"
-            placeholder="Пароль"
-            v-model="fields.password"
-            :error="errors.password"
-          />
+          <FormItem>
+            <FormInput
+              label="Вкажіть логін:"
+              id="username"
+              type="text"
+              class="form__username-input"
+              placeholder="Логін"
+              v-model="inputs.username"
+              :error="errors.username"
+            />
+          </FormItem>
+          <FormItem>
+            <FormInput
+              label="Вкажіть пароль:"
+              id="password"
+              type="password"
+              class="form__password-input"
+              placeholder="Пароль"
+              v-model="inputs.password"
+              :error="errors.password"
+            />
+            <RouterLink class="link" to="/">Забули пароль?</RouterLink>
+          </FormItem>
         </template>
         <template #footer>
           <input type="submit" value="Увійти" class="form__submit-button" /> </template

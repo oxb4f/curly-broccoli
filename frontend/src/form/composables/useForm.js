@@ -1,9 +1,9 @@
 import { reactive } from 'vue';
 
-export function useForm(fields) {
-  fields = reactive(fields);
+export function useForm(inputs) {
+  inputs = reactive(inputs);
 
-  const errors = reactive({ ...fields });
+  const errors = reactive({ ...inputs });
 
   function clear(object) {
     for (const field of Object.keys(object)) {
@@ -12,7 +12,7 @@ export function useForm(fields) {
   }
 
   function clearFields() {
-    clear(fields);
+    clear(inputs);
   }
 
   function clearErrors() {
@@ -25,7 +25,7 @@ export function useForm(fields) {
   }
 
   return {
-    fields,
+    inputs,
     errors,
     clearFields,
     clearErrors,
