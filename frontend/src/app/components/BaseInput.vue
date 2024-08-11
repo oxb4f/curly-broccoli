@@ -16,5 +16,4 @@ const model = defineModel({ type: String });
 <template>
   <label v-if="label" :for="$attrs.id">{{ label }}</label>
   <input class="input" v-bind="$attrs" v-model="model" />
-  <span v-if="description && !model" class="input__description">{{ description }}</span>
 </template>
