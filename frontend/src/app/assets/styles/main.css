@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import './base.css';
+@import './animation.css';
 
 .link {
   @apply text-project-main-color;
@@ -34,6 +35,10 @@
 .modal__header,
 .modal__content {
   @apply mb-6;
+}
+
+.modal__content {
+  @apply min-h-96;
 }
 
 .modal__close-button {
@@ -86,7 +91,7 @@
 }
 
 .form__error {
-  @apply text-sm text-project-error-color;
+  @apply mt-1 text-sm text-project-error-color;
 }
 
 .form__submit-button {

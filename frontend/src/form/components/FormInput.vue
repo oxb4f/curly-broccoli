@@ -15,6 +15,8 @@ defineProps({
     default: false
   }
 });
+
+const model = defineModel({ type: String });
 </script>
 
 <template>
@@ -22,7 +24,13 @@ defineProps({
     :label
     :description="!error ? description : undefined"
     v-bind="$attrs"
+    v-model="model"
     class="form__input"
   />
-  <span v-if="error" class="form__error">{{ error }}</span>
+  <TransitionGroup name="slide"
+    ><span v-if="description && !model && !error" class="input__description" key="description">{{
+      description
+    }}</span>
+    <span v-if="error" class="form__error" key="error">{{ error }}</span></TransitionGroup
+  >
 </template>

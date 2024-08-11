@@ -5,7 +5,7 @@ import FormInput from '@form/components/FormInput.vue';
 import { useForm } from '@form/composables/useForm';
 import BaseModal from '@app/components/BaseModal.vue';
 
-const { inputs, errors, clearErrors } = useForm({ username: '', password: '' });
+const { inputs, errors } = useForm({ username: '', password: '' });
 </script>
 
 <template>
