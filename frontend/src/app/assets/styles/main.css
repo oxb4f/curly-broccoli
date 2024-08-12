@@ -9,7 +9,7 @@
 }
 
 .description {
-  @apply text-project-text-color-soft;
+  @apply text-project-text-color-darker;
 }
 
 span.error {
@@ -21,7 +21,7 @@ input.error {
 }
 
 .input {
-  @apply mb-5 w-full;
+  @apply mb-5 w-full placeholder:text-project-text-color-darker;
 }
 
 .input__error,
@@ -29,25 +29,21 @@ input.error {
   @apply absolute bottom-0 text-xs;
 }
 
-/* .input__description {
-  @apply text-xs;
-} */
-
 .modal {
   @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full break-all;
 }
 
 .modal button,
 .modal input[type='submit'] {
-  @apply cursor-pointer bg-project-main-color text-project-text-color-inverted active:bg-project-main-color-soft disabled:bg-project-main-color-mute disabled:cursor-default;
+  @apply cursor-pointer bg-project-main-color text-project-bg-secondary-color active:bg-project-main-color-soft disabled:bg-project-main-color-mute disabled:cursor-default;
 }
 
 .modal__backdrop {
-  @apply absolute inset-0 w-full h-full bg-project-main-color-mute opacity-50;
+  @apply absolute inset-0 w-full h-full bg-project-bg-secondary-color opacity-50;
 }
 
 .modal__window {
-  @apply z-10 w-full max-w-xl p-6 rounded-lg bg-project-bg-main-color;
+  @apply z-10 w-full max-w-xl p-6 rounded-lg bg-project-bg-secondary-color;
 }
 
 .modal__header,
@@ -60,7 +56,7 @@ input.error {
 }
 
 .logo-icon {
-  @apply w-12 h-12;
+  @apply w-36 h-12 text-center text-3xl text-project-main-color;
 }
 
 .modal__logo-icon {
@@ -101,9 +97,9 @@ input.error {
 }
 
 .form__input {
-  @apply p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
+  @apply p-2 border-b-2 border-project-main-color-mute bg-project-bg-secondary-color focus:outline-none focus:border-project-main-color;
 }
 
 .form__submit-button {
-  @apply w-full p-2 rounded-md;
+  @apply w-full p-2 rounded-md font-bold;
 }

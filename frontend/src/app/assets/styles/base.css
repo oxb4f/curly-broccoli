@@ -1,29 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 :root {
-  --project-main-color: #4f46e5;
-  --project-main-color-soft: #746de7;
-  --project-main-color-mute: #9f9be9;
+  --project-main-color: #2ea200;
+  --project-main-color-soft: #77d154;
+  --project-main-color-mute: #a5d392;
 
   --project-secondary-color: #bf7af0;
   --project-secondary-color-soft: #ca97ef;
   --project-secondary-color-mute: #d3b8e9;
 
-  --project-bg-main-color: #ededed;
+  --project-bg-main-color: #000000;
   --project-bg-secondary-color: #0a0a0a;
   --project-bg-hover-color: rgba(255, 255, 255, 0.09);
 
   --project-border-color: rgba(255, 255, 255, 0.14);
 
-  --project-text-color: #000000;
+  --project-text-color: #ededed;
   --project-text-color-darker: #a1a1a1;
-  --project-text-color-inverted: #ededed;
+  --project-text-color-inverted: #000000;
 
   --project-error-color: #eb4848;
   --project-error-color-soft: #ecadad;
 }
 
+.pacifico-regular {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
   color: var(--project-text-color);
   background-color: var(--project-bg-main-color);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px inset var(--project-bg-main-color) !important;
+  -webkit-text-fill-color: var(--project-text-color) !important;
+  caret-color: var(--project-text-color);
+}
+
+form input:-webkit-autofill,
+form input:-webkit-autofill:hover,
+form input:-webkit-autofill:focus,
+form textarea:-webkit-autofill,
+form textarea:-webkit-autofill:hover,
+form textarea:-webkit-autofill:focus,
+form select:-webkit-autofill,
+form select:-webkit-autofill:hover,
+form select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px inset var(--project-bg-secondary-color) !important;
 }
 
 input {
