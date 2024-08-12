@@ -39,7 +39,7 @@ input.error {
 
 .modal button,
 .modal input[type='submit'] {
-  @apply bg-project-main-color text-project-text-color-inverted active:bg-project-main-color-soft;
+  @apply cursor-pointer bg-project-main-color text-project-text-color-inverted active:bg-project-main-color-soft disabled:bg-project-main-color-mute disabled:cursor-default;
 }
 
 .modal__backdrop {
@@ -105,5 +105,5 @@ input.error {
 }
 
 .form__submit-button {
-  @apply w-full p-2 rounded-md cursor-pointer;
+  @apply w-full p-2 rounded-md;
 }

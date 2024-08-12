@@ -3,10 +3,6 @@ defineProps({
   label: {
     type: [String, Boolean],
     default: false
-  },
-  description: {
-    type: [String, Boolean],
-    default: false
   }
 });
 
