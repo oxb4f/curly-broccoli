@@ -6,7 +6,7 @@ import { useForm } from '../composables/useForm';
 import BaseModal from '@/app/components/BaseModal.vue';
 import { createUser } from '@/app/services/api/user';
 
-const { inputs, errors, submitForm } = useForm({ username: '', password: '' });
+const { inputs, errors, submitForm, isSubmitDisabled } = useForm({ username: '', password: '' });
 </script>
 
 <template>
@@ -68,7 +68,12 @@ const { inputs, errors, submitForm } = useForm({ username: '', password: '' });
           /> -->
         </template>
         <template #footer>
-          <input type="submit" value="Зареєструватись" class="form__submit-button" />
+          <input
+            type="submit"
+            value="Зареєструватись"
+            class="form__submit-button"
+            :disabled="isSubmitDisabled"
+          />
         </template>
       </BaseForm>
     </template>
