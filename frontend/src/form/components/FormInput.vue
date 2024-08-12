@@ -26,11 +26,15 @@ const model = defineModel({ type: String });
     v-bind="$attrs"
     v-model="model"
     class="form__input"
+    :class="error ? 'error' : undefined"
   />
   <TransitionGroup name="slide"
-    ><span v-if="description && !model && !error" class="input__description" key="description">{{
-      description
-    }}</span>
-    <span v-if="error" class="form__error" key="error">{{ error }}</span></TransitionGroup
+    ><span
+      v-if="description && !model && !error"
+      class="input__description description"
+      key="description"
+      >{{ description }}</span
+    >
+    <span v-if="error" class="input__error error" key="error">{{ error }}</span></TransitionGroup
   >
 </template>

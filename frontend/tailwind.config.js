@@ -12,9 +12,10 @@ export default {
         'project-text-color-soft': 'var(--project-text-color-soft)',
         'project-text-color-mute': 'var(--project-text-color-mute)',
         'project-text-color-inverted': 'var(--project-text-color-inverted)',
-        'project-error-color': 'var(--project-error-color)'
+        'project-error-color': 'var(--project-error-color)',
+        'project-error-color-soft': 'var(--project-error-color-soft)'
       }
     }
   },
   plugins: []
-}
+};

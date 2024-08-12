@@ -8,12 +8,30 @@
   @apply text-project-main-color;
 }
 
-.input {
+.description {
+  @apply text-project-text-color-soft;
 }
 
-.input__description {
-  @apply text-xs text-project-text-color-soft;
+span.error {
+  @apply text-project-error-color;
 }
+
+input.error {
+  @apply border-project-error-color-soft focus:border-project-error-color placeholder:text-project-error-color-soft placeholder:focus:text-project-error-color;
+}
+
+.input {
+  @apply mb-5 w-full;
+}
+
+.input__error,
+.input__description {
+  @apply absolute bottom-0 text-xs;
+}
+
+/* .input__description {
+  @apply text-xs;
+} */
 
 .modal {
   @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full break-all;
@@ -35,10 +53,6 @@
 .modal__header,
 .modal__content {
   @apply mb-6;
-}
-
-.modal__content {
-  @apply min-h-96;
 }
 
 .modal__close-button {
@@ -79,7 +93,7 @@
 }
 
 .form__item {
-  @apply mb-2 flex flex-col;
+  @apply relative flex flex-col;
 }
 
 .form__item__half-size {
@@ -87,11 +101,7 @@
 }
 
 .form__input {
-  @apply mb-1 w-full p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
-}
-
-.form__error {
-  @apply mt-1 text-sm text-project-error-color;
+  @apply p-2 border-b-2 border-project-main-color-mute focus:outline-none focus:border-project-main-color;
 }
 
 .form__submit-button {
