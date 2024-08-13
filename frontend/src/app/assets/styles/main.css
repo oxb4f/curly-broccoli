@@ -8,6 +8,42 @@
   @apply text-project-main-color;
 }
 
+.content {
+  @apply min-h-screen flex justify-center items-center;
+}
+
+.footer {
+  @apply w-full h-44 border-t-1 shadow-xl shadow-project-main-color border-project-border-color bg-project-bg-secondary-color;
+}
+
+.authorisation {
+  @apply flex items-center gap-8;
+}
+
+.authorisation__window {
+  @apply w-80;
+}
+
+.authorisation__media-content {
+  @apply z-10;
+}
+
+.authorisation__header {
+  @apply flex justify-center;
+}
+
+.media-content {
+  @apply flex gap-7 p-5 border-1 border-project-border-color bg-project-bg-secondary-color;
+}
+
+.media-content__content {
+  @apply flex flex-col justify-center gap-5 max-w-96 break-words;
+}
+
+.media-content__footer {
+  @apply flex justify-center gap-4 flex-wrap;
+}
+
 .description {
   @apply text-project-text-color-darker;
 }
@@ -17,11 +53,11 @@ span.error {
 }
 
 input.error {
-  @apply border-project-error-color-soft focus:border-project-error-color placeholder:text-project-error-color-soft placeholder:focus:text-project-error-color;
+  @apply border-project-error-color-soft focus:border-project-error-color focus:ring-project-error-color-soft hover:border-project-error-color-soft placeholder:text-project-error-color-soft placeholder:focus:text-project-error-color;
 }
 
 .input {
-  @apply mb-5 w-full placeholder:text-project-text-color-darker;
+  @apply mb-5 placeholder:text-project-text-color-darker;
 }
 
 .input__error,
@@ -30,12 +66,7 @@ input.error {
 }
 
 .modal {
-  @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full break-all;
-}
-
-.modal button,
-.modal input[type='submit'] {
-  @apply cursor-pointer font-bold bg-project-main-color text-project-bg-secondary-color active:bg-project-main-color-mute hover:bg-project-main-color-soft disabled:bg-project-main-color-mute disabled:text-project-text-color-darker disabled:cursor-default;
+  @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center gap-6 size-full break-all;
 }
 
 .modal__backdrop {
@@ -44,11 +75,6 @@ input.error {
 
 .modal__window {
   @apply z-10 w-full max-w-xl p-6 rounded-lg bg-project-bg-secondary-color;
-}
-
-.modal__header,
-.modal__content {
-  @apply mb-6;
 }
 
 .modal__close-button {
@@ -66,26 +92,22 @@ input.error {
 .form,
 .form__header,
 .form__content,
-.form__footer {
+.form__footer,
+.form__section {
   @apply w-full;
 }
 
-.form__header,
-.form__content {
-  @apply mb-6;
-}
-
-.form__header,
+.form,
 .form__footer {
-  @apply flex justify-around;
+  @apply flex flex-col gap-6;
 }
 
 .form__header {
-  @apply text-xl;
+  @apply text-xl flex justify-around;
 }
 
-.form__section {
-  @apply w-full;
+.form__footer {
+  @apply gap-2;
 }
 
 .form__item {
@@ -97,9 +119,9 @@ input.error {
 }
 
 .form__input {
-  @apply p-2 border-b-2 border-project-main-color-mute bg-project-bg-secondary-color focus:outline-none focus:border-project-main-color;
+  @apply border-1 border-project-main-color-mute bg-project-bg-main-color hover:border-project-main-color-soft focus:border-project-main-color focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-project-bg-main-color focus:ring-project-main-color-soft;
 }
 
 .form__submit-button {
-  @apply w-full p-2 rounded-md;
+  @apply cursor-pointer font-bold bg-project-main-color text-project-bg-main-color enabled:hover:bg-project-main-color-soft enabled:active:bg-project-main-color-mute;
 }

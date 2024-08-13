@@ -1,22 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import RegisterView from '@form/views/RegisterView.vue';
-import LoginView from '@form/views/LoginView.vue';
+import LoginFormView from '@/form/views/LoginFormView.vue';
+import RegisterFormView from '@/form/views/RegisterFormView.vue';
+import AuthorisationView from '../views/AuthorisationView.vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
     {
-      path: '/'
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: RegisterView
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: LoginView
+      path: '/',
+      name: 'authorisation',
+      component: AuthorisationView,
+      children: [
+        {
+          path: '/',
+          component: RegisterFormView
+        },
+        {
+          path: '/login',
+          component: LoginFormView
+        }
+      ]
     }
   ]
 });

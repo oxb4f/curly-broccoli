@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
-  --project-main-color: #2ea200;
-  --project-main-color-soft: #6ad142;
-  --project-main-color-mute: #a5d392;
+  --project-main-color: #00d7e7;
+  --project-main-color-soft: #00727a;
+  --project-main-color-mute: #88b9bc;
 
   --project-secondary-color: #bf7af0;
   --project-secondary-color-soft: #ca97ef;
@@ -12,7 +12,7 @@
 
   --project-bg-main-color: #000000;
   --project-bg-secondary-color: #0a0a0a;
-  --project-bg-hover-color: rgba(255, 255, 255, 0.09);
+  --project-bg-hover-color: rgba(255, 255, 255, 0.1);
   --project-bg-disable-color: rgba(255, 255, 255, 0.09);
 
   --project-border-color: rgba(255, 255, 255, 0.14);
@@ -26,14 +26,6 @@
 
   --project-font: 'Roboto', sans-serif;
   --project-logo-font: 'Pacifico', cursive;
-}
-
-body {
-  font-family: var(--project-font);
-  font-weight: 400;
-  font-style: normal;
-  color: var(--project-text-color);
-  background-color: var(--project-bg-main-color);
 }
 
 input:-webkit-autofill,
@@ -50,19 +42,25 @@ select:-webkit-autofill:focus {
   caret-color: var(--project-text-color);
 }
 
-form input:-webkit-autofill,
-form input:-webkit-autofill:hover,
-form input:-webkit-autofill:focus,
-form textarea:-webkit-autofill,
-form textarea:-webkit-autofill:hover,
-form textarea:-webkit-autofill:focus,
-form select:-webkit-autofill,
-form select:-webkit-autofill:hover,
-form select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 30px inset var(--project-bg-secondary-color) !important;
+html,
+body {
+  @apply size-full;
+}
+
+body {
+  font-family: var(--project-font);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--project-text-color);
+  background-color: var(--project-bg-main-color);
 }
 
 input {
   color: var(--project-text-color);
   background-color: var(--project-bg-main-color);
+  @apply w-full p-2 rounded-md disabled:opacity-30 disabled:cursor-default;
+}
+
+h1 {
+  @apply text-3xl;
 }

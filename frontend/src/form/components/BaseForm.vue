@@ -2,14 +2,14 @@
 
 <template>
   <form @submit.prevent class="form">
-    <div class="form__header">
+    <header class="form__header">
       <slot name="header"></slot>
-    </div>
-    <div class="form__content">
+    </header>
+    <main class="form__content">
       <slot name="content"></slot>
-    </div>
-    <div class="form__footer">
+    </main>
+    <footer class="form__footer">
       <slot name="footer"></slot>
-    </div>
+    </footer>
   </form>
 </template>
