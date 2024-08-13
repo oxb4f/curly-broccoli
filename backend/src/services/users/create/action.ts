@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import z from "zod";
 import { User } from "../../../entities/user";
 import type { Context } from "../../context";
@@ -40,10 +41,19 @@ async function create({
 
 	await context.usersRepository.createFromEntity(user);
 
-	return new CreateUserDtoOut(user.getId(), user.getUsername(), {
-		access: jwtAccess,
-		refresh: refreshToken,
-	});
+	const access = user.getAcesss();
+
+	assert(access, "Assert must be created");
+
+	return new CreateUserDtoOut(
+		user.getId(),
+		user.getUsername(),
+		access.getId(),
+		{
+			access: jwtAccess,
+			refresh: refreshToken,
+		},
+	);
 }
 
 export function factory() {

@@ -20,13 +20,13 @@ async function validate({
 		});
 	}
 
-	const result = await Access.verifyAndDecodeJwt(
+	const [result, ok] = await Access.verifyAndDecodeJwt(
 		dto.jwtAccess,
 		context.config.JWT_SECRET,
 		dto.ignoreExpiration,
 	);
 
-	if (!result) {
+	if (!ok) {
 		ServiceError.throw(ServiceError.ERROR_TYPE.AUTH, {
 			details: [],
 			message: "Authorization was failed",

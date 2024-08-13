@@ -1,7 +1,7 @@
 services:
   app:
     image: ${APP_IMAGE:-}
-    command: sh -c 'bun dev'
+    command: sh -c 'bun migrate:db && bun dev'
     restart: always
     container_name: backend
     env_file:

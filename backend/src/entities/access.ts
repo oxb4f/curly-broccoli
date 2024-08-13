@@ -18,6 +18,11 @@ type CPayload = {
 	refreshTokens?: Record<string, string>;
 };
 
+type PlainObject = {
+	id: number;
+	login: string;
+};
+
 export type RefreshPayload = {
 	refreshId: string;
 	secret: string;
@@ -29,7 +34,8 @@ export type JwtAccessPayload = {
 	jwtAccessLifetime: number;
 };
 
-export type AccessPayload = CPayload & RefreshPayload;
+export type AccessPayload = CPayload &
+	RefreshPayload & { jwtAccessLifetime: number };
 
 export type AccessHashedPayload = CPayload & {
 	refreshTokens: Record<string, string>;
@@ -55,18 +61,21 @@ export class Access extends Base {
 			: new Map();
 	}
 
-	static async from(payload: AccessPayload): Promise<[Access, string]> {
+	static async from(payload: AccessPayload): Promise<[Access, string, string]> {
 		const access = new Access({ ...payload });
 
 		await access.setPassword(payload.password);
 
-		const refresh = await access.addOrReplaceRefreshToken(
-			payload.refreshId,
-			payload.secret,
-			payload.refreshLifetime,
-		);
+		const [jwtAccess, refresh] = await Promise.all([
+			access.generateJwtAccess(payload.secret, payload.jwtAccessLifetime),
+			access.addOrReplaceRefreshToken(
+				payload.refreshId,
+				payload.secret,
+				payload.refreshLifetime,
+			),
+		]);
 
-		return [access, refresh];
+		return [access, refresh, jwtAccess];
 	}
 
 	static async fromHashed(payload: AccessHashedPayload): Promise<Access> {
@@ -172,16 +181,16 @@ export class Access extends Base {
 		token: string,
 		secret: string,
 		ignoreExpiration = false,
-	): Promise<CompleteJwtPayload | null> {
+	): Promise<[CompleteJwtPayload | null, boolean]> {
 		try {
 			const verifier = createVerifier({
 				key: async () => secret,
 				ignoreExpiration,
 			});
 
-			return await verifier(token);
+			return [await verifier(token), true];
 		} catch (error) {
-			if (error instanceof TokenError) return null;
+			if (error instanceof TokenError) return [null, false];
 			throw error;
 		}
 	}
@@ -207,7 +216,7 @@ export class Access extends Base {
 		return { refreshToken, jwtAccess };
 	}
 
-	toPlainObject(): Readonly<Omit<CPayload, "password" | "refreshTokens">> {
+	toPlainObject(): Readonly<PlainObject> {
 		return {
 			id: this._id,
 			login: this._login,

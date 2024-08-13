@@ -35,7 +35,7 @@ export class User extends Base {
 	static async fromCredentials(
 		payload: UserWithCredentialsPayload,
 	): Promise<[User, string, string]> {
-		const [access, refreshToken] = await Access.from({
+		const [access, refreshToken, jwtAccess] = await Access.from({
 			...payload,
 			login: payload.username,
 		});
@@ -43,11 +43,6 @@ export class User extends Base {
 		const user = new User({ ...payload });
 
 		user.setAccess(access);
-
-		const jwtAccess = await access.generateJwtAccess(
-			payload.secret,
-			payload.jwtAccessLifetime,
-		);
 
 		return [user, jwtAccess, refreshToken];
 	}

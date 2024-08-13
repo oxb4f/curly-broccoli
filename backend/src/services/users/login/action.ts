@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import z from "zod";
 import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
@@ -40,7 +41,11 @@ async function login({
 
 	await context.usersRepository.updateFromEntity(user);
 
-	return new LoginDtoOut(user.getId(), user.getUsername(), {
+	const access = user.getAcesss();
+
+	assert(access, "Acesss must exist");
+
+	return new LoginDtoOut(user.getId(), user.getUsername(), access.getId(), {
 		access: loginResult.jwtAccess,
 		refresh: loginResult.refreshToken,
 	});
