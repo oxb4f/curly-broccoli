@@ -1,7 +1,10 @@
 <script setup>
 import BaseInput from '@/app/components/BaseInput.vue';
+import FormInputError from './FormInputError.vue';
+import FormInputDescription from './FormInputDescription.vue';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   label: {
     type: [String, Boolean],
     default: false
@@ -17,24 +20,17 @@ defineProps({
 });
 
 const model = defineModel({ type: String });
+
+const inscriptionBelow = computed(() => {
+  if (props.error) return FormInputError;
+  if (props.description && !model.value) return FormInputDescription;
+  return undefined;
+});
 </script>
 
 <template>
-  <BaseInput
-    :label
-    :description="!error ? description : undefined"
-    v-bind="$attrs"
-    v-model="model"
-    class="form__input"
-    :class="error ? 'error' : undefined"
-  />
-  <TransitionGroup name="slide"
-    ><span
-      v-if="description && !model && !error"
-      class="input__description description"
-      key="description"
-      >{{ description }}</span
-    >
-    <span v-if="error" class="input__error error" key="error">{{ error }}</span></TransitionGroup
-  >
+  <BaseInput :label v-bind="$attrs" v-model="model" class="form__input" :class="{ error }" />
+  <Transition name="slide" mode="out-in">
+    <component :is="inscriptionBelow" :description :error></component
+  ></Transition>
 </template>

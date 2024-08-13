@@ -3,7 +3,7 @@
 
 :root {
   --project-main-color: #2ea200;
-  --project-main-color-soft: #77d154;
+  --project-main-color-soft: #6ad142;
   --project-main-color-mute: #a5d392;
 
   --project-secondary-color: #bf7af0;
@@ -13,6 +13,7 @@
   --project-bg-main-color: #000000;
   --project-bg-secondary-color: #0a0a0a;
   --project-bg-hover-color: rgba(255, 255, 255, 0.09);
+  --project-bg-disable-color: rgba(255, 255, 255, 0.09);
 
   --project-border-color: rgba(255, 255, 255, 0.14);
 
@@ -21,17 +22,14 @@
   --project-text-color-inverted: #000000;
 
   --project-error-color: #eb4848;
-  --project-error-color-soft: #ecadad;
-}
+  --project-error-color-soft: #e78b8b;
 
-.pacifico-regular {
-  font-family: 'Pacifico', cursive;
-  font-weight: 400;
-  font-style: normal;
+  --project-font: 'Roboto', sans-serif;
+  --project-logo-font: 'Pacifico', cursive;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--project-font);
   font-weight: 400;
   font-style: normal;
   color: var(--project-text-color);

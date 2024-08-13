@@ -1,13 +1,13 @@
 .input {
-  transition: color 0.3s ease-out;
+  transition: border-color 0.1s ease-out;
 }
 
 .slide-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .slide-leave-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .slide-enter-from,
