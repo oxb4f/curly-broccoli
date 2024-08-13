@@ -9,11 +9,16 @@ export default {
         'project-main-color-mute': 'var(--project-main-color-mute)',
         'project-bg-main-color': 'var(--project-bg-main-color)',
         'project-bg-secondary-color': 'var(--project-bg-secondary-color)',
+        'project-bg-disable-color': 'var(--project-bg-disable-color)',
         'project-text-color': 'var(--project-text-color)',
         'project-text-color-darker': 'var(--project-text-color-darker)',
         'project-text-color-inverted': 'var(--project-text-color-inverted)',
         'project-error-color': 'var(--project-error-color)',
         'project-error-color-soft': 'var(--project-error-color-soft)'
+      },
+      fontFamily: {
+        'project-font': 'var(--project-font)',
+        'project-logo-font': 'var(--project-logo-font)'
       }
     }
   },

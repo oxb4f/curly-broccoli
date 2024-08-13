@@ -2,7 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import './base.css';
-@import './animation.css';
+@import './transitions.css';
 
 .link {
   @apply text-project-main-color;
@@ -35,7 +35,7 @@ input.error {
 
 .modal button,
 .modal input[type='submit'] {
-  @apply cursor-pointer bg-project-main-color text-project-bg-secondary-color active:bg-project-main-color-soft disabled:bg-project-main-color-mute disabled:cursor-default;
+  @apply cursor-pointer font-bold bg-project-main-color text-project-bg-secondary-color active:bg-project-main-color-mute hover:bg-project-main-color-soft disabled:bg-project-main-color-mute disabled:text-project-text-color-darker disabled:cursor-default;
 }
 
 .modal__backdrop {
@@ -56,7 +56,7 @@ input.error {
 }
 
 .logo-icon {
-  @apply w-36 h-12 text-center text-3xl text-project-main-color;
+  @apply w-36 h-12 text-center font-project-logo-font text-3xl text-project-main-color;
 }
 
 .modal__logo-icon {
@@ -101,5 +101,5 @@ input.error {
 }
 
 .form__submit-button {
-  @apply w-full p-2 rounded-md font-bold;
+  @apply w-full p-2 rounded-md;
 }
