@@ -1,10 +1,6 @@
 <script setup></script>
 
 <template>
-  <nav>
-    <RouterLink to="/register">Зареєструватись</RouterLink>
-    <RouterLink to="/login">Увійти</RouterLink>
-  </nav>
-
-  <RouterView />
+  <main class="content"><RouterView /></main>
+  <footer class="footer"></footer>
 </template>
