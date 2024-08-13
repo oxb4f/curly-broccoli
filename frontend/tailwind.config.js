@@ -11,6 +11,7 @@ export default {
         'project-bg-secondary-color': 'var(--project-bg-secondary-color)',
         'project-bg-hover-color': 'var(--project-bg-hover-color)',
         'project-bg-disable-color': 'var(--project-bg-disable-color)',
+        'project-border-color': 'var(--project-border-color)',
         'project-text-color': 'var(--project-text-color)',
         'project-text-color-darker': 'var(--project-text-color-darker)',
         'project-text-color-inverted': 'var(--project-text-color-inverted)',

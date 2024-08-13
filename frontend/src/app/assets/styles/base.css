@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
-  --project-main-color: #2ea200;
-  --project-main-color-soft: #78c35a;
-  --project-main-color-mute: #a5d392;
+  --project-main-color: #00d7e7;
+  --project-main-color-soft: #00727a;
+  --project-main-color-mute: #88b9bc;
 
   --project-secondary-color: #bf7af0;
   --project-secondary-color-soft: #ca97ef;

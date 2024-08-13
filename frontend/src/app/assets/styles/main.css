@@ -13,7 +13,7 @@
 }
 
 .footer {
-  @apply w-full h-44 border-t-1 shadow-xl shadow-project-main-color border-project-main-color bg-project-bg-secondary-color;
+  @apply w-full h-44 border-t-1 shadow-xl shadow-project-main-color border-project-border-color bg-project-bg-secondary-color;
 }
 
 .authorisation {
@@ -24,12 +24,16 @@
   @apply w-80;
 }
 
+.authorisation__media-content {
+  @apply z-10;
+}
+
 .authorisation__header {
   @apply flex justify-center;
 }
 
 .media-content {
-  @apply flex gap-7 p-5 border-1 shadow-md shadow-project-main-color border-project-main-color bg-project-bg-secondary-color;
+  @apply flex gap-7 p-5 border-1 border-project-border-color bg-project-bg-secondary-color;
 }
 
 .media-content__content {
