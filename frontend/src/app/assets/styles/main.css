@@ -13,7 +13,7 @@
 }
 
 .footer {
-  @apply w-full h-44 border-t-1 shadow-xl shadow-project-main-color border-project-border-color bg-project-bg-secondary-color;
+  @apply w-full h-44 border-t-1 border-project-border-color bg-project-bg-secondary-color;
 }
 
 .authorisation {
@@ -33,7 +33,7 @@
 }
 
 .media-content {
-  @apply flex gap-7 p-5 border-1 border-project-border-color bg-project-bg-secondary-color;
+  @apply min-h-96 flex gap-7 p-5 border-1 border-project-border-color bg-project-bg-secondary-color;
 }
 
 .media-content__phone-screen {
@@ -41,7 +41,7 @@
 }
 
 .media-content__content {
-  @apply flex flex-col justify-center gap-6 max-w-96 break-words;
+  @apply flex flex-col justify-center gap-6 max-w-96 text-center break-words;
 }
 
 .media-content__footer {
