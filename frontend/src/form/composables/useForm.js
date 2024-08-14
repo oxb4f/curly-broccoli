@@ -6,10 +6,9 @@ export function useForm(inputs) {
   const errors = reactive({ ...inputs });
 
   const isSubmitDisabled = computed(() => {
-    for (const value of Object.values(inputs)) {
-      if (value) return false;
-    }
-    return true;
+    return Object.values(inputs).some((value) => {
+      return !value;
+    });
   });
 
   function _clear(object) {
@@ -38,6 +37,8 @@ export function useForm(inputs) {
       })
       .catch((error) => {
         {
+          console.log(error);
+
           for (const field in errors) {
             errors[field] = error.details[field];
           }

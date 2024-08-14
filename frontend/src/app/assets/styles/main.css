@@ -106,12 +106,17 @@ input.error {
 }
 
 .form,
+.form__content,
 .form__footer {
   @apply flex flex-col gap-6;
 }
 
 .form__header {
   @apply text-xl flex justify-around;
+}
+
+.form__content {
+  @apply gap-1;
 }
 
 .form__footer {
