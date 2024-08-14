@@ -36,12 +36,20 @@
   @apply flex gap-7 p-5 border-1 border-project-border-color bg-project-bg-secondary-color;
 }
 
+.media-content__phone-screen {
+  @apply w-44;
+}
+
 .media-content__content {
-  @apply flex flex-col justify-center gap-5 max-w-96 break-words;
+  @apply flex flex-col justify-center gap-6 max-w-96 break-words;
 }
 
 .media-content__footer {
   @apply flex justify-center gap-4 flex-wrap;
+}
+
+.media-content__download-image {
+  @apply h-10;
 }
 
 .description {

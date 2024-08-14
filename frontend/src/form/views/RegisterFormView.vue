@@ -10,7 +10,7 @@ const { inputs, errors, submitForm, isSubmitDisabled } = useForm({ username: '',
 </script>
 
 <template>
-  <BaseForm @submit="submitForm(createUser, inputs)">
+  <BaseForm @submit="submitForm(createUser, inputs)" autocomplete="off">
     <template #content>
       <FormItem>
         <FormInput
