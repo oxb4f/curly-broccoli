@@ -4,13 +4,13 @@ import FormItem from '../components/FormItem.vue';
 import FormInput from '../components/FormInput.vue';
 import FormSubmitButton from '../components/FormSubmitButton.vue';
 import { useForm } from '../composables/useForm';
-import { createUser } from '@/app/services/api/user';
+import { loginUser } from '@/app/services/api/user';
 
 const { inputs, errors, submitForm, isSubmitDisabled } = useForm({ username: '', password: '' });
 </script>
 
 <template>
-  <BaseForm @submit="submitForm(createUser, inputs)">
+  <BaseForm @submit="submitForm(loginUser, inputs)">
     <template #content>
       <FormItem>
         <FormInput
@@ -33,8 +33,9 @@ const { inputs, errors, submitForm, isSubmitDisabled } = useForm({ username: '',
         />
       </FormItem>
     </template>
-    <template #footer> <FormSubmitButton value="Login" :disabled="isSubmitDisabled" /></template>
+    <template #footer>
+      <FormSubmitButton value="Login" :disabled="isSubmitDisabled" />
+      <span>First time here? <RouterLink class="link" to="/">Register</RouterLink></span></template
+    >
   </BaseForm>
-
-  <span>First time here? <RouterLink class="link" to="/">Register</RouterLink></span>
 </template>

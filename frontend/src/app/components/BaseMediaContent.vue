@@ -24,9 +24,9 @@
         /></a>
         <a href="#" class="media-content__download-link"
           ><img
-            src="../assets/images/microsoft-download.png"
+            src="../assets/images/app-store-download.png"
             class="media-content__download-image"
-            alt="Microsoft Download"
+            alt="App Store Download"
         /></a>
       </footer>
     </div>

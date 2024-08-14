@@ -9,7 +9,7 @@ export default class BaseError extends Error {
   }
 
   static from(error) {
-    const name = error.payload?.message;
+    const type = error?.type;
 
     function toObj(arr, value) {
       return arr.reduceRight((acc, item) => ({ [item]: acc }), value);
@@ -20,6 +20,6 @@ export default class BaseError extends Error {
         return { ...object, ...toObj(detail.path, detail.message) };
       }, {}) ?? {};
 
-    return new BaseError(name, details);
+    return new this(type, details);
   }
 }

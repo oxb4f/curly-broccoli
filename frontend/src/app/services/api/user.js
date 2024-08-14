@@ -5,4 +5,12 @@ async function createUser(userData) {
   return response;
 }
 
-export { createUser };
+async function loginUser(userData) {
+  const response = await api.post('users/login', { json: userData }).text();
+  localStorage.setItem('user', response);
+  console.log(response);
+
+  return response;
+}
+
+export { createUser, loginUser };
