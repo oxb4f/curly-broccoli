@@ -1,5 +1,4 @@
 import api from './api';
-import { refreshToken } from './jwt';
 
 async function createUser(userData) {
   const response = await api.post('users', { json: userData }).json();
