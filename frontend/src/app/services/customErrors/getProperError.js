@@ -1,16 +1,16 @@
 import ValidationError from '../customErrors/validationError';
-import AuthorisationError from '../customErrors/authorisationError';
+import AuthorizationError from './authorizationError';
 import BaseError from '../customErrors/baseError';
 
 export default function getProperError(error) {
-  if (error.type === 'VALIDATION') {
+  if (error.type === 'VALIDATION' || error.type === 'DUPLICATED') {
     const validationError = ValidationError.from(error);
 
     return validationError;
-  } else if (error.type === 'DUPLICATED' || error.type === 'AUTH') {
-    const authorisationError = AuthorisationError.from(error);
+  } else if (error.type === 'AUTH') {
+    const authorizationError = AuthorizationError.from(error);
 
-    return authorisationError;
+    return authorizationError;
   }
   return BaseError.from(error);
 }

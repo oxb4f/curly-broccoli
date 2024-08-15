@@ -1,4 +1,4 @@
-@keyframes authorisation-window-slide {
+@keyframes authorization-window-slide {
   from {
     transform: translateX(100%);
   }
@@ -16,7 +16,7 @@
   }
 }
 
-@keyframes authorisation-media-content-slide {
+@keyframes authorization-media-content-slide {
   from {
     transform: translateX(-25%);
   }
@@ -25,16 +25,16 @@
   }
 }
 
-.authorisation {
+.authorization {
   animation: 0.3s ease-out 2 alternate scale;
 }
 
-.authorisation__window {
-  animation: 0.8s ease-in-out 0.6s both authorisation-window-slide;
+.authorization__window {
+  animation: 0.8s ease-in-out 0.6s both authorization-window-slide;
 }
 
-.authorisation__media-content {
-  animation: 0.8s ease-in-out 0.6s both authorisation-media-content-slide;
+.authorization__media-content {
+  animation: 0.8s ease-in-out 0.6s both authorization-media-content-slide;
 }
 
 .input {

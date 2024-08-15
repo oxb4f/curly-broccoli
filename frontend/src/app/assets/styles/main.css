@@ -16,19 +16,19 @@
   @apply w-full h-44 border-t-1 border-project-border-color bg-project-bg-secondary-color;
 }
 
-.authorisation {
+.authorization {
   @apply flex items-center gap-8;
 }
 
-.authorisation__window {
+.authorization__window {
   @apply w-80;
 }
 
-.authorisation__media-content {
+.authorization__media-content {
   @apply z-10;
 }
 
-.authorisation__header {
+.authorization__header {
   @apply flex justify-center;
 }
 
