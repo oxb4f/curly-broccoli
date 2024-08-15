@@ -37,10 +37,8 @@ export function useForm(inputs) {
       })
       .catch((error) => {
         {
-          console.log(error);
-
           for (const field in errors) {
-            errors[field] = error.details[field];
+            errors[field] = error?.details?.[field];
           }
         }
       });
