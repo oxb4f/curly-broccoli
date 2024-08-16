@@ -12,11 +12,23 @@ export function onError<E extends Error = Error>(
 ) {
 	const result = match(error)
 		.when(
-			(e: any) => e instanceof ServiceError,
+			(e: E) => e instanceof ServiceError,
 			(e: ServiceError) => {
 				set.status = e.isAuthError() ? 401 : 422;
 
 				return getErrorResponse(e.toJSON());
+			},
+		)
+		.when(
+			(e: any) => e && e.code === "VALIDATION" && Array.isArray(e.all),
+			(e: any) => {
+				return getErrorResponse({
+                    message: "Validation error",
+                    details : e.all.map((r: { path: string, message: string }) => ({
+                        path : r.path.slice(1).split('/'),
+                        message : "Invalid data"
+                    }))
+                });
 			},
 		)
 		.otherwise(() => {

@@ -19,4 +19,6 @@ export const accesses = pgTable(
 export const users = pgTable("users", {
 	id: bigint("id", { mode: "number" }).primaryKey(),
 	username: varchar("username", { length: 128 }).notNull().unique(),
+	firstName: varchar("first_name", { length: 255 }),
+	lastName: varchar("last_name", { length: 255 }),
 });

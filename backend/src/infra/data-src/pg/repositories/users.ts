@@ -37,6 +37,8 @@ export class PgUsersRepository
 				.insert(users)
 				.values({
 					id: user.getId(),
+					firstName: user.getFirstName(),
+					lastName: user.getLastName(),
 					username: user.getUsername(),
 				})
 				.execute();
@@ -66,6 +68,8 @@ export class PgUsersRepository
 				.update(users)
 				.set({
 					username: user.getUsername(),
+					firstName: user.getFirstName(),
+					lastName: user.getLastName(),
 				})
 				.where(eq(users.id, user.getId()))
 				.execute();
@@ -90,14 +94,23 @@ export class PgUsersRepository
 
 	async getUser(filter: GetUserFilter): Promise<User | null> {
 		const eqArray = [];
+
+        const innerJoinQuery = [eq(users.id, accesses.userId)];
+
 		for (const k of Object.keys(filter) as Array<keyof typeof filter>) {
+            if (k === 'accessId') {
+                if (filter[k]) innerJoinQuery.push(eq(accesses.id, filter[k]));
+
+                continue;
+            }
+
 			eqArray.push(eq(users[k], filter[k]!));
 		}
 
 		const result = await this._connection
 			.select()
 			.from(users)
-			.innerJoin(accesses, eq(users.id, accesses.userId))
+			.innerJoin(accesses, and(...innerJoinQuery))
 			.where(and(...eqArray))
 			.limit(1)
 			.execute();

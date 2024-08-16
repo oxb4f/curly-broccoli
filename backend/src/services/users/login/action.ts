@@ -45,10 +45,17 @@ async function login({
 
 	assert(access, "Acesss must exist");
 
-	return new LoginDtoOut(user.getId(), user.getUsername(), access.getId(), {
-		access: loginResult.jwtAccess,
-		refresh: loginResult.refreshToken,
-	});
+	return new LoginDtoOut(
+		user.getId(),
+		user.getUsername(),
+		user.getFirstName() ?? null,
+		user.getLastName() ?? null,
+		access.getId(),
+		{
+			access: loginResult.jwtAccess,
+			refresh: loginResult.refreshToken,
+		},
+	);
 }
 
 export function factory() {

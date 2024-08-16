@@ -13,7 +13,18 @@ export const app = new Elysia()
 		return onError(error, set);
 	})
 	.use(cors()) // FIXME: bad approach, pls change
-	.use(swagger())
+	.use(
+		swagger({
+			path: "doc",
+			documentation: {
+				info: {
+					title: "API Documentation",
+					version: "0.0.0",
+				},
+				tags: [{ name: "Accesses" }, { name: "Users" }, { name: "Ping" }],
+			},
+		}),
+	)
 	.use(configPlugin)
 	.use(contextPlugin)
 	.use(pingRoute)
