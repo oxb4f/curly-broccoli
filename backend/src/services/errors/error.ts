@@ -39,6 +39,10 @@ export class ServiceError<C extends Error = Error> extends Error {
 		return this.type === ServiceError.ERROR_TYPE.AUTH;
 	}
 
+	isNotFoundError() {
+		return this.type === ServiceError.ERROR_TYPE.NOT_FOUND;
+	}
+
 	toJSON() {
 		return {
 			type: this.type,

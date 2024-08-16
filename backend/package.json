@@ -2,11 +2,12 @@
 	"name": "@curly-broccoli/backend",
 	"version": "0.0.0",
 	"scripts": {
-		"test": "bun test --timeout 150000 --coverage test",
+		"test": "bun test --timeout 150000",
 		"test:watch": "bun test --timeout 150000 --watch test",
 		"dev": "bun run --watch src/run.ts",
 		"lint": "bunx @biomejs/biome check --write ./",
-		"migrate:db": "bunx drizzle-kit migrate"
+		"migrate:db": "bunx drizzle-kit migrate",
+		"migrate:db:gen": "bunx drizzle-kit generate --config drizzle.config.ts"
 	},
 	"dependencies": {
 		"@bogeychan/elysia-logger": "^0.1.0",

@@ -1,5 +1,6 @@
 import z from "zod";
 import { Access } from "../../../entities/access";
+import { jwt } from "../../common/validation/schema";
 import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
@@ -40,7 +41,7 @@ export function factory() {
 	return makeService(
 		validate,
 		z.object({
-			jwtAccess: z.string().trim().min(1).max(255).optional(),
+			jwtAccess: jwt.optional(),
 			ignoreExpiration: z.coerce.boolean().optional().default(false),
 		}),
 	);

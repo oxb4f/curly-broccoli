@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import z from "zod";
+import { password, refreshId, username } from "../../common/validation/schema";
 import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
@@ -45,19 +46,21 @@ async function login({
 
 	assert(access, "Acesss must exist");
 
-	return new LoginDtoOut(user.getId(), user.getUsername(), access.getId(), {
-		access: loginResult.jwtAccess,
-		refresh: loginResult.refreshToken,
-	});
+	return new LoginDtoOut(
+		user.getId(),
+		user.getUsername(),
+		user.getFirstName(),
+		user.getLastName(),
+		user.getBirthday(),
+		user.getSocial(),
+		access.getId(),
+		{
+			access: loginResult.jwtAccess,
+			refresh: loginResult.refreshToken,
+		},
+	);
 }
 
 export function factory() {
-	return makeService(
-		login,
-		z.object({
-			username: z.string().trim().min(1).max(128),
-			password: z.string().trim().min(8).max(128),
-			refreshId: z.string().trim().max(255),
-		}),
-	);
+	return makeService(login, z.object({ username, password, refreshId }));
 }

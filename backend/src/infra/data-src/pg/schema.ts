@@ -1,4 +1,11 @@
-import { bigint, index, json, pgTable, varchar } from "drizzle-orm/pg-core";
+import {
+	bigint,
+	date,
+	index,
+	json,
+	pgTable,
+	varchar,
+} from "drizzle-orm/pg-core";
 
 export const accesses = pgTable(
 	"accesses",
@@ -19,4 +26,8 @@ export const accesses = pgTable(
 export const users = pgTable("users", {
 	id: bigint("id", { mode: "number" }).primaryKey(),
 	username: varchar("username", { length: 128 }).notNull().unique(),
+	firstName: varchar("first_name", { length: 255 }),
+	lastName: varchar("last_name", { length: 255 }),
+	birthday: date("birthday", { mode: "string" }),
+	social: json("social"),
 });

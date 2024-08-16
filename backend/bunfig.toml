@@ -1,0 +1,4 @@
+[test]
+root = "./test"
+coverage = true
+coverageThreshold = { function = 0.8, statement = 0.9 }

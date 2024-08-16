@@ -19,10 +19,10 @@ export const pingRoute = new Elysia({ name: "pingRoute" })
 					return result.toJSON();
 				},
 				{
+					tags: ["Ping"],
 					query: t.Object({
 						ping: t.String({
 							description: "Ping value",
-							examples: "Ping",
 						}),
 					}),
 				},

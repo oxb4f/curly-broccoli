@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import z from "zod";
 import { User } from "../../../entities/user";
+import { password, refreshId, username } from "../../common/validation/schema";
 import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
@@ -31,6 +32,10 @@ async function create({
 	}
 
 	const [user, jwtAccess, refreshToken] = await User.fromCredentials({
+		firstName: null,
+		lastName: null,
+		birthday: null,
+		social: {},
 		username: dto.username,
 		password: dto.password,
 		refreshId: dto.refreshId,
@@ -48,6 +53,10 @@ async function create({
 	return new CreateUserDtoOut(
 		user.getId(),
 		user.getUsername(),
+		user.getFirstName(),
+		user.getLastName(),
+		user.getBirthday(),
+		user.getSocial(),
 		access.getId(),
 		{
 			access: jwtAccess,
@@ -57,12 +66,5 @@ async function create({
 }
 
 export function factory() {
-	return makeService(
-		create,
-		z.object({
-			username: z.string().trim().min(1).max(128).readonly(),
-			password: z.string().trim().min(8).max(128).readonly(),
-			refreshId: z.string().trim().max(255).readonly(),
-		}),
-	);
+	return makeService(create, z.object({ username, password, refreshId }));
 }

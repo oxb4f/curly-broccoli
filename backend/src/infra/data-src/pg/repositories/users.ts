@@ -1,6 +1,6 @@
 import { and, count, eq, not } from "drizzle-orm";
 import { Access, type AccessHashedPayload } from "../../../../entities/access";
-import { User } from "../../../../entities/user";
+import { type Social, User } from "../../../../entities/user";
 import type {
 	ExistsArgs,
 	GetUserFilter,
@@ -37,6 +37,8 @@ export class PgUsersRepository
 				.insert(users)
 				.values({
 					id: user.getId(),
+					firstName: user.getFirstName(),
+					lastName: user.getLastName(),
 					username: user.getUsername(),
 				})
 				.execute();
@@ -66,6 +68,10 @@ export class PgUsersRepository
 				.update(users)
 				.set({
 					username: user.getUsername(),
+					firstName: user.getFirstName(),
+					lastName: user.getLastName(),
+					birthday: user.getBirthday()?.toUTCString() ?? null,
+					social: user.getSocial(),
 				})
 				.where(eq(users.id, user.getId()))
 				.execute();
@@ -90,14 +96,23 @@ export class PgUsersRepository
 
 	async getUser(filter: GetUserFilter): Promise<User | null> {
 		const eqArray = [];
+
+		const innerJoinQuery = [eq(users.id, accesses.userId)];
+
 		for (const k of Object.keys(filter) as Array<keyof typeof filter>) {
+			if (k === "accessId") {
+				if (filter[k]) innerJoinQuery.push(eq(accesses.id, filter[k]));
+
+				continue;
+			}
+
 			eqArray.push(eq(users[k], filter[k]!));
 		}
 
 		const result = await this._connection
 			.select()
 			.from(users)
-			.innerJoin(accesses, eq(users.id, accesses.userId))
+			.innerJoin(accesses, and(...innerJoinQuery))
 			.where(and(...eqArray))
 			.limit(1)
 			.execute();
@@ -108,6 +123,8 @@ export class PgUsersRepository
 
 		return User.from({
 			...record.users,
+			social: record.users.social as Social,
+			birthday: record.users.birthday ? new Date(record.users.birthday) : null,
 			access: await Access.fromHashed(record.accesses as AccessHashedPayload),
 		});
 	}

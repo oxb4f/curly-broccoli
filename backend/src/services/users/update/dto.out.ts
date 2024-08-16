@@ -6,7 +6,7 @@ import type {
 	Username,
 } from "../../../entities/user";
 
-export class LoginDtoOut {
+export class UpdateUserDtoOut {
 	constructor(
 		public readonly id: number,
 		public readonly username: Username,
@@ -14,8 +14,6 @@ export class LoginDtoOut {
 		public readonly lastName: LastName,
 		public readonly birthday: Birthday,
 		public readonly social: Social,
-		public readonly accessId: number,
-		public readonly jwt: { access: string; refresh: string },
 	) {}
 
 	toJSON() {

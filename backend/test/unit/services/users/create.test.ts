@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, mock, spyOn, test } from "bun:test";
+import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { User } from "../../../../src/entities/user";
 import { ServiceError } from "../../../../src/services/errors/error";
 import { factory } from "../../../../src/services/users/create/action";
@@ -14,7 +14,7 @@ const fixture = {
 test("Unit test: User Create Service", () => {
 	const service = factory();
 
-	afterEach(() => mock.restore());
+	beforeEach(() => mock.restore());
 
 	describe("should return valid dto", async () => {
 		spyOn(User, "fromCredentials").mockResolvedValue([

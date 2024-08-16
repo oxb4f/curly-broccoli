@@ -25,16 +25,23 @@ export const accessesRoute = new Elysia({ name: "accessesRoute" })
 					return result.toJSON();
 				},
 				{
+					tags: ["Accesses"],
 					params: t.Object({
 						accessId: t.Numeric({
 							description: "Access id",
-							examples: 1,
 						}),
 					}),
 					body: t.Object({
 						refresh: t.String({
 							description: "Refresh token",
-							examples: "lupapupa",
+						}),
+					}),
+					headers: t.Object({
+						authorization: t.String({
+							description: "JWT",
+						}),
+						"user-agent": t.String({
+							description: "User-Agent",
 						}),
 					}),
 				},
