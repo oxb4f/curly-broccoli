@@ -1,27 +1,27 @@
 import api from './api';
+import { setToStorage } from '../storage/storage';
+import { refreshToken } from './jwt';
 
 async function createUser(userData) {
-  const response = await api.post('users', { json: userData }).json();
+  const response = await api.post('users', userData);
   return response;
 }
 
 async function loginUser(userData) {
-  const response = await api.post('users/login', { json: userData }).text();
-  localStorage.setItem('user', response);
-  console.log(response);
-  const user = JSON.parse(localStorage.getItem('user'));
-  Promise.all[
-    (api
-      .post(`accesses/${user.accessId}/refresh`, {
-        json: { refresh: user.jwt.refresh }
-      })
-      .json(),
-    api
-      .post(`accesses/${user.accessId}/refresh`, {
-        json: { refresh: user.jwt.refresh }
-      })
-      .json())
-  ];
+  const response = await api.post('users/login', userData);
+  response.jwt.access = 'sdfasdf';
+  setToStorage({ name: 'user', value: response });
+
+  await api.post(
+    `accesses/${response.accessId}/refresh`,
+    { refresh: response.jwt.refresh },
+    {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))?.jwt?.access}`
+      }
+    }
+  );
+
   return response;
 }
 
