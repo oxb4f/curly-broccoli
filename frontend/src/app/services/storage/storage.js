@@ -6,4 +6,8 @@ function getFromStorage(variableName) {
   return JSON.parse(localStorage.getItem(variableName));
 }
 
-export { setToStorage, getFromStorage };
+function removeFromStorage(variableName) {
+  localStorage.removeItem(variableName);
+}
+
+export { setToStorage, getFromStorage, removeFromStorage };
