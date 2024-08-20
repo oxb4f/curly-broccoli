@@ -1,69 +1,49 @@
 import axios from 'axios';
 import getProperError from '../customErrors/getProperError';
 import { refreshToken } from './jwt';
+import { getFromStorage } from '../storage/storage';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 let refreshRequest = null;
 
 const api = axios.create({
   baseURL: BASE_URL,
-  // headers: {
-  //   Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')).jwt.access}`
-  // },
   transformResponse: [
     (data) => {
-      data = JSON.parse(data);
-      if (data.error) {
-        return getProperError(data.error);
+      try {
+        data = JSON.parse(data);
+        if (data.error) {
+          return getProperError(data.error);
+        }
+        return data;
+      } catch {
+        return data;
       }
-      return data;
     }
   ]
-  // hooks: {
-  //   afterResponse: [
-  //     async (request, options, response) => {
-  //       const user = localStorage.getItem('user');
-  //       if (response.status === 401 && user) {
-  //         const userData = JSON.parse(user);
-  //         if (!refreshRequest) {
-  //           refreshRequest = refreshToken;
-  //         }
-  //         const token = await refreshRequest(userData.accessId, userData.jwt.refresh);
-  //         refreshRequest = null;
-  //         request.headers.set('Authorization', `Bearer ${token}`);
+});
 
-  //         return axios(request);
-  //       } else if (!response.ok) {
-  //         response = await response.json();
-
-  //         throw getProperError(response.error);
-  //       }
-  //     }
-  //   ]
-  // }
+api.interceptors.request.use((config) => {
+  config.headers['Authorization'] = `Bearer ${getFromStorage('user')?.jwt?.access}`;
+  return config;
 });
 
 api.interceptors.response.use(
   function (response) {
-    console.log(response);
     return response.data;
   },
   async function (error) {
-    console.log(error);
-    const user = localStorage.getItem('user');
+    const user = getFromStorage('user');
+
     if (error.response.status === 401 && user) {
-      const userData = JSON.parse(user);
       if (!refreshRequest) {
-        refreshRequest = refreshToken;
+        refreshRequest = refreshToken(user.accessId, user.jwt.refresh).finally(() => {
+          refreshRequest = null;
+        });
       }
-      console.log('refreshing...');
+      await refreshRequest;
 
-      const token = await refreshRequest(userData.accessId, userData.jwt.refresh);
-      refreshRequest = null;
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      error.config.headers.Authorization = `Bearer ${token}`;
-
-      return axios(error.config);
+      return api(error.config);
     }
     throw error.response.data;
   }
