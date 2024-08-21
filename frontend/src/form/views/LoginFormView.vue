@@ -3,7 +3,7 @@ import BaseForm from '../components/BaseForm.vue';
 import FormItem from '../components/FormItem.vue';
 import FormInput from '../components/FormInput.vue';
 import FormSubmitButton from '../components/FormSubmitButton.vue';
-import { useForm } from '../composables/useForm';
+import useForm from '../composables/useForm';
 import { loginUser } from '@/app/services/api/user';
 
 const { inputs, errors, submitForm, isSubmitDisabled } = useForm({ username: '', password: '' });
