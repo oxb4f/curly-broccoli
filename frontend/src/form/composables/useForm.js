@@ -1,6 +1,6 @@
 import { reactive, computed } from 'vue';
 
-export function useForm(inputs) {
+export default function useForm(inputs) {
   inputs = reactive(inputs);
 
   const errors = reactive({ ...inputs });
@@ -30,18 +30,14 @@ export function useForm(inputs) {
     clearErrors();
   }
 
-  function submitForm(callback, inputs) {
-    callback(inputs)
-      .then(() => {
-        clearErrors();
-      })
-      .catch((error) => {
-        {
-          for (const field in errors) {
-            errors[field] = error?.details?.[field];
-          }
-        }
-      });
+  async function submitForm(callback, inputs) {
+    const handler = (error) => {
+      for (const field in errors) {
+        errors[field] = error?.details?.[field] ?? '';
+      }
+    };
+
+    await callback(inputs).then(handler, handler);
   }
 
   return {
