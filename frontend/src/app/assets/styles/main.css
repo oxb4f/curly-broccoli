@@ -4,16 +4,24 @@
 @import './base.css';
 @import './transitions.css';
 
-.link {
-  @apply text-project-main-color;
+#app {
+  @apply flex;
+}
+
+.main {
+  @apply w-full h-screen overflow-y-scroll;
 }
 
 .content {
-  @apply min-h-screen flex justify-center items-center;
+  @apply min-h-screen w-full flex justify-center items-center;
 }
 
 .footer {
   @apply w-full h-44 border-t-1 border-project-border-color bg-project-bg-secondary-color;
+}
+
+.link {
+  @apply text-project-main-color;
 }
 
 .authorization {
@@ -90,7 +98,7 @@ input.error {
 }
 
 .logo-icon {
-  @apply w-36 h-12 text-center font-project-logo-font text-3xl text-project-main-color;
+  @apply text-center font-project-logo-font text-3xl text-project-main-color;
 }
 
 .modal__logo-icon {
@@ -137,4 +145,83 @@ input.error {
 
 .form__submit-button {
   @apply cursor-pointer font-bold bg-project-main-color text-project-bg-main-color enabled:hover:bg-project-main-color-soft enabled:active:bg-project-main-color-mute;
+}
+
+.profile-photo {
+  @apply relative size-44 rounded-full overflow-hidden;
+}
+
+.profile-photo__container {
+  @apply absolute w-96;
+}
+
+.profile-photo__image {
+  @apply size-full;
+}
+
+.sidebar {
+  @apply flex flex-col min-w-16 h-screen items-center gap-9 py-9 border-r-1 border-project-border-color bg-project-bg-main-color;
+}
+
+.sidebar__header,
+.sidebar__main,
+.sidebar__footer {
+  @apply w-full grow-0 text-center;
+}
+
+.sidebar__main {
+  @apply grow;
+}
+
+.sidebar__logo {
+  @apply text-4xl;
+}
+
+.sidebar__list {
+  @apply size-full flex flex-col gap-6;
+}
+
+.sidebar__list-item {
+  @apply relative h-10 w-full text-center text-lg before:absolute before:top-0 before:right-0 before:block before:size-5 before:bg-gradient-to-br from-project-main-color from-50% to-50% before:-z-50 after:absolute after:bottom-0 after:right-0 after:block after:size-5 after:bg-gradient-to-tr from-project-main-color from-50% to-50% after:-z-50;
+}
+
+.sidebar__list-item__current .sidebar__icon {
+  @apply text-project-main-color;
+}
+
+.sidebar__list-item__current:hover .sidebar__icon {
+  @apply !text-project-main-color-mute;
+}
+
+.sidebar__list-item__current::before,
+.sidebar__list-item__current::after {
+  @apply translate-x-full;
+}
+
+.sidebar__list-item:hover .sidebar__icon {
+  @apply scale-110 text-project-text-color-darker;
+}
+
+.sidebar__link {
+  @apply block size-full text-project-text-color;
+}
+
+.sidebar__icon {
+  @apply inline-block size-10;
+}
+
+.sidebar__profile-photo {
+  @apply size-10 hover:ring-2 hover:ring-offset-4 hover:ring-offset-project-bg-main-color hover:ring-project-border-color;
+}
+
+/* .sidebar__profile-button {
+  @apply hover:ring-2 hover:ring-offset-2 hover:ring-offset-project-bg-main-color hover:ring-project-main-color-soft;
+} */
+
+/* .sidebar__user-profile .profile-photo__container {
+  @apply w-60;
+} */
+
+.user-profile {
+  @apply w-full p-5 border-t-1 border-project-border-color;
 }

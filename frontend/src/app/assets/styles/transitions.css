@@ -1,3 +1,17 @@
+.slide-enter-active {
+  transition: all 0.1s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.1s ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(-5px);
+  opacity: 0;
+}
+
 @keyframes authorization-window-slide {
   from {
     transform: translateX(100%);
@@ -7,7 +21,7 @@
   }
 }
 
-@keyframes scale {
+@keyframes authorization-scale {
   from {
     transform: scale(1);
   }
@@ -26,7 +40,7 @@
 }
 
 .authorization {
-  animation: 0.3s ease-out 2 alternate scale;
+  animation: 0.3s ease-out 2 alternate authorization-scale;
 }
 
 .authorization__window {
@@ -42,16 +56,15 @@
   transition: box-shadow 0.15s ease-out;
 }
 
-.slide-enter-active {
-  transition: all 0.1s ease-out;
+.sidebar__icon {
+  transition: transform 0.1s ease-out;
 }
 
-.slide-leave-active {
-  transition: all 0.1s ease-out;
+.sidebar__profile-photo {
+  transition: box-shadow 0.1s ease-out;
 }
 
-.slide-enter-from,
-.slide-leave-to {
-  transform: translateY(-5px);
-  opacity: 0;
+.sidebar__list-item::before,
+.sidebar__list-item::after {
+  transition: transform 0.1s ease-out;
 }
