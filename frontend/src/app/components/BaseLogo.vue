@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+  text: {
+    type: String,
+    default: 'Litrify'
+  }
+});
+</script>
+
 <template>
-  <span class="modal__logo-icon logo-icon">Litrify</span>
+  <span class="logo-icon">{{ text }}</span>
 </template>

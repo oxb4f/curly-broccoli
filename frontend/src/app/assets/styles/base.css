@@ -47,6 +47,18 @@ body {
   @apply size-full;
 }
 
+* {
+  scrollbar-color: var(--project-bg-secondary-color) var(--project-bg-main-color);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--project-bg-secondary-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--project-bg-main-color);
+}
+
 body {
   font-family: var(--project-font);
   font-weight: 400;

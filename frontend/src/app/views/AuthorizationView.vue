@@ -8,7 +8,7 @@ import BaseMediaContent from '../components/BaseMediaContent.vue';
   <section class="authorization">
     <article class="authorization__window">
       <header class="authorization__header"><BaseLogo /></header>
-      <main class="authorization__content"><RouterView></RouterView></main>
+      <main class="authorization__content"><RouterView name="form" /></main>
     </article>
     <BaseMediaContent class="authorization__media-content" />
   </section>

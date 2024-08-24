@@ -1,6 +1,6 @@
 <script setup></script>
 
 <template>
-  <main class="content"><RouterView /></main>
-  <footer class="footer"></footer>
+  <RouterView name="sidebar" />
+  <RouterView name="main" />
 </template>
