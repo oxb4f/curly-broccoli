@@ -181,38 +181,54 @@ input.error {
   @apply text-4xl;
 }
 
+.navigation {
+  @apply w-full;
+}
+
 .navigation-list {
-  @apply w-full flex flex-col gap-6;
+  @apply flex flex-col gap-6;
 }
 
 .navigation-list__item {
   @apply w-full text-lg;
 }
 
-.sidebar__roots .navigation-list__item {
+.navigation__link {
+  @apply size-full block text-project-text-color hover:text-project-text-color-darker;
+}
+
+.navigation__link__active {
+  @apply text-project-main-color hover:text-project-main-color;
+}
+
+.navigation__icon {
+  @apply size-9 inline-block align-middle;
+}
+
+.sidebar__roots .navigation__link {
   @apply relative before:absolute before:top-0 before:right-0 before:size-5 before:bg-gradient-to-br from-project-main-color from-50% to-50% before:-z-50 after:absolute after:bottom-0 after:right-0 after:size-5 after:bg-gradient-to-tr from-project-main-color from-50% to-50% after:-z-50;
 }
 
-.navigation-list__item:hover .navigation-list__icon {
-  @apply scale-110 text-project-text-color-darker;
+.sidebar__user-profile .navigation__icon {
+  @apply hover:ring-2 hover:ring-offset-4 hover:ring-offset-project-bg-main-color hover:ring-project-main-color-mute;
 }
 
-.navigation-list__item__current .navigation-list__icon,
-.navigation-list__item__current:hover .navigation-list__icon {
-  @apply text-project-main-color transform-none;
+.sidebar__user-profile .navigation__link__active .navigation__icon {
+  @apply ring-2 ring-offset-4 ring-offset-project-bg-main-color ring-project-main-color hover:ring-project-main-color;
 }
 
-.sidebar__roots .navigation-list__item__current::before,
-.sidebar__roots .navigation-list__item__current::after {
+.navigation__link:hover .navigation__icon {
+  @apply scale-110;
+}
+
+.navigation__link__active:hover .navigation__icon,
+.sidebar__user-profile .navigation__link:hover .navigation__icon {
+  @apply transform-none;
+}
+
+.sidebar__roots .navigation__link__active::before,
+.sidebar__roots .navigation__link__active:after {
   @apply translate-x-full;
-}
-
-.navigation-list__link {
-  @apply size-full block text-center text-project-text-color;
-}
-
-.navigation-list__icon {
-  @apply size-9 inline-block align-middle;
 }
 
 .options {
@@ -231,29 +247,9 @@ input.error {
   @apply size-5;
 }
 
-.options .navigation-list {
+.options .navigation {
   @apply min-h-0;
 }
-
-.sidebar__user-profile .navigation-list__icon {
-  @apply hover:ring-2 hover:ring-offset-4 hover:ring-offset-project-bg-main-color hover:ring-project-main-color-mute;
-}
-
-.sidebar__user-profile:hover .navigation-list__icon {
-  @apply transform-none;
-}
-
-.sidebar__user-profile.navigation-list__item__current .navigation-list__icon {
-  @apply ring-2 ring-offset-4 ring-offset-project-bg-main-color ring-project-main-color hover:ring-project-main-color;
-}
-
-/* .sidebar__profile-button {
-  @apply hover:ring-2 hover:ring-offset-2 hover:ring-offset-project-bg-main-color hover:ring-project-main-color-soft;
-} */
-
-/* .sidebar__user-profile .profile-photo__container {
-  @apply w-60;
-} */
 
 .user-profile {
   @apply max-w-3xl w-full min-h-screen p-5 border-project-border-color;

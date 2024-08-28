@@ -52,7 +52,7 @@ const navigationList = {
     </template>
     <template #footer>
       <SidebarOptionsList :options="navigationList.options" class="sidebar__options" />
-      <BaseNavigationList :list="navigationList.profile" class="sidebar__user-profile" singleItem />
+      <BaseNavigationList :list="navigationList.profile" class="sidebar__user-profile" isSingle />
     </template>
   </BaseSidebar>
 </template>

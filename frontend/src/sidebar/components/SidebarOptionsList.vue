@@ -1,7 +1,8 @@
 <script setup>
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/vue/24/outline';
 import BaseNavigationList from './BaseNavigationList.vue';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
+import { useStorage } from '@vueuse/core';
 
 defineProps({
   options: {
@@ -10,7 +11,7 @@ defineProps({
   }
 });
 
-const isHidden = ref(true);
+const isHidden = useStorage('vue-sidebar-options-hidden', true);
 
 const hidingButtonIcon = computed(() => {
   return isHidden.value ? ChevronUpIcon : ChevronDownIcon;

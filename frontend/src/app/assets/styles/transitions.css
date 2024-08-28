@@ -65,19 +65,16 @@
   transition: box-shadow 0.15s ease-out;
 }
 
-.sidebar__icon,
-.control-panel__icon {
+.navigation__icon {
   transition: transform 0.1s ease-out;
 }
 
 .sidebar__user-profile .profile-photo {
-  transition:
-    box-shadow 0.1s ease-out,
-    transform 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
 
-.navigation-list__item:before,
-.navigation-list__item::after {
+.navigation__link:before,
+.navigation__link::after {
   transition: transform 0.1s ease-out;
 }
 
