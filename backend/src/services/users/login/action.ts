@@ -48,8 +48,10 @@ async function login({
 	return new LoginDtoOut(
 		user.getId(),
 		user.getUsername(),
-		user.getFirstName() ?? null,
-		user.getLastName() ?? null,
+		user.getFirstName(),
+		user.getLastName(),
+		user.getBirthday(),
+		user.getSocial(),
 		access.getId(),
 		{
 			access: loginResult.jwtAccess,

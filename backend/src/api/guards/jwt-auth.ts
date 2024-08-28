@@ -3,12 +3,12 @@ import { bearer } from "@elysiajs/bearer";
 import { Elysia } from "elysia";
 import { factory as createValidateServiceFactory } from "../../services/accesses/validate/action";
 import { ValidateDtoIn } from "../../services/accesses/validate/dto.in";
+import type { ValidateDtoOut } from "../../services/accesses/validate/dto.out";
 import { contextPlugin } from "../plugins/context";
-import { ValidateDtoOut } from "../../services/accesses/validate/dto.out";
 
 export function createJwtAuthGuard(ignoreExpiration = false) {
 	return new Elysia({ name: "jwtAuthGuard" })
-        .state('jwtAuthGuardPayload', {} as ValidateDtoOut)
+		.state("jwtAuthGuardPayload", {} as ValidateDtoOut)
 		.decorate("validateService", createValidateServiceFactory())
 		.use(contextPlugin)
 		.use(bearer())
@@ -22,7 +22,7 @@ export function createJwtAuthGuard(ignoreExpiration = false) {
 					context,
 				});
 
-                store.jwtAuthGuardPayload = result;
+				store.jwtAuthGuardPayload = result;
 			},
 		);
 }

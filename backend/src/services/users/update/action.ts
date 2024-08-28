@@ -14,7 +14,7 @@ async function update({
 }) {
 	const user = await context.usersRepository.getUser({
 		id: dto.userId,
-        accessId: dto.accessId
+		accessId: dto.accessId,
 	});
 
 	if (!user) {
@@ -24,19 +24,24 @@ async function update({
 		});
 	}
 
-    if (dto.username) {
-        const existingUser = await context.usersRepository.exists({
-            username: dto.username,
-            notId: user.getId()
-        })
+	if (dto.username) {
+		const existingUser = await context.usersRepository.exists({
+			username: dto.username,
+			notId: user.getId(),
+		});
 
-        if (existingUser) {
-            ServiceError.throw(ServiceError.ERROR_TYPE.DUPLICATED, {
-                message: "User not found",
-                details: [{ path: ["username"], message: "User already exists with this username" }],
-            });
-        }
-    }
+		if (existingUser) {
+			ServiceError.throw(ServiceError.ERROR_TYPE.DUPLICATED, {
+				message: "User not found",
+				details: [
+					{
+						path: ["username"],
+						message: "User already exists with this username",
+					},
+				],
+			});
+		}
+	}
 
 	await user.update(dto);
 
@@ -45,8 +50,10 @@ async function update({
 	return new UpdateDtoOut(
 		user.getId(),
 		user.getUsername(),
-		user.getFirstName() ?? null,
-		user.getLastName() ?? null,
+		user.getFirstName(),
+		user.getLastName(),
+		user.getBirthday(),
+		user.getSocial(),
 	);
 }
 
@@ -59,6 +66,13 @@ export function factory() {
 			username: z.string().trim().min(1).max(128).optional(),
 			firstName: z.string().trim().min(1).max(255).optional().nullable(),
 			lastName: z.string().trim().min(1).max(255).optional().nullable(),
+			birthday: z.coerce.date().optional().nullable(),
+			social: z
+				.object({
+					telegram: z.string().trim().url().optional().nullable(),
+					instagram: z.string().trim().url().optional().nullable(),
+				})
+				.optional(),
 		}),
 	);
 }

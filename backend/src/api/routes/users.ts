@@ -74,15 +74,17 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 				.patch(
 					"/:userId",
 					async ({ params, body, context, updateUsersService, store }) => {
-                        assert(store.jwtAuthGuardPayload.payload?.accessId);
+						assert(store.jwtAuthGuardPayload.payload?.accessId);
 
 						const result = await updateUsersService({
 							dto: new UpdateDtoIn(
-                                store.jwtAuthGuardPayload.payload.accessId,
+								store.jwtAuthGuardPayload.payload.accessId,
 								params.userId,
 								body.username,
 								body.firstName,
 								body.lastName,
+								body.birthday,
+								body.social,
 							),
 							context,
 						});
@@ -115,6 +117,31 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 										description: "Last name",
 									}),
 								),
+							),
+							birthday: t.Optional(
+								t.Nullable(
+									t.Date({
+										description: "Last name",
+									}),
+								),
+							),
+							social: t.Optional(
+								t.Object({
+									instagram: t.Optional(
+										t.Nullable(
+											t.String({
+												description: "Instagram URL",
+											}),
+										),
+									),
+									telegram: t.Optional(
+										t.Nullable(
+											t.String({
+												description: "Telegram URL",
+											}),
+										),
+									),
+								}),
 							),
 						}),
 					},

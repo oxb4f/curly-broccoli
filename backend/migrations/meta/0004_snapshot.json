@@ -1,6 +1,6 @@
 {
-	"id": "3a7f314c-5a3b-4fec-970a-d60017f79922",
-	"prevId": "1e91341b-2f89-48fb-8e7b-28c7d987b0cd",
+	"id": "81317f1d-4a4d-4c40-bb31-b965d7376604",
+	"prevId": "3a7f314c-5a3b-4fec-970a-d60017f79922",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
@@ -101,6 +101,18 @@
 				"last_name": {
 					"name": "last_name",
 					"type": "varchar(255)",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"birthday": {
+					"name": "birthday",
+					"type": "date",
+					"primaryKey": false,
+					"notNull": false
+				},
+				"social": {
+					"name": "social",
+					"type": "json",
 					"primaryKey": false,
 					"notNull": false
 				}

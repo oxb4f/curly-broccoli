@@ -1,9 +1,19 @@
+import type {
+	Birthday,
+	FirstName,
+	LastName,
+	Social,
+	Username,
+} from "../../../entities/user";
+
 export class UpdateDtoIn {
 	constructor(
 		public readonly accessId: number,
 		public readonly userId: number,
-		public readonly username?: string,
-		public readonly firstName?: string | null,
-		public readonly lastName?: string | null,
+		public readonly username?: Username,
+		public readonly firstName?: FirstName,
+		public readonly lastName?: LastName,
+		public readonly birthday?: Birthday,
+		public readonly social?: Social,
 	) {}
 }

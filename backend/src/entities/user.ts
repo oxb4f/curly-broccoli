@@ -2,20 +2,26 @@ import assert from "node:assert/strict";
 import { Access, type JwtAccessPayload, type RefreshPayload } from "./access";
 import { Base } from "./base";
 
-type FirstName = string | null | undefined;
-type LastName = string | null | undefined;
+export type FirstName = string | null | undefined;
+export type LastName = string | null | undefined;
+export type Birthday = Date | null | undefined;
+export type Username = string;
+export type Password = string;
+export type Social = Partial<Record<"telegram" | "instagram", string | null>>;
 
 type CPayload = {
 	id?: number;
 	firstName: FirstName;
 	lastName: LastName;
-	username: string;
+	username: Username;
+	birthday: Birthday;
+	social: Social;
 };
 
 export type UserWithCredentialsPayload = CPayload &
 	RefreshPayload &
 	JwtAccessPayload & {
-		password: string;
+		password: Password;
 	};
 
 export type UserPayload = CPayload & {
@@ -24,20 +30,24 @@ export type UserPayload = CPayload & {
 
 export type LoginPayload = RefreshPayload &
 	JwtAccessPayload & {
-		password: string;
+		password: Password;
 	};
 
 export type UpdatePayload = {
 	firstName?: FirstName;
 	lastName?: LastName;
-	username?: string;
+	username?: Username;
+	birthday?: Birthday;
+	social?: Social;
 };
 
 export class User extends Base {
-	private _username: string;
+	private _username: Username;
 	private _access?: Access;
 	private _firstName: FirstName;
 	private _lastName: LastName;
+	private _birthday: Birthday;
+	private _social: Social;
 
 	private constructor(payload: CPayload) {
 		super(payload.id);
@@ -45,6 +55,8 @@ export class User extends Base {
 		this._username = payload.username;
 		this._firstName = payload.firstName;
 		this._lastName = payload.lastName;
+		this._birthday = payload.birthday;
+		this._social = payload.social;
 	}
 
 	static async fromCredentials(
@@ -92,10 +104,12 @@ export class User extends Base {
 	}
 
 	async update(payload: UpdatePayload) {
-		const { firstName, lastName, username } = payload;
+		const { firstName, lastName, username, birthday, social } = payload;
 
 		if (firstName || firstName === null) this.setFirstName(firstName);
 		if (lastName || lastName === null) this.setLastName(lastName);
+		if (birthday || birthday === null) this.setBirthday(birthday);
+		if (social || social === null) this.setSocial(social);
 		if (username) this.setUsername(username);
 
 		return this;
@@ -113,11 +127,27 @@ export class User extends Base {
 		this._lastName = lastName;
 	}
 
-	private setUsername(username: string) {
+	private setUsername(username: Username) {
 		this._username = username;
 	}
 
-	getUsername(): string {
+	private setBirthday(birthday: Birthday) {
+		this._birthday = birthday;
+	}
+
+	private setSocial(social: Social) {
+		this._social = social;
+	}
+
+	getSocial(): Social {
+		return this._social;
+	}
+
+	getBirthday(): Birthday {
+		return this._birthday;
+	}
+
+	getUsername(): Username {
 		return this._username;
 	}
 
@@ -139,6 +169,8 @@ export class User extends Base {
 			firstName: this._firstName,
 			lastName: this._lastName,
 			username: this._username,
+			birthday: this._birthday,
+			social: this._social,
 			access: this._access,
 		};
 	}

@@ -33,6 +33,8 @@ async function create({
 	const [user, jwtAccess, refreshToken] = await User.fromCredentials({
 		firstName: null,
 		lastName: null,
+		birthday: null,
+		social: {},
 		username: dto.username,
 		password: dto.password,
 		refreshId: dto.refreshId,
@@ -50,8 +52,10 @@ async function create({
 	return new CreateUserDtoOut(
 		user.getId(),
 		user.getUsername(),
-		user.getFirstName() ?? null,
-		user.getLastName() ?? null,
+		user.getFirstName(),
+		user.getLastName(),
+		user.getBirthday(),
+		user.getSocial(),
 		access.getId(),
 		{
 			access: jwtAccess,

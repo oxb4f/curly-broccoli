@@ -14,7 +14,12 @@ export function onError<E extends Error = Error>(
 		.when(
 			(e: E) => e instanceof ServiceError,
 			(e: ServiceError) => {
-				set.status = e.isAuthError() ? 401 : 422;
+				let statusCode = 422;
+
+				if (e.isAuthError()) statusCode = 401;
+				if (e.isNotFoundError()) statusCode = 404;
+
+				set.status = statusCode;
 
 				return getErrorResponse(e.toJSON());
 			},
@@ -22,13 +27,15 @@ export function onError<E extends Error = Error>(
 		.when(
 			(e: any) => e && e.code === "VALIDATION" && Array.isArray(e.all),
 			(e: any) => {
+				set.status = 422;
+
 				return getErrorResponse({
-                    message: "Validation error",
-                    details : e.all.map((r: { path: string, message: string }) => ({
-                        path : r.path.slice(1).split('/'),
-                        message : "Invalid data"
-                    }))
-                });
+					message: "Validation error",
+					details: e.all.map((r: { path: string; message: string }) => ({
+						path: r.path.slice(1).split("/"),
+						message: "Invalid data",
+					})),
+				});
 			},
 		)
 		.otherwise(() => {
