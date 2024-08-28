@@ -24,6 +24,10 @@ export default {
       },
       borderWidth: {
         1: '1px'
+      },
+      gridTemplateRows: {
+        hide: 'min-content 0fr',
+        show: 'min-content 1fr'
       }
     }
   },

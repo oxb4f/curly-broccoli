@@ -1,31 +1,45 @@
-import { HomeIcon, BookOpenIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import BaseProfilePhoto from '@/app/components/BaseProfilePhoto.vue';
+import {
+  HomeIcon,
+  BookOpenIcon,
+  MagnifyingGlassIcon,
+  Cog8ToothIcon,
+  ArrowLeftStartOnRectangleIcon
+} from '@heroicons/vue/24/outline';
 
 export default function useSidebar() {
-  const router = useRouter();
-
   const navigationList = {
-    home: {
-      icon: HomeIcon,
-      toUrl: '/main'
+    roots: {
+      home: {
+        icon: HomeIcon,
+        toUrl: '/main'
+      },
+      books: {
+        icon: BookOpenIcon,
+        toUrl: '/books'
+      },
+      search: {
+        icon: MagnifyingGlassIcon,
+        toUrl: '/search'
+      }
     },
-    books: {
-      icon: BookOpenIcon,
-      toUrl: '/books'
+    options: {
+      settings: {
+        icon: Cog8ToothIcon,
+        toUrl: '/settings'
+      },
+      logout: {
+        icon: ArrowLeftStartOnRectangleIcon,
+        toUrl: ''
+      }
     },
-    search: {
-      icon: MagnifyingGlassIcon,
-      toUrl: '/search'
+    profile: {
+      icon: BaseProfilePhoto,
+      toUrl: '/profile'
     }
   };
 
-  const currentPath = computed(() => {
-    return router.currentRoute.value.path;
-  });
-
   return {
-    navigationList,
-    currentPath
+    navigationList
   };
 }

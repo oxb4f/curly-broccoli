@@ -3,7 +3,7 @@ import LoginFormView from '@/form/views/LoginFormView.vue';
 import RegisterFormView from '@/form/views/RegisterFormView.vue';
 import MainLayout from '../layouts/MainLayout.vue';
 import AuthorizationView from '../views/AuthorizationView.vue';
-import BaseSidebar from '../../sidebar/components/BaseSidebar.vue';
+import MainSidebarView from '@/sidebar/views/MainSidebarView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
 
 const router = createRouter({
@@ -33,7 +33,7 @@ const router = createRouter({
     {
       path: '/main',
       name: 'main',
-      components: { sidebar: BaseSidebar, main: MainLayout },
+      components: { sidebar: MainSidebarView, main: MainLayout },
       children: [
         {
           path: '/main',
@@ -46,6 +46,14 @@ const router = createRouter({
         {
           path: '/search',
           components: { content: RegisterFormView }
+        },
+        {
+          path: '/settings',
+          components: { content: LoginFormView }
+        },
+        {
+          path: '/profile',
+          components: { content: UserProfileView }
         }
       ]
     }

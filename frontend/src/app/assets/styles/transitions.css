@@ -39,6 +39,15 @@
   }
 }
 
+@keyframes show-user-options {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
 .authorization {
   animation: 0.3s ease-out 2 alternate authorization-scale;
 }
@@ -56,15 +65,22 @@
   transition: box-shadow 0.15s ease-out;
 }
 
-.sidebar__icon {
+.sidebar__icon,
+.control-panel__icon {
   transition: transform 0.1s ease-out;
 }
 
-.sidebar__profile-photo {
-  transition: box-shadow 0.1s ease-out;
+.sidebar__user-profile .profile-photo {
+  transition:
+    box-shadow 0.1s ease-out,
+    transform 0.1s ease-out;
 }
 
-.sidebar__list-item::before,
-.sidebar__list-item::after {
+.navigation-list__item:before,
+.navigation-list__item::after {
   transition: transform 0.1s ease-out;
+}
+
+.options {
+  transition: grid-template-rows 0.3s ease-out;
 }
