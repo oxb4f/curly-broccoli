@@ -39,6 +39,15 @@
   }
 }
 
+@keyframes show-user-options {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
 .authorization {
   animation: 0.3s ease-out 2 alternate authorization-scale;
 }
@@ -56,15 +65,19 @@
   transition: box-shadow 0.15s ease-out;
 }
 
-.sidebar__icon {
+.navigation__icon {
   transition: transform 0.1s ease-out;
 }
 
-.sidebar__profile-photo {
-  transition: box-shadow 0.1s ease-out;
+.sidebar__user-profile .profile-photo {
+  transition: all 0.1s ease-out;
 }
 
-.sidebar__list-item::before,
-.sidebar__list-item::after {
+.navigation__link:before,
+.navigation__link::after {
   transition: transform 0.1s ease-out;
+}
+
+.options {
+  transition: grid-template-rows 0.3s ease-out;
 }
