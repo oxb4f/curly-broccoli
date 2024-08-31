@@ -1,4 +1,5 @@
 import z from "zod";
+import { id, jwt, refreshId } from "../../common/validation/schema";
 import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
@@ -50,9 +51,9 @@ export function factory() {
 	return makeService(
 		refresh,
 		z.object({
-			refresh: z.string().trim().min(1).max(255).readonly(),
-			refreshId: z.string().trim().max(255).readonly(),
-			accessId: z.coerce.number().int().safe().positive().readonly(),
+			refresh: jwt,
+			refreshId,
+			accessId: id,
 		}),
 	);
 }

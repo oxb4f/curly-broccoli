@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import z from "zod";
+import { password, refreshId, username } from "../../common/validation/schema";
 import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
@@ -61,12 +62,5 @@ async function login({
 }
 
 export function factory() {
-	return makeService(
-		login,
-		z.object({
-			username: z.string().trim().min(1).max(128),
-			password: z.string().trim().min(8).max(128),
-			refreshId: z.string().trim().max(255),
-		}),
-	);
+	return makeService(login, z.object({ username, password, refreshId }));
 }

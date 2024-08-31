@@ -5,7 +5,7 @@ import { CreateUserDtoIn } from "../../services/users/create/dto.in";
 import { factory as loginUsersServiceFactory } from "../../services/users/login/action";
 import { LoginDtoIn } from "../../services/users/login/dto.in";
 import { factory as updateUsersServiceFactory } from "../../services/users/update/action";
-import { UpdateDtoIn } from "../../services/users/update/dto.in";
+import { UpdateUserDtoIn } from "../../services/users/update/dto.in";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 import { generateUserAgentHash } from "./utils";
@@ -77,7 +77,7 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 						assert(store.jwtAuthGuardPayload.payload?.accessId);
 
 						const result = await updateUsersService({
-							dto: new UpdateDtoIn(
+							dto: new UpdateUserDtoIn(
 								store.jwtAuthGuardPayload.payload.accessId,
 								params.userId,
 								body.username,

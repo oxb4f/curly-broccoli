@@ -3,6 +3,13 @@ import { Access } from "../../../src/entities/access";
 import { User } from "../../../src/entities/user";
 
 const fixture = {
+	firstName: "test",
+	lastName: "test",
+	birthday: new Date(),
+	social: {
+		telegram: "https://test.example",
+		instagram: "https://test.example",
+	},
 	username: "test",
 	password: "testPassword123_$",
 	jwtAccessLifetime: 100000000,
@@ -66,7 +73,92 @@ test("Unit test: User Entity", () => {
 				id: user.getId(),
 				username: user.getUsername(),
 				access: user.getAcesss(),
+				firstName: user.getFirstName(),
+				lastName: user.getLastName(),
+				birthday: user.getBirthday(),
+				social: user.getSocial(),
 			});
+		});
+	});
+
+	describe("update", () => {
+		describe("should return user with updated data", async () => {
+			const [user] = await User.fromCredentials(fixture);
+
+			const birthday = new Date(Date.now() - 86400000);
+
+			const result = await user.update({
+				firstName: "testtest",
+				lastName: "testtest",
+				birthday: birthday,
+				social: {
+					telegram: "https://test1.example",
+					instagram: "https://test1.example",
+				},
+			});
+
+			expect(result).toBeInstanceOf(User);
+			expect(result.getFirstName()).toEqual("testtest");
+			expect(result.getLastName()).toEqual("testtest");
+			expect(result.getBirthday()).toEqual(birthday);
+			expect(result.getSocial()).toEqual({
+				telegram: "https://test1.example",
+				instagram: "https://test1.example",
+			});
+		});
+
+		describe("shoud perform partial update", async () => {
+			const [user] = await User.fromCredentials(fixture);
+
+			const result = await user.update({
+				firstName: "testtest",
+				lastName: "testtest",
+			});
+
+			expect(result).toBeInstanceOf(User);
+			expect(result.getFirstName()).toEqual("testtest");
+			expect(result.getLastName()).toEqual("testtest");
+			expect(result.getBirthday()).toEqual(fixture.birthday);
+			expect(result.getSocial()).toEqual(fixture.social);
+		});
+
+		describe("should update to null values", async () => {
+			const [user] = await User.fromCredentials(fixture);
+
+			const result = await user.update({
+				firstName: null,
+				lastName: null,
+				birthday: null,
+				social: { telegram: null, instagram: null },
+			});
+
+			expect(result).toBeInstanceOf(User);
+			expect(result.getFirstName()).toBeNull();
+			expect(result.getLastName()).toBeNull();
+			expect(result.getBirthday()).toBeNull();
+			expect(result.getSocial()).toEqual({
+				telegram: null,
+				instagram: null,
+			});
+		});
+
+		describe("should pass null value for username", async () => {
+			const [user] = await User.fromCredentials(fixture);
+
+			const result = await user.update({
+				username: null as any,
+				firstName: "testtest",
+				lastName: "testtest",
+				birthday: fixture.birthday,
+				social: fixture.social,
+			});
+
+			expect(result).toBeInstanceOf(User);
+			expect(result.getUsername()).toEqual(fixture.username);
+			expect(result.getFirstName()).toEqual("testtest");
+			expect(result.getLastName()).toEqual("testtest");
+			expect(result.getBirthday()).toEqual(fixture.birthday);
+			expect(result.getSocial()).toEqual(fixture.social);
 		});
 	});
 });

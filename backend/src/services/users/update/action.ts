@@ -1,15 +1,16 @@
 import z from "zod";
+import { id, username } from "../../common/validation/schema";
 import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
-import type { UpdateDtoIn } from "./dto.in";
-import { UpdateDtoOut } from "./dto.out";
+import type { UpdateUserDtoIn } from "./dto.in";
+import { UpdateUserDtoOut } from "./dto.out";
 
 async function update({
 	dto,
 	context,
 }: {
-	dto: UpdateDtoIn;
+	dto: UpdateUserDtoIn;
 	context: Context;
 }) {
 	const user = await context.usersRepository.getUser({
@@ -25,12 +26,12 @@ async function update({
 	}
 
 	if (dto.username) {
-		const existingUser = await context.usersRepository.exists({
+		const isUsersWithSameUsernameExist = await context.usersRepository.exists({
 			username: dto.username,
 			notId: user.getId(),
 		});
 
-		if (existingUser) {
+		if (isUsersWithSameUsernameExist) {
 			ServiceError.throw(ServiceError.ERROR_TYPE.DUPLICATED, {
 				message: "User not found",
 				details: [
@@ -47,7 +48,7 @@ async function update({
 
 	await context.usersRepository.updateFromEntity(user);
 
-	return new UpdateDtoOut(
+	return new UpdateUserDtoOut(
 		user.getId(),
 		user.getUsername(),
 		user.getFirstName(),
@@ -61,9 +62,9 @@ export function factory() {
 	return makeService(
 		update,
 		z.object({
-			accessId: z.coerce.number().int().safe().positive().readonly(),
-			userId: z.coerce.number().int().safe().positive().readonly(),
-			username: z.string().trim().min(1).max(128).optional(),
+			accessId: id,
+			userId: id,
+			username: username.optional(),
 			firstName: z.string().trim().min(1).max(255).optional().nullable(),
 			lastName: z.string().trim().min(1).max(255).optional().nullable(),
 			birthday: z.coerce.date().optional().nullable(),

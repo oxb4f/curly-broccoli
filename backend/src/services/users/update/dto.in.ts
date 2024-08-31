@@ -6,7 +6,7 @@ import type {
 	Username,
 } from "../../../entities/user";
 
-export class UpdateDtoIn {
+export class UpdateUserDtoIn {
 	constructor(
 		public readonly accessId: number,
 		public readonly userId: number,

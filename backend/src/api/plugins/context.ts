@@ -8,7 +8,7 @@ import { configPlugin } from "./config";
 
 export const contextPlugin = new Elysia({ name: "contextPlugin" })
 	.use(configPlugin)
-	.derive({ as: "scoped" }, async ({ config }) => {
+	.derive({ as: "global" }, async ({ config }) => {
 		assert(config);
 
 		const dbCredentials = {
