@@ -70,7 +70,16 @@ body {
 input {
   color: var(--project-text-color);
   background-color: var(--project-bg-main-color);
-  @apply w-full p-2 rounded-md disabled:opacity-30 disabled:cursor-default;
+}
+
+input:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+input[type='range'] {
+  accent-color: var(--project-main-color);
+  cursor: pointer;
 }
 
 h1 {

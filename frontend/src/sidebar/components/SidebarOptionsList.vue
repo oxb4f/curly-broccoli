@@ -1,6 +1,6 @@
 <script setup>
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/vue/24/outline';
-import BaseNavigationList from './BaseNavigationList.vue';
+import BaseNavigationList from './SidebarNavigationList.vue';
 import { computed } from 'vue';
 import { useStorage } from '@vueuse/core';
 

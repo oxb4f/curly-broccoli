@@ -1,7 +1,7 @@
 <script setup>
 import BaseSidebar from '../components/BaseSidebar.vue';
 import BaseLogo from '@/app/components/BaseLogo.vue';
-import BaseNavigationList from '../components/BaseNavigationList.vue';
+import BaseNavigationList from '../components/SidebarNavigationList.vue';
 import SidebarOptionsList from '../components/SidebarOptionsList.vue';
 import BaseProfilePhoto from '@/app/components/BaseProfilePhoto.vue';
 import {

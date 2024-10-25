@@ -82,7 +82,7 @@ input.error {
 }
 
 .modal {
-  @apply overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center gap-6 size-full break-all;
+  @apply fixed inset-0 z-50 flex justify-center items-center gap-6 overflow-y-auto break-all;
 }
 
 .modal__backdrop {
@@ -90,19 +90,35 @@ input.error {
 }
 
 .modal__window {
-  @apply z-10 w-full max-w-xl p-6 rounded-lg bg-project-bg-secondary-color;
+  @apply z-10 w-full max-w-xl max-h-screen p-6 rounded-lg bg-project-bg-secondary-color;
 }
 
-.modal__close-button {
-  @apply absolute w-7 h-7 rounded-full;
+.modal__confirm-panel {
+  @apply size-full py-4 flex justify-around;
 }
 
-.logo-icon {
-  @apply text-center font-project-logo-font text-3xl text-project-main-color;
+.modal__confirm-button {
+  @apply hover:text-project-main-color-mute;
+}
+
+.modal__cancel-button {
+  @apply hover:text-project-error-color-soft;
+}
+
+.modal__button-icon {
+  @apply size-8;
 }
 
 .modal__logo-icon {
   @apply m-auto;
+}
+
+.modal__range {
+  @apply w-full py-2;
+}
+
+.logo-icon {
+  @apply text-center font-project-logo-font text-3xl text-project-main-color;
 }
 
 .form,
@@ -137,6 +153,11 @@ input.error {
 
 .form__item__half-size {
   @apply align-top inline-block w-1/2;
+}
+
+.form__input,
+.form__submit-button {
+  @apply p-2 rounded-md;
 }
 
 .form__input {
@@ -296,3 +317,28 @@ input.error {
 .user-stats__item-counter {
   @apply font-bold;
 }
+
+.setting-profile-photo {
+  @apply h-[36rem] overflow-hidden;
+}
+
+.setting-profile-photo__drop-zone,
+.setting-profile-photo__canvas {
+  @apply size-full;
+}
+
+.setting-profile-photo__container {
+  @apply relative size-full;
+}
+
+.setting-profile-photo__frame {
+  @apply absolute flex justify-center items-center ring-[999rem] ring-project-bg-secondary-color opacity-80 rounded-full bg-transparent z-50 cursor-move;
+}
+
+.setting-profile-photo__icon {
+  @apply rotate-45 size-1/4 opacity-70;
+}
+
+/* .drop-zone {
+  @apply size-full;
+} */
