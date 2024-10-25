@@ -5,6 +5,7 @@ import MainLayout from '../layouts/MainLayout.vue';
 import AuthorizationView from '../views/AuthorizationView.vue';
 import MainSidebarView from '@/sidebar/views/MainSidebarView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
+import SetProfilePhotoView from '../views/SetProfilePhotoView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,7 +46,7 @@ const router = createRouter({
         },
         {
           path: '/search',
-          components: { content: RegisterFormView }
+          components: { content: SetProfilePhotoView }
         },
         {
           path: '/settings',
