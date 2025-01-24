@@ -7,7 +7,7 @@
         src="../assets/images/iphone-screen.png"
         alt="iphone-screen"
         class="media-content__phone-screen"
-      />
+      >
     </div>
     <div class="media-content__content">
       <header class="media-content__header"><h1>Download the application</h1></header>
