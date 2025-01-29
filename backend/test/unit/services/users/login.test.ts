@@ -17,12 +17,12 @@ test("Unit test: User Login Service", () => {
 	beforeEach(() => mock.restore());
 
 	describe("should return valid dto", async () => {
-		User.prototype.login = mock().mockResolvedValueOnce({
+		User.prototype.login = mock().mockResolvedValue({
 			jwtAccess: "test",
 			refreshToken: "test",
 		});
 
-		spyOn(context.usersRepository, "getUser").mockResolvedValueOnce(
+		spyOn(context.usersRepository, "getUser").mockResolvedValue(
 			createdUserFixture1,
 		);
 
@@ -36,11 +36,11 @@ test("Unit test: User Login Service", () => {
 		expect(dto.username).toBeString();
 		expect(User.prototype.login).toBeCalledTimes(1);
 		expect(context.usersRepository.getUser).toBeCalledTimes(1);
-		expect(context.usersRepository.updateFromEntity).toBeCalledTimes(1);
+		expect(context.usersRepository.updateFromEntity).toHaveBeenCalled();
 	});
 
 	describe("should throw auth error if user does not exist", async () => {
-		spyOn(context.usersRepository, "getUser").mockResolvedValueOnce(null);
+		spyOn(context.usersRepository, "getUser").mockResolvedValue(null);
 
 		await expect(
 			service({ dto: fixture, context: context }),

@@ -15,17 +15,22 @@ RS := $(shell openssl rand -base64 10 | tr -dc 'a-zA-Z0-9' | head -c 10)
 # @target build
 PULL ?= false ## Pull the latest base image before building. Default is false.
 NO_CACHE ?= false ## Build the image without using cache. Default is false.
-TARGET ?= dev ## Build target for docker: dev, prod or test
-
-# @target run
-DETACH ?= false ## Run docker compose in detached mode. Default is false.
+TARGET ?= run ## Build target
 
 BLUE := \033[1;34m
 GREEN := \033[0;32m
 WHITE := \033[0;97m
 RESET := \033[0m
 
-.PHONY: build run stop help hurl test-unit
+.PHONY: build run stop help hurl test-unit test-env
+
+env: ## Apply environment variables to the environment
+	@if [ ! -f deployment/${ENV_FILE} ]; then \
+		echo "$(RED)Error: deployment/${ENV_FILE} not found!$(RESET)"; \
+		exit 1; \
+	fi
+	$(eval include deployment/${ENV_FILE})
+	$(eval export $(shell sed 's/=.*//' deployment/${ENV_FILE}))
 
 build: ## Build the Docker image for the application
 ifeq ($(PULL),true)
@@ -40,32 +45,32 @@ else
 endif
 	DOCKER_BUILDKIT=1 docker build $(PULL_FLAG) $(NO_CACHE_FLAG) --tag ${APP_IMAGE} --file ${DOCKER_FILE} --target ${TARGET} .
 
-run: stop ## Start the application using Docker Compose
-ifeq ($(DETACH),true)
-	DETACH_FLAG=-d
-else
-	DETACH_FLAG=
-endif
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up $(DETACH_FLAG)
+run: env stop ## Start the application using Docker Compose
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up -d
 
-stop: ## Stop the application using Docker Compose
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} down --remove-orphans --volumes
+stop: env ## Stop the application using Docker Compose
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} down --volumes
 
 hurl: ## Run hurl tests against the application
 	@hurl \
-		--variables-file ./hurl/vars \
+		--variables-file ./test/hurl/vars \
 		--variable rn=$(RN) \
 		--variable rs=$(RS) \
-		--file-root ./hurl \
+		--file-root ./test/hurl \
 		--insecure \
 		--error-format long \
 		--test \
-		--glob "./hurl/**/*.hurl"
+		--jobs 1 \
+		--glob "./test/hurl/**/*.hurl"
 
-test-unit: stop ## Run unit tests against the application
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up --detach
+test-unit: env stop ## Run unit tests against the application
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up --detach && docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} exec --tty --interactive app sh -c "bun run test"
 
-	docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} exec --tty --interactive app sh -c "pnpm test:unit"
+logs: env ## Display container last logs
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} logs --tail 100
+
+logs-follow: env ## Display container last logs
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} logs --follow
 
 help: ## Display this help message
 	@echo "Usage: make [target] [FLAGS]"

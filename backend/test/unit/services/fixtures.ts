@@ -26,8 +26,15 @@ export const context = {
 };
 
 export const userFixture1 = {
+	firstName: "John",
+	lastName: "Doe",
 	username: "test",
 	password: "testPassword123_$",
+	birthday: new Date("1990-01-01"),
+	social: {
+		telegram: "https://t.me/test",
+		instagram: "https://www.instagram.com/test",
+	},
 	jwtAccessLifetime: 100000000,
 	refreshId: "1",
 	secret: "test",

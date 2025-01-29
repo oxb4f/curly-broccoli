@@ -22,24 +22,12 @@ WORKDIR /app
 
 COPY  --from=base /app/. .
 COPY  --from=base /app/package*.json ./
-COPY  --from=base /app/node_modules ./node_modules
+COPY  --from=base /app/node_modules node_modules
 COPY .env.defaults ./
 COPY tsconfig*.json ./
 COPY drizzle.config.ts ./
-COPY src ./
-
-ENTRYPOINT []
-
-
-### test
-FROM run AS test
-
-RUN mkdir -p /app
-WORKDIR /app
-
-COPY --from=run /app/. .
-COPY --from=base /app/package*.json ./
-
-RUN bun install
+COPY bunfig.toml ./
+COPY src src
+COPY test test
 
 ENTRYPOINT []
