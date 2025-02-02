@@ -1,0 +1,11 @@
+.profile-photo-wrapper {
+  @apply relative size-44 rounded-full overflow-hidden;
+}
+
+.profile-photo {
+  @apply absolute w-96;
+}
+
+.profile-photo__image {
+  @apply size-full;
+}

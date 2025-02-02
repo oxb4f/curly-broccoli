@@ -1,0 +1,31 @@
+.navigation {
+  @apply size-auto;
+}
+
+.navigation__item {
+  @apply size-auto px-3 text-lg;
+}
+
+.navigation__link {
+  @apply size-full text-pr-text hover:text-pr-text-darker;
+}
+
+.navigation__link > * {
+  transition: transform 0.1s ease-out;
+}
+
+.navigation__link > *:hover {
+  @apply scale-110;
+}
+
+.navigation__link.active {
+  @apply text-pr-main hover:text-pr-main;
+}
+
+.navigation__link.active > *:hover {
+  @apply transform-none;
+}
+
+.navigation__icon {
+  @apply size-9 m-auto;
+}

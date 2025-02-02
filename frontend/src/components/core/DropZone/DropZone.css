@@ -1,0 +1,7 @@
+.drop-zone-wrapper {
+  @apply size-full flex justify-center items-center p-20;
+}
+
+.drop-zone {
+  @apply h-full min-w-max max-w-full flex justify-center p-8 items-center border-4 border-dashed border-pr-border ring-[20px] ring-pr-bg-secondary bg-pr-bg-secondary text-pr-border;
+}

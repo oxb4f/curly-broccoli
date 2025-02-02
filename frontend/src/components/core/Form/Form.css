@@ -1,0 +1,28 @@
+.form {
+  @apply w-full flex gap-y-6 gap-x-2 flex-wrap;
+}
+
+.form__item {
+  @apply w-full flex justify-center items-center;
+}
+
+.form__item__half-size {
+  @apply w-0 flex-grow;
+}
+
+input.form__input {
+  @apply w-full p-2 rounded-md;
+}
+
+input.form__text-input,
+input.form__password-input {
+  @apply border-1 border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft;
+}
+
+input.form__submit-input {
+  @apply cursor-pointer font-bold bg-pr-main text-pr-bg-main enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute;
+}
+
+input.form__range-input {
+  @apply accent-pr-main cursor-pointer;
+}

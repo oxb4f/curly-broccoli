@@ -1,0 +1,36 @@
+@keyframes scale {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.01);
+  }
+}
+
+.scale-animation {
+  animation: scale 0.3s ease-out 2 alternate;
+}
+
+#root {
+  @apply min-h-screen;
+}
+
+.main {
+  @apply px-20;
+}
+
+.content {
+  @apply size-full flex justify-center px-20;
+}
+
+.footer {
+  @apply border-pr-border bg-pr-bg-secondary;
+}
+
+.description {
+  @apply text-pr-text-darker;
+}
+
+.link {
+  @apply text-pr-main cursor-pointer;
+}

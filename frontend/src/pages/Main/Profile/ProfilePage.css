@@ -1,0 +1,27 @@
+.user-profile {
+  @apply size-full py-5;
+}
+
+.user-profile__header {
+  @apply w-full flex;
+}
+
+.user-profile__header {
+  @apply flex-col gap-6;
+}
+
+.user-profile__info {
+  @apply w-full min-w-max flex flex-col items-center gap-4;
+}
+
+/* .user-profile__photo {
+  @apply hover:bg;
+} */
+
+.user-profile__username {
+  @apply text-2xl text-center break-words;
+}
+
+.user-profile__stats {
+  @apply min-w-80;
+}

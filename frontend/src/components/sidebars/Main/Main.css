@@ -1,0 +1,25 @@
+.sidebar__profile-photo {
+  @apply size-9 hover:ring-2 hover:ring-offset-4 hover:ring-offset-pr-bg-main hover:ring-pr-main-mute;
+}
+
+.sidebar .navigation__list {
+  @apply grid gap-6;
+}
+
+.sidebar .link.active .sidebar__profile-photo {
+  @apply ring-2 ring-offset-4 ring-offset-pr-bg-main ring-pr-main hover:ring-pr-main;
+}
+
+/* .sidebar .link {
+  @apply relative before:top-0 before:right-0 before:bg-gradient-to-br after:bottom-0 after:right-0 after:bg-gradient-to-tr;
+}
+
+.sidebar .link::before,
+.sidebar .link::after {
+  @apply absolute size-5 from-pr-main from-50% to-50% -z-50;
+}
+
+.sidebar .link.active::before,
+.sidebar .link.active::after {
+  @apply translate-x-[160%];
+} */

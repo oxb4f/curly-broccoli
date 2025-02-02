@@ -1,0 +1,21 @@
+.sidebar {
+  @apply min-w-16 h-screen flex flex-col items-center gap-9 py-9 border-r-1 border-pr-border bg-pr-bg-main;
+}
+
+.sidebar__header,
+.sidebar__main,
+.sidebar__footer {
+  @apply w-full grow-0 text-center;
+}
+
+.sidebar__main {
+  @apply grow;
+}
+
+.sidebar__footer {
+  @apply flex flex-col gap-4 items-center;
+}
+
+.sidebar__logo {
+  @apply text-4xl;
+}
