@@ -4,23 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        'project-main-color': 'var(--project-main-color)',
-        'project-main-color-soft': 'var(--project-main-color-soft)',
-        'project-main-color-mute': 'var(--project-main-color-mute)',
-        'project-bg-main-color': 'var(--project-bg-main-color)',
-        'project-bg-secondary-color': 'var(--project-bg-secondary-color)',
-        'project-bg-hover-color': 'var(--project-bg-hover-color)',
-        'project-bg-disable-color': 'var(--project-bg-disable-color)',
-        'project-border-color': 'var(--project-border-color)',
-        'project-text-color': 'var(--project-text-color)',
-        'project-text-color-darker': 'var(--project-text-color-darker)',
-        'project-text-color-inverted': 'var(--project-text-color-inverted)',
-        'project-error-color': 'var(--project-error-color)',
-        'project-error-color-soft': 'var(--project-error-color-soft)'
+        'pr-main': 'var(--project-main-color)',
+        'pr-main-soft': 'var(--project-main-color-soft)',
+        'pr-main-mute': 'var(--project-main-color-mute)',
+        'pr-bg-main': 'var(--project-bg-main-color)',
+        'pr-bg-secondary': 'var(--project-bg-secondary-color)',
+        'pr-bg-hover': 'var(--project-bg-hover-color)',
+        'pr-bg-disable': 'var(--project-bg-disable-color)',
+        'pr-border': 'var(--project-border-color)',
+        'pr-text': 'var(--project-text-color)',
+        'pr-text-darker': 'var(--project-text-color-darker)',
+        'pr-text-inverted': 'var(--project-text-color-inverted)',
+        'pr-error': 'var(--project-error-color)',
+        'pr-error-soft': 'var(--project-error-color-soft)'
       },
       fontFamily: {
-        'project-font': 'var(--project-font)',
-        'project-logo-font': 'var(--project-logo-font)'
+        'pr-main': 'var(--project-font)',
+        'pr-logo': 'var(--project-logo-font)'
       },
       borderWidth: {
         1: '1px'

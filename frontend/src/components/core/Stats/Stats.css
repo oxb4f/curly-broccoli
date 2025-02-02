@@ -1,0 +1,16 @@
+.stats {
+  @apply flex flex-wrap justify-center items-center gap-x-3 gap-y-1;
+}
+
+.stats__item {
+  @apply w-36;
+}
+
+.stats__counter,
+.stats__name {
+  @apply w-full block text-center break-words;
+}
+
+.stats__counter {
+  @apply font-bold;
+}
