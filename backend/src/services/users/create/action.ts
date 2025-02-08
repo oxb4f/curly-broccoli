@@ -32,6 +32,7 @@ async function create({
 	}
 
 	const [user, jwtAccess, refreshToken] = await User.fromCredentials({
+		imageUrl: null,
 		firstName: null,
 		lastName: null,
 		birthday: null,
@@ -57,6 +58,7 @@ async function create({
 		user.getLastName(),
 		user.getBirthday(),
 		user.getSocial(),
+		user.getImageUrl(),
 		access.getId(),
 		{
 			access: jwtAccess,

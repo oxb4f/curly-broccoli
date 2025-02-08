@@ -8,14 +8,16 @@ export type Birthday = Date | null | undefined;
 export type Username = string;
 export type Password = string;
 export type Social = Partial<Record<"telegram" | "instagram", string | null>>;
+export type ImageUrl = string | null | undefined;
 
 type CPayload = {
 	id?: number;
 	firstName: FirstName;
 	lastName: LastName;
 	username: Username;
-	birthday: Birthday;
+	birthday?: Birthday;
 	social: Social;
+	imageUrl?: ImageUrl;
 };
 
 export type UserWithCredentialsPayload = CPayload &
@@ -39,6 +41,7 @@ export type UpdatePayload = {
 	username?: Username;
 	birthday?: Birthday;
 	social?: Social;
+	imageUrl?: ImageUrl;
 };
 
 export class User extends Base {
@@ -48,6 +51,7 @@ export class User extends Base {
 	private _lastName: LastName;
 	private _birthday: Birthday;
 	private _social: Social;
+	private _imageUrl: ImageUrl;
 
 	private constructor(payload: CPayload) {
 		super(payload.id);
@@ -57,6 +61,7 @@ export class User extends Base {
 		this._lastName = payload.lastName;
 		this._birthday = payload.birthday;
 		this._social = payload.social;
+		this._imageUrl = payload.imageUrl;
 	}
 
 	static async fromCredentials(
@@ -104,12 +109,14 @@ export class User extends Base {
 	}
 
 	async update(payload: UpdatePayload) {
-		const { firstName, lastName, username, birthday, social } = payload;
+		const { firstName, lastName, username, birthday, social, imageUrl } =
+			payload;
 
 		if (firstName || firstName === null) this.setFirstName(firstName);
 		if (lastName || lastName === null) this.setLastName(lastName);
 		if (birthday || birthday === null) this.setBirthday(birthday);
 		if (social || social === null) this.setSocial(social);
+		if (imageUrl || imageUrl === null) this.setImageUrl(imageUrl);
 		if (username) this.setUsername(username);
 
 		return this;
@@ -163,6 +170,14 @@ export class User extends Base {
 		return this._lastName;
 	}
 
+	getImageUrl(): ImageUrl {
+		return this._imageUrl;
+	}
+
+	setImageUrl(imageUrl: ImageUrl) {
+		this._imageUrl = imageUrl;
+	}
+
 	toPlainObject(): Readonly<CPayload & { access?: Access }> {
 		return {
 			id: this._id,
@@ -171,6 +186,7 @@ export class User extends Base {
 			username: this._username,
 			birthday: this._birthday,
 			social: this._social,
+			imageUrl: this._imageUrl,
 			access: this._access,
 		};
 	}

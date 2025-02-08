@@ -1,6 +1,7 @@
 import type {
 	Birthday,
 	FirstName,
+	ImageUrl,
 	LastName,
 	Social,
 	Username,
@@ -14,6 +15,7 @@ export class UpdateUserDtoOut {
 		public readonly lastName: LastName,
 		public readonly birthday: Birthday,
 		public readonly social: Social,
+		public readonly imageUrl: ImageUrl,
 	) {}
 
 	toJSON() {

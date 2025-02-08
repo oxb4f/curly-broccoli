@@ -55,6 +55,7 @@ async function update({
 		user.getLastName(),
 		user.getBirthday(),
 		user.getSocial(),
+		user.getImageUrl(),
 	);
 }
 
@@ -74,6 +75,7 @@ export function factory() {
 					instagram: z.string().trim().url().optional().nullable(),
 				})
 				.optional(),
+			imageUrl: z.string().trim().url().optional().nullable(),
 		}),
 	);
 }

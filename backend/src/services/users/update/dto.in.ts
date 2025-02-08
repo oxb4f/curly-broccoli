@@ -1,6 +1,7 @@
 import type {
 	Birthday,
 	FirstName,
+	ImageUrl,
 	LastName,
 	Social,
 	Username,
@@ -15,5 +16,6 @@ export class UpdateUserDtoIn {
 		public readonly lastName?: LastName,
 		public readonly birthday?: Birthday,
 		public readonly social?: Social,
+		public readonly imageUrl?: ImageUrl,
 	) {}
 }

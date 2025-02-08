@@ -72,6 +72,7 @@ export class PgUsersRepository
 					lastName: user.getLastName(),
 					birthday: user.getBirthday()?.toUTCString() ?? null,
 					social: user.getSocial(),
+					imageUrl: user.getImageUrl(),
 				})
 				.where(eq(users.id, user.getId()))
 				.execute();

@@ -85,6 +85,7 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 								body.lastName,
 								body.birthday,
 								body.social,
+								body.imageUrl,
 							),
 							context,
 						});
@@ -142,6 +143,13 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 										),
 									),
 								}),
+							),
+							imageUrl: t.Optional(
+								t.Nullable(
+									t.String({
+										description: "Image URL",
+									}),
+								),
 							),
 						}),
 					},

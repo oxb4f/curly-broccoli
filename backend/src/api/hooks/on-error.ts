@@ -1,4 +1,4 @@
-import type { Context } from "elysia";
+import { type Context, NotFoundError } from "elysia";
 import { match } from "ts-pattern";
 import { ServiceError } from "../../services/errors/error";
 
@@ -36,6 +36,14 @@ export function onError<E extends Error = Error>(
 						message: "Invalid data",
 					})),
 				});
+			},
+		)
+		.when(
+			(e: any) => e instanceof NotFoundError,
+			() => {
+				set.status = 404;
+
+				return getErrorResponse({ message: "Not found", details: [] });
 			},
 		)
 		.otherwise(() => {
