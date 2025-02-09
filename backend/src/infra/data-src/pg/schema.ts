@@ -30,4 +30,10 @@ export const users = pgTable("users", {
 	lastName: varchar("last_name", { length: 255 }),
 	birthday: date("birthday", { mode: "string" }),
 	social: json("social"),
+	imageUrl: varchar("image_url", { length: 255 }),
+});
+
+export const images = pgTable("images", {
+	id: bigint("id", { mode: "number" }).primaryKey(),
+	path: varchar("path", { length: 255 }).notNull().unique(),
 });

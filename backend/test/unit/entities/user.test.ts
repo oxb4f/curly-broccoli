@@ -95,6 +95,7 @@ test("Unit test: User Entity", () => {
 					telegram: "https://test1.example",
 					instagram: "https://test1.example",
 				},
+				imageUrl: "https://test.com/test.png",
 			});
 
 			expect(result).toBeInstanceOf(User);
@@ -105,6 +106,7 @@ test("Unit test: User Entity", () => {
 				telegram: "https://test1.example",
 				instagram: "https://test1.example",
 			});
+			expect(result.getImageUrl()).toEqual("https://test.com/test.png");
 		});
 
 		describe("shoud perform partial update", async () => {
@@ -130,6 +132,7 @@ test("Unit test: User Entity", () => {
 				lastName: null,
 				birthday: null,
 				social: { telegram: null, instagram: null },
+				imageUrl: null,
 			});
 
 			expect(result).toBeInstanceOf(User);
@@ -140,6 +143,7 @@ test("Unit test: User Entity", () => {
 				telegram: null,
 				instagram: null,
 			});
+			expect(result.getImageUrl()).toBeNull();
 		});
 
 		describe("should pass null value for username", async () => {

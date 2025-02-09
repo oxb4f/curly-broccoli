@@ -2,15 +2,15 @@
 POST {{API_BASE}}/users
 Content-Type: application/json
 {
-    "username": "0203{{rn}}{{rs}}user1",
-    "password": "0203{{rn}}{{rs}}pass1"
+    "username": "0201{{rn}}{{rs}}user1",
+    "password": "0201{{rn}}{{rs}}pass1"
 }
 
 HTTP 200
 [Asserts]
 jsonpath "$.id" isInteger
 jsonpath "$.accessId" isInteger
-jsonpath "$.username" == "0203{{rn}}{{rs}}user1"
+jsonpath "$.username" == "0201{{rn}}{{rs}}user1"
 jsonpath "$.jwt.access" isString
 jsonpath "$.jwt.refresh" isString
 [Captures]

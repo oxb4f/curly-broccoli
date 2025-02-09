@@ -56,7 +56,7 @@ hurl: ## Run hurl tests against the application
 		--variables-file ./test/hurl/vars \
 		--variable rn=$(RN) \
 		--variable rs=$(RS) \
-		--file-root ./test/hurl \
+		--file-root ./test/hurl/fixtures \
 		--insecure \
 		--error-format long \
 		--test \
@@ -71,6 +71,8 @@ logs: env ## Display container last logs
 
 logs-follow: env ## Display container last logs
 	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} logs --follow
+
+dev: build run logs-follow ## Start the application using Docker Compose
 
 help: ## Display this help message
 	@echo "Usage: make [target] [FLAGS]"

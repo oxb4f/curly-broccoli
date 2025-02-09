@@ -1,66 +1,58 @@
 import assert from "node:assert/strict";
 import z from "zod";
 import { password, refreshId, username } from "../../common/validation/schema";
-import type { Context } from "../../context";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
 import type { LoginDtoIn } from "./dto.in";
 import { LoginDtoOut } from "./dto.out";
 
-async function login({
-	dto,
-	context,
-}: {
-	dto: LoginDtoIn;
-	context: Context;
-}) {
-	const user = await context.usersRepository.getUser({
-		username: dto.username,
-	});
-
-	if (!user) {
-		ServiceError.throw(ServiceError.ERROR_TYPE.AUTH, {
-			message: "User not found",
-			details: [{ path: ["username"], message: "Username does not exist" }],
+export default makeService<LoginDtoIn, LoginDtoOut>(
+	async ({ dto, context }) => {
+		const user = await context.usersRepository.getUser({
+			username: dto.username,
 		});
-	}
 
-	const loginResult = await user.login({
-		password: dto.password,
-		refreshId: dto.refreshId,
-		refreshLifetime: context.config.REFRESH_TOKEN_LIFETIME,
-		secret: context.config.JWT_SECRET,
-		jwtAccessLifetime: context.config.JWT_ACCESS_LIFETIME,
-	});
+		if (!user) {
+			ServiceError.throw(ServiceError.ERROR_TYPE.AUTH, {
+				message: "User not found",
+				details: [{ path: ["username"], message: "Username does not exist" }],
+			});
+		}
 
-	if (!(loginResult.jwtAccess && loginResult.refreshToken)) {
-		ServiceError.throw(ServiceError.ERROR_TYPE.AUTH, {
-			message: "Invalid password",
-			details: [{ path: ["password"], message: "Invalid password" }],
+		const loginResult = await user.login({
+			password: dto.password,
+			refreshId: dto.refreshId,
+			refreshLifetime: context.config.REFRESH_TOKEN_LIFETIME,
+			secret: context.config.JWT_SECRET,
+			jwtAccessLifetime: context.config.JWT_ACCESS_LIFETIME,
 		});
-	}
 
-	await context.usersRepository.updateFromEntity(user);
+		if (!(loginResult.jwtAccess && loginResult.refreshToken)) {
+			ServiceError.throw(ServiceError.ERROR_TYPE.AUTH, {
+				message: "Invalid password",
+				details: [{ path: ["password"], message: "Invalid password" }],
+			});
+		}
 
-	const access = user.getAcesss();
+		await context.usersRepository.updateFromEntity(user);
 
-	assert(access, "Acesss must exist");
+		const access = user.getAcesss();
 
-	return new LoginDtoOut(
-		user.getId(),
-		user.getUsername(),
-		user.getFirstName(),
-		user.getLastName(),
-		user.getBirthday(),
-		user.getSocial(),
-		access.getId(),
-		{
-			access: loginResult.jwtAccess,
-			refresh: loginResult.refreshToken,
-		},
-	);
-}
+		assert(access, "Acesss must exist");
 
-export function factory() {
-	return makeService(login, z.object({ username, password, refreshId }));
-}
+		return new LoginDtoOut(
+			user.getId(),
+			user.getUsername(),
+			user.getFirstName(),
+			user.getLastName(),
+			user.getBirthday(),
+			user.getSocial(),
+			access.getId(),
+			{
+				access: loginResult.jwtAccess,
+				refresh: loginResult.refreshToken,
+			},
+		);
+	},
+	z.object({ username, password, refreshId }),
+);

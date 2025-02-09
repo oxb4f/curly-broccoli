@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { ServiceError } from "../../../../src/services/errors/error";
-import { factory } from "../../../../src/services/users/update/action";
+import updateUserService from "../../../../src/services/users/update/action";
 import { UpdateUserDtoOut } from "../../../../src/services/users/update/dto.out";
 import { context, createdUserFixture1 } from "../fixtures";
 
@@ -15,10 +15,11 @@ const fixture = {
 		telegram: "https://test.example",
 		instagram: "https://test.example",
 	},
+	imageUrl: "https://test.com/test.png",
 };
 
 test("Unit test: User Update Service", () => {
-	const service = factory();
+	const service = updateUserService;
 
 	beforeEach(() => mock.restore());
 
@@ -40,6 +41,7 @@ test("Unit test: User Update Service", () => {
 		expect(dto.social).toBeObject();
 		expect(dto.social.telegram).toBeString();
 		expect(dto.social.instagram).toBeString();
+		expect(dto.imageUrl).toBeString();
 		expect(context.usersRepository.getUser).toBeCalledTimes(1);
 		expect(context.usersRepository.updateFromEntity).toBeCalledTimes(1);
 		expect(context.usersRepository.exists).toBeCalledTimes(1);

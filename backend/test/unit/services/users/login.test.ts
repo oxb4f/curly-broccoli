@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { User } from "../../../../src/entities/user";
 import { ServiceError } from "../../../../src/services/errors/error";
-import { factory } from "../../../../src/services/users/login/action";
+import loginUserService from "../../../../src/services/users/login/action";
 import { LoginDtoOut } from "../../../../src/services/users/login/dto.out";
 import { context, createdUserFixture1 } from "../fixtures";
 
@@ -12,7 +12,7 @@ const fixture = {
 };
 
 test("Unit test: User Login Service", () => {
-	const service = factory();
+	const service = loginUserService;
 
 	beforeEach(() => mock.restore());
 

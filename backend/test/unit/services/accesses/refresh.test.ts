@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { Access } from "../../../../src/entities/access";
-import { factory } from "../../../../src/services/accesses/refresh/action";
+import refreshAccessService from "../../../../src/services/accesses/refresh/action";
 import { RefreshDtoOut } from "../../../../src/services/accesses/refresh/dto.out";
 import { ServiceError } from "../../../../src/services/errors/error";
 import { context, createdAccessFixture1 } from "../fixtures";
@@ -12,7 +12,7 @@ const fixture = {
 };
 
 test("Unit test: Access Refresh Service", () => {
-	const service = factory();
+	const service = refreshAccessService;
 
 	afterEach(() => mock.restore());
 

@@ -30,7 +30,8 @@ Authorization: Bearer {{jwtAccess}}
     "social": {
         "telegram": "https://test.example",
         "instagram": "https://test.example"
-    }
+    },
+    "imageUrl": "https://test.example"
 }
 
 HTTP 200
@@ -42,6 +43,7 @@ jsonpath "$.lastName" == "TestLast103"
 jsonpath "$.birthday" == "2020-02-20T00:00:00.000Z"
 jsonpath "$.social.telegram" == "https://test.example"
 jsonpath "$.social.instagram" == "https://test.example"
+jsonpath "$.imageUrl" == "https://test.example"
 
 # Update to the same username
 PATCH {{API_BASE}}/users/{{userId}}

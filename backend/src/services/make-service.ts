@@ -14,7 +14,7 @@ export type TAction<T extends Record<string, any>, R> = (
 	arg: ActionArg<T>,
 ) => Promise<R>;
 
-export function makeService<T extends Record<string, any>, R>(
+function makeProxyHandler<T extends Record<string, any>, R>(
 	action: TAction<T, R>,
 	validationSchema?: ZodSchema<T>,
 ) {
@@ -34,4 +34,11 @@ export function makeService<T extends Record<string, any>, R>(
 	};
 
 	return new Proxy(action, proxyHandler);
+}
+
+export function makeService<T extends Record<string, any>, R>(
+	action: TAction<T, R>,
+	validationSchema?: ZodSchema<T>,
+) {
+	return makeProxyHandler(action, validationSchema);
 }

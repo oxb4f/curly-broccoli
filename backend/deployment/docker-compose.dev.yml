@@ -14,6 +14,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      minio:
+        condition: service_started
     expose:
       - "${APP_PORT:-8080}"
 
@@ -31,3 +33,30 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    ports:
+      - "${MINIO_PORT:-9000}:${MINIO_PORT:-9000}"
+    expose:
+      - "${MINIO_PORT:-9000}"
+      - "127.0.0.1:9001:9001"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    volumes:
+      - ./minio/data:/data
+
+  createbuckets:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add dev http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
+      /usr/bin/mc rm -r --force dev/${FILE_STORAGE_DEFAULT_BUCKET_NAME};
+      /usr/bin/mc mb dev/${FILE_STORAGE_DEFAULT_BUCKET_NAME};
+      /usr/bin/mc policy download dev/${FILE_STORAGE_DEFAULT_BUCKET_NAME};
+      exit 0;
+      "
