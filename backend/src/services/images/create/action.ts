@@ -1,9 +1,10 @@
 import z from "zod";
 import { Image } from "../../../entities/image";
 import { makeService } from "../../make-service";
+import type { CreateImageDtoIn } from "./dto.in";
 import { CreateImageDtoOut } from "./dto.out";
 
-export default makeService(
+export default makeService<CreateImageDtoIn, CreateImageDtoOut>(
 	async ({ dto, context }) => {
 		const image = await Image.fromBucket({
 			bucket: dto.bucket ?? context.config.FILE_STORAGE_DEFAULT_BUCKET_NAME,

@@ -2,9 +2,10 @@ import z from "zod";
 import { FileStorageNotFoundError } from "../../../infra/file-storage/errors/not-found";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
+import type { GetImageDtoIn } from "./dto.in";
 import { GetImageDtoOut } from "./dto.out";
 
-export default makeService(
+export default makeService<GetImageDtoIn, GetImageDtoOut>(
 	async ({ dto, context }) => {
 		try {
 			const image = await context.fileStorage.get({ path: dto.path });
