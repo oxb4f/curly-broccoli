@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, mock, test } from "bun:test";
 import { Access } from "../../../../src/entities/access";
-import { factory } from "../../../../src/services/accesses/validate/action";
+import validateAccessService from "../../../../src/services/accesses/validate/action";
 import { ValidateDtoOut } from "../../../../src/services/accesses/validate/dto.out";
 import { ServiceError } from "../../../../src/services/errors/error";
 import { context } from "../fixtures";
@@ -10,7 +10,7 @@ const fixture = {
 };
 
 test("Unit test: Access Validate Service", () => {
-	const service = factory();
+	const service = validateAccessService;
 
 	afterEach(() => mock.restore());
 
