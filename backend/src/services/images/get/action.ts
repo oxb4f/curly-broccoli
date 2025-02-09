@@ -1,21 +1,25 @@
 import z from "zod";
-import type { Context } from "../../context";
+import { FileStorageNotFoundError } from "../../../infra/file-storage/errors/not-found";
+import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
-import type { GetImageDtoIn } from "./dto.in";
 import { GetImageDtoOut } from "./dto.out";
 
-async function get({
-	dto,
-	context,
-}: {
-	dto: GetImageDtoIn;
-	context: Context;
-}) {
-	const image = await context.fileStorage.get({ path: dto.path });
+export default makeService(
+	async ({ dto, context }) => {
+		try {
+			const image = await context.fileStorage.get({ path: dto.path });
 
-	return new GetImageDtoOut(image);
-}
+			return new GetImageDtoOut(image);
+		} catch (error) {
+			if (error instanceof FileStorageNotFoundError) {
+				ServiceError.throw(ServiceError.ERROR_TYPE.NOT_FOUND, {
+					message: "Image not found",
+					details: [{ path: ["path"], message: "Image not found" }],
+				});
+			}
 
-export function factory() {
-	return makeService(get, z.object({ path: z.string() }));
-}
+			throw error;
+		}
+	},
+	z.object({ path: z.string().min(1).max(100) }),
+);

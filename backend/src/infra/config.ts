@@ -24,6 +24,7 @@ export interface Config {
 	AWS_SECRET_ACCESS_KEY: string;
 	AWS_REGION: string;
 	AWS_S3_ENDPOINT: string;
+	FILE_STORAGE_DEFAULT_BUCKET_NAME: string;
 }
 
 export class ConfigValidationError extends Error {
@@ -59,6 +60,7 @@ export const configSchema = z.object({
 
 	FILE_STORAGE_TYPE: z.enum(["aws-s3"]),
 	FILE_STORAGE_BASE_RETRIEVE_URL: z.string().url(),
+	FILE_STORAGE_DEFAULT_BUCKET_NAME: z.string(),
 
 	AWS_ACCESS_KEY_ID: z.string(),
 	AWS_SECRET_ACCESS_KEY: z.string(),

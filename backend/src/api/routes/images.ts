@@ -1,15 +1,15 @@
 import Elysia, { t } from "elysia";
-import { factory as createImagesServiceFactory } from "../../services/images/create/action";
+import createImagesService from "../../services/images/create/action";
 import { CreateImageDtoIn } from "../../services/images/create/dto.in";
-import { factory as getImageServiceFactory } from "../../services/images/get/action";
+import getImageService from "../../services/images/get/action";
 import { GetImageDtoIn } from "../../services/images/get/dto.in";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 
 export const imagesRoute = new Elysia({ name: "imagesRoute" })
 	.use(contextPlugin)
-	.decorate("createImagesService", createImagesServiceFactory())
-	.decorate("getImageService", getImageServiceFactory())
+	.decorate("createImageService", createImagesService)
+	.decorate("getImageService", getImageService)
 	.group("/images", (app) =>
 		app.guard((app) =>
 			app
@@ -35,8 +35,8 @@ export const imagesRoute = new Elysia({ name: "imagesRoute" })
 				.use(createJwtAuthGuard())
 				.post(
 					"/",
-					async ({ body, context, createImagesService }) => {
-						const result = await createImagesService({
+					async ({ body, context, createImageService }) => {
+						const result = await createImageService({
 							dto: new CreateImageDtoIn(body.image, body.bucket),
 							context,
 						});
@@ -49,9 +49,11 @@ export const imagesRoute = new Elysia({ name: "imagesRoute" })
 							image: t.Any({
 								description: "Image",
 							}),
-							bucket: t.String({
-								description: "Bucket",
-							}),
+							bucket: t.Optional(
+								t.String({
+									description: "Bucket",
+								}),
+							),
 						}),
 					},
 				),
