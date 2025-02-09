@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import Elysia, { t } from "elysia";
-import { factory as createUsersServiceFactory } from "../../services/users/create/action";
+import createUserService from "../../services/users/create/action";
 import { CreateUserDtoIn } from "../../services/users/create/dto.in";
-import { factory as loginUsersServiceFactory } from "../../services/users/login/action";
+import getUserService from "../../services/users/get/action";
+import { GetUserDtoIn } from "../../services/users/get/dto.in";
+import loginUserService from "../../services/users/login/action";
 import { LoginDtoIn } from "../../services/users/login/dto.in";
-import { factory as updateUsersServiceFactory } from "../../services/users/update/action";
+import updateUserService from "../../services/users/update/action";
 import { UpdateUserDtoIn } from "../../services/users/update/dto.in";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
@@ -12,16 +14,17 @@ import { generateUserAgentHash } from "./utils";
 
 export const usersRoute = new Elysia({ name: "usersRoute" })
 	.use(contextPlugin)
-	.decorate("createUsersService", createUsersServiceFactory())
-	.decorate("loginUsersService", loginUsersServiceFactory())
-	.decorate("updateUsersService", updateUsersServiceFactory())
+	.decorate("createUserService", createUserService)
+	.decorate("loginUserService", loginUserService)
+	.decorate("updateUserService", updateUserService)
+	.decorate("getUserService", getUserService)
 	.group("/users", (app) =>
 		app.guard((app) =>
 			app
 				.post(
 					"/",
-					async ({ body, context, createUsersService, headers }) => {
-						const result = await createUsersService({
+					async ({ body, context, createUserService, headers }) => {
+						const result = await createUserService({
 							dto: new CreateUserDtoIn(
 								body.username,
 								body.password,
@@ -46,8 +49,8 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 				)
 				.post(
 					"/login",
-					async ({ body, context, loginUsersService, headers }) => {
-						const result = await loginUsersService({
+					async ({ body, context, loginUserService, headers }) => {
+						const result = await loginUserService({
 							dto: new LoginDtoIn(
 								body.username,
 								body.password,
@@ -71,12 +74,36 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 					},
 				)
 				.use(createJwtAuthGuard())
-				.patch(
+				.get(
 					"/:userId",
-					async ({ params, body, context, updateUsersService, store }) => {
+					async ({ params, context, getUserService, store }) => {
 						assert(store.jwtAuthGuardPayload.payload?.accessId);
 
-						const result = await updateUsersService({
+						const result = await getUserService({
+							dto: new GetUserDtoIn(
+								store.jwtAuthGuardPayload.payload.accessId,
+								params.userId,
+							),
+							context,
+						});
+
+						return result.toJSON();
+					},
+					{
+						tags: ["Users"],
+						params: t.Object({
+							userId: t.Numeric({
+								description: "User id",
+							}),
+						}),
+					},
+				)
+				.patch(
+					"/:userId",
+					async ({ params, body, context, updateUserService, store }) => {
+						assert(store.jwtAuthGuardPayload.payload?.accessId);
+
+						const result = await updateUserService({
 							dto: new UpdateUserDtoIn(
 								store.jwtAuthGuardPayload.payload.accessId,
 								params.userId,
