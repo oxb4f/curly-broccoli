@@ -56,7 +56,7 @@ hurl: ## Run hurl tests against the application
 		--variables-file ./test/hurl/vars \
 		--variable rn=$(RN) \
 		--variable rs=$(RS) \
-		--file-root ./test/hurl \
+		--file-root ./test/hurl/fixtures \
 		--insecure \
 		--error-format long \
 		--test \

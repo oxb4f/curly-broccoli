@@ -1,5 +1,5 @@
 import Elysia, { t } from "elysia";
-import { factory as refreshServiceFactory } from "../../services/accesses/refresh/action";
+import refreshService from "../../services/accesses/refresh/action";
 import { RefreshDtoIn } from "../../services/accesses/refresh/dto.in";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
@@ -7,7 +7,7 @@ import { generateUserAgentHash } from "./utils";
 
 export const accessesRoute = new Elysia({ name: "accessesRoute" })
 	.use(contextPlugin)
-	.decorate("refreshService", refreshServiceFactory())
+	.decorate("refreshService", refreshService)
 	.group("/accesses", (app) =>
 		app.guard((app) =>
 			app.use(createJwtAuthGuard(true)).post(
