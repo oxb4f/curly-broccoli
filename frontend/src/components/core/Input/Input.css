@@ -1,7 +1,3 @@
 .input {
   @apply block text-pr-text bg-pr-bg-main placeholder:text-pr-text-darker;
 }
-
-.input__description {
-  @apply text-xs;
-}

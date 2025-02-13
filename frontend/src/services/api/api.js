@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getProperError from '../customErrors/getProperError';
 import { refreshToken } from './jwt';
-import { getFromStorage } from '../storage/storage';
+import { getUserFromStorage, setUserToStorage } from '../storage/user';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -25,7 +25,13 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  config.headers['Authorization'] = `Bearer ${getFromStorage('user')?.jwt?.access}`;
+  const user = getUserFromStorage();
+  if (user?.jwt?.access) {
+    config.headers['Authorization'] = `Bearer ${user.jwt.access}`;
+  }
+
+  config.headers['Content-Type'] ??= 'application/json';
+
   return config;
 });
 
@@ -34,7 +40,9 @@ api.interceptors.response.use(
     return response.data;
   },
   async function (error) {
-    const user = getFromStorage('user');
+    const user = getUserFromStorage();
+    const originalRequest = error.config;
+    // виправити
 
     if (error.response.status === 401 && user) {
       if (!refreshRequest) {
@@ -42,10 +50,19 @@ api.interceptors.response.use(
           refreshRequest = null;
         });
       }
-      await refreshRequest;
 
-      return api(error.config);
+      const newTokens = await refreshRequest;
+      console.log(newTokens);
+
+      const newUserData = { ...user, jwt: newTokens };
+
+      setUserToStorage(newUserData);
+
+      const response = await api(originalRequest);
+
+      return response;
     }
+
     throw error.response.data;
   }
 );

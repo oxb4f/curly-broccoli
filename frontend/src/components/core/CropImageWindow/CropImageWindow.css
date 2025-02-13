@@ -3,7 +3,7 @@
 }
 
 .crop-image-window__frame {
-  @apply absolute flex justify-center items-center ring-[999rem] box-border ring-pr-bg-secondary opacity-80 rounded-full bg-transparent z-50 cursor-move;
+  @apply absolute top-0 left-0 flex justify-center items-center ring-[999rem] box-border ring-pr-bg-secondary opacity-80 rounded-full bg-transparent z-50 cursor-move;
 }
 
 .crop-image-window__icon {

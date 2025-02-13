@@ -1,0 +1,11 @@
+.social-navigation {
+  @apply stroke-pr-main;
+}
+
+.social-navigation .navigation__list {
+  @apply flex flex-wrap gap-3;
+}
+
+.social-navigation .navigation__icon {
+  @apply size-7;
+}

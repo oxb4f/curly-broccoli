@@ -1,0 +1,11 @@
+.profile-photo {
+  @apply rounded-full overflow-hidden;
+}
+
+.profile-photo__image {
+  @apply size-full;
+}
+
+.profile-photo__icon {
+  @apply size-full text-pr-text scale-125;
+}
