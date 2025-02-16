@@ -56,3 +56,35 @@ Authorization: Bearer {{jwtAccess2}}
 
 HTTP 404
 
+# User update with valid values
+PATCH {{API_BASE}}/users/{{userId}}
+Content-Type: application/json
+Authorization: Bearer {{jwtAccess}}
+{
+    "username": "0104{{rn}}{{rs}}user1",
+    "firstName": "TestFirst104",
+    "lastName": "TestLast104",
+    "birthday": "2020-02-20",
+    "social": {
+        "telegram": "https://test.example",
+        "instagram": "https://test.example"
+    },
+    "imageUrl": "https://test.example"
+}
+
+HTTP 200
+
+# User get after update
+GET {{API_BASE}}/users/{{userId}}
+Authorization: Bearer {{jwtAccess}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.id" isInteger
+jsonpath "$.username" == "0104{{rn}}{{rs}}user1"
+jsonpath "$.social.instagram" == "https://test.example"
+jsonpath "$.social.telegram" == "https://test.example"
+jsonpath "$.imageUrl" == "https://test.example"
+jsonpath "$.firstName" == "TestFirst104"
+jsonpath "$.lastName" == "TestLast104"
+jsonpath "$.birthday" == "2020-02-20T00:00:00.000Z"
