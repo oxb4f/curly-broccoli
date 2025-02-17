@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, mock, test } from "bun:test";
 import { Access } from "../../../../src/entities/access";
 import validateAccessService from "../../../../src/services/accesses/validate/action";
-import { ValidateDtoOut } from "../../../../src/services/accesses/validate/dto.out";
 import { ServiceError } from "../../../../src/services/errors/error";
 import { context } from "../fixtures";
 
@@ -22,7 +21,6 @@ test("Unit test: Access Validate Service", () => {
 
 		const dto = await service({ dto: fixture, context: context });
 
-		expect(dto).toBeInstanceOf(ValidateDtoOut);
 		expect(dto.result).toBeBoolean();
 		expect(dto.payload).toBeObject();
 		expect(dto.payload).toContainKey("accessId");
@@ -31,7 +29,10 @@ test("Unit test: Access Validate Service", () => {
 
 	describe("should throw an error if jwtAccess equals to false value", async () => {
 		await expect(
-			service({ dto: { ...fixture, jwtAccess: undefined }, context: context }),
+			service({
+				dto: { ...fixture, jwtAccess: undefined },
+				context: context,
+			}),
 		).rejects.toBeInstanceOf(ServiceError);
 	});
 

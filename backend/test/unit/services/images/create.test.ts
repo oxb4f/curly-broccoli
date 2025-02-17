@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { Image } from "../../../../src/entities/image";
 import { ServiceError } from "../../../../src/services/errors/error";
 import createImageService from "../../../../src/services/images/create/action";
-import { CreateImageDtoOut } from "../../../../src/services/images/create/dto.out";
 import { context, createdImageFixture1 } from "../fixtures";
 
 const fixture = {
@@ -26,7 +25,6 @@ test("Unit test: Image Create Service", () => {
 
 		const dto = await service({ dto: fixture, context: context });
 
-		expect(dto).toBeInstanceOf(CreateImageDtoOut);
 		expect(dto.url).toBeString();
 		expect(Image.fromBucket).toBeCalledTimes(1);
 		expect(context.imagesRepository.createFromEntity).toBeCalledTimes(1);

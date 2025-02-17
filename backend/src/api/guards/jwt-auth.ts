@@ -2,13 +2,12 @@ import assert from "node:assert/strict";
 import { bearer } from "@elysiajs/bearer";
 import { Elysia } from "elysia";
 import validateService from "../../services/accesses/validate/action";
-import { ValidateDtoIn } from "../../services/accesses/validate/dto.in";
-import type { ValidateDtoOut } from "../../services/accesses/validate/dto.out";
+import type { OutShape } from "../../services/accesses/validate/dto";
 import { contextPlugin } from "../plugins/context";
 
 export function createJwtAuthGuard(ignoreExpiration = false) {
 	return new Elysia({ name: "jwtAuthGuard" })
-		.state("jwtAuthGuardPayload", {} as ValidateDtoOut)
+		.state("jwtAuthGuardPayload", {} as OutShape)
 		.decorate("validateService", validateService)
 		.use(contextPlugin)
 		.use(bearer())
@@ -18,7 +17,7 @@ export function createJwtAuthGuard(ignoreExpiration = false) {
 				assert(context, `Invalid guard args: context ${!!context}`);
 
 				const result = await validateService({
-					dto: new ValidateDtoIn(bearer, ignoreExpiration),
+					dto: { jwtAccess: bearer, ignoreExpiration },
 					context,
 				});
 

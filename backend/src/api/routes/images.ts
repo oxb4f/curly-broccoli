@@ -1,8 +1,6 @@
 import Elysia, { t } from "elysia";
 import createImagesService from "../../services/images/create/action";
-import { CreateImageDtoIn } from "../../services/images/create/dto.in";
 import getImageService from "../../services/images/get/action";
-import { GetImageDtoIn } from "../../services/images/get/dto.in";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 
@@ -17,7 +15,7 @@ export const imagesRoute = new Elysia({ name: "imagesRoute" })
 					"*",
 					async ({ params, context, getImageService }) => {
 						const result = await getImageService({
-							dto: new GetImageDtoIn(params["*"] as string),
+							dto: { path: params["*"] as string },
 							context,
 						});
 
@@ -37,11 +35,14 @@ export const imagesRoute = new Elysia({ name: "imagesRoute" })
 					"/",
 					async ({ body, context, createImageService }) => {
 						const result = await createImageService({
-							dto: new CreateImageDtoIn(body.image, body.bucket),
+							dto: {
+								image: body.image,
+								bucket: body.bucket,
+							},
 							context,
 						});
 
-						return result.toJSON();
+						return result;
 					},
 					{
 						tags: ["Images"],

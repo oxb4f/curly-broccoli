@@ -1,57 +1,36 @@
-import type { ZodSchema } from "zod";
 import type { Context } from "./context";
-import { ServiceError } from "./errors/error";
+import type { Dto, DtoShape } from "./dtos/factory";
+
+export type InputDto<T extends Record<string, any>> = Dto<T>;
+export type OutputResult<T extends Record<string, any>> = DtoShape<Dto<T>>;
 
 export type ServiceAction<
-	InputDto extends Record<string, any> = Record<string, any>,
-	OutputType = any,
+	InputType extends Record<string, any>,
+	OutputType extends Record<string, any>,
 > = (arg: {
-	dto: InputDto;
+	dto: InputType;
 	context: Context;
 }) => Promise<OutputType>;
 
-function isClassInstance(value: any): boolean {
-	return value?.constructor && value.constructor !== Object;
-}
-
-async function validateDto<T extends Record<string, any>>(
-	dto: T,
-	schema?: ZodSchema<T>,
-): Promise<T> {
-	if (!schema) return dto;
-
-	const result = await schema.safeParseAsync(dto);
-	if (!result.success) {
-		ServiceError.throwValidationErrorFromZodError(result.error);
-	}
-
-	if (isClassInstance(dto)) {
-		Object.assign(dto, result.data);
-		return dto;
-	}
-
-	return result.data;
-}
-
-function createServiceProxy<InputDto extends Record<string, any>, OutputType>(
-	action: ServiceAction<InputDto, OutputType>,
-	validationSchema?: ZodSchema<InputDto>,
-) {
+function createServiceProxy<
+	InputType extends Record<string, any>,
+	OutputType extends Record<string, any>,
+>(action: ServiceAction<InputType, OutputType>, dtoIn: InputDto<InputType>) {
 	return new Proxy(action, {
 		async apply(
-			target: ServiceAction<InputDto, OutputType>,
+			target: ServiceAction<InputType, OutputType>,
 			thisArg: unknown,
-			[arg]: [{ dto: InputDto; context: Context }],
+			[arg]: [{ dto: InputType; context: Context }],
 		) {
-			arg.dto = await validateDto(arg.dto, validationSchema);
+			arg.dto = await dtoIn.create(arg.dto);
 			return target.call(thisArg, arg);
 		},
 	});
 }
 
-export function makeService<InputDto extends Record<string, any>, OutputType>(
-	action: ServiceAction<InputDto, OutputType>,
-	validationSchema?: ZodSchema<InputDto>,
-) {
-	return createServiceProxy(action, validationSchema);
+export function makeService<
+	InputType extends Record<string, any>,
+	OutputType extends Record<string, any>,
+>(action: ServiceAction<InputType, OutputType>, dtoIn: InputDto<InputType>) {
+	return createServiceProxy(action, dtoIn);
 }

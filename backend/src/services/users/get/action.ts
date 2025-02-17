@@ -1,36 +1,32 @@
-import z from "zod";
-import { id } from "../../common/validation/schema";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
-import type { GetUserDtoIn } from "./dto.in";
-import { GetUserDtoOut } from "./dto.out";
+import {
+	GetUserDtoIn,
+	GetUserDtoOut,
+	type InShape,
+	type OutShape,
+} from "./dto";
 
-export default makeService<GetUserDtoIn, GetUserDtoOut>(
-	async ({ dto, context }) => {
-		const user = await context.usersRepository.getUser({
-			id: dto.userId,
-			accessId: dto.accessId,
+export default makeService<InShape, OutShape>(async ({ dto, context }) => {
+	const user = await context.usersRepository.getUser({
+		id: dto.userId,
+		accessId: dto.accessId,
+	});
+
+	if (!user) {
+		ServiceError.throw(ServiceError.ERROR_TYPE.NOT_FOUND, {
+			message: "User not found",
+			details: [{ path: ["userId"], message: "User not found" }],
 		});
+	}
 
-		if (!user) {
-			ServiceError.throw(ServiceError.ERROR_TYPE.NOT_FOUND, {
-				message: "User not found",
-				details: [{ path: ["userId"], message: "User not found" }],
-			});
-		}
-
-		return new GetUserDtoOut(
-			user.getId(),
-			user.getUsername(),
-			user.getFirstName(),
-			user.getLastName(),
-			user.getBirthday(),
-			user.getSocial(),
-			user.getImageUrl(),
-		);
-	},
-	z.object({
-		accessId: id,
-		userId: id,
-	}),
-);
+	return GetUserDtoOut.create({
+		id: user.getId(),
+		username: user.getUsername(),
+		firstName: user.getFirstName(),
+		lastName: user.getLastName(),
+		birthday: user.getBirthday(),
+		social: user.getSocial(),
+		imageUrl: user.getImageUrl(),
+	});
+}, GetUserDtoIn);

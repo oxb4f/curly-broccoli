@@ -4,13 +4,23 @@ import {
 	index,
 	json,
 	pgTable,
+	timestamp,
 	varchar,
 } from "drizzle-orm/pg-core";
+
+export const base = {
+	id: bigint("id", { mode: "number" }).notNull().primaryKey(),
+	createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
+	updatedAt: timestamp("updated_at", { mode: "string" })
+		.notNull()
+		.defaultNow()
+		.$onUpdateFn(() => new Date().toISOString()),
+};
 
 export const accesses = pgTable(
 	"accesses",
 	{
-		id: bigint("id", { mode: "number" }).notNull().primaryKey(),
+		...base,
 		login: varchar("login", { length: 128 }).notNull(),
 		password: varchar("password", { length: 64 }).notNull(),
 		refreshTokens: json("refresh_tokens").notNull(),
@@ -18,13 +28,11 @@ export const accesses = pgTable(
 			.notNull()
 			.references(() => users.id),
 	},
-	(accesses) => ({
-		loginUserIdIdx: index("login_user_idx").on(accesses.login, accesses.userId),
-	}),
+	(accesses) => [index("login_user_idx").on(accesses.login, accesses.userId)],
 );
 
 export const users = pgTable("users", {
-	id: bigint("id", { mode: "number" }).primaryKey(),
+	...base,
 	username: varchar("username", { length: 128 }).notNull().unique(),
 	firstName: varchar("first_name", { length: 255 }),
 	lastName: varchar("last_name", { length: 255 }),
@@ -34,6 +42,6 @@ export const users = pgTable("users", {
 });
 
 export const images = pgTable("images", {
-	id: bigint("id", { mode: "number" }).primaryKey(),
+	...base,
 	path: varchar("path", { length: 255 }).notNull().unique(),
 });

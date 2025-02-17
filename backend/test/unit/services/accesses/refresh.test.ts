@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { Access } from "../../../../src/entities/access";
 import refreshAccessService from "../../../../src/services/accesses/refresh/action";
-import { RefreshDtoOut } from "../../../../src/services/accesses/refresh/dto.out";
 import { ServiceError } from "../../../../src/services/errors/error";
 import { context, createdAccessFixture1 } from "../fixtures";
 
@@ -28,7 +27,6 @@ test("Unit test: Access Refresh Service", () => {
 
 		const dto = await service({ dto: fixture, context: context });
 
-		expect(dto).toBeInstanceOf(RefreshDtoOut);
 		expect(dto.jwt).toBeObject();
 		expect(dto.jwt.access).toBeString();
 		expect(dto.jwt.refresh).toBeString();

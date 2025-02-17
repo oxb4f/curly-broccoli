@@ -1,10 +1,13 @@
-import z from "zod";
 import { makeService } from "../../make-service";
-import { GetPingDtoOut } from "./dto.out";
+import {
+	GetPingDtoIn,
+	GetPingDtoOut,
+	type InShape,
+	type OutShape,
+} from "./dto";
 
-export default makeService(
-	async ({ dto }) => {
-		return new GetPingDtoOut(dto.ping);
-	},
-	z.object({ ping: z.string().max(128) }),
-);
+export default makeService<InShape, OutShape>(async ({ dto }) => {
+	return GetPingDtoOut.create({
+		pong: dto.ping,
+	});
+}, GetPingDtoIn);

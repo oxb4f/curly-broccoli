@@ -1,13 +1,9 @@
 import assert from "node:assert/strict";
 import Elysia, { t } from "elysia";
 import createUserService from "../../services/users/create/action";
-import { CreateUserDtoIn } from "../../services/users/create/dto.in";
 import getUserService from "../../services/users/get/action";
-import { GetUserDtoIn } from "../../services/users/get/dto.in";
 import loginUserService from "../../services/users/login/action";
-import { LoginDtoIn } from "../../services/users/login/dto.in";
 import updateUserService from "../../services/users/update/action";
-import { UpdateUserDtoIn } from "../../services/users/update/dto.in";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 import { generateUserAgentHash } from "./utils";
@@ -25,15 +21,15 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 					"/",
 					async ({ body, context, createUserService, headers }) => {
 						const result = await createUserService({
-							dto: new CreateUserDtoIn(
-								body.username,
-								body.password,
-								generateUserAgentHash(headers["user-agent"]),
-							),
+							dto: {
+								username: body.username,
+								password: body.password,
+								refreshId: generateUserAgentHash(headers["user-agent"]),
+							},
 							context,
 						});
 
-						return result.toJSON();
+						return result;
 					},
 					{
 						tags: ["Users"],
@@ -51,15 +47,15 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 					"/login",
 					async ({ body, context, loginUserService, headers }) => {
 						const result = await loginUserService({
-							dto: new LoginDtoIn(
-								body.username,
-								body.password,
-								generateUserAgentHash(headers["user-agent"]),
-							),
+							dto: {
+								username: body.username,
+								password: body.password,
+								refreshId: generateUserAgentHash(headers["user-agent"]),
+							},
 							context,
 						});
 
-						return result.toJSON();
+						return result;
 					},
 					{
 						tags: ["Users"],
@@ -80,14 +76,14 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 						assert(store.jwtAuthGuardPayload.payload?.accessId);
 
 						const result = await getUserService({
-							dto: new GetUserDtoIn(
-								store.jwtAuthGuardPayload.payload.accessId,
-								params.userId,
-							),
+							dto: {
+								accessId: store.jwtAuthGuardPayload.payload.accessId,
+								userId: params.userId,
+							},
 							context,
 						});
 
-						return result.toJSON();
+						return result;
 					},
 					{
 						tags: ["Users"],
@@ -104,20 +100,20 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 						assert(store.jwtAuthGuardPayload.payload?.accessId);
 
 						const result = await updateUserService({
-							dto: new UpdateUserDtoIn(
-								store.jwtAuthGuardPayload.payload.accessId,
-								params.userId,
-								body.username,
-								body.firstName,
-								body.lastName,
-								body.birthday,
-								body.social,
-								body.imageUrl,
-							),
+							dto: {
+								accessId: store.jwtAuthGuardPayload.payload.accessId,
+								userId: params.userId,
+								username: body.username,
+								firstName: body.firstName,
+								lastName: body.lastName,
+								birthday: body.birthday,
+								social: body.social,
+								imageUrl: body.imageUrl,
+							},
 							context,
 						});
 
-						return result.toJSON();
+						return result;
 					},
 					{
 						tags: ["Users"],

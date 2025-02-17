@@ -11,6 +11,7 @@ export class ServiceError<C extends Error = Error> extends Error {
 		NOT_FOUND: "NOT_FOUND",
 		VALIDATION: "VALIDATION",
 		AUTH: "AUTH",
+		WRONG_INTERNAL_STATE: "WRONG_INTERNAL_STATE",
 	} as const);
 
 	protected constructor(

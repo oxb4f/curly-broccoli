@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { User } from "../../../../src/entities/user";
 import { ServiceError } from "../../../../src/services/errors/error";
 import createUserService from "../../../../src/services/users/create/action";
-import { CreateUserDtoOut } from "../../../../src/services/users/create/dto.out";
 import { context, createdUserFixture1 } from "../fixtures";
 
 const fixture = {
@@ -25,7 +24,6 @@ test("Unit test: User Create Service", () => {
 
 		const dto = await service({ dto: fixture, context: context });
 
-		expect(dto).toBeInstanceOf(CreateUserDtoOut);
 		expect(dto.id).toBeInteger();
 		expect(dto.jwt).toBeObject();
 		expect(dto.jwt.access).toBeString();

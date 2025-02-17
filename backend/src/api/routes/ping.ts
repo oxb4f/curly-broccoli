@@ -1,6 +1,5 @@
 import Elysia, { t } from "elysia";
 import getPingService from "../../services/ping/get/action";
-import { GetPingDtoIn } from "../../services/ping/get/dto.in";
 import { contextPlugin } from "../plugins/context";
 
 export const pingRoute = new Elysia({ name: "pingRoute" })
@@ -12,11 +11,11 @@ export const pingRoute = new Elysia({ name: "pingRoute" })
 				"/",
 				async ({ query, getPingService, context }) => {
 					const result = await getPingService({
-						dto: new GetPingDtoIn(query.ping!),
+						dto: { ping: query.ping },
 						context,
 					});
 
-					return result.toJSON();
+					return result;
 				},
 				{
 					tags: ["Ping"],

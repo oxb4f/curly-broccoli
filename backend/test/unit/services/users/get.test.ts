@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { ServiceError } from "../../../../src/services/errors/error";
 import getUserService from "../../../../src/services/users/get/action";
-import { GetUserDtoOut } from "../../../../src/services/users/get/dto.out";
 import { context, createdUserFixture1 } from "../fixtures";
 
 const fixture = {
@@ -20,15 +19,14 @@ test("Unit test: User Update Service", () => {
 
 		const dto = await service({ dto: fixture, context: context });
 
-		expect(dto).toBeInstanceOf(GetUserDtoOut);
 		expect(dto.id).toBeInteger();
 		expect(dto.username).toBeString();
 		expect(dto.firstName).toBeString();
 		expect(dto.lastName).toBeString();
 		expect(dto.birthday).toBeDate();
 		expect(dto.social).toBeObject();
-		expect(dto.social.telegram).toBeString();
-		expect(dto.social.instagram).toBeString();
+		expect(dto.social?.telegram).toBeString();
+		expect(dto.social?.instagram).toBeString();
 		expect(dto.imageUrl).toBeString();
 		expect(context.usersRepository.getUser).toBeCalledTimes(1);
 	});

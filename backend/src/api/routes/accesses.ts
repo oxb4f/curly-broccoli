@@ -1,6 +1,5 @@
 import Elysia, { t } from "elysia";
 import refreshService from "../../services/accesses/refresh/action";
-import { RefreshDtoIn } from "../../services/accesses/refresh/dto.in";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 import { generateUserAgentHash } from "./utils";
@@ -14,15 +13,15 @@ export const accessesRoute = new Elysia({ name: "accessesRoute" })
 				"/:accessId/refresh",
 				async ({ body, params, context, refreshService, headers }) => {
 					const result = await refreshService({
-						dto: new RefreshDtoIn(
-							generateUserAgentHash(headers["user-agent"]),
-							params.accessId,
-							body.refresh,
-						),
+						dto: {
+							refreshId: generateUserAgentHash(headers["user-agent"]),
+							accessId: params.accessId,
+							refresh: body.refresh,
+						},
 						context,
 					});
 
-					return result.toJSON();
+					return result;
 				},
 				{
 					tags: ["Accesses"],

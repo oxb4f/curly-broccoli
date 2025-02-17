@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { FileStorageNotFoundError } from "../../../../src/infra/file-storage/errors/not-found";
 import { ServiceError } from "../../../../src/services/errors/error";
 import getImageService from "../../../../src/services/images/get/action";
-import { GetImageDtoOut } from "../../../../src/services/images/get/dto.out";
 import { context } from "../fixtures";
 
 const fixture = {
@@ -15,11 +14,15 @@ test("Unit test: Image Get Service", () => {
 	beforeEach(() => mock.restore());
 
 	describe("should return valid dto", async () => {
-		spyOn(context.fileStorage, "get").mockImplementation((() => {}) as any);
+		spyOn(context.fileStorage, "get").mockImplementation(
+			mock().mockResolvedValue(
+				new File([new Uint8Array([1, 2, 3])], "test.png"),
+			),
+		);
 
 		const dto = await service({ dto: fixture, context: context });
 
-		expect(dto).toBeInstanceOf(GetImageDtoOut);
+		expect(dto.image).toBeInstanceOf(File);
 		expect(context.fileStorage.get).toBeCalledTimes(1);
 	});
 
