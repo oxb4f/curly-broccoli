@@ -30,8 +30,7 @@ const CropImageWindowFrame = ({ innerRef, containerRef, imageBounds, frameSize, 
     <div
       className="crop-image-window__frame"
       style={{
-        top: `${framePosition.y}px`,
-        left: `${framePosition.x}px`,
+        transform: `translate(${framePosition.x}px, ${framePosition.y}px)`,
         height: `${frameRelativeSize}px`,
         width: `${frameRelativeSize}px`
       }}

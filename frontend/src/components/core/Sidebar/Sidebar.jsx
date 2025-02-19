@@ -1,11 +1,11 @@
 import './Sidebar.css';
 
-const Sidebar = ({ header, main, footer }) => {
+const Sidebar = ({ header, main, footer, className = '' }) => {
   return (
-    <aside className="sidebar">
-      <header className="sidebar__header">{header}</header>
+    <aside className={`sidebar ${className}`}>
+      {header && <header className="sidebar__header">{header}</header>}
       <div className="sidebar__main">{main}</div>
-      <footer className="sidebar__footer">{footer}</footer>
+      {footer && <footer className="sidebar__footer">{footer}</footer>}
     </aside>
   );
 };

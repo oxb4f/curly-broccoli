@@ -1,0 +1,30 @@
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  @apply relative bg-pr-bg-tertiary overflow-hidden;
+}
+
+.skeleton::after {
+  @apply absolute inset-0 content-[''] bg-gradient-to-r from-transparent from-0% via-pr-text-darker via-85% to-transparent to-100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+.skeleton-text,
+.skeleton-icon {
+  @apply rounded-sm;
+}
+
+.skeleton-input {
+  @apply rounded-md;
+}
+
+.skeleton-rounded {
+  @apply rounded-full;
+}

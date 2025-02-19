@@ -9,6 +9,7 @@ export default {
         'pr-main-mute': 'var(--project-main-color-mute)',
         'pr-bg-main': 'var(--project-bg-main-color)',
         'pr-bg-secondary': 'var(--project-bg-secondary-color)',
+        'pr-bg-tertiary': 'var(--project-bg-tertiary-color)',
         'pr-bg-hover': 'var(--project-bg-hover-color)',
         'pr-bg-disable': 'var(--project-bg-disable-color)',
         'pr-border': 'var(--project-border-color)',

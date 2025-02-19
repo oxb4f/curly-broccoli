@@ -1,0 +1,7 @@
+.form__navigation {
+  @apply size-full border-1 border-pr-main rounded-md;
+}
+
+.form__navigation .navigation__link {
+  @apply size-full flex justify-center items-center;
+}

@@ -1,5 +1,5 @@
 .sidebar {
-  @apply min-w-16 h-screen flex flex-col items-center gap-9 py-9 border-r-1 border-pr-border bg-pr-bg-main;
+  @apply flex flex-col items-center border-pr-border bg-pr-bg-main;
 }
 
 .sidebar__header,
@@ -13,9 +13,21 @@
 }
 
 .sidebar__footer {
-  @apply flex flex-col gap-4 items-center;
+  @apply flex flex-col gap-6 items-center;
 }
 
 .sidebar__logo {
   @apply text-4xl;
 }
+
+.sidebar__profile-photo {
+  @apply size-full;
+}
+
+/* .sidebar .sidebar__navigation {
+  @apply px-3;
+} */
+
+/* .sidebar .sidebar__navigation > ul {
+  @apply grid;
+} */

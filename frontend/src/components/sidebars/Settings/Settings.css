@@ -1,0 +1,19 @@
+.settings-sidebar {
+  @apply min-w-max h-screen py-9 border-r-1;
+}
+
+.settings-sidebar .sidebar__header {
+  @apply flex justify-center;
+}
+
+.settings-sidebar .sidebar__navigation .navigation__item {
+  @apply border-b-1 border-pr-border;
+}
+
+.settings-sidebar .sidebar__main .sidebar__navigation .navigation__text {
+  @apply p-3;
+}
+
+/* .settings-sidebar .navigation__item:hover {
+  @apply transition-all;
+} */

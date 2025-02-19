@@ -27,7 +27,8 @@
   @apply border-pr-border bg-pr-bg-secondary;
 }
 
-.description {
+.description,
+.hint {
   @apply text-pr-text-darker;
 }
 

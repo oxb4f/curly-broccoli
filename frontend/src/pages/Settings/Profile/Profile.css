@@ -1,0 +1,19 @@
+.profile-settings {
+  @apply size-full flex flex-col gap-8 justify-center items-center;
+}
+
+.profile-settings__photo-container {
+  @apply relative size-fit;
+}
+
+.profile-settings__photo {
+  @apply size-44;
+}
+
+.profile-settings__edit-photo-navigation {
+  @apply absolute right-4 bottom-0 size-9 rounded-full bg-pr-bg-secondary z-10;
+}
+
+.profile-settings__edit-photo-navigation .navigation__icon {
+  @apply p-2;
+}

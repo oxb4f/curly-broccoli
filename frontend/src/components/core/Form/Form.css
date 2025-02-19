@@ -1,28 +1,52 @@
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .form {
-  @apply w-full flex gap-y-6 gap-x-2 flex-wrap;
+  @apply min-w-64;
+}
+
+.form__group {
+  @apply w-full flex justify-evenly;
+}
+
+.form__group .form__item {
+  @apply w-auto max-w-[50%] flex-grow;
 }
 
 .form__item {
-  @apply w-full flex justify-center items-center;
+  @apply w-full relative flex justify-center items-center;
 }
 
-.form__item__half-size {
-  @apply w-0 flex-grow;
+.form__hint {
+  @apply absolute w-full h-4 left-0 -bottom-4 -z-10;
 }
 
-input.form__input {
-  @apply w-full p-2 rounded-md;
+.form__hint {
+  animation: slide-down 0.2s ease-out;
 }
 
-input.form__text-input,
-input.form__password-input {
+.form .form__input {
+  @apply w-full h-10 px-2 rounded-md;
+}
+
+.form .form__text-input,
+.form .form__password-input,
+.form .form__date-input {
   @apply border-1 border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft;
 }
 
-input.form__submit-input {
-  @apply cursor-pointer font-bold bg-pr-main text-pr-bg-main enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute;
+.form .form__submit-input {
+  @apply cursor-pointer font-bold bg-pr-main text-pr-bg-main enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute disabled:cursor-default;
 }
 
-input.form__range-input {
+.form .form__range-input {
   @apply accent-pr-main cursor-pointer;
 }

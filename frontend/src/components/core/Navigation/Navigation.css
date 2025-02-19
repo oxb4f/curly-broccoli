@@ -1,31 +1,31 @@
 .navigation {
-  @apply size-auto;
-}
-
-.navigation__item {
-  @apply size-auto px-3 text-lg;
+  @apply w-fit;
 }
 
 .navigation__link {
-  @apply size-full text-pr-text hover:text-pr-text-darker;
+  @apply text-pr-text hover:text-pr-text-darker;
 }
 
-.navigation__link > * {
-  transition: transform 0.1s ease-out;
-}
-
-.navigation__link > *:hover {
-  @apply scale-110;
+.navigation__link {
+  transition: transform 0.05s ease-out;
 }
 
 .navigation__link.active {
-  @apply text-pr-main hover:text-pr-main;
+  @apply border-pr-main text-pr-main hover:text-pr-main hover:cursor-default;
 }
 
-.navigation__link.active > *:hover {
+.navigation__link:hover > .navigation__icon {
+  @apply scale-105;
+}
+
+.navigation__link.active:hover > * {
   @apply transform-none;
 }
 
 .navigation__icon {
-  @apply size-9 m-auto;
+  @apply block;
+}
+
+.navigation__text {
+  @apply block;
 }

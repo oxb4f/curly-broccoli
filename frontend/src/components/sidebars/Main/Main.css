@@ -1,13 +1,13 @@
-.sidebar__profile-photo {
-  @apply size-9 hover:ring-2 hover:ring-offset-4 hover:ring-offset-pr-bg-main hover:ring-pr-main-mute;
+.main-sidebar {
+  @apply w-16 h-screen gap-9 py-9 border-r-1;
 }
 
-.sidebar .navigation__list {
+.main-sidebar .sidebar__main {
+  @apply flex justify-center items-start;
+}
+
+.main-sidebar .sidebar__navigation .navigation__list {
   @apply grid gap-6;
-}
-
-.sidebar .link.active .sidebar__profile-photo {
-  @apply ring-2 ring-offset-4 ring-offset-pr-bg-main ring-pr-main hover:ring-pr-main;
 }
 
 /* .sidebar .link {

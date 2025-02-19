@@ -1,6 +1,35 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
-const useReactiveForm = (initialValues, onSubmit) => {
+const useReactiveForm = (fields, onSubmit) => {
+  const flattenObject = useCallback(
+    (object) =>
+      Object.entries(object).reduce((result, [key, value]) => {
+        if (value.element) return result;
+
+        if (value && typeof value === 'object' && value.type) {
+          return {
+            ...result,
+            [key]: value.value ?? ''
+          };
+        }
+
+        if (value && typeof value === 'object') {
+          return {
+            ...result,
+            ...flattenObject(value)
+          };
+        }
+
+        return {
+          ...result,
+          [key]: value
+        };
+      }, {}),
+    []
+  );
+
+  const initialValues = useMemo(() => flattenObject(fields), [flattenObject, fields]);
+
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
 
@@ -11,7 +40,8 @@ const useReactiveForm = (initialValues, onSubmit) => {
   };
 
   const handleReject = (error) => {
-    setErrors({ ...(error?.details ?? {}) });
+    const errors = flattenObject({ ...(error?.details ?? {}) });
+    setErrors(errors);
   };
 
   const handleSubmit = async (event) => {

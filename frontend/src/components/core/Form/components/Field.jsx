@@ -1,30 +1,28 @@
 import '../Form.css';
 import FormItem from './Item';
 import Input from '../../Input/Input';
-import { useCallback, useMemo, memo } from 'react';
+import FormHint from './Hint';
+import { memo } from 'react';
 
 const FormField = memo(
-  ({ field, isFragmented, value, error, isSubmitDisabled, onFieldChange }) => {
+  ({ field, value, error, isSubmitDisabled, onFieldChange }) => {
     if (field.element) {
-      return <FormItem isFragmented={isFragmented}>{field.element}</FormItem>;
+      return <FormItem>{field.element}</FormItem>;
     }
 
-    const handleChange = useCallback((event) => {
+    const handleChange = (event) => {
       field.onChange?.(event.target.value);
       onFieldChange(field.name, event.target.value);
-    }, []);
+    };
 
-    const commonProps = useMemo(
-      () => ({
-        ...field,
-        className: `form__${field.type}-input form__input`
-      }),
-      [field]
-    );
+    const commonProps = {
+      ...field,
+      className: `form__input form__${field.type}-input`
+    };
 
     if (field.type === 'submit') {
       return (
-        <FormItem isFragmented={isFragmented}>
+        <FormItem>
           <Input {...commonProps} disabled={isSubmitDisabled} />
         </FormItem>
       );
@@ -32,15 +30,16 @@ const FormField = memo(
 
     if (field.type === 'button') {
       return (
-        <FormItem isFragmented={isFragmented}>
+        <FormItem>
           <Input {...commonProps} />
         </FormItem>
       );
     }
 
     return (
-      <FormItem isFragmented={isFragmented}>
+      <FormItem>
         <Input {...commonProps} value={value ?? ''} error={error ?? ''} onChange={handleChange} />
+        <FormHint value={field.hint} inputValue={value} inputError={error} />
       </FormItem>
     );
   },
@@ -53,5 +52,7 @@ const FormField = memo(
     );
   }
 );
+
+FormField.displayName = 'FormField';
 
 export default FormField;

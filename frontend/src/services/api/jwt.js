@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { getFromStorage, setToStorage } from '../storage/storage';
-import { logoutUser } from './user';
+import { getUserFromStorage, removeUserFromStorage } from '../storage/user';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const REDIRECT_URL_ON_FAILED_AUTH = import.meta.env.VITE_LOGIN_ENDPOINT;
 
 const jwtApi = axios.create({
   baseURL: BASE_URL
 });
 
 jwtApi.interceptors.request.use((config) => {
-  config.headers['Authorization'] = `Bearer ${getFromStorage('user')?.jwt?.access}`;
+  config.headers['Authorization'] = `Bearer ${getUserFromStorage()?.jwt?.access}`;
   return config;
 });
 
@@ -20,8 +18,7 @@ jwtApi.interceptors.response.use(
   },
   function (error) {
     if (error.response.status === 401) {
-      logoutUser();
-      location.pathname = REDIRECT_URL_ON_FAILED_AUTH;
+      removeUserFromStorage();
     }
 
     throw error.response.data;
@@ -31,13 +28,10 @@ jwtApi.interceptors.response.use(
 async function refreshToken(accessId, refreshToken) {
   const response = await jwtApi.post(`accesses/${accessId}/refresh`, { refresh: refreshToken });
 
-  const userData = getFromStorage('user');
+  // const userData = getFromStorage('user');
+  // console.log(response);
 
-  userData.jwt = response.jwt;
-
-  setToStorage({ name: 'user', value: userData });
-
-  return response.jwt.access;
+  return response.jwt;
 }
 
 export { jwtApi, refreshToken };
