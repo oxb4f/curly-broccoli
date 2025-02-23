@@ -26,13 +26,17 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const user = getUserFromStorage();
-  if (user?.jwt?.access) {
-    config.headers['Authorization'] = `Bearer ${user.jwt.access}`;
-  }
+  const existingHeaders = config.headers ?? {};
 
-  config.headers['Content-Type'] ??= 'application/json';
-
-  return config;
+  return {
+    ...config,
+    headers: {
+      'Content-Type': 'application/json',
+      ...existingHeaders,
+      ...(user?.jwt?.access && { Authorization: `Bearer ${user.jwt.access}` })
+    },
+    withCredentials: true
+  };
 });
 
 api.interceptors.response.use(
@@ -42,7 +46,7 @@ api.interceptors.response.use(
   async function (error) {
     const user = getUserFromStorage();
     const originalRequest = error.config;
-    // виправити
+    // FIXME(artdain): rewrite this
 
     if (error.response.status === 401 && user) {
       if (!refreshRequest) {
