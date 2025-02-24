@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import SignInForm from '../../forms/SignIn';
+import AuthSignInForm from '../../forms/Auth/SignIn';
 import './Auth.css';
-import SignUpForm from '../../forms/SignUp';
+import AuthSignUpForm from '../../forms/Auth/SignUp';
 import Logo from '../Logo/Logo';
 
 const Auth = () => {
@@ -11,20 +11,22 @@ const Auth = () => {
       <header className="authorization__header">
         <Logo text="Litrify" />
       </header>
-      <main className="authorization__main">{isLogin ? <SignInForm /> : <SignUpForm />}</main>
+      <main className="authorization__main">
+        {isLogin ? <AuthSignInForm /> : <AuthSignUpForm />}
+      </main>
       <footer className="authorization__footer">
         {
           <div>
             {isLogin ? (
               <>
-                Already have an account?{' '}
+                First time here?{' '}
                 <span className="link" onClick={() => setIsLogin(!isLogin)}>
                   Sign up
                 </span>
               </>
             ) : (
               <>
-                First time here?{' '}
+                Already have an account?{' '}
                 <span className="link" onClick={() => setIsLogin(!isLogin)}>
                   Sign in
                 </span>

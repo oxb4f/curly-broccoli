@@ -1,0 +1,16 @@
+.photo-settings__form {
+  @apply size-min grid grid-rows-3;
+  grid-template-rows: auto 1fr auto;
+}
+
+.photo-settings__form .form__group {
+  @apply gap-1;
+}
+
+.profile-settings__form {
+  @apply w-full max-w-2xl grid gap-y-5;
+}
+
+.profile-settings__form .form__group {
+  @apply gap-x-2;
+}

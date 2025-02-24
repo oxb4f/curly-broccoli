@@ -1,0 +1,7 @@
+.profile {
+  @apply size-full py-5;
+}
+
+.profile__card {
+  @apply flex flex-col gap-2;
+}

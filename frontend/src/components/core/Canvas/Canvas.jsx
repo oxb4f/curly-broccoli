@@ -1,7 +1,7 @@
 import './Canvas.css';
 import { useEffect, useRef, memo, useImperativeHandle } from 'react';
 
-const Canvas = memo(({ innerRef, imageUrl, className, onImageLoad, ...props }) => {
+const Canvas = memo(({ innerRef, imageUrl, onImageLoad, className = '', ...props }) => {
   const canvasRef = useRef(null);
   const image = useRef(new Image());
 
@@ -9,8 +9,8 @@ const Canvas = memo(({ innerRef, imageUrl, className, onImageLoad, ...props }) =
     return { ...image.current.bounds };
   };
 
-  const getImageUrl = () => {
-    return canvasRef.current.toDataURL();
+  const getCanvas = () => {
+    return canvasRef.current;
   };
 
   const syncCanvasSize = (canvas, width, height, measure) => {
@@ -55,7 +55,7 @@ const Canvas = memo(({ innerRef, imageUrl, className, onImageLoad, ...props }) =
   };
 
   useImperativeHandle(innerRef, () => ({
-    getImageUrl,
+    getImageUrl: getCanvas,
     cropImage: (cropParams) => {
       return cropImage(canvasRef.current, image.current, cropParams);
     }
@@ -80,7 +80,9 @@ const Canvas = memo(({ innerRef, imageUrl, className, onImageLoad, ...props }) =
     };
   }, [imageUrl]);
 
-  return <canvas ref={canvasRef} className={`canvas ${className ?? ''}`} {...props}></canvas>;
+  return <canvas ref={canvasRef} className={`canvas ${className}`} {...props}></canvas>;
 });
+
+Canvas.displayName = 'Canvas';
 
 export default Canvas;

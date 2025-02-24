@@ -10,6 +10,7 @@ export function onError<E extends Error = Error>(
 	error: E,
 	set: Context["set"],
 ) {
+    console.trace(error);
 	const result = match(error)
 		.when(
 			(e: E) => e instanceof ServiceError,

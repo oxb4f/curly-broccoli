@@ -1,6 +1,6 @@
 .drop-down {
   transition: grid-template-rows 0.3s ease-out;
-  @apply w-full grid grid-rows-show gap-2 overflow-hidden;
+  @apply w-full grid grid-rows-show justify-center gap-2 overflow-hidden;
 }
 
 .drop-down__hidden {

@@ -1,0 +1,39 @@
+.profile-card {
+  @apply w-full;
+}
+
+.profile-card__header {
+  @apply w-full flex flex-col items-center gap-y-4;
+}
+
+.profile-card__photo {
+  @apply size-44;
+}
+
+.profile-card__username {
+  @apply min-w-16 max-w-28 min-h-8 text-2xl;
+}
+
+.profile-card__details {
+  @apply flex flex-col items-center gap-1.5;
+}
+
+.profile-card__personal-info {
+  @apply min-w-20 max-w-40 min-h-6 text-base;
+}
+
+.profile-card__social-navigation {
+  @apply min-w-7 max-w-16 min-h-7;
+}
+
+.profile-card__stats {
+  @apply min-w-80;
+}
+
+/* .profile-card__social-icon {
+  @apply size-6 stroke-pr-main fill-pr-main;
+} */
+
+/* .profile-card__container {
+  @apply min-w-24 max-w-44;
+} */

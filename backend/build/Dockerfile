@@ -29,5 +29,6 @@ COPY drizzle.config.ts ./
 COPY bunfig.toml ./
 COPY src src
 COPY test test
+COPY migrations migrations
 
 ENTRYPOINT []
