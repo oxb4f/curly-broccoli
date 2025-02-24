@@ -1,10 +1,10 @@
 import './Card.css';
-import Stats from '../../Stats/Stats';
 import { useSession } from '@/components/core/SessionProvider/SessionProvider';
 import AsyncProfilePhoto from '../../../asyncs/Profile/Photo';
 import AsyncProfileUsername from '../../../asyncs/Profile/Username';
 import AsyncProfilePersonalInfo from '../../../asyncs/Profile/PersonalInfo';
 import AsyncSocialNavigation from '../../../asyncs/SocialNavigation/SocialNavigation';
+import ProfileStats from '../../../stats/Profile/Profile';
 
 const ProfileCard = ({ className = '' }) => {
   const { user, isPending } = useSession();
@@ -13,21 +13,6 @@ const ProfileCard = ({ className = '' }) => {
 
   if (!user && !isPending) return;
   console.log(isPending);
-
-  const stats = [
-    {
-      count: 0,
-      name: 'books read'
-    },
-    {
-      count: 0,
-      name: 'followers'
-    },
-    {
-      count: 0,
-      name: 'following'
-    }
-  ];
 
   return (
     <article className={`profile-card ${className}`}>
@@ -58,8 +43,8 @@ const ProfileCard = ({ className = '' }) => {
         />
       </section>
 
-      <section className="profile-card__stats">
-        <Stats list={stats} />
+      <section className="profile-card__footer">
+        <ProfileStats className="profile-card__stats" />
       </section>
     </article>
   );

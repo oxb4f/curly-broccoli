@@ -1,0 +1,11 @@
+.book-photo {
+  @apply relative flex justify-center items-center overflow-hidden;
+}
+
+.book-photo__background {
+  @apply absolute inset-0 scale-105 blur-sm;
+}
+
+.book-photo__image {
+  @apply relative size-full object-contain;
+}

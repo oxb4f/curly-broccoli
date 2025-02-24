@@ -1,0 +1,35 @@
+.book-card {
+  @apply w-44 rounded-md bg-pr-bg-secondary overflow-hidden;
+}
+
+.book-card__photo-container {
+  @apply size-full overflow-hidden;
+}
+
+.book-card__link {
+  @apply block transition-all;
+}
+
+.book-card__link:hover {
+  @apply scale-110;
+}
+
+.book-card__photo {
+  @apply w-full h-40;
+}
+
+.book-card__details {
+  @apply flex flex-col p-2 gap-2;
+}
+
+.book-card__info {
+  @apply max-h-24 text-base text-center;
+}
+
+.book-card__stats {
+  @apply flex flex-wrap gap-1 justify-end;
+}
+
+.book-card__info * {
+  @apply line-clamp-2 overflow-ellipsis;
+}

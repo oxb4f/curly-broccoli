@@ -13,7 +13,7 @@ build: ## Build the Docker image for the application
 
 run: PROFILE=run 
 run: ## Start the application using Docker Compose
-	APP_IMAGE=${APP_IMAGE} docker compose --project-directory . --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} --profile ${PROFILE} up -d
+	APP_IMAGE=${APP_IMAGE} docker compose --project-directory . --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} --profile ${PROFILE} up --watch
 
 dev: TARGET=dev 
 dev: build run

@@ -1,7 +1,11 @@
 .profile {
-  @apply size-full py-5;
+  @apply size-full py-5 grid gap-3;
 }
 
 .profile__card {
   @apply flex flex-col gap-2;
 }
+
+/* .profile__content {
+  @apply flex flex-wrap;
+} */

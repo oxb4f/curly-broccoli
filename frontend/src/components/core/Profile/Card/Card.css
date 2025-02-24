@@ -26,8 +26,12 @@
   @apply min-w-7 max-w-16 min-h-7;
 }
 
+.profile-card__footer {
+  @apply min-w-80 flex justify-center;
+}
+
 .profile-card__stats {
-  @apply min-w-80;
+  @apply flex justify-center gap-x-6;
 }
 
 /* .profile-card__social-icon {

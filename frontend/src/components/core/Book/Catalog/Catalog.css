@@ -1,0 +1,3 @@
+.book__catalog {
+  @apply flex flex-wrap;
+}

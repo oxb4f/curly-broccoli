@@ -1,0 +1,7 @@
+.book-stats .stats__icon {
+  @apply size-7 hover:text-pr-text-darker hover:cursor-pointer hover:scale-105;
+}
+
+.book-stats .stats__item__active .stats__icon {
+  @apply text-pr-main fill-pr-main hover:text-pr-main hover:cursor-pointer hover:transform-none;
+}

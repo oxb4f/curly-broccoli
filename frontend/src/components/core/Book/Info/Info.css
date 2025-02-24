@@ -1,0 +1,15 @@
+.book-info {
+  @apply w-full text-pr-text break-words;
+}
+
+.book-info__name {
+  @apply text-[1.1em]/[1.6em] font-bold;
+}
+
+.book-info__author {
+  @apply text-[0.8em]/[1.2em];
+}
+
+.book-info__other {
+  @apply py-8 text-[0.75em]/[1.2em];
+}
