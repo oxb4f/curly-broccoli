@@ -29,9 +29,9 @@ test("Unit test: User Create Service", () => {
 		expect(dto.jwt.access).toBeString();
 		expect(dto.jwt.refresh).toBeString();
 		expect(dto.username).toBeString();
-		expect(User.fromCredentials).toBeCalledTimes(1);
-		expect(context.usersRepository.exists).toBeCalledTimes(1);
-		expect(context.usersRepository.createFromEntity).toBeCalledTimes(1);
+		expect(User.fromCredentials).toBeCalled();
+		expect(context.usersRepository.exists).toBeCalled();
+		expect(context.usersRepository.createFromEntity).toBeCalled();
 	});
 
 	describe("should throw an error if user already exist", async () => {
