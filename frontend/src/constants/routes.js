@@ -4,7 +4,8 @@ const ROUTES = {
   },
   MAIN: {
     ROOT: '/',
-    PROFILE: '/profile'
+    PROFILE: '/profile',
+    BOOK: '/book'
   },
   SETTINGS: {
     ROOT: '/settings',

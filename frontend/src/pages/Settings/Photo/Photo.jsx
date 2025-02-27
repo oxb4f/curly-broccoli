@@ -13,14 +13,12 @@ const SettingsPhotoPage = () => {
   };
 
   return (
-    <section className="photo-settings">
+    <section className="photo-settings-page">
       {imageUrl ? (
         <PhotoSettingsForm imageUrl={imageUrl} />
       ) : (
         <DropZone onDropHandler={handleOnDrop} />
       )}
-      {/* <CropImageForm imageUrl={imageUrl} /> */}
-      {/* <DropZone onDropHandler={handleOnDrop} /> */}
     </section>
   );
 };

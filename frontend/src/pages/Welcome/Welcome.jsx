@@ -8,7 +8,7 @@ export default function WelcomePage() {
     <MainLayout
       {...{
         main: (
-          <section className="welcome-window scale-animation">
+          <section className="welcome-window-page scale-animation">
             <Auth />
             <AppBanner />
           </section>

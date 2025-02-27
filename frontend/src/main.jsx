@@ -12,6 +12,7 @@ import ROUTES from './constants/routes.js';
 import ProtectedRoute from './components/core/ProtectedRoute/ProtectedRoute.jsx';
 import SessionProvider from './components/core/SessionProvider/SessionProvider.jsx';
 import SettingsPhotoPage from './pages/Settings/Photo/Photo.jsx';
+import BookPage from './pages/Main/Book/Book.jsx';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ createRoot(document.getElementById('root')).render(
             >
               <Route index element={<Navigate to={ROUTES.MAIN.PROFILE} replace />} />
               <Route path={ROUTES.MAIN.PROFILE} element={<ProfilePage />} />
+              <Route path={ROUTES.MAIN.BOOK} element={<BookPage />} />
               {/* <Route path="search" element={<SetPhotoZone />} /> */}
             </Route>
             <Route

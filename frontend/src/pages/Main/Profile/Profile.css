@@ -1,8 +1,8 @@
-.profile {
+.profile-page {
   @apply size-full py-5 grid gap-3;
 }
 
-.profile__card {
+.profile-page__card {
   @apply flex flex-col gap-2;
 }
 

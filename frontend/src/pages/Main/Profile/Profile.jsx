@@ -4,11 +4,11 @@ import BookCard from '../../../components/core/Book/Card/Card';
 
 const ProfilePage = () => {
   return (
-    <section className="profile">
-      <header className="profile__header">
-        <ProfileCard className="profile__card" />
+    <section className="profile-page">
+      <header className="profile-page__header">
+        <ProfileCard className="profile-page__card" />
       </header>
-      <section className="profile__content">
+      <section className="profile-page__content">
         <BookCard />
       </section>
     </section>
