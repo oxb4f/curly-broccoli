@@ -1,0 +1,7 @@
+services:
+  frontend-app:
+    ports:
+      - "4173:4173"
+    command: ["npm", "run", "preview", "--", "--host"]
+    profiles:
+      - prod

@@ -13,7 +13,7 @@ COPY . .
 
 # -----------------------------------
 # Development-режим з Vite
-FROM base AS dev
+FROM base AS run
 
 # Відкриваємо порти для Vite
 EXPOSE 5173

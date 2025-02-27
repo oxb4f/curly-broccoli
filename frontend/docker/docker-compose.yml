@@ -1,32 +1,7 @@
 services:
-  frontend:
+  frontend-app:
     image: ${APP_IMAGE:-}
     container_name: frontend
-    ports:
-      - "4173:4173"
-    command: ["npm", "run", "preview", "--", "--host"]
-    profiles:
-      - prod
-
-  frontend-dev:
-    image: ${APP_IMAGE:-}
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./src:/app/src
-    command: ["npm", "run", "dev", "--", "--host"]
-    develop:
-      watch:
-        - action: sync+restart
-          path: ./src
-          target: /app/src
-          ignore:
-            - ./node_modules
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - CHOKIDAR_INTERVAL=100
-    profiles:
-      - run
 
   nginx-anycors:
     image: nginx:latest
@@ -38,13 +13,12 @@ services:
     depends_on:
       backend-app:
         condition: service_healthy
-      frontend:
+      frontend-app:
         condition: service_started
-    profiles:
-      - prod
 
   backend-app:
     image: dev/oxb4f/backend:${TAG_BACKEND}
+    container_name: backend
     command: sh -c 'bun migrate:db && bun dev'
     restart: always
     env_file:
