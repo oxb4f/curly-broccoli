@@ -8,11 +8,9 @@ import ROUTES from '../../../../constants/routes';
 const BookCard = ({ data, isPublic }) => {
   return (
     <article className="book-card">
-      <div className="book-card__photo-container">
-        <Link to={ROUTES.MAIN.BOOK} className="link book-card__link">
-          <BookPhoto className="book-card__photo" />
-        </Link>
-      </div>
+      <Link to={ROUTES.MAIN.BOOK} className="link book-card__link">
+        <BookPhoto className="book-card__photo" />
+      </Link>
       <div className="book-card__details">
         <BookInfo className="book-card__info" />
         <BookStats className="book-card__stats" isPublic={isPublic} />

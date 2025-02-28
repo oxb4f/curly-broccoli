@@ -2,20 +2,16 @@
   @apply w-44 rounded-md bg-pr-bg-secondary overflow-hidden;
 }
 
-.book-card__photo-container {
-  @apply size-full overflow-hidden;
-}
-
 .book-card__link {
-  @apply block transition-all;
-}
-
-.book-card__link:hover {
-  @apply scale-110;
+  @apply block overflow-hidden;
 }
 
 .book-card__photo {
-  @apply w-full h-40;
+  @apply w-full h-40 transition-all;
+}
+
+.book-card__link:hover .book-card__photo {
+  @apply scale-110;
 }
 
 .book-card__details {

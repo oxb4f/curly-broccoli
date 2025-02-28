@@ -8,9 +8,7 @@ const BookPage = () => {
   // const params = useParams();
   return (
     <section className="book-page">
-      <div className="book-page__photo-container">
-        <BookPhoto className="book-page__photo" />
-      </div>
+      <BookPhoto className="book-page__photo" />
       <div className="book-page__details">
         <BookInfo data={{ other: 'Other info' }} className="book-page__info" />
         <BookStats className="book-page__stats" />

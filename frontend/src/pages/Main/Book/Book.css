@@ -2,12 +2,8 @@
   @apply flex gap-5 min-w-fit;
 }
 
-.book-page__photo-container {
-  @apply grow-0;
-}
-
 .book-page__photo {
-  @apply h-screen min-w-96 max-w-lg;
+  @apply grow-0 h-screen min-w-96 max-w-lg;
 }
 
 .book-page__details {

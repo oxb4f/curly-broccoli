@@ -1,6 +1,6 @@
 import './Book.css';
 import Stats from '../../core/Stats/Stats';
-import { StarIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, HeartIcon } from '@heroicons/react/24/outline';
 
 const BookStats = ({ data, isPublic, className = '' }) => {
   isPublic = false;
@@ -9,7 +9,7 @@ const BookStats = ({ data, isPublic, className = '' }) => {
     private: [
       {
         name: 'favorite',
-        icon: StarIcon,
+        icon: BookmarkIcon,
         isActive: isFavorite
       }
     ],
