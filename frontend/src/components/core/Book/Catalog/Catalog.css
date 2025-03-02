@@ -1,3 +1,43 @@
-.book__catalog {
-  @apply flex flex-wrap;
+.book-catalog {
+  @apply w-full flex gap-x-6 gap-y-4;
+}
+
+.book-catalog__item {
+  @apply w-44 h-60;
+}
+
+.book-catalog__link {
+  @apply relative flex justify-center items-center size-full border-4 border-pr-bg-secondary rounded-md bg-pr-bg-secondary transition-colors hover:border-pr-text;
+}
+
+.book-catalog__link::before {
+  @apply content-[''] absolute inset-0 bg-pr-bg-main scale-100 transition-transform;
+}
+
+.book-catalog__link:hover::before {
+  @apply scale-0;
+}
+
+.book-catalog__icon {
+  @apply absolute size-28 transition-all duration-150;
+}
+
+.book-catalog__icon_plus {
+  @apply opacity-100 rotate-0;
+}
+
+.book-catalog__icon_book {
+  @apply opacity-0 rotate-180;
+}
+
+.book-catalog__link:hover .book-catalog__icon_plus {
+  @apply opacity-0 rotate-180;
+}
+
+.book-catalog__link:hover .book-catalog__icon_book {
+  @apply opacity-100 rotate-[360deg] transition-all delay-150;
+}
+
+.book-catalog__book-card {
+  @apply flex flex-col size-full;
 }

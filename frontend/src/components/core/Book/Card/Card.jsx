@@ -5,10 +5,10 @@ import BookStats from '../../../stats/Book/Book';
 import { Link } from 'react-router';
 import ROUTES from '../../../../constants/routes';
 
-const BookCard = ({ data, isPublic }) => {
+const BookCard = ({ data, isPublic, className = '' }) => {
   return (
-    <article className="book-card">
-      <Link to={ROUTES.MAIN.BOOK} className="link book-card__link">
+    <article className={`book-card ${className}`}>
+      <Link to={ROUTES.MAIN.BOOK.ROOT} className="link book-card__link">
         <BookPhoto className="book-card__photo" />
       </Link>
       <div className="book-card__details">

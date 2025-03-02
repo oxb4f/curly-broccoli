@@ -2,7 +2,7 @@ import './DropZone.css';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-const DropZone = ({ onDropHandler }) => {
+const DropZone = ({ onDropHandler, className = '' }) => {
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles) {
       onDropHandler(acceptedFiles[0]);
@@ -12,15 +12,16 @@ const DropZone = ({ onDropHandler }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div className="drop-zone-wrapper">
-      <div {...getRootProps()} className="drop-zone">
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        )}
-      </div>
+    <div
+      {...getRootProps()}
+      className={`drop-zone ${isDragActive ? 'drop-zone_active' : ''} ${className}`}
+    >
+      <input {...getInputProps()} />
+      {isDragActive ? (
+        <p>Drop the files here ...</p>
+      ) : (
+        <p>Drag 'n' drop some files here, or click to select files</p>
+      )}
     </div>
   );
 };

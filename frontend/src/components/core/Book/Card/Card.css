@@ -1,13 +1,13 @@
 .book-card {
-  @apply w-44 rounded-md bg-pr-bg-secondary overflow-hidden;
+  @apply rounded-md bg-pr-bg-secondary overflow-hidden;
 }
 
 .book-card__link {
-  @apply block overflow-hidden;
+  @apply min-w-20 overflow-hidden;
 }
 
 .book-card__photo {
-  @apply w-full h-40 transition-all;
+  @apply w-full h-full transition-all;
 }
 
 .book-card__link:hover .book-card__photo {
@@ -15,7 +15,7 @@
 }
 
 .book-card__details {
-  @apply flex flex-col p-2 gap-2;
+  @apply flex flex-col w-full p-2 gap-2;
 }
 
 .book-card__info {

@@ -1,0 +1,3 @@
+.textarea {
+  @apply text-pr-text bg-pr-bg-main placeholder:text-pr-text-darker;
+}

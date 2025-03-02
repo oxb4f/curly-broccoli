@@ -14,11 +14,11 @@
 }
 
 .form__group {
-  @apply w-full flex justify-evenly;
+  @apply w-full;
 }
 
 .form__group .form__item {
-  @apply w-auto max-w-[50%] flex-grow;
+  @apply w-auto;
 }
 
 .form__item {
@@ -37,16 +37,21 @@
   @apply w-full h-10 px-2 rounded-md;
 }
 
-.form .form__text-input,
-.form .form__password-input,
-.form .form__date-input {
+.form .form__input_text,
+.form .form__input_password,
+.form .form__input_date,
+.form .form__input_textarea {
   @apply border-1 border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft;
 }
 
-.form .form__submit-input {
+.form .form__input_textarea {
+  @apply py-2 max-h-80 min-h-40;
+}
+
+.form .form__input_submit {
   @apply cursor-pointer font-bold bg-pr-main text-pr-bg-main enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute disabled:cursor-default;
 }
 
-.form .form__range-input {
+.form .form__input_range {
   @apply accent-pr-main cursor-pointer;
 }

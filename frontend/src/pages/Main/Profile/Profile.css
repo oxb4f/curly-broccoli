@@ -2,7 +2,7 @@
   @apply size-full py-5 grid gap-3;
 }
 
-.profile-page__card {
+.profile-page__profile-card {
   @apply flex flex-col gap-2;
 }
 

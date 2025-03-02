@@ -2,7 +2,7 @@
   @apply w-full text-pr-text break-words;
 }
 
-.book-info__name {
+.book-info__title {
   @apply text-[1.1em]/[1.6em] font-bold;
 }
 

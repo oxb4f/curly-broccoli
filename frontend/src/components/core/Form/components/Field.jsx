@@ -1,23 +1,28 @@
 import '../Form.css';
 import FormItem from './Item';
 import Input from '../../Input/Input';
+import Textarea from '../../Textarea/Textarea';
 import FormHint from './Hint';
 import { memo } from 'react';
 
 const FormField = memo(
   ({ field, value, error, isSubmitDisabled, onFieldChange }) => {
-    if (field.element) {
-      return <FormItem>{field.element}</FormItem>;
-    }
-
     const handleChange = (event) => {
       field.onChange?.(event.target.value);
       onFieldChange(field.name, event.target.value);
     };
 
+    if (field.element) {
+      return (
+        <FormItem>
+          {<field.element value={value ?? ''} error={error ?? ''} onChange={handleChange} />}
+        </FormItem>
+      );
+    }
+
     const commonProps = {
       ...field,
-      className: `form__input form__${field.type}-input`
+      className: `form__input form__input_${field.type}`
     };
 
     if (field.type === 'submit') {
@@ -32,6 +37,14 @@ const FormField = memo(
       return (
         <FormItem>
           <Input {...commonProps} />
+        </FormItem>
+      );
+    }
+
+    if (field.type === 'textarea') {
+      return (
+        <FormItem>
+          <Textarea {...commonProps} value={value ?? ''} onChange={handleChange} />
         </FormItem>
       );
     }

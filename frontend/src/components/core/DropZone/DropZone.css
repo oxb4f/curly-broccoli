@@ -1,7 +1,11 @@
-.drop-zone-wrapper {
-  @apply size-full flex justify-center items-center p-20;
+.drop-zone {
+  @apply relative flex justify-center p-8 items-center bg-pr-bg-secondary text-pr-border;
 }
 
-.drop-zone {
-  @apply h-full min-w-max max-w-full flex justify-center p-8 items-center border-4 border-dashed border-pr-border ring-[20px] ring-pr-bg-secondary bg-pr-bg-secondary text-pr-border;
+.drop-zone::before {
+  @apply content-[''] absolute inset-4 border-4 border-dashed border-pr-border;
+}
+
+.drop-zone_active {
+  @apply text-pr-text-darker before:border-pr-text-darker;
 }

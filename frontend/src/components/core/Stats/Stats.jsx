@@ -4,7 +4,7 @@ const Stats = ({ list, className = '' }) => {
   return (
     <ul className={`stats ${className}`}>
       {list.map((item) => (
-        <li key={item.name} className={`stats__item ${item.isActive ? 'stats__item__active' : ''}`}>
+        <li key={item.name} className={`stats__item ${item.isActive ? 'stats__item_active' : ''}`}>
           {Number.isFinite(item.count) && <p className="stats__counter">{item.count}</p>}
           {item.icon ? (
             <item.icon className="stats__icon" />
