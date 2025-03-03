@@ -7,7 +7,19 @@ export class PgImagesRepository
 	extends BaseRepository
 	implements ImagesRepository
 {
-	async createFromEntity(image: Image) {
+	async get(): Promise<never> {
+		throw new Error("Not implemented");
+	}
+
+	async update(): Promise<never> {
+		throw new Error("Not implemented");
+	}
+
+	async list(): Promise<never> {
+		throw new Error("Not implemented");
+	}
+
+	async create(image: Image) {
 		await this._connection.transaction(async (tx) => {
 			await tx
 				.insert(images)

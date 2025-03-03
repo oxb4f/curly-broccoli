@@ -1,9 +1,12 @@
 import {
 	bigint,
+	boolean,
 	date,
 	index,
+	integer,
 	json,
 	pgTable,
+	text,
 	timestamp,
 	varchar,
 } from "drizzle-orm/pg-core";
@@ -45,3 +48,42 @@ export const images = pgTable("images", {
 	...base,
 	path: varchar("path", { length: 255 }).notNull().unique(),
 });
+
+export const books = pgTable("books", {
+	...base,
+	bookProfileId: bigint("book_profile_id", { mode: "number" }).references(
+		() => bookProfiles.id,
+	),
+	isPublic: boolean("is_public").notNull().default(false),
+});
+
+export const bookProfiles = pgTable("book_profiles", {
+	...base,
+	title: varchar("title", { length: 255 }).notNull(),
+	description: text("description"),
+	author: varchar("author", { length: 255 }).notNull(),
+	genre: varchar("genre", { length: 255 }),
+	numberOfPages: integer("number_of_pages").notNull(),
+	isbn: varchar("isbn", { length: 255 }),
+	imageUrl: varchar("image_url", { length: 255 }),
+});
+
+export const userBooks = pgTable(
+	"user_books",
+	{
+		...base,
+		bookId: bigint("book_id", { mode: "number" }).references(() => books.id),
+		userId: bigint("user_id", { mode: "number" }).references(() => users.id),
+		bookProfileId: bigint("book_profile_id", { mode: "number" }).references(
+			() => bookProfiles.id,
+		),
+		isFavorite: boolean("is_favorite").notNull().default(false),
+		isRead: boolean("is_read").notNull().default(false),
+		rating: integer("rating"),
+		review: text("review"),
+	},
+	(userBooks) => [
+		index("book_user_idx").on(userBooks.bookId, userBooks.userId),
+		index("favorite_user_idx").on(userBooks.isFavorite, userBooks.userId),
+	],
+);

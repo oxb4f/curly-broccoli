@@ -23,10 +23,10 @@ test("Unit test: User Update Service", () => {
 	beforeEach(() => mock.restore());
 
 	describe("should return valid dto", async () => {
-		context.usersRepository.getUser =
+		context.usersRepository.get =
 			mock().mockResolvedValueOnce(createdUserFixture1);
 		context.usersRepository.exists = mock().mockResolvedValueOnce(null);
-		context.usersRepository.updateFromEntity =
+		context.usersRepository.update =
 			mock().mockResolvedValueOnce(fixture);
 
 		const dto = await service({ dto: fixture, context: context });
@@ -40,13 +40,13 @@ test("Unit test: User Update Service", () => {
 		expect(dto.social?.telegram).toBeString();
 		expect(dto.social?.instagram).toBeString();
 		expect(dto.imageUrl).toBeString();
-		expect(context.usersRepository.getUser).toBeCalledTimes(1);
-		expect(context.usersRepository.updateFromEntity).toBeCalledTimes(1);
+		expect(context.usersRepository.get).toBeCalledTimes(1);
+		expect(context.usersRepository.update).toBeCalledTimes(1);
 		expect(context.usersRepository.exists).toBeCalledTimes(1);
 	});
 
 	describe("should throw an error if user does not exist", async () => {
-		context.usersRepository.getUser = mock().mockResolvedValueOnce(null);
+		context.usersRepository.get = mock().mockResolvedValueOnce(null);
 
 		await expect(
 			service({ dto: fixture, context: context }),
@@ -54,7 +54,7 @@ test("Unit test: User Update Service", () => {
 	});
 
 	describe("should throw an error if username is already exist", async () => {
-		context.usersRepository.getUser =
+		context.usersRepository.get =
 			mock().mockResolvedValueOnce(createdUserFixture1);
 		context.usersRepository.exists = mock().mockResolvedValueOnce(true);
 
@@ -64,7 +64,7 @@ test("Unit test: User Update Service", () => {
 	});
 
 	describe("should throw an error if validation was failed", async () => {
-		context.usersRepository.getUser =
+		context.usersRepository.get =
 			mock().mockResolvedValueOnce(createdUserFixture1);
 
 		await expect(
@@ -76,7 +76,7 @@ test("Unit test: User Update Service", () => {
 	});
 
 	describe("should throw an error if birthday is invalid", async () => {
-		context.usersRepository.getUser =
+		context.usersRepository.get =
 			mock().mockResolvedValueOnce(createdUserFixture1);
 
 		await expect(
@@ -88,7 +88,7 @@ test("Unit test: User Update Service", () => {
 	});
 
 	describe("should throw an error if social is invalid", async () => {
-		context.usersRepository.getUser =
+		context.usersRepository.get =
 			mock().mockResolvedValueOnce(createdUserFixture1);
 
 		await expect(

@@ -27,11 +27,6 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 	}
 
 	const [user, jwtAccess, refreshToken] = await User.fromCredentials({
-		imageUrl: null,
-		firstName: null,
-		lastName: null,
-		birthday: null,
-		social: {},
 		username: dto.username,
 		password: dto.password,
 		refreshId: dto.refreshId,
@@ -40,7 +35,7 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		jwtAccessLifetime: context.config.JWT_ACCESS_LIFETIME,
 	});
 
-	await context.usersRepository.createFromEntity(user);
+	await context.usersRepository.create(user);
 
 	const access = user.getAcesss();
 

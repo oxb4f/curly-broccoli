@@ -2,26 +2,35 @@ import bcrypt from "bcrypt";
 import { TokenError, createSigner, createVerifier } from "fast-jwt";
 
 import { Base } from "./base";
+import type { Id, MaybeNumberId } from "./types/id";
 
 const SALT_ROUNDS = 10;
 
 export interface CompleteJwtPayload {
 	[k: string]: any;
 
-	accessId: number;
+	accessId: Id;
 }
 
-type CPayload = {
-	id?: number;
-	login: string;
-	password: string;
-	refreshTokens?: Record<string, string>;
-};
+export type Login = string;
+export type Password = string;
+export type RefreshTokens = Record<string, string>;
+export type Secret = string;
+export type RefreshId = string;
+export type JwtAccessLifetime = number;
+export type RefreshLifetime = number;
 
-type PlainObject = {
-	id: number;
-	login: string;
-};
+interface AccessData {
+	id?: MaybeNumberId;
+	login: Login;
+	password: Password;
+	refreshTokens?: RefreshTokens;
+}
+
+export interface AccessProfileData {
+	id: MaybeNumberId;
+	login: Login;
+}
 
 export type RefreshPayload = {
 	refreshId: string;
@@ -34,10 +43,10 @@ export type JwtAccessPayload = {
 	jwtAccessLifetime: number;
 };
 
-export type AccessPayload = CPayload &
+export type AccessPayload = AccessData &
 	RefreshPayload & { jwtAccessLifetime: number };
 
-export type AccessHashedPayload = CPayload & {
+export type AccessHashedPayload = AccessData & {
 	refreshTokens: Record<string, string>;
 };
 
@@ -47,11 +56,11 @@ export type TokensRefreshPayload = RefreshPayload &
 	};
 
 export class Access extends Base {
-	private _login: string;
-	private _password: string;
+	private _login: Login;
+	private _password: Password;
 	private _refreshTokens: Map<string, string>;
 
-	private constructor(payload: CPayload) {
+	private constructor(payload: AccessData) {
 		super(payload.id);
 
 		this._login = payload.login;
@@ -216,7 +225,7 @@ export class Access extends Base {
 		return { refreshToken, jwtAccess };
 	}
 
-	toPlainObject(): Readonly<PlainObject> {
+	toPlainObject(): Readonly<AccessProfileData> {
 		return {
 			id: this._id,
 			login: this._login,

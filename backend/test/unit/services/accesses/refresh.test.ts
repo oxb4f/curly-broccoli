@@ -21,7 +21,7 @@ test("Unit test: Access Refresh Service", () => {
 			refreshToken: "test",
 		});
 
-		spyOn(context.accessesRepository, "getAccess").mockResolvedValueOnce(
+		spyOn(context.accessesRepository, "get").mockResolvedValueOnce(
 			createdAccessFixture1,
 		);
 
@@ -30,12 +30,12 @@ test("Unit test: Access Refresh Service", () => {
 		expect(dto.jwt).toBeObject();
 		expect(dto.jwt.access).toBeString();
 		expect(dto.jwt.refresh).toBeString();
-		expect(context.accessesRepository.getAccess).toBeCalledTimes(1);
-		expect(context.accessesRepository.updateFromEntity).toBeCalledTimes(1);
+		expect(context.accessesRepository.get).toBeCalledTimes(1);
+		expect(context.accessesRepository.update).toBeCalledTimes(1);
 	});
 
 	describe("should throw an error if access does not exist", async () => {
-		spyOn(context.accessesRepository, "getAccess").mockResolvedValueOnce(null);
+		spyOn(context.accessesRepository, "get").mockResolvedValueOnce(null);
 
 		await expect(
 			service({ dto: fixture, context: context }),
@@ -45,7 +45,7 @@ test("Unit test: Access Refresh Service", () => {
 	describe("should throw an error if refresh was failed", async () => {
 		Access.prototype.refresh = mock().mockResolvedValueOnce({});
 
-		spyOn(context.accessesRepository, "getAccess").mockResolvedValueOnce(
+		spyOn(context.accessesRepository, "get").mockResolvedValueOnce(
 			createdAccessFixture1,
 		);
 

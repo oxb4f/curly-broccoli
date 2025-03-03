@@ -1,5 +1,7 @@
 import type { Config } from "../infra/config";
 import type { AccessesRepository } from "./accesses/repository";
+import type { BooksRepository } from "./books/repository";
+import type { UserBooksRepository } from "./books/repository";
 import type { ImagesRepository } from "./images/repository";
 import type { UsersRepository } from "./users/repository";
 
@@ -27,4 +29,6 @@ export interface Context {
 	usersRepository: UsersRepository;
 	accessesRepository: AccessesRepository;
 	imagesRepository: ImagesRepository;
+	booksRepository: BooksRepository;
+	userBooksRepository: UserBooksRepository;
 }

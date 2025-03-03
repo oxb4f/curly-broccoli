@@ -18,7 +18,7 @@ test("Unit test: Image Create Service", () => {
 
 	describe("should return valid dto", async () => {
 		spyOn(Image, "fromBucket").mockResolvedValue(createdImageFixture1);
-		spyOn(context.imagesRepository, "createFromEntity").mockImplementation(
+		spyOn(context.imagesRepository, "create").mockImplementation(
 			(() => {}) as any,
 		);
 		spyOn(context.fileStorage, "put").mockImplementation((() => {}) as any);
@@ -27,7 +27,7 @@ test("Unit test: Image Create Service", () => {
 
 		expect(dto.url).toBeString();
 		expect(Image.fromBucket).toBeCalledTimes(1);
-		expect(context.imagesRepository.createFromEntity).toBeCalledTimes(1);
+		expect(context.imagesRepository.create).toBeCalledTimes(1);
 		expect(context.fileStorage.put).toBeCalledTimes(1);
 	});
 

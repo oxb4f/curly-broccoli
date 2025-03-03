@@ -77,6 +77,7 @@ test("Unit test: User Entity", () => {
 				lastName: user.getLastName(),
 				birthday: user.getBirthday(),
 				social: user.getSocial(),
+				imageUrl: user.getImageUrl(),
 			});
 		});
 	});
