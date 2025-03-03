@@ -4,6 +4,7 @@ import { onError } from "./hooks/on-error";
 import { configPlugin } from "./plugins/config";
 import { contextPlugin } from "./plugins/context";
 import { accessesRoute } from "./routes/accesses";
+import { booksRoute } from "./routes/books";
 import { imagesRoute } from "./routes/images";
 import { pingRoute } from "./routes/ping";
 import { usersRoute } from "./routes/users";
@@ -25,6 +26,7 @@ export const app = new Elysia()
 					{ name: "Users" },
 					{ name: "Ping" },
 					{ name: "Images" },
+					{ name: "Books" },
 				],
 			},
 		}),
@@ -35,6 +37,7 @@ export const app = new Elysia()
 	.use(usersRoute)
 	.use(accessesRoute)
 	.use(imagesRoute)
+	.use(booksRoute)
 	.listen({ port: process.env.APP_PORT }, () =>
 		console.log(`🦊 Elysia is running at :${process.env.APP_PORT}`),
 	);

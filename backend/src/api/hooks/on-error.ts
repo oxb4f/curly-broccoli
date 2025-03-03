@@ -31,11 +31,14 @@ export function onError<E extends Error = Error>(
 				set.status = 422;
 
 				return getErrorResponse({
-					message: "Validation error",
-					details: e.all.map((r: { path: string; message: string }) => ({
-						path: r.path.slice(1).split("/"),
-						message: "Invalid data",
-					})),
+					type: "VALIDATION",
+					payload: {
+						message: "Validation error",
+						details: e.all.map((r: { path: string; message: string }) => ({
+							path: r.path.slice(1).split("/"),
+							message: "Invalid data",
+						})),
+					},
 				});
 			},
 		)

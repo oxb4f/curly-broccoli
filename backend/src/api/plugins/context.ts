@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import { Elysia } from "elysia";
 import { getConnection } from "../../infra/data-src/pg/connection";
 import { PgAccessesRepository } from "../../infra/data-src/pg/repositories/accesses";
+import { PgBooksRepository } from "../../infra/data-src/pg/repositories/books";
 import { PgImagesRepository } from "../../infra/data-src/pg/repositories/images";
+import { PgUserBooksRepository } from "../../infra/data-src/pg/repositories/userBooks";
 import { PgUsersRepository } from "../../infra/data-src/pg/repositories/users";
 import { createStorage } from "../../infra/file-storage/factory";
 import type { Context } from "../../services/context";
@@ -29,6 +31,8 @@ export const contextPlugin = new Elysia({ name: "contextPlugin" })
 				usersRepository: new PgUsersRepository(dbConnection),
 				accessesRepository: new PgAccessesRepository(dbConnection),
 				imagesRepository: new PgImagesRepository(dbConnection),
+				booksRepository: new PgBooksRepository(dbConnection),
+				userBooksRepository: new PgUserBooksRepository(dbConnection),
 				fileStorage: createStorage(),
 			} satisfies Context,
 		};
