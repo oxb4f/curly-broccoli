@@ -32,8 +32,8 @@ api.interceptors.request.use((config) => {
     ...config,
     headers: {
       'Content-Type': 'application/json',
-      ...existingHeaders,
-      ...(user?.jwt?.access && { Authorization: `Bearer ${user.jwt.access}` })
+      ...(user?.jwt?.access && { Authorization: `Bearer ${user.jwt.access}` }),
+      ...existingHeaders
     },
     withCredentials: true
   };
@@ -61,6 +61,8 @@ api.interceptors.response.use(
       const newUserData = { ...user, jwt: newTokens };
 
       setUserToStorage(newUserData);
+
+      originalRequest.headers.Authorization = `Bearer ${newTokens.access}`;
 
       const response = await api(originalRequest);
 

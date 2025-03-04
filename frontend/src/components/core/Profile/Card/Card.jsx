@@ -12,7 +12,6 @@ const ProfileCard = ({ className = '' }) => {
   // const user = null;
 
   if (!user && !isPending) return;
-  console.log(isPending);
 
   return (
     <article className={`profile-card ${className}`}>

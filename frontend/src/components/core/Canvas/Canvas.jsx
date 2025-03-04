@@ -3,10 +3,10 @@ import { useEffect, useRef, memo } from 'react';
 
 const Canvas = memo(({ imageUrl, onImageLoad, className = '' }) => {
   const canvasRef = useRef(null);
-  const image = useRef(new Image());
+  const imageRef = useRef(new Image());
 
   const getImageBounds = () => {
-    return { ...image.current.bounds };
+    return { ...imageRef.current.bounds };
   };
 
   const getImageBlob = async () => {
@@ -56,7 +56,7 @@ const Canvas = memo(({ imageUrl, onImageLoad, className = '' }) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const originalImage = image.current;
+    const originalImage = imageRef.current;
 
     syncCanvasSize(canvas, 100, 100, '%');
 
@@ -64,7 +64,7 @@ const Canvas = memo(({ imageUrl, onImageLoad, className = '' }) => {
       drawImage(canvas, originalImage);
       onImageLoad({
         imageBounds: getImageBounds(),
-        cropImage: (cropParams) => cropImage(canvasRef.current, image.current, cropParams),
+        cropImage: (cropParams) => cropImage(canvasRef.current, imageRef.current, cropParams),
         getImageBlob
       });
     };

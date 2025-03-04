@@ -11,14 +11,14 @@ import { getUser } from '../../../services/api/user';
 const SessionContext = createContext(null);
 
 export default function SessionProvider({ children }) {
-  // const [user, setUser] = useState(getUserFromStorage());
   const [hasStoredUser, setHasStoredUser] = useState(Boolean(getUserFromStorage()));
-
   const queryClient = useQueryClient();
+
   const {
     data: user,
     isPending,
-    error
+    error,
+    refetch
   } = useQuery({
     queryKey: ['user'],
     queryFn: getUser,
@@ -31,22 +31,18 @@ export default function SessionProvider({ children }) {
 
   useEffect(() => {
     if (user) {
-      // const clearedUser = clearEmptyFields(user);
       console.log(user);
-      // clearEmptyFields(user);
-      // setUserToStorage(clearedUser);
-      // queryClient.setQueryData(['user'], clearedUser);
     }
   }, [user]);
 
   const storeUserSession = (userData) => {
     setUserToStorage(userData);
     setHasStoredUser(true);
+    refetch();
   };
 
   const updateUserSession = (userData) => {
     queryClient.setQueryData(['user'], { ...user, ...userData });
-    console.log(queryClient.getQueryData());
   };
 
   const clearUserSession = () => {
@@ -59,6 +55,7 @@ export default function SessionProvider({ children }) {
     <SessionContext.Provider
       value={{
         user,
+        hasStoredUser,
         isPending,
         error,
         storeUserSession,

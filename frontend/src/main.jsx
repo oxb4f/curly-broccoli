@@ -36,7 +36,6 @@ createRoot(document.getElementById('root')).render(
               <Route path={ROUTES.MAIN.PROFILE} element={<ProfilePage />} />
               <Route path={ROUTES.MAIN.BOOK.ROOT} element={<BookPage />} />
               <Route path={ROUTES.MAIN.BOOK.ADD} element={<BookAddPage />} />
-              {/* <Route path="search" element={<SetPhotoZone />} /> */}
             </Route>
             <Route
               path={ROUTES.SETTINGS.ROOT}

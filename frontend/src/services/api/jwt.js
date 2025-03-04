@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getUserFromStorage, removeUserFromStorage } from '../storage/user';
+import ROUTES from '../../constants/routes';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -19,6 +20,7 @@ jwtApi.interceptors.response.use(
   function (error) {
     if (error.response.status === 401) {
       removeUserFromStorage();
+      window.location.href = ROUTES.AUTH.ROOT;
     }
 
     throw error.response.data;
@@ -27,10 +29,6 @@ jwtApi.interceptors.response.use(
 
 async function refreshToken(accessId, refreshToken) {
   const response = await jwtApi.post(`accesses/${accessId}/refresh`, { refresh: refreshToken });
-
-  // const userData = getFromStorage('user');
-  // console.log(response);
-
   return response.jwt;
 }
 

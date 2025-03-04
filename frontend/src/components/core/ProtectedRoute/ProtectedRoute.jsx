@@ -3,10 +3,9 @@ import { useSession } from '@/components/core/SessionProvider/SessionProvider';
 import ROUTES from '@/constants/routes.js';
 
 const ProtectedRoute = ({ children }) => {
-  // const user = getUserFromStorage();
-  const { user, isPending } = useSession();
+  const { user, hasStoredUser, isPending } = useSession();
 
-  if (!user && !isPending) {
+  if ((!user && !isPending) || !hasStoredUser) {
     return <Navigate to={ROUTES.AUTH.ROOT} replace></Navigate>;
   }
 
