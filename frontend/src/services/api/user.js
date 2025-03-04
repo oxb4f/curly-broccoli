@@ -42,7 +42,7 @@ const changeUserInfo = async (userData) => {
 };
 
 const uploadPhoto = async (userData) => {
-  const preparedData = await prepareRequest(userData, 'uploadPhoto');
+  const preparedData = prepareRequest(userData, 'uploadPhoto');
   console.log(preparedData);
 
   const response = await api.post('images', preparedData, {

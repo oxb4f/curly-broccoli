@@ -24,7 +24,7 @@ export default function BookPhotoUpload({ onChange, value, className = '' }) {
   };
 
   return (
-    <div className={`book-photo-upload ${className}`}>
+    <div className="book-photo-upload">
       {imageUrl ? (
         <>
           <BookPhoto imageUrl={imageUrl} className="book-photo-upload__photo" />

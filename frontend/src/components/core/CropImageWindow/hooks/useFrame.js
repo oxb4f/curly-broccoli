@@ -1,49 +1,49 @@
 import { useCallback, useState, useMemo } from 'react';
 
-const useFrame = (rawFrameSize, maxRawFrameSize, imageBounds) => {
+const useFrame = (expectedSize, expectedMaxSize, imageBounds) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const getSize = (rawFrameSize, imageBounds, maxRawFrameSize) => {
-    if (!imageBounds) return rawFrameSize;
-    return rawFrameSize * (Math.min(imageBounds.width, imageBounds.height) / maxRawFrameSize);
+  const getBoundedSize = (expectedSize, imageBounds, expectedMaxSize) => {
+    if (!imageBounds) return expectedSize;
+    return expectedSize * (Math.min(imageBounds.width, imageBounds.height) / expectedMaxSize);
   };
 
   const findCoordinate = (coordinate, min, max) => {
     return Math.min(Math.max(coordinate, min), max);
   };
 
-  const size = useMemo(
-    () => getSize(rawFrameSize, imageBounds, maxRawFrameSize),
-    [rawFrameSize, imageBounds]
+  const boundedSize = useMemo(
+    () => getBoundedSize(expectedSize, imageBounds, expectedMaxSize),
+    [expectedSize, imageBounds]
   );
 
-  const getFrameBounds = useCallback(() => {
+  const getBounds = useCallback(() => {
     return {
       left: position.x,
       top: position.y,
-      width: size,
-      height: size
+      width: boundedSize,
+      height: boundedSize
     };
-  }, [position, size]);
+  }, [position, boundedSize]);
 
-  const setFramePosition = (mouseX, mouseY) => {
+  const setBoundedPosition = (expectedX, expectedY) => {
     if (!imageBounds) return;
 
     setPosition({
       x: findCoordinate(
-        mouseX - size / 2,
+        expectedX - boundedSize / 2,
         imageBounds.left,
-        imageBounds.left + imageBounds.width - size
+        imageBounds.left + imageBounds.width - boundedSize
       ),
       y: findCoordinate(
-        mouseY - size / 2,
+        expectedY - boundedSize / 2,
         imageBounds.top,
-        imageBounds.top + imageBounds.height - size
+        imageBounds.top + imageBounds.height - boundedSize
       )
     });
   };
 
-  return { frameRelativeSize: size, framePosition: position, getFrameBounds, setFramePosition };
+  return { boundedSize, position, getBounds, setBoundedPosition };
 };
 
 export default useFrame;

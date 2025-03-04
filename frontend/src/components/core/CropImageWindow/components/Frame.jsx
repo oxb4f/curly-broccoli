@@ -1,44 +1,47 @@
-import '../CropImageWindow.css';
-import { useEffect, useImperativeHandle } from 'react';
+import '../ImageCropper.css';
+import { useEffect } from 'react';
 import { ArrowsPointingOutIcon } from '@heroicons/react/20/solid';
 import useFrame from '../hooks/useFrame';
 import createDraggable from '../../../../utils/createDraggable';
 
-const CropImageWindowFrame = ({ innerRef, containerRef, imageBounds, frameSize, maxFrameSize }) => {
-  const { frameRelativeSize, framePosition, getFrameBounds, setFramePosition } = useFrame(
-    frameSize,
-    maxFrameSize,
+const ImageCropperFrame = ({
+  containerRef,
+  imageBounds,
+  expectedSize,
+  expectedMaxSize,
+  onChange
+}) => {
+  const { boundedSize, position, getBounds, setBoundedPosition } = useFrame(
+    expectedSize,
+    expectedMaxSize,
     imageBounds
   );
 
-  useImperativeHandle(innerRef, () => ({
-    getFrameBounds
-  }));
-
-  const { startDragging } = createDraggable(containerRef, setFramePosition);
+  const { startDragging } = createDraggable(containerRef, setBoundedPosition);
 
   useEffect(() => {
     if (imageBounds) {
-      setFramePosition(
-        framePosition.x + frameRelativeSize / 2,
-        framePosition.y + frameRelativeSize / 2
-      );
+      setBoundedPosition(position.x + boundedSize / 2, position.y + boundedSize / 2);
     }
-  }, [frameRelativeSize]);
+  }, [boundedSize]);
+
+  useEffect(() => {
+    onChange({ frameBounds: getBounds() });
+  }, [boundedSize, position]);
 
   return (
     <div
-      className="crop-image-window__frame"
+      className="image-cropper__frame"
       style={{
-        transform: `translate(${framePosition.x}px, ${framePosition.y}px)`,
-        height: `${frameRelativeSize}px`,
-        width: `${frameRelativeSize}px`
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        height: `${boundedSize}px`,
+        width: `${boundedSize}px`
       }}
       onPointerDown={startDragging}
     >
-      <ArrowsPointingOutIcon className="crop-image-window__icon" />
+      <ArrowsPointingOutIcon className="image-cropper__frame-icon" />
     </div>
   );
 };
 
-export default CropImageWindowFrame;
+export default ImageCropperFrame;

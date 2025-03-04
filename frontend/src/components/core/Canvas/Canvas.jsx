@@ -1,7 +1,7 @@
 import './Canvas.css';
-import { useEffect, useRef, memo, useImperativeHandle } from 'react';
+import { useEffect, useRef, memo } from 'react';
 
-const Canvas = memo(({ innerRef, imageUrl, onImageLoad, className = '', ...props }) => {
+const Canvas = memo(({ imageUrl, onImageLoad, className = '' }) => {
   const canvasRef = useRef(null);
   const image = useRef(new Image());
 
@@ -9,8 +9,8 @@ const Canvas = memo(({ innerRef, imageUrl, onImageLoad, className = '', ...props
     return { ...image.current.bounds };
   };
 
-  const getCanvas = () => {
-    return canvasRef.current;
+  const getImageBlob = async () => {
+    return await new Promise((resolve) => canvasRef.current.toBlob(resolve));
   };
 
   const syncCanvasSize = (canvas, width, height, measure) => {
@@ -54,13 +54,6 @@ const Canvas = memo(({ innerRef, imageUrl, onImageLoad, className = '', ...props
     context.drawImage(image, x, y, width, height, 0, 0, cropParams.size, cropParams.size);
   };
 
-  useImperativeHandle(innerRef, () => ({
-    getImageUrl: getCanvas,
-    cropImage: (cropParams) => {
-      return cropImage(canvasRef.current, image.current, cropParams);
-    }
-  }));
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const originalImage = image.current;
@@ -69,7 +62,11 @@ const Canvas = memo(({ innerRef, imageUrl, onImageLoad, className = '', ...props
 
     const handleImageLoad = () => {
       drawImage(canvas, originalImage);
-      onImageLoad(getImageBounds());
+      onImageLoad({
+        imageBounds: getImageBounds(),
+        cropImage: (cropParams) => cropImage(canvasRef.current, image.current, cropParams),
+        getImageBlob
+      });
     };
 
     originalImage.src = imageUrl;
@@ -80,7 +77,7 @@ const Canvas = memo(({ innerRef, imageUrl, onImageLoad, className = '', ...props
     };
   }, [imageUrl]);
 
-  return <canvas ref={canvasRef} className={`canvas ${className}`} {...props}></canvas>;
+  return <canvas ref={canvasRef} className={`canvas ${className}`}></canvas>;
 });
 
 Canvas.displayName = 'Canvas';

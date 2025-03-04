@@ -1,26 +1,12 @@
 import './Photo.css';
-import DropZone from '../../../components/core/DropZone/DropZone';
-import { useState } from 'react';
-import PhotoSettingsForm from '../../../components/forms/Settings/Photo';
+import PhotoSettingsForm from '@/components/forms/Settings/Photo';
 
-const SettingsPhotoPage = () => {
-  console.log('SetPhotoZone');
-  const [imageUrl, setImageUrl] = useState(null);
-
-  const handleOnDrop = (file) => {
-    const objectUrl = URL.createObjectURL(file);
-    setImageUrl(objectUrl);
-  };
-
+const PhotoSettingsPage = () => {
   return (
     <section className="photo-settings-page">
-      {imageUrl ? (
-        <PhotoSettingsForm imageUrl={imageUrl} />
-      ) : (
-        <DropZone onDropHandler={handleOnDrop} />
-      )}
+      <PhotoSettingsForm />
     </section>
   );
 };
 
-export default SettingsPhotoPage;
+export default PhotoSettingsPage;

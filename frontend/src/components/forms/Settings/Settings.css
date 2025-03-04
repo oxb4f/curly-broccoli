@@ -1,14 +1,31 @@
-.photo-settings__form {
-  @apply size-min grid grid-rows-3;
-  grid-template-rows: auto 1fr auto;
+.photo-settings-page__form {
+  @apply max-w-min min-w-fit h-screen py-2 grid grid-rows-[auto_1fr] gap-2;
 }
 
-.photo-settings__form .form__group {
-  @apply flex gap-1;
+.photo-settings-page__form .form__group {
+  @apply flex;
 }
 
-.photo-settings__form .form__group .form__item {
-  @apply grow;
+.photo-settings-page__form .form__group .form__item {
+  @apply flex-1 transition-all;
+}
+
+.photo-settings-page__form .form__group .form__item:has(.form__input_submit:enabled:hover),
+.photo-settings-page__form .form__group .form__item:has(.form__back-link:hover) {
+  @apply flex-grow-[1.2];
+}
+
+.photo-settings-page__form .form__group .form__input_submit,
+.photo-settings-page__form .form__group .form__back-link {
+  @apply bg-pr-bg-secondary text-pr-text;
+}
+
+.photo-settings-page__form .form__group .form__input_submit {
+  @apply rounded-none rounded-e-lg hover:enabled:bg-pr-bg-tertiary;
+}
+
+.photo-settings-page__form .form__group .form__back-link {
+  @apply rounded-s-lg size-full py-2 text-center hover:bg-pr-bg-tertiary;
 }
 
 .profile-settings__form {

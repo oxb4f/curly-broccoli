@@ -29,10 +29,10 @@ const prepareRequest = (data, apiAction) => {
       };
     }
     case 'uploadPhoto': {
-      return new Promise((resolve) => data.canvas.toBlob(resolve)).then((imageBlob) => ({
-        image: imageBlob,
+      return {
+        image: data.binaryImageData,
         bucket: data.bucket
-      }));
+      };
     }
   }
 };

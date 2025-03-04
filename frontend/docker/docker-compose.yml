@@ -77,7 +77,7 @@ services:
       - backend-minio
     entrypoint: >
       /bin/sh -c "
-      /usr/bin/mc config host add dev http://minio:9000 minio password12345;
+      /usr/bin/mc config host add dev http://backend-minio:9000 minio password12345;
       /usr/bin/mc rm -r --force dev/bucket;
       /usr/bin/mc mb dev/bucket;
       /usr/bin/mc policy download dev/bucket;

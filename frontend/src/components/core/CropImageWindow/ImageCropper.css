@@ -1,0 +1,19 @@
+.image-cropper {
+  @apply flex flex-col items-center;
+}
+
+.image-cropper__window {
+  @apply relative size-[36rem] rounded-t-md overflow-hidden;
+}
+
+.image-cropper__frame {
+  @apply absolute top-0 left-0 flex justify-center items-center ring-[999rem] box-border ring-pr-bg-secondary opacity-80 rounded-full bg-transparent z-50 cursor-move;
+}
+
+.image-cropper__frame-icon {
+  @apply rotate-45 size-1/4 opacity-70;
+}
+
+.image-cropper__input-range {
+  @apply appearance-none w-full rounded-b-lg border-t-1 border-pr-bg-tertiary accent-pr-main bg-pr-bg-secondary cursor-pointer focus:border-pr-main;
+}

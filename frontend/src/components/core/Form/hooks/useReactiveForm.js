@@ -30,13 +30,10 @@ const useReactiveForm = (fields, onSubmit) => {
 
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
-  console.log(values);
 
   const isSubmitDisabled = Object.values(values).some((value) => !value);
 
   const handleChange = (name, value) => {
-    console.log({ [name]: value });
-
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 

@@ -15,7 +15,16 @@ const FormField = memo(
     if (field.element) {
       return (
         <FormItem>
-          {<field.element value={value ?? ''} error={error ?? ''} onChange={handleChange} />}
+          {
+            <field.element
+              value={value ?? ''}
+              error={error ?? ''}
+              onChange={handleChange}
+              {...field.args}
+            >
+              {field.args?.children}
+            </field.element>
+          }
         </FormItem>
       );
     }

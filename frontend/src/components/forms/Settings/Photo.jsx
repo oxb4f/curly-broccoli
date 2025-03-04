@@ -1,71 +1,61 @@
 import './Settings.css';
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import Form from '../../core/Form/Form';
-import CropImageWindow from '../../core/CropImageWindow/CropImageWindow';
 import ROUTES from '../../../constants/routes';
-import FormNavigation from '../../navigations/Form/Form';
+import UserPhotoUpload from '../../uploads/User/Photo/Photo';
 import useUserService from '@/hooks/useUserService';
+import { Link } from 'react-router';
 
-const MIN_RANGE_VALUE = 200;
-const MAX_RANGE_VALUE = 1000;
-
-const PhotoSettingsForm = ({ imageUrl }) => {
+const PhotoSettingsForm = () => {
   const { changePhoto } = useUserService();
-  const [rangeValue, setRangeValue] = useState(MIN_RANGE_VALUE);
-
-  const cropImageRef = useRef(null);
-
-  const backNavigation = {
-    text: 'cancel',
-    to: ROUTES.SETTINGS.ROOT
-  };
+  const imageCropperRef = useRef(null);
 
   const handleOnSubmit = async () => {
-    const croppedCanvas = cropImageRef.current.cropImage();
+    const croppedBlob = await imageCropperRef.current.cropImage();
 
-    // console.log(croppedCanvas);
-    const response = await changePhoto({ canvas: croppedCanvas });
-    console.log(response);
+    await changePhoto({ binaryImageData: croppedBlob });
+
+    // const a = document.createElement('a');
+    // a.href = imageUrl;
+    // a.download = 'croppedBlob.jpg';
+    // a.click();
   };
-
-  const handleRangeChange = useCallback((value) => {
-    setRangeValue(value);
-  }, []);
 
   const fields = useMemo(
     () => ({
-      controlButtons: {
-        cancel: {
-          element: <FormNavigation item={backNavigation} />
+      controlPanel: {
+        back: {
+          element: Link,
+          value: 'back',
+          args: {
+            to: ROUTES.SETTINGS.PROFILE,
+            className: 'form__back-link',
+            children: 'back'
+          }
         },
         confirm: {
           type: 'submit',
           value: 'confirm'
         }
       },
-      cropImageWindow: {
-        element: (
-          <CropImageWindow
-            innerRef={cropImageRef}
-            imageUrl={imageUrl}
-            frameSize={rangeValue}
-            maxFrameSize={MAX_RANGE_VALUE}
-          />
-        )
-      },
-      frameSizeRange: {
-        type: 'range',
-        min: MIN_RANGE_VALUE,
-        max: MAX_RANGE_VALUE,
-        step: 10,
-        value: MIN_RANGE_VALUE,
-        onChange: handleRangeChange
+      photo: {
+        element: UserPhotoUpload,
+        args: {
+          imageCropperRef: imageCropperRef
+        }
       }
     }),
-    [rangeValue, imageUrl, handleRangeChange]
+    []
   );
 
-  return <Form className="photo-settings__form" fields={fields} onSubmit={handleOnSubmit} />;
+  return (
+    <Form
+      className="photo-settings-page__form"
+      fields={fields}
+      onSubmit={handleOnSubmit}
+      allFieldsRequired={true}
+    />
+  );
 };
 
 export default PhotoSettingsForm;
