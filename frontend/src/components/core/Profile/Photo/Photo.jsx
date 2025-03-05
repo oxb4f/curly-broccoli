@@ -7,7 +7,7 @@ const ProfilePhoto = ({ imageUrl, className = '' }) => {
       {imageUrl ? (
         <img src={imageUrl} alt="Profile image" className="profile-photo__image" />
       ) : (
-        <UserCircleIcon className="profile-photo__icon" />
+        <UserCircleIcon className="profile-photo__image-icon" />
       )}
     </figure>
   );

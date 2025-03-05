@@ -1,11 +1,11 @@
 .profile-photo {
-  @apply rounded-full overflow-hidden;
+  @apply rounded-full overflow-hidden flex items-center;
 }
 
 .profile-photo__image {
-  @apply size-full;
+  @apply w-full text-center;
 }
 
-.profile-photo__icon {
+.profile-photo__image-icon {
   @apply size-full text-pr-text scale-125;
 }
