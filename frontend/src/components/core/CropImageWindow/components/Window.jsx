@@ -34,13 +34,15 @@ const ImageCropperWindow = ({ imageUrl, rangeValue, maxRangeValue, onCropData })
         className="image-cropper__canvas"
         onImageLoad={handleOnImageLoad}
       />
-      <ImageCropperFrame
-        containerRef={containerRef}
-        imageBounds={imageBounds}
-        expectedSize={rangeValue}
-        expectedMaxSize={maxRangeValue}
-        onChange={handleOnFrameChange}
-      />
+      {imageBounds && (
+        <ImageCropperFrame
+          containerRef={containerRef}
+          imageBounds={imageBounds}
+          expectedSize={rangeValue}
+          expectedMaxSize={maxRangeValue}
+          onChange={handleOnFrameChange}
+        />
+      )}
     </div>
   );
 };

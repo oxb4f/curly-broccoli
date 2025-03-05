@@ -4,10 +4,15 @@
 
 .image-cropper__window {
   @apply relative size-[36rem] rounded-t-md overflow-hidden;
+  --frame-x: 0px;
+  --frame-y: 0px;
+  --max-frame-size: 0px;
+  --frame-scale: 0;
 }
 
 .image-cropper__frame {
-  @apply absolute top-0 left-0 flex justify-center items-center ring-[999rem] box-border ring-pr-bg-secondary opacity-80 rounded-full bg-transparent z-50 cursor-move;
+  @apply absolute top-0 left-0 w-[--max-frame-size] h-[--max-frame-size] origin-top-left flex justify-center items-center ring-[999rem] box-border ring-pr-bg-secondary opacity-80 rounded-full bg-transparent z-50 cursor-move;
+  transform: translate(var(--frame-x), var(--frame-y)) scale(var(--frame-scale));
 }
 
 .image-cropper__frame-icon {

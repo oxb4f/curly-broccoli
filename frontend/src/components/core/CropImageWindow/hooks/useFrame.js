@@ -1,49 +1,58 @@
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 const useFrame = (expectedSize, expectedMaxSize, imageBounds) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const positionRef = useRef({ x: 0, y: 0 });
 
-  const getBoundedSize = (expectedSize, imageBounds, expectedMaxSize) => {
-    if (!imageBounds) return expectedSize;
-    return expectedSize * (Math.min(imageBounds.width, imageBounds.height) / expectedMaxSize);
-  };
+  const maxSize = useMemo(() => {
+    return imageBounds ? Math.min(imageBounds.width, imageBounds.height) : expectedMaxSize;
+  }, [imageBounds, expectedMaxSize]);
 
-  const findCoordinate = (coordinate, min, max) => {
+  const boundedSize = useMemo(() => {
+    if (!maxSize) return expectedSize;
+    return Math.min((expectedSize * maxSize) / expectedMaxSize, maxSize);
+  }, [expectedSize, maxSize, expectedMaxSize]);
+
+  const clampCoordinate = (coordinate, min, max) => {
     return Math.min(Math.max(coordinate, min), max);
   };
 
-  const boundedSize = useMemo(
-    () => getBoundedSize(expectedSize, imageBounds, expectedMaxSize),
-    [expectedSize, imageBounds]
+  const setBoundedPosition = useCallback(
+    (expectedX, expectedY) => {
+      if (!imageBounds) return positionRef.current;
+
+      const halfSize = boundedSize / 2;
+      positionRef.current = {
+        x: clampCoordinate(
+          expectedX - halfSize,
+          imageBounds.left,
+          imageBounds.left + imageBounds.width - boundedSize
+        ),
+        y: clampCoordinate(
+          expectedY - halfSize,
+          imageBounds.top,
+          imageBounds.top + imageBounds.height - boundedSize
+        )
+      };
+      return positionRef.current;
+    },
+    [imageBounds, boundedSize]
   );
 
   const getBounds = useCallback(() => {
     return {
-      left: position.x,
-      top: position.y,
-      width: boundedSize,
-      height: boundedSize
+      left: positionRef.current.x,
+      top: positionRef.current.y,
+      size: boundedSize
     };
-  }, [position, boundedSize]);
+  }, [boundedSize]);
 
-  const setBoundedPosition = (expectedX, expectedY) => {
-    if (!imageBounds) return;
-
-    setPosition({
-      x: findCoordinate(
-        expectedX - boundedSize / 2,
-        imageBounds.left,
-        imageBounds.left + imageBounds.width - boundedSize
-      ),
-      y: findCoordinate(
-        expectedY - boundedSize / 2,
-        imageBounds.top,
-        imageBounds.top + imageBounds.height - boundedSize
-      )
-    });
+  return {
+    boundedSize,
+    maxSize,
+    position: positionRef.current,
+    getBounds,
+    setBoundedPosition
   };
-
-  return { boundedSize, position, getBounds, setBoundedPosition };
 };
 
 export default useFrame;

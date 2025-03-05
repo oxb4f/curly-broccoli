@@ -1,5 +1,5 @@
 import '../ImageCropper.css';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { ArrowsPointingOutIcon } from '@heroicons/react/20/solid';
 import useFrame from '../hooks/useFrame';
 import createDraggable from '../../../../utils/createDraggable';
@@ -11,34 +11,42 @@ const ImageCropperFrame = ({
   expectedMaxSize,
   onChange
 }) => {
-  const { boundedSize, position, getBounds, setBoundedPosition } = useFrame(
+  const { boundedSize, maxSize, position, getBounds, setBoundedPosition } = useFrame(
     expectedSize,
     expectedMaxSize,
     imageBounds
   );
 
-  const { startDragging } = createDraggable(containerRef, setBoundedPosition);
+  const renderPosition = useCallback(
+    (offsetX, offsetY) => {
+      const newPosition = setBoundedPosition(offsetX, offsetY);
+      if (containerRef.current) {
+        containerRef.current.style.setProperty('--frame-x', `${newPosition.x}px`);
+        containerRef.current.style.setProperty('--frame-y', `${newPosition.y}px`);
+      }
+    },
+    [containerRef, setBoundedPosition]
+  );
+
+  const updateBounds = useCallback(
+    () => onChange({ frameBounds: getBounds() }),
+    [getBounds, onChange]
+  );
+
+  const { startDragging } = createDraggable(containerRef, renderPosition, updateBounds);
 
   useEffect(() => {
     if (imageBounds) {
-      setBoundedPosition(position.x + boundedSize / 2, position.y + boundedSize / 2);
-    }
-  }, [boundedSize]);
+      containerRef.current.style.setProperty('--max-frame-size', `${maxSize}px`);
+      containerRef.current.style.setProperty('--frame-scale', `${boundedSize / maxSize}`);
 
-  useEffect(() => {
-    onChange({ frameBounds: getBounds() });
-  }, [boundedSize, position]);
+      renderPosition(position.x + boundedSize / 2, position.y + boundedSize / 2);
+      updateBounds();
+    }
+  }, [imageBounds, boundedSize, containerRef, maxSize]);
 
   return (
-    <div
-      className="image-cropper__frame"
-      style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
-        height: `${boundedSize}px`,
-        width: `${boundedSize}px`
-      }}
-      onPointerDown={startDragging}
-    >
+    <div className="image-cropper__frame" onPointerDown={startDragging}>
       <ArrowsPointingOutIcon className="image-cropper__frame-icon" />
     </div>
   );

@@ -1,4 +1,4 @@
-const createDraggable = (containerRef, handlerOnDragging) => {
+const createDraggable = (containerRef, handlerOnDragging, handlerOnStopDragging) => {
   const handleOnPointerMove = (event) => {
     const containerBounds = containerRef.current.containerBounds;
 
@@ -19,6 +19,7 @@ const createDraggable = (containerRef, handlerOnDragging) => {
     draggableElement.onpointerup = () => {
       draggableElement.removeEventListener('pointermove', handleOnPointerMove);
       draggableElement.onpointerup = null;
+      handlerOnStopDragging();
     };
   };
 

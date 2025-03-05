@@ -9,9 +9,9 @@ const ImageCropper = ({ innerRef, imageUrl, className = '' }) => {
   const [rangeValue, setRangeValue] = useState(MIN_RANGE_VALUE);
   const cropParams = useRef(null);
 
-  const handleRangeChange = (event) => {
-    setRangeValue(event.target.value);
-  };
+  const handleRangeChange = useCallback((event) => {
+    setRangeValue(Number(event.target.value));
+  }, []);
 
   const handleOnCropData = useCallback((data) => {
     cropParams.current = { ...cropParams.current, ...data };
@@ -20,11 +20,12 @@ const ImageCropper = ({ innerRef, imageUrl, className = '' }) => {
   useImperativeHandle(innerRef, () => ({
     cropImage: async () => {
       const { cropImage, getImageBlob, imageBounds, frameBounds } = cropParams.current;
+      if (!cropImage || !getImageBlob || !imageBounds || !frameBounds) return null;
 
       cropImage({
         x: frameBounds.left - imageBounds.left,
         y: frameBounds.top - imageBounds.top,
-        size: frameBounds.width
+        size: frameBounds.size
       });
 
       return await getImageBlob();
@@ -32,7 +33,7 @@ const ImageCropper = ({ innerRef, imageUrl, className = '' }) => {
   }));
 
   return (
-    <div ref={innerRef} className={`image-cropper ${className}`}>
+    <div className={`image-cropper ${className}`}>
       <ImageCropperWindow
         imageUrl={imageUrl}
         rangeValue={rangeValue}
@@ -46,6 +47,7 @@ const ImageCropper = ({ innerRef, imageUrl, className = '' }) => {
         min={MIN_RANGE_VALUE}
         max={MAX_RANGE_VALUE}
         step={10}
+        value={rangeValue}
         onChange={handleRangeChange}
       />
     </div>
