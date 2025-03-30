@@ -13,7 +13,7 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		extension: dto.image.type.split("/").pop(),
 	});
 
-	await context.imagesRepository.createFromEntity(image);
+	await context.imagesRepository.create(image);
 
 	await context.fileStorage.put({
 		file: dto.image,

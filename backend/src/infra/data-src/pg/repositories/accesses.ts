@@ -1,7 +1,8 @@
 import { and, eq } from "drizzle-orm";
-import { Access, type AccessHashedPayload } from "../../../../entities/access";
 import type {
+	AccessUpdateData,
 	AccessesRepository,
+	GetAccessDto,
 	GetAccessFilter,
 } from "../../../../services/accesses/repository";
 import { accesses, type users } from "../schema";
@@ -13,7 +14,15 @@ export class PgAccessesRepository
 	extends BaseRepository
 	implements AccessesRepository
 {
-	async getAccess(filter: GetAccessFilter): Promise<Access | null> {
+	async list(): Promise<never> {
+		throw new Error("Not implemented");
+	}
+
+	async create(): Promise<never> {
+		throw new Error("Not implemented");
+	}
+
+	async get(filter: GetAccessFilter): Promise<GetAccessDto | null> {
 		const eqArray = [];
 		for (const k of Object.keys(filter) as Array<keyof typeof filter>) {
 			eqArray.push(eq(accesses[k], filter[k]!));
@@ -30,18 +39,27 @@ export class PgAccessesRepository
 
 		if (!record?.id) return null;
 
-		return Access.fromHashed(record as AccessHashedPayload);
+		return {
+			...record,
+			refreshTokens: record.refreshTokens as Record<string, string>,
+		};
 	}
 
-	async updateFromEntity(access: Access): Promise<void> {
+	async update(filter: GetAccessFilter, data: AccessUpdateData): Promise<void> {
+		if (!(filter.id || filter.login)) return;
+
+		const where = filter.id
+			? eq(accesses.id, filter.id)
+			: eq(accesses.login, filter.login!);
+
 		await this._connection
 			.update(accesses)
 			.set({
-				login: access.getLogin(),
-				password: access.getPassword(),
-				refreshTokens: Object.fromEntries(access.getRefreshTokens().entries()),
+				login: data.login,
+				password: data.password,
+				refreshTokens: data.refreshTokens,
 			})
-			.where(eq(accesses.id, access.getId()))
+			.where(where)
 			.execute();
 	}
 }

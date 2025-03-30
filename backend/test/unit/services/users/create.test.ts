@@ -31,7 +31,7 @@ test("Unit test: User Create Service", () => {
 		expect(dto.username).toBeString();
 		expect(User.fromCredentials).toBeCalled();
 		expect(context.usersRepository.exists).toBeCalled();
-		expect(context.usersRepository.createFromEntity).toBeCalled();
+		expect(context.usersRepository.create).toBeCalled();
 	});
 
 	describe("should throw an error if user already exist", async () => {

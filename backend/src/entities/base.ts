@@ -1,15 +1,15 @@
-import type { MaybeNumberId } from "./types/id";
+import type { Id, MaybeNumberId } from "./types/id";
 
 export abstract class Base {
-	protected _id: number;
+	protected _id: Id;
 
 	abstract toPlainObject(): Record<string, any>;
 
 	protected constructor(id: MaybeNumberId) {
-		this._id = id ?? this._generateUniqueId();
+		this._id = id ?? Base._generateUniqueId();
 	}
 
-	private _generateUniqueId() {
+	protected static _generateUniqueId() {
 		const timestamp = Date.now().toString().slice(-6);
 		const randomNum = Math.floor(Math.random() * 100000);
 

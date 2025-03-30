@@ -29,8 +29,7 @@ jsonpath "$.username" == "0104{{rn}}{{rs}}user1"
 jsonpath "$.firstName" == null
 jsonpath "$.lastName" == null
 jsonpath "$.birthday" == null
-jsonpath "$.social" == null
-jsonpath "$.social" == null
+jsonpath "$.social" exists
 jsonpath "$.imageUrl" == null
 
 # User not found with valid access token

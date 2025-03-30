@@ -1,21 +1,24 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { ServiceError } from "../../../../src/services/errors/error";
 import getUserService from "../../../../src/services/users/get/action";
-import { context, createdUserFixture1 } from "../fixtures";
+import { context, createdAccessFixture1, createdUserFixture1, userFixture1 } from "../fixtures";
 
 const fixture = {
 	userId: 1,
 	accessId: 1,
 };
 
-test("Unit test: User Update Service", () => {
+test("Unit test: User Get Service", () => {
 	const service = getUserService;
 
 	beforeEach(() => mock.restore());
 
 	describe("should return valid dto", async () => {
-		context.usersRepository.getUser =
-			mock().mockResolvedValueOnce(createdUserFixture1);
+		context.usersRepository.get =
+			mock().mockResolvedValueOnce({
+				...userFixture1,
+				access: createdAccessFixture1,
+			});
 
 		const dto = await service({ dto: fixture, context: context });
 
@@ -28,11 +31,11 @@ test("Unit test: User Update Service", () => {
 		expect(dto.social?.telegram).toBeString();
 		expect(dto.social?.instagram).toBeString();
 		expect(dto.imageUrl).toBeString();
-		expect(context.usersRepository.getUser).toBeCalledTimes(1);
+		expect(context.usersRepository.get).toBeCalledTimes(1);
 	});
 
 	describe("should throw an error if user does not exist", async () => {
-		context.usersRepository.getUser = mock().mockResolvedValueOnce(null);
+		context.usersRepository.get = mock().mockResolvedValueOnce(null);
 
 		await expect(
 			service({ dto: fixture, context: context }),
@@ -40,7 +43,7 @@ test("Unit test: User Update Service", () => {
 	});
 
 	describe("should throw an error if validation was failed", async () => {
-		context.usersRepository.getUser =
+		context.usersRepository.get =
 			mock().mockResolvedValueOnce(createdUserFixture1);
 
 		await expect(
@@ -48,6 +51,6 @@ test("Unit test: User Update Service", () => {
 				dto: { ...fixture, userId: "test" as any },
 				context: context,
 			}),
-		).rejects.toBeInstanceOf(ServiceError);
+		).rejects.toThrow(ServiceError);
 	});
 });

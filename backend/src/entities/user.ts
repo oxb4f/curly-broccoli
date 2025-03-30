@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { Access, type JwtAccessPayload, type RefreshPayload } from "./access";
 import { Base } from "./base";
+import type { MaybeNumberId } from "./types/id";
 
 export type FirstName = string | null | undefined;
 export type LastName = string | null | undefined;
@@ -10,23 +11,26 @@ export type Password = string;
 export type Social = Partial<Record<"telegram" | "instagram", string | null>>;
 export type ImageUrl = string | null | undefined;
 
-type CPayload = {
-	id?: number;
-	firstName: FirstName;
-	lastName: LastName;
+interface UserProfileData {
+	id?: MaybeNumberId;
+	firstName?: FirstName;
+	lastName?: LastName;
 	username: Username;
 	birthday?: Birthday;
-	social: Social;
+	social?: Social;
 	imageUrl?: ImageUrl;
-};
+	access?: Access;
+}
 
-export type UserWithCredentialsPayload = CPayload &
+type UserProfileUpdateData = Partial<Omit<UserProfileData, "id" | "access">>;
+
+export type UserWithCredentialsPayload = UserProfileData &
 	RefreshPayload &
 	JwtAccessPayload & {
 		password: Password;
 	};
 
-export type UserPayload = CPayload & {
+export type UserPayload = UserProfileData & {
 	access: Access;
 };
 
@@ -34,15 +38,6 @@ export type LoginPayload = RefreshPayload &
 	JwtAccessPayload & {
 		password: Password;
 	};
-
-export type UpdatePayload = {
-	firstName?: FirstName;
-	lastName?: LastName;
-	username?: Username;
-	birthday?: Birthday;
-	social?: Social;
-	imageUrl?: ImageUrl;
-};
 
 export class User extends Base {
 	private _username: Username;
@@ -53,15 +48,15 @@ export class User extends Base {
 	private _social: Social;
 	private _imageUrl: ImageUrl;
 
-	private constructor(payload: CPayload) {
+	private constructor(payload: UserProfileData) {
 		super(payload.id);
 
 		this._username = payload.username;
-		this._firstName = payload.firstName;
-		this._lastName = payload.lastName;
-		this._birthday = payload.birthday;
-		this._social = payload.social;
-		this._imageUrl = payload.imageUrl;
+		this._firstName = payload.firstName ?? null;
+		this._lastName = payload.lastName ?? null;
+		this._birthday = payload.birthday ?? null;
+		this._social = payload.social ?? {};
+		this._imageUrl = payload.imageUrl ?? null;
 	}
 
 	static async fromCredentials(
@@ -108,7 +103,7 @@ export class User extends Base {
 		return { jwtAccess, refreshToken };
 	}
 
-	async update(payload: UpdatePayload) {
+	async update(payload: UserProfileUpdateData) {
 		const { firstName, lastName, username, birthday, social, imageUrl } =
 			payload;
 
@@ -178,7 +173,7 @@ export class User extends Base {
 		this._imageUrl = imageUrl;
 	}
 
-	toPlainObject(): Readonly<CPayload & { access?: Access }> {
+	toPlainObject(): UserProfileData {
 		return {
 			id: this._id,
 			firstName: this._firstName,

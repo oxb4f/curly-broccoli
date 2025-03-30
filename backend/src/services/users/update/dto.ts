@@ -19,7 +19,7 @@ export const UpdateUserDtoIn = createInputDto(
 		firstName: firstName.optional().nullable(),
 		lastName: lastName.optional().nullable(),
 		birthday: date.optional().nullable(),
-		social: social.optional().nullable(),
+		social: social.optional(),
 		imageUrl: url.optional().nullable(),
 	}),
 );

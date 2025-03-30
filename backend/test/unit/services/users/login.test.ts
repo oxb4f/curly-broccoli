@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { User } from "../../../../src/entities/user";
 import { ServiceError } from "../../../../src/services/errors/error";
 import loginUserService from "../../../../src/services/users/login/action";
-import { context, createdUserFixture1 } from "../fixtures";
+import { context, createdAccessFixture1, createdUserFixture1 } from "../fixtures";
 
 const fixture = {
 	username: "testuser",
@@ -21,9 +21,10 @@ test("Unit test: User Login Service", () => {
 			refreshToken: "test",
 		});
 
-		spyOn(context.usersRepository, "getUser").mockResolvedValue(
-			createdUserFixture1,
-		);
+		spyOn(context.usersRepository, "get").mockResolvedValue({
+            ...fixture,
+			access: createdAccessFixture1,
+		});
 
 		const dto = await service({ dto: fixture, context: context });
 
@@ -33,12 +34,12 @@ test("Unit test: User Login Service", () => {
 		expect(dto.jwt.refresh).toBeString();
 		expect(dto.username).toBeString();
 		expect(User.prototype.login).toBeCalledTimes(1);
-		expect(context.usersRepository.getUser).toBeCalledTimes(1);
-		expect(context.usersRepository.updateFromEntity).toHaveBeenCalled();
+		expect(context.usersRepository.get).toBeCalledTimes(1);
+		expect(context.usersRepository.update).toHaveBeenCalled();
 	});
 
 	describe("should throw auth error if user does not exist", async () => {
-		spyOn(context.usersRepository, "getUser").mockResolvedValue(null);
+		spyOn(context.usersRepository, "get").mockResolvedValue(null);
 
 		await expect(
 			service({ dto: fixture, context: context }),
@@ -48,7 +49,7 @@ test("Unit test: User Login Service", () => {
 	describe("should throw auth error if password does not match", async () => {
 		User.prototype.login = mock().mockResolvedValueOnce({});
 
-		spyOn(context.usersRepository, "getUser").mockResolvedValueOnce(
+		spyOn(context.usersRepository, "get").mockResolvedValueOnce(
 			createdUserFixture1,
 		);
 
@@ -63,7 +64,7 @@ test("Unit test: User Login Service", () => {
 			refreshToken: "test",
 		});
 
-		spyOn(context.usersRepository, "getUser").mockResolvedValueOnce(
+		spyOn(context.usersRepository, "get").mockResolvedValueOnce(
 			createdUserFixture1,
 		);
 

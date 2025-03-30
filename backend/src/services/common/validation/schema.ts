@@ -15,3 +15,7 @@ export const dateString = z.string().date().readonly();
 export const date = z.coerce.date().readonly();
 
 export const url = z.string().trim().url().readonly();
+
+export const limit = z.coerce.number().int().safe().min(1).max(200).readonly();
+
+export const offset = z.coerce.number().int().safe().min(0).readonly();

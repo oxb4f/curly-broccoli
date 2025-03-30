@@ -1,19 +1,22 @@
 import assert from "node:assert/strict";
+import { User } from "../../../entities/user";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
 import { type InShape, LoginDtoIn, LoginDtoOut, type OutShape } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
-	const user = await context.usersRepository.getUser({
+	const getUserDto = await context.usersRepository.get({
 		username: dto.username,
 	});
 
-	if (!user) {
+	if (!getUserDto) {
 		ServiceError.throw(ServiceError.ERROR_TYPE.AUTH, {
 			message: "User not found",
 			details: [{ path: ["username"], message: "Username does not exist" }],
 		});
 	}
+
+	const user = await User.from(getUserDto);
 
 	const loginResult = await user.login({
 		password: dto.password,
@@ -30,11 +33,20 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		});
 	}
 
-	await context.usersRepository.updateFromEntity(user);
-
 	const access = user.getAcesss();
 
 	assert(access, "Acesss must exist");
+
+	await context.usersRepository.update(
+		{
+			id: user.getId(),
+		},
+		{
+			access: {
+				refreshTokens: Object.fromEntries(access.getRefreshTokens().entries()),
+			},
+		},
+	);
 
 	return LoginDtoOut.create({
 		id: user.getId(),

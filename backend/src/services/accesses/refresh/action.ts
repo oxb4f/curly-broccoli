@@ -1,3 +1,4 @@
+import { Access } from "../../../entities/access";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
 import {
@@ -8,16 +9,18 @@ import {
 } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
-	const access = await context.accessesRepository.getAccess({
+	const getAccessDto = await context.accessesRepository.get({
 		id: dto.accessId,
 	});
 
-	if (!access) {
+	if (!getAccessDto) {
 		ServiceError.throw(ServiceError.ERROR_TYPE.AUTH, {
 			details: [],
 			message: "Refresh was failed",
 		});
 	}
+
+	const access = await Access.fromHashed(getAccessDto);
 
 	const result = await access.refresh({
 		refresh: dto.refresh,
@@ -34,7 +37,11 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		});
 	}
 
-	await context.accessesRepository.updateFromEntity(access);
+	await context.accessesRepository.update({
+		id: dto.accessId,
+	}, {
+		refreshTokens: Object.fromEntries(access.getRefreshTokens().entries()),
+	});
 
 	return RefreshDtoOut.create({
 		jwt: {

@@ -5,12 +5,13 @@ import type { Context } from "../../../src/services/context";
 
 export const context = {
 	usersRepository: {
-		createFromEntity: mock(),
-		updateFromEntity: mock(),
-		getUser: mock(),
+		create: mock(),
+		update: mock(),
+		get: mock(),
 		exists: mock(),
+		list: mock(),
 	},
-	accessesRepository: { getAccess: mock(), updateFromEntity: mock() },
+	accessesRepository: { get: mock(), update: mock(), list: mock(), create: mock() },
 	config: {
 		APP_PORT: 8080,
 
@@ -35,13 +36,28 @@ export const context = {
 		AWS_S3_ENDPOINT: "http://minio:9000",
 	},
 	imagesRepository: {
-		createFromEntity: mock(),
+		create: mock(),
+		get: mock(),
+		update: mock(),
+		list: mock(),
 	},
 	fileStorage: {
 		put: mock(),
 		get: mock().mockImplementation(() =>
 			Promise.resolve(new File([], "test.png", { type: "image/png" })),
 		),
+	},
+	booksRepository: {
+		create: mock(),
+		update: mock(),
+		get: mock(),
+		list: mock(),
+	},
+	userBooksRepository: {
+		create: mock(),
+		update: mock(),
+		get: mock(),
+		list: mock(),
 	},
 } satisfies Context;
 
