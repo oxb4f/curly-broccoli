@@ -1,9 +1,14 @@
-import '../ImageCropper.css';
 import { useCallback, useRef, useState } from 'react';
 import Canvas from '../../Canvas/Canvas';
 import ImageCropperFrame from './Frame';
 
-const ImageCropperWindow = ({ imageUrl, rangeValue, maxRangeValue, onCropData }) => {
+const ImageCropperWindow = ({
+  imageUrl,
+  rangeValue,
+  maxRangeValue,
+  onCropData,
+  className = ''
+}) => {
   const containerRef = useRef(null);
   const [imageBounds, setImageBounds] = useState(null);
 
@@ -28,12 +33,17 @@ const ImageCropperWindow = ({ imageUrl, rangeValue, maxRangeValue, onCropData })
   );
 
   return (
-    <div className="image-cropper__window" ref={containerRef}>
-      <Canvas
-        imageUrl={imageUrl}
-        className="image-cropper__canvas"
-        onImageLoad={handleOnImageLoad}
-      />
+    <div
+      className={`relative overflow-hidden ${className}`}
+      style={{
+        '--frame-x': '0px',
+        '--frame-y': '0px',
+        '--max-frame-size': '0px',
+        '--frame-scale': 0
+      }}
+      ref={containerRef}
+    >
+      <Canvas imageUrl={imageUrl} className="size-full" onImageLoad={handleOnImageLoad} />
       {imageBounds && (
         <ImageCropperFrame
           containerRef={containerRef}

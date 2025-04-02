@@ -1,4 +1,3 @@
-import '../ImageCropper.css';
 import { useCallback, useEffect } from 'react';
 import { ArrowsPointingOutIcon } from '@heroicons/react/20/solid';
 import useFrame from '../hooks/useFrame';
@@ -46,8 +45,11 @@ const ImageCropperFrame = ({
   }, [imageBounds, boundedSize, containerRef, maxSize]);
 
   return (
-    <div className="image-cropper__frame" onPointerDown={startDragging}>
-      <ArrowsPointingOutIcon className="image-cropper__frame-icon" />
+    <div
+      className="absolute top-0 left-0 w-[--max-frame-size] h-[--max-frame-size] translate-x-[--frame-x] translate-y-[--frame-y] scale-[--frame-scale] origin-top-left flex justify-center items-center ring-[999rem] box-border ring-pr-bg-secondary opacity-80 rounded-full bg-transparent z-50 cursor-move"
+      onPointerDown={startDragging}
+    >
+      <ArrowsPointingOutIcon className="rotate-45 size-1/4 opacity-70" />
     </div>
   );
 };

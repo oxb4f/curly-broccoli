@@ -1,4 +1,3 @@
-import './Photo.css';
 import DropZone from '../../../core/DropZone/DropZone';
 import { useEffect } from 'react';
 import ImageCropper from '../../../core/CropImageWindow/ImageCropper';
@@ -19,17 +18,13 @@ const UserPhotoUpload = ({ value, onChange, imageCropperRef }) => {
   }, [imageUrl]);
 
   return (
-    <div className="user-photo-upload">
+    <div className="size-full flex justify-center">
       {imageUrl ? (
         <>
-          <ImageCropper
-            innerRef={imageCropperRef}
-            className="user-photo-upload__image-cropper"
-            imageUrl={imageUrl}
-          />
+          <ImageCropper innerRef={imageCropperRef} className="size-full" imageUrl={imageUrl} />
         </>
       ) : (
-        <DropZone onDropHandler={handleOnDrop} className="user-photo-upload__drop-zone" />
+        <DropZone onDropHandler={handleOnDrop} className="h-full min-w-96 max-w-md rounded-md" />
       )}
     </div>
   );

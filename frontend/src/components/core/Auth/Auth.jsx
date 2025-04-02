@@ -1,41 +1,26 @@
 import { useState } from 'react';
 import AuthSignInForm from '../../forms/Auth/SignIn';
-import './Auth.css';
 import AuthSignUpForm from '../../forms/Auth/SignUp';
 import Logo from '../Logo/Logo';
 
-const Auth = () => {
+const Auth = ({ className = '' }) => {
   const [isLogin, setIsLogin] = useState(true);
+
   return (
-    <article className="authorization">
-      <header className="authorization__header">
-        <Logo text="Litrify" />
-      </header>
-      <main className="authorization__main">
-        {isLogin ? <AuthSignInForm /> : <AuthSignUpForm />}
-      </main>
-      <footer className="authorization__footer">
-        {
-          <div>
-            {isLogin ? (
-              <>
-                First time here?{' '}
-                <span className="link" onClick={() => setIsLogin(!isLogin)}>
-                  Sign up
-                </span>
-              </>
-            ) : (
-              <>
-                Already have an account?{' '}
-                <span className="link" onClick={() => setIsLogin(!isLogin)}>
-                  Sign in
-                </span>
-              </>
-            )}
-          </div>
-        }
-      </footer>
-    </article>
+    <div className={`min-w-60 ${className}`}>
+      <Logo text="Litrify" className="pb-4" />
+      {isLogin ? <AuthSignInForm /> : <AuthSignUpForm />}
+      <p className="pt-2">
+        {`${isLogin ? 'First time here?' : 'Already have an account?'} `}
+        <button
+          type="button"
+          className="text-pr-main hover:underline"
+          onClick={() => setIsLogin(!isLogin)}
+        >
+          Sign {isLogin ? 'up' : 'in'}
+        </button>
+      </p>
+    </div>
   );
 };
 

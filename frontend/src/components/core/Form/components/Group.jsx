@@ -1,7 +1,5 @@
-import '../Form.css';
-
-const FormGroup = ({ children }) => {
-  return <div className={`form__group`}>{children}</div>;
+const FormGroup = ({ className = '', children }) => {
+  return <div className={className}>{children}</div>;
 };
 
 export default FormGroup;

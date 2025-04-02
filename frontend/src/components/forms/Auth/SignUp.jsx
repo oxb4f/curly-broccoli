@@ -26,7 +26,7 @@ const AuthSignUpForm = () => {
 
   return (
     <Form
-      className="authorization__form"
+      className="grid w-full gap-y-6"
       fields={fields}
       onSubmit={handleSubmit}
       allFieldsRequired

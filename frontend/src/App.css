@@ -1,14 +1,23 @@
-@keyframes scale {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.01);
-  }
+#root {
+  @apply grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    'sidebar main'
+    'sidebar footer';
 }
 
-.scale-animation {
-  animation: scale 0.3s ease-out 2 alternate;
+.sidebar {
+  grid-area: sidebar;
+  @apply sticky top-0;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  grid-area: footer;
 }
 
 #root {

@@ -1,13 +1,12 @@
-import './Photo.css';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 
 const ProfilePhoto = ({ imageUrl, className = '' }) => {
   return (
-    <figure className={`profile-photo ${className}`}>
+    <figure className={`rounded-full overflow-hidden flex items-center ${className}`}>
       {imageUrl ? (
-        <img src={imageUrl} alt="Profile image" className="profile-photo__image" />
+        <img src={imageUrl} alt="Profile image" className="w-full text-center" />
       ) : (
-        <UserCircleIcon className="profile-photo__image-icon" />
+        <UserCircleIcon className="size-full text-pr-text scale-125" />
       )}
     </figure>
   );

@@ -1,4 +1,3 @@
-import './DropZone.css';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -14,7 +13,11 @@ const DropZone = ({ onDropHandler, className = '' }) => {
   return (
     <div
       {...getRootProps()}
-      className={`drop-zone ${isDragActive ? 'drop-zone_active' : ''} ${className}`}
+      className={`relative flex justify-center p-8 items-center bg-pr-bg-secondary text-pr-border ${
+        isDragActive ? 'text-pr-text-darker before:border-pr-text-darker' : ''
+      }
+      before:content-[''] before:absolute before:inset-4 before:border-4 before:border-dashed before:border-pr-border
+      ${className}`}
     >
       <input {...getInputProps()} />
       {isDragActive ? (

@@ -1,4 +1,3 @@
-import './Canvas.css';
 import { useEffect, useRef, memo } from 'react';
 
 const Canvas = memo(({ imageUrl, onImageLoad, className = '' }) => {
@@ -77,7 +76,7 @@ const Canvas = memo(({ imageUrl, onImageLoad, className = '' }) => {
     };
   }, [imageUrl]);
 
-  return <canvas ref={canvasRef} className={`canvas ${className}`}></canvas>;
+  return <canvas ref={canvasRef} className={className}></canvas>;
 });
 
 Canvas.displayName = 'Canvas';

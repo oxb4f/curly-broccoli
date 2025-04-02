@@ -1,4 +1,3 @@
-import './Add.css';
 import DropZone from '../../../../components/core/DropZone/DropZone';
 import { useParams } from 'react-router';
 import photo from '@/assets/images/profile-photo2.jpg';
@@ -10,7 +9,7 @@ const BookAddPage = () => {
   // const params = useParams();
 
   return (
-    <section className="book-add-page">
+    <section className="size-full flex justify-center">
       <AddBookForm />
       {/* <div className="book-add-page__photo-container">
         {imageUrl ? (

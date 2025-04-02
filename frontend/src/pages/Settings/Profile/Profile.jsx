@@ -1,25 +1,22 @@
-import './Profile.css';
 import ProfileSettingsForm from '../../../components/forms/Settings/Profile';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import ROUTES from '../../../constants/routes';
 import { useSession } from '@/components/core/SessionProvider/SessionProvider';
 import AsyncProfilePhoto from '@/components/asyncs/Profile/Photo';
-import { Link } from 'react-router';
+import NavigationLink from '../../../components/core/Navigation/Link/Link';
 
 const SettingsProfilePage = () => {
   const { user, isPending } = useSession();
 
   return (
-    <section className="profile-settings-page">
-      <div className="profile-settings-page__photo-container">
-        <AsyncProfilePhoto
-          className="profile-settings-page__photo"
-          imageUrl={user?.imageUrl}
-          isPending={isPending}
+    <section className="size-full flex flex-col gap-8 justify-center items-center">
+      <div className="relative size-fit">
+        <AsyncProfilePhoto className="size-44" imageUrl={user?.imageUrl} isPending={isPending} />
+        <NavigationLink
+          icon={PencilIcon}
+          to={ROUTES.SETTINGS.PHOTO}
+          className="absolute right-4 bottom-0 size-9 p-2 rounded-full bg-pr-bg-secondary z-10"
         />
-        <Link to={ROUTES.SETTINGS.PHOTO} className="profile-settings-page__link">
-          <PencilIcon />
-        </Link>
       </div>
 
       <ProfileSettingsForm userCurrentData={user} isPending={isPending} />

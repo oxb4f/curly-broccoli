@@ -1,4 +1,3 @@
-import './DropDown.css';
 import { useState } from 'react';
 import {
   ChevronUpIcon,
@@ -7,7 +6,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
 
-const DropDown = ({ openingDirection, children }) => {
+const DropDown = ({ openingDirection, children, className = '' }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   const getArrows = (direction) => {
@@ -34,9 +33,13 @@ const DropDown = ({ openingDirection, children }) => {
   };
 
   return (
-    <div className={`${isHidden ? 'drop-down__hidden' : ''} drop-down`}>
-      <button className="drop-down__hide-button" onClick={changeVisibility}>
-        <HidingButtonIcon className="drop-down__hide-icon" />
+    <div
+      className={`w-full grid ${
+        isHidden ? 'grid-rows-hide' : 'grid-rows-show'
+      } transition-[grid-template-rows] overflow-hidden ${className}`}
+    >
+      <button className="w-full flex justify-center" onClick={changeVisibility}>
+        <HidingButtonIcon className="size-5" />
       </button>
       {children}
     </div>

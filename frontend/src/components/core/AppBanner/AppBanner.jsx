@@ -1,38 +1,25 @@
-import './AppBanner.css';
 import iphoneScreen from '@/assets/images/iphone-screen.png';
 import googlePlayDownload from '@/assets/images/google-play-download.png';
 import appStoreDownload from '@/assets/images/app-store-download.png';
 
-const AppBanner = () => {
+const AppBanner = ({ className = '' }) => {
   return (
-    <article className="app-banner">
-      <div className="app-banner__showcase">
-        <img src={iphoneScreen} alt="iphone-screen" className="app-banner__phone-screen" />
-      </div>
-      <div className="app-banner__content">
-        <header className="app-banner__header">
-          <h1>Download the application</h1>
-        </header>
-        <main className="app-banner__description description">
+    <article className={`border border-pr-border bg-pr-bg-secondary ${className}`}>
+      <img src={iphoneScreen} alt="iphone-screen" className="max-w-44 max-h-96" />
+      <div className="flex flex-col justify-center gap-6 max-w-96 min-w-56 text-center break-words">
+        <h1 className="text-3xl">Download the application</h1>
+        <p className="text-pr-text-darker">
           Our app is made for people who want read their favorite books and share their thoughts
           with like-minded people
-        </main>
-        <footer className="app-banner__footer">
-          <a href="#" className="media-content__download-link link">
-            <img
-              src={googlePlayDownload}
-              className="app-banner__download-image"
-              alt="Google Play Download"
-            />
+        </p>
+        <nav className="flex justify-center gap-4 flex-wrap">
+          <a href="#" className="hover:opacity-75">
+            <img src={googlePlayDownload} className="h-10" alt="Google Play Download" />
           </a>
-          <a href="#" className="app-banner__download-link link">
-            <img
-              src={appStoreDownload}
-              className="app-banner__download-image"
-              alt="App Store Download"
-            />
+          <a href="#" className="hover:opacity-75">
+            <img src={appStoreDownload} className="h-10" alt="App Store Download" />
           </a>
-        </footer>
+        </nav>
       </div>
     </article>
   );

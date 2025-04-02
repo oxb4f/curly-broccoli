@@ -1,5 +1,3 @@
-import './Main.css';
-
 const MainLayout = ({ sidebar, main, footer }) => {
   return (
     <>

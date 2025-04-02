@@ -1,4 +1,3 @@
-import './Auth.css';
 import Form from '../../core/Form/Form';
 import useUserService from '@/hooks/useUserService';
 
@@ -26,7 +25,7 @@ const AuthSignInForm = () => {
 
   return (
     <Form
-      className="authorization__form"
+      className="grid w-full gap-y-6"
       fields={fields}
       onSubmit={handleSubmit}
       allFieldsRequired

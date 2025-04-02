@@ -1,4 +1,3 @@
-import './Add.css';
 import useUserService from '@/hooks/useUserService';
 import Form from '../../../core/Form/Form';
 import BookPhoto from '../../../../components/core/Book/Photo/Photo';
@@ -31,29 +30,38 @@ const AddBookForm = ({ className = '' }) => {
     photo: {
       element: BookPhotoUpload
     },
-    textFields: {
-      title: {
-        type: 'text',
-        placeholder: 'Title'
+    description: {
+      fields: {
+        title: {
+          type: 'text',
+          placeholder: 'Title'
+        },
+        author: {
+          type: 'text',
+          placeholder: 'Author'
+        },
+        description: {
+          type: 'textarea',
+          placeholder: 'Description'
+        },
+        addBook: {
+          type: 'submit',
+          value: 'Add book'
+        }
       },
-      author: {
-        type: 'text',
-        placeholder: 'Author'
-      },
-      description: {
-        type: 'textarea',
-        placeholder: 'Description'
-      },
-      addBook: {
-        type: 'submit',
-        value: 'Add book'
-      }
+      className: 'py-10 flex flex-col gap-5 min-w-96'
     }
   };
 
   // const handleSubmit = (userData) => changeInfo(userData);
 
-  return <Form className="add-book-form" fields={fields} onSubmit={handleOnSubmit} />;
+  return (
+    <Form
+      className="max-w-4xl w-full h-full grid grid-cols-[auto_1fr] gap-4"
+      fields={fields}
+      onSubmit={handleOnSubmit}
+    />
+  );
 };
 
 export default AddBookForm;

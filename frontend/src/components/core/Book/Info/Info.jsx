@@ -1,11 +1,13 @@
-import './Info.css';
+const BookInfo = ({ data, isShort = false, className = '' }) => {
+  const shortClassName = isShort ? 'overflow-hidden text-ellipsis whitespace-nowrap ' : '';
 
-const BookInfo = ({ data, className = '' }) => {
   return (
-    <section className={`book-info ${className}`}>
-      <h3 className="book-info__title">Book name</h3>
-      <p className="book-info__author">Book author</p>
-      {data?.other && <p className="book-info__other">{data.other}</p>}
+    <section className={`text-pr-text ${className}`}>
+      <h3 className={`text-[1.1em]/[1.6em] font-bold ${shortClassName}`}>Book name</h3>
+      <p className={`text-[0.8em]/[1.2em] ${shortClassName}`}>Book author</p>
+      {data?.other && (
+        <p className={`py-8 text-[0.75em]/[1.2em] ${isShort ? 'hidden' : 'block'}`}>{data.other}</p>
+      )}
     </section>
   );
 };

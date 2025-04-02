@@ -1,4 +1,3 @@
-import './ImageCropper.css';
 import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 import ImageCropperWindow from './components/Window';
 
@@ -33,22 +32,23 @@ const ImageCropper = ({ innerRef, imageUrl, className = '' }) => {
   }));
 
   return (
-    <div className={`image-cropper ${className}`}>
-      <ImageCropperWindow
-        imageUrl={imageUrl}
-        rangeValue={rangeValue}
-        maxRangeValue={MAX_RANGE_VALUE}
-        onCropData={handleOnCropData}
-      />
-
+    <div className={`flex flex-col-reverse justify-end ${className}`}>
       <input
         type="range"
-        className="input image-cropper__input-range"
+        className="peer appearance-none w-full rounded-xl accent-pr-main bg-pr-bg-secondary cursor-pointer transition-all duration-300  
+        focus:rounded-t-none"
         min={MIN_RANGE_VALUE}
         max={MAX_RANGE_VALUE}
         step={10}
         value={rangeValue}
         onChange={handleRangeChange}
+      />
+      <ImageCropperWindow
+        imageUrl={imageUrl}
+        rangeValue={rangeValue}
+        maxRangeValue={MAX_RANGE_VALUE}
+        onCropData={handleOnCropData}
+        className="size-[36rem] rounded-md peer-focus:rounded-b-none transition-all duration-300"
       />
     </div>
   );

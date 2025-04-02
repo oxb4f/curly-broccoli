@@ -1,4 +1,3 @@
-import './Profile.css';
 import Stats from '../../core/Stats/Stats';
 
 const ProfileStats = ({ data, className = '' }) => {
@@ -17,7 +16,7 @@ const ProfileStats = ({ data, className = '' }) => {
     }
   ];
 
-  return <Stats list={stats} className={`profile-stats ${className}`} />;
+  return <Stats list={stats} className={className} />;
 };
 
 export default ProfileStats;

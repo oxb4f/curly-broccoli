@@ -68,11 +68,6 @@ body {
   background-color: var(--project-bg-main-color);
 }
 
-input:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
 /* input {
   color: var(--project-text-color);
   background-color: var(--project-bg-main-color);

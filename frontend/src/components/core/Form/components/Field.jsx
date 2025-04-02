@@ -1,8 +1,5 @@
-import '../Form.css';
-import FormItem from './Item';
 import Input from '../../Input/Input';
 import Textarea from '../../Textarea/Textarea';
-import FormHint from './Hint';
 import { memo } from 'react';
 
 const FormField = memo(
@@ -14,55 +11,44 @@ const FormField = memo(
 
     if (field.element) {
       return (
-        <FormItem>
-          {
-            <field.element
-              value={value ?? ''}
-              error={error ?? ''}
-              onChange={handleChange}
-              {...field.args}
-            >
-              {field.args?.children}
-            </field.element>
-          }
-        </FormItem>
+        <field.element
+          value={value ?? ''}
+          error={error ?? ''}
+          onChange={handleChange}
+          {...field.args}
+        >
+          {field.args?.children}
+        </field.element>
       );
     }
 
     const commonProps = {
       ...field,
-      className: `form__input form__input_${field.type}`
+      className: `w-full h-10 px-2 rounded-md ${
+        field.type === 'submit'
+          ? 'cursor-pointer font-bold bg-pr-main text-pr-bg-main enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute'
+          : field.type === 'textarea'
+          ? 'py-2 max-h-80 min-h-40 border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
+          : field.type === 'range'
+          ? 'accent-pr-main cursor-pointer'
+          : 'border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
+      } ${field?.className ?? ''}`
     };
 
     if (field.type === 'submit') {
-      return (
-        <FormItem>
-          <Input {...commonProps} disabled={isSubmitDisabled} />
-        </FormItem>
-      );
+      return <Input {...commonProps} disabled={isSubmitDisabled} />;
     }
 
     if (field.type === 'button') {
-      return (
-        <FormItem>
-          <Input {...commonProps} />
-        </FormItem>
-      );
+      return <Input {...commonProps} />;
     }
 
     if (field.type === 'textarea') {
-      return (
-        <FormItem>
-          <Textarea {...commonProps} value={value ?? ''} onChange={handleChange} />
-        </FormItem>
-      );
+      return <Textarea {...commonProps} value={value ?? ''} onChange={handleChange} />;
     }
 
     return (
-      <FormItem>
-        <Input {...commonProps} value={value ?? ''} error={error ?? ''} onChange={handleChange} />
-        <FormHint value={field.hint} inputValue={value} inputError={error} />
-      </FormItem>
+      <Input {...commonProps} value={value ?? ''} error={error ?? ''} onChange={handleChange} />
     );
   },
   (prevProps, nextProps) => {

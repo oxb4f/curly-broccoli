@@ -29,6 +29,31 @@ export default {
       gridTemplateRows: {
         hide: 'min-content 0fr',
         show: 'min-content 1fr'
+      },
+      animation: {
+        'slide-in-from-right-full': 'slideInFromRightFull 0.8s ease-in-out 0.6s both',
+        'slide-in-from-left-1/3': 'slideInFromLeftThird 0.8s ease-in-out 0.6s both',
+        'faded-slide-in-from-top-full': 'fadedSlideInFromTopFull 0.2s ease-out',
+        bump: 'bump 0.6s ease-out'
+      },
+      keyframes: {
+        slideInFromRightFull: {
+          from: { transform: 'translateX(100%)' },
+          to: { transform: 'translateX(0)' }
+        },
+        slideInFromLeftThird: {
+          from: { transform: 'translateX(-33%)' },
+          to: { transform: 'translateX(0)' }
+        },
+        fadedSlideInFromTopFull: {
+          from: { opacity: '0', transform: 'translateY(-100%)' },
+          to: { opacity: '1', transform: 'translateY(0)' }
+        },
+        bump: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.01)' },
+          '100%': { transform: 'scale(1)' }
+        }
       }
     }
   },
