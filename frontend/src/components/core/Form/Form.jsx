@@ -2,11 +2,9 @@ import useReactiveForm from './hooks/useReactiveForm';
 import FormFields from './components/Fields';
 
 const Form = ({ fields, onSubmit, className = '', allFieldsRequired = false }) => {
-  const { values, errors, isSubmitDisabled, handleChange, handleSubmit } = useReactiveForm(
-    fields,
-    onSubmit
-  );
+  const { values, errors, handleChange, handleSubmit } = useReactiveForm(fields, onSubmit);
   console.log(values);
+  console.log(errors);
 
   return (
     <form className={`min-w-64 ${className}`} onSubmit={handleSubmit}>
@@ -14,7 +12,7 @@ const Form = ({ fields, onSubmit, className = '', allFieldsRequired = false }) =
         fields={fields}
         values={values}
         errors={errors}
-        isSubmitDisabled={allFieldsRequired && isSubmitDisabled}
+        allFieldsRequired={allFieldsRequired}
         onFieldChange={handleChange}
       />
     </form>

@@ -1,13 +1,15 @@
-const ProfilePersonalInfo = ({ personalInfo = {}, className = '' }) => {
-  const personalInfoValues = Object.values(personalInfo);
+import Skeleton from '../../Skeleton/Skeleton';
+
+const ProfilePersonalInfo = ({ personalInfo, className = '' }) => {
+  const personalInfoValues = Object.values(personalInfo ?? {});
   return (
-    <>
-      {Boolean(personalInfoValues.length) && (
-        <div className={`text-center break-words description ${className}`}>
-          {personalInfoValues.join(', ')}
-        </div>
+    <p className={`text-center break-words description ${className}`}>
+      {personalInfo ? (
+        Boolean(personalInfoValues.length) && personalInfoValues.join(', ')
+      ) : (
+        <Skeleton type={'text'} />
       )}
-    </>
+    </p>
   );
 };
 

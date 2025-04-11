@@ -1,54 +1,46 @@
 import Input from '../../Input/Input';
 import Textarea from '../../Textarea/Textarea';
+import FormPlaceholder from './Placeholder';
 import { memo } from 'react';
 
 const FormField = memo(
-  ({ field, value, error, isSubmitDisabled, onFieldChange }) => {
+  ({ field, value, onChange }) => {
     const handleChange = (event) => {
       field.onChange?.(event.target.value);
-      onFieldChange(field.name, event.target.value);
+      onChange(field.name, event.target.value);
     };
 
     if (field.element) {
       return (
-        <field.element
-          value={value ?? ''}
-          error={error ?? ''}
-          onChange={handleChange}
-          {...field.args}
-        >
-          {field.args?.children}
+        <field.element value={value ?? ''} onChange={handleChange} {...field.props}>
+          {field.props?.children}
         </field.element>
       );
     }
 
     const commonProps = {
       ...field,
-      className: `w-full h-10 px-2 rounded-md ${
-        field.type === 'submit'
-          ? 'cursor-pointer font-bold bg-pr-main text-pr-bg-main enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute'
-          : field.type === 'textarea'
-          ? 'py-2 max-h-80 min-h-40 border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
+      className: `peer w-full h-10 px-2 rounded-md placeholder:opacity-0 ${
+        field.type === 'textarea'
+          ? 'py-2 border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
           : field.type === 'range'
           ? 'accent-pr-main cursor-pointer'
           : 'border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
       } ${field?.className ?? ''}`
     };
 
-    if (field.type === 'submit') {
-      return <Input {...commonProps} disabled={isSubmitDisabled} />;
-    }
+    let inputElement = <Input {...commonProps} value={value ?? ''} onChange={handleChange} />;
 
-    if (field.type === 'button') {
-      return <Input {...commonProps} />;
-    }
-
-    if (field.type === 'textarea') {
-      return <Textarea {...commonProps} value={value ?? ''} onChange={handleChange} />;
-    }
+    if (field.type === 'textarea')
+      inputElement = <Textarea {...commonProps} value={value ?? ''} onChange={handleChange} />;
 
     return (
-      <Input {...commonProps} value={value ?? ''} error={error ?? ''} onChange={handleChange} />
+      <FormPlaceholder
+        value={field.placeholder}
+        className="text-pr-main-soft bg-pr-bg-main peer-focus:text-pr-main"
+      >
+        {inputElement}
+      </FormPlaceholder>
     );
   },
   (prevProps, nextProps) => {

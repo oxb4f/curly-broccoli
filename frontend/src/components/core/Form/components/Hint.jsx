@@ -1,17 +1,15 @@
-import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-
-const FormHint = ({ value, inputValue, inputError }) => {
-  const key = inputError || (!inputValue && value ? value : null);
+const FormHint = ({ value, error, isVisible }) => {
+  const key = error || (isVisible && value ? value : null);
 
   return (
-    key && (
-      <small
-        key={key}
-        className="absolute w-full h-4 left-0 -bottom-4 -z-10 animate-faded-slide-in-from-top-full"
-      >
-        {inputError ? <ErrorMessage message={inputError} /> : <span>{value}</span>}
-      </small>
-    )
+    <small
+      key={key}
+      className={`w-full h-4 text-xs -z-10 animate-faded-slide-in-from-top-full ${
+        error ? 'text-pr-error' : 'text-pr-text-darker'
+      }`}
+    >
+      {key}
+    </small>
   );
 };
 

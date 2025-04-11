@@ -8,7 +8,7 @@
 }
 
 .skeleton {
-  @apply relative bg-pr-bg-tertiary overflow-hidden;
+  @apply relative block bg-pr-bg-tertiary overflow-hidden;
 }
 
 .skeleton::after {
@@ -21,10 +21,14 @@
   @apply rounded-sm;
 }
 
-.skeleton-input {
-  @apply rounded-md;
+.skeleton-text {
+  @apply text-transparent stroke-current;
 }
 
 .skeleton-rounded {
+  @apply rounded-md;
+}
+
+.skeleton-circular {
   @apply rounded-full;
 }

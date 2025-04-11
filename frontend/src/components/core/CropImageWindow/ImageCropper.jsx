@@ -32,7 +32,7 @@ const ImageCropper = ({ innerRef, imageUrl, className = '' }) => {
   }));
 
   return (
-    <div className={`flex flex-col-reverse justify-end ${className}`}>
+    <div className={`flex flex-col-reverse gap-1 justify-end ${className}`}>
       <input
         type="range"
         className="peer appearance-none w-full rounded-xl accent-pr-main bg-pr-bg-secondary cursor-pointer transition-all duration-300  

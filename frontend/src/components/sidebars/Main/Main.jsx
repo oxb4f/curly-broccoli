@@ -1,6 +1,6 @@
 import DropDown from '../../core/DropDown/DropDown';
 import Logo from '../../core/Logo/Logo';
-import AsyncProfilePhoto from '../../asyncs/Profile/Photo';
+import ProfilePhoto from '../../core/Profile/Photo/Photo';
 import Sidebar from '../../core/Sidebar/Sidebar';
 import Navigation from '../../core/Navigation/Navigation';
 import NavigationLink from '../../core/Navigation/Link/Link';
@@ -16,7 +16,7 @@ import useUserService from '../../../hooks/useUserService';
 import { useSession } from '@/components/core/SessionProvider/SessionProvider';
 import { useMemo } from 'react';
 
-const MainSidebar = () => {
+const MainSidebar = ({ className = '' }) => {
   const { user, isPending } = useSession();
   const { logOut } = useUserService();
 
@@ -37,67 +37,61 @@ const MainSidebar = () => {
         items: [
           {
             name: 'home',
-            icon: HomeIcon,
-            args: {
+            linkProps: {
               to: ROUTES.MAIN.ROOT,
-              className: commonLinkClasses
+              children: <HomeIcon />
             }
           },
           {
             name: 'books',
-            icon: BookOpenIcon,
-            args: {
+            linkProps: {
               to: ROUTES.MAIN.BOOK.ROOT,
-              className: commonLinkClasses
+              children: <BookOpenIcon />
             }
           },
           {
             name: 'search',
-            icon: MagnifyingGlassIcon,
-            args: {
+            linkProps: {
               to: '/search',
-              className: commonLinkClasses
+              children: <MagnifyingGlassIcon />
             }
           }
         ],
-        args: {
+        props: {
           className: 'grid gap-6'
-        }
+        },
+        linksClasses: commonLinkClasses
       },
       options: {
         items: [
           {
             name: 'settings',
-            icon: Cog8ToothIcon,
-            args: {
+            linkProps: {
               to: ROUTES.SETTINGS.ROOT,
-              className: commonLinkClasses
+              children: <Cog8ToothIcon />
             }
           },
           {
             name: 'logout',
-            icon: ArrowLeftStartOnRectangleIcon,
-            args: {
+            linkProps: {
               onClick: logOut,
-              className: logOutButtonClasses
+              className: logOutButtonClasses,
+              children: <ArrowLeftStartOnRectangleIcon />
             }
           }
         ],
-        args: {
+        props: {
           className: 'grid gap-4'
-        }
+        },
+        linksClasses: commonLinkClasses
       },
       profile: {
-        element: (
-          <AsyncProfilePhoto
-            imageUrl={user?.imageUrl}
-            isPending={isPending}
-            className="size-full"
-          />
-        ),
-        args: {
+        props: {
           to: '/profile',
-          className: profileLinkClasses
+          className: profileLinkClasses,
+          children: (
+            <ProfilePhoto imageUrl={user?.imageUrl} isLoading={isPending} className="size-full" />
+          )
         }
       }
     }),
@@ -107,7 +101,7 @@ const MainSidebar = () => {
   return (
     <Sidebar
       {...{
-        className: 'w-16 h-screen gap-9 py-9 border-r-1',
+        className: `${className} w-16 h-screen gap-9 py-9 border-r-1`,
         header: <Logo text="L" />,
         main: <Navigation list={navigation.roots} className="flex justify-center items-start" />,
         footer: (
@@ -118,7 +112,7 @@ const MainSidebar = () => {
                 list={navigation.options}
               />
             </DropDown>
-            <NavigationLink element={navigation.profile.element} {...navigation.profile.args} />
+            <NavigationLink element={navigation.profile.element} {...navigation.profile.props} />
           </>
         )
       }}

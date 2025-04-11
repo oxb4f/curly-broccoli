@@ -17,31 +17,30 @@ const SettingsSidebar = () => {
   const navigation = useMemo(
     () => ({
       back: {
-        icon: ArrowLeftCircleIcon,
-        args: {
+        props: {
           to: ROUTES.MAIN.ROOT,
-          className: backLinkClasses
+          className: backLinkClasses,
+          children: <ArrowLeftCircleIcon />
         }
       },
       settings: {
         items: [
           {
             name: 'profile',
-            text: 'Profile settings',
-            args: {
+            linkProps: {
               to: ROUTES.SETTINGS.PROFILE,
-              className: commonLinkClasses
+              children: 'Profile settings'
             }
           },
           {
             name: 'books',
-            text: 'Sequrity settings',
-            args: {
+            linkProps: {
               to: ROUTES.SETTINGS.SECURITY,
-              className: commonLinkClasses
+              children: 'Sequrity settings'
             }
           }
-        ]
+        ],
+        linksClasses: commonLinkClasses
       }
     }),
     []
@@ -51,7 +50,7 @@ const SettingsSidebar = () => {
     <Sidebar
       {...{
         className: 'min-w-max h-screen py-9 border-r-1',
-        header: <NavigationLink icon={navigation.back.icon} {...navigation.back.args} />,
+        header: <NavigationLink icon={navigation.back.icon} {...navigation.back.props} />,
         main: <Navigation list={navigation.settings} />
       }}
     />

@@ -7,7 +7,8 @@ const ROUTES = {
     PROFILE: '/profile',
     BOOK: {
       ROOT: '/book',
-      ADD: '/book/add'
+      ADD: '/book/add',
+      EDIT: '/book/edit'
     }
   },
   SETTINGS: {

@@ -3,17 +3,10 @@ import NavigationLink from './Link/Link';
 const Navigation = ({ list, className = '' }) => {
   return (
     <nav className={className}>
-      <ul {...list.args}>
+      <ul {...list.props}>
         {list.items.map((item) => (
-          <li key={item.name}>
-            {
-              <NavigationLink
-                element={item.element}
-                icon={item.icon}
-                text={item.text}
-                {...item.args}
-              />
-            }
+          <li key={item.name} className={list.itemsClasses} {...item.props}>
+            {<NavigationLink className={list.linksClasses} {...item.linkProps} />}
           </li>
         ))}
       </ul>

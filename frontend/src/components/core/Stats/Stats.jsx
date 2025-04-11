@@ -1,10 +1,10 @@
 import StatsItem from './Item/Item';
 
-const Stats = ({ list, isStatic = true, className = '' }) => {
+const Stats = ({ items, isStatic = true, className = '' }) => {
   return (
     <ul className={className}>
-      {list.map((item) => (
-        <StatsItem key={item.name} item={item} isStatic={isStatic} />
+      {items.map((item) => (
+        <StatsItem key={item.name} isStatic={isStatic} {...item} />
       ))}
     </ul>
   );

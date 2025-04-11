@@ -1,39 +1,73 @@
 import calculateAge from './calculateAge';
 
-const prepareRequest = (data, apiAction) => {
-  switch (apiAction) {
-    case 'signIn':
-      return {
-        username: data.username,
-        password: data.password
-      };
-    case 'signUp':
-      return {
-        username: data.username,
-        password: data.password
-      };
-    case 'changeInfo': {
-      const { telegram, instagram, ...rest } = Object.fromEntries(
-        Object.entries(data).map((item) => {
-          if (!item[1]) item[1] = null;
-          return item;
-        })
-      );
+const prepareRequest = (data, apiEndpoint, apiAction) => {
+  switch (apiEndpoint) {
+    case 'users':
+      switch (apiAction) {
+        case 'signIn':
+          return {
+            username: data.username,
+            password: data.password
+          };
+        case 'signUp':
+          return {
+            username: data.username,
+            password: data.password
+          };
+        case 'changeInfo': {
+          const { telegram, instagram, ...rest } = Object.fromEntries(
+            Object.entries(data).map((item) => {
+              if (!item[1]) item[1] = null;
+              return item;
+            })
+          );
 
-      return {
-        ...rest,
-        social: {
-          telegram,
-          instagram
+          return {
+            ...rest,
+            social: {
+              telegram,
+              instagram
+            }
+          };
         }
-      };
-    }
-    case 'uploadPhoto': {
-      return {
-        image: data.binaryImageData,
-        bucket: data.bucket
-      };
-    }
+        default:
+          return;
+      }
+    case 'books':
+      switch (apiAction) {
+        case 'create':
+          return {
+            title: data.title,
+            author: data.author,
+            numberOfPages: Number(data.numberOfPages),
+            description: data.description,
+            genre: data.genre,
+            isbn: data.isbn,
+            imageUrl: data.imageUrl
+          };
+        case 'edit': {
+          console.log(data);
+
+          return Object.fromEntries(
+            Object.entries(data).map((item) => {
+              item[1] ??= null;
+              if (typeof item[1] === 'string' && !isNaN(item[1])) item[1] = Number(item[1]);
+
+              return item;
+            })
+          );
+        }
+        default:
+          return;
+      }
+    case 'images':
+      switch (apiAction) {
+        case 'upload':
+          return {
+            image: data.binaryImage,
+            bucket: data.bucket
+          };
+      }
   }
 };
 
@@ -62,6 +96,19 @@ const processResponse = (data, apiEndpoint) => {
         personalInfo
       };
     }
+    case 'books': {
+      const { id, title, author, imageUrl, isFavorite, isRead, rating, review, ...other } = data;
+      return {
+        id,
+        imageUrl,
+        info: {
+          title,
+          author,
+          other
+        },
+        stats: { isFavorite, isRead, rating, review }
+      };
+    }
     case 'images': {
       return {
         imageUrl: data.url
@@ -80,4 +127,12 @@ const clearEmptyFields = (object) => {
   return result;
 };
 
-export { prepareRequest, processResponse, clearEmptyFields };
+const formatKey = (key) => {
+  if (typeof key !== 'string') throw new Error('Key must be string');
+  return key
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .toLowerCase()
+    .replace(/^\w/, (c) => c.toUpperCase());
+};
+
+export { prepareRequest, processResponse, clearEmptyFields, formatKey };

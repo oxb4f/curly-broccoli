@@ -3,20 +3,20 @@ import Stats from '../../core/Stats/Stats';
 const ProfileStats = ({ data, className = '' }) => {
   const stats = [
     {
-      count: 1,
-      name: 'books read'
+      name: 'books read',
+      initialCount: 1
     },
     {
-      count: 0,
-      name: 'followers'
+      name: 'followers',
+      initialCount: 0
     },
     {
-      count: 0,
-      name: 'following'
+      name: 'following',
+      initialCount: 0
     }
   ];
 
-  return <Stats list={stats} className={className} />;
+  return <Stats items={stats} className={className} />;
 };
 
 export default ProfileStats;

@@ -1,8 +1,9 @@
 import TelegramIcon from '@/assets/svgs/telegram.svg?react';
 import InstagramIcon from '@/assets/svgs/instagram.svg?react';
 import Navigation from '../Navigation/Navigation';
+import Skeleton from '../Skeleton/Skeleton';
 
-const Social = ({ social = {}, className = '' }) => {
+const Social = ({ social, className = '' }) => {
   const getProperIcon = (socialName) => {
     switch (socialName.toLowerCase()) {
       case 'telegram':
@@ -14,24 +15,30 @@ const Social = ({ social = {}, className = '' }) => {
     }
   };
 
-  const navigationList = {
-    items: Object.keys(social).map((key) => ({
+  const navigation = {
+    items: Object.keys(social ?? {}).map((key) => ({
       name: key,
-      icon: getProperIcon(key),
-      args: {
+      linkProps: {
         href: social[key],
-        className: 'size-7'
+        children: getProperIcon(key)
       }
     })),
-    args: {
+    props: {
       className: 'flex flex-wrap gap-3'
-    }
+    },
+    linksClasses: 'block size-7 text-center transition-transform hover:scale-110'
   };
+
+  console.log(navigation);
 
   return (
     <>
-      {Boolean(navigationList.items.length) && (
-        <Navigation list={navigationList} className={`stroke-pr-main ${className}`} />
+      {social ? (
+        Boolean(navigation.items.length) && (
+          <Navigation list={navigation} className={`stroke-pr-main ${className}`} />
+        )
+      ) : (
+        <Skeleton type="rounded" width="1.75rem" height="1.75rem" />
       )}
     </>
   );

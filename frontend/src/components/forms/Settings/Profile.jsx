@@ -1,11 +1,13 @@
 import useUserService from '@/hooks/useUserService';
-import AsyncForm from '../../asyncs/Form/Form';
+import AsyncForm from '../../core/Form/Async/Async';
 
 const ProfileSettingsForm = ({ userCurrentData, isPending }) => {
   const { changeInfo } = useUserService();
   if (!userCurrentData && !isPending) return;
 
-  const commonFormGroupClasses = 'flex gap-x-3';
+  console.log(userCurrentData);
+
+  const commonFormGroupClasses = 'flex gap-x-5';
 
   const fields = {
     username: {
@@ -57,10 +59,10 @@ const ProfileSettingsForm = ({ userCurrentData, isPending }) => {
 
   return (
     <AsyncForm
-      className="w-full min-w-80 max-w-2xl grid gap-y-5"
+      className="w-full min-w-80 max-w-2xl grid gap-y-2"
       fields={fields}
       onSubmit={handleSubmit}
-      isPending={isPending}
+      isLoading={isPending}
     />
   );
 };

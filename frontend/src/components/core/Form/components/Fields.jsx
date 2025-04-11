@@ -1,9 +1,9 @@
+import FormButton from './Button';
 import FormField from './Field';
 import FormGroup from './Group';
-import FormHint from './Hint';
 import FormItem from './Item';
 
-const FormFields = ({ fields, values, errors, isSubmitDisabled, onFieldChange }) => {
+const FormFields = ({ fields, values, errors, allFieldsRequired, onFieldChange }) => {
   return Object.entries(fields).map(([name, params]) => {
     if (params.fields) {
       return (
@@ -13,7 +13,7 @@ const FormFields = ({ fields, values, errors, isSubmitDisabled, onFieldChange })
               fields={params.fields}
               values={values}
               errors={errors}
-              isSubmitDisabled={isSubmitDisabled}
+              allFieldsRequired={allFieldsRequired}
               onFieldChange={onFieldChange}
             />
           }
@@ -21,16 +21,15 @@ const FormFields = ({ fields, values, errors, isSubmitDisabled, onFieldChange })
       );
     }
 
-    return (
-      <FormItem key={name}>
-        <FormField
-          field={{ name, ...params }}
-          value={values[name]}
-          error={errors[name]}
-          isSubmitDisabled={isSubmitDisabled}
-          onFieldChange={onFieldChange}
-        />
-        <FormHint value={params.hint} inputValue={values[name]} inputError={errors[name]} />
+    return params.type === 'submit' || params.type === 'button' ? (
+      <FormButton
+        key={name}
+        button={{ name, ...params }}
+        isDisabled={allFieldsRequired && Object.values(values).some((value) => !value)}
+      />
+    ) : (
+      <FormItem key={name} hint={params.hint} error={errors[name]} isHintVisible={!values[name]}>
+        <FormField field={{ name, ...params }} value={values[name]} onChange={onFieldChange} />
       </FormItem>
     );
   });

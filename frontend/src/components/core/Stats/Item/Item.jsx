@@ -1,34 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const StatsItem = ({ item, isStatic }) => {
-  const [count, setCount] = useState(item.count);
+const StatsItem = ({
+  name,
+  isStatic,
+  renderIcon,
+  initialCount,
+  initialIsActive,
+  onClick,
+  className = ''
+}) => {
+  const [count, setCount] = useState(initialCount);
+  const [isActive, setIsActive] = useState(initialIsActive);
 
-  const handleClick = () => {
-    if (!isStatic && Number.isFinite(count)) {
-      const newCount = count + 1;
-      setCount(newCount);
-      // if (onCountChange) {
-      //   onCountChange(item.name, newCount);
-      // }
-    }
+  useEffect(() => {
+    setCount(initialCount);
+    setIsActive(initialIsActive);
+  }, [initialCount, initialIsActive]);
+
+  const handleClick = async () => {
+    const newCount = isActive ? count - 1 : count + 1;
+    await onClick({ count: newCount, isActive: !isActive });
+    setCount(newCount);
+    setIsActive(!isActive);
   };
 
   const renderContent = () => {
-    if (item.icon) {
-      return <item.icon className={`block transition-all ${item.className || ''}`} />;
-    }
-    return <p className={`text-center break-words ${item.className || ''}`}>{item.name}</p>;
+    return <p className={`text-center break-words`}>{renderIcon ? renderIcon(isActive) : name}</p>;
   };
 
   return (
-    <li className="flex flex-col items-center">
-      {Number.isFinite(item.count) && (
-        <p className="font-bold text-center break-words">{isStatic ? item.count : count}</p>
+    <li className={className}>
+      {Number.isFinite(initialCount) && (
+        <p className="font-bold text-center break-words">{count}</p>
       )}
       {isStatic ? (
-        <span>{renderContent()}</span>
+        renderContent()
       ) : (
-        <button onClick={handleClick}>{renderContent()}</button>
+        <button onClick={handleClick} className="size-full">
+          {renderContent()}
+        </button>
       )}
     </li>
   );

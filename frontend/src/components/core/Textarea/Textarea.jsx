@@ -1,7 +1,7 @@
 const Textarea = ({ className = '', ...props }) => {
   return (
     <textarea
-      className={`text-pr-text bg-pr-bg-main placeholder:text-pr-text-darker ${className}`}
+      className={`disabled:opacity-50 disabled:cursor-default ${className}`}
       {...props}
     ></textarea>
   );

@@ -4,17 +4,19 @@ const useReactiveForm = (fields, onSubmit) => {
   const flattenObject = useCallback(
     (object) =>
       Object.entries(object).reduce((result, [key, value]) => {
-        if (value && typeof value === 'object' && (value.type || value.element)) {
+        if (value.type === 'submit' || value.type === 'button') return result;
+
+        if (value.fields) {
           return {
             ...result,
-            [key]: value.value ?? ''
+            ...flattenObject(value.fields)
           };
         }
 
-        if (value && typeof value === 'object') {
+        if (value.type || value.element) {
           return {
             ...result,
-            ...flattenObject(value)
+            [key]: value.value ?? ''
           };
         }
 
@@ -30,8 +32,6 @@ const useReactiveForm = (fields, onSubmit) => {
 
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
-
-  const isSubmitDisabled = Object.values(values).some((value) => !value);
 
   const handleChange = (name, value) => {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -62,7 +62,6 @@ const useReactiveForm = (fields, onSubmit) => {
   return {
     values,
     errors,
-    isSubmitDisabled,
     handleChange,
     handleSubmit,
     resetForm

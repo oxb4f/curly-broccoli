@@ -1,39 +1,48 @@
 import Stats from '../../core/Stats/Stats';
 import { BookmarkIcon, HeartIcon } from '@heroicons/react/24/outline';
+import useBookService from '../../../hooks/useBookService';
+import Skeleton from '../../core/Skeleton/Skeleton';
 
-const BookStats = ({ data, isPublic, className = '' }) => {
-  isPublic = false;
-  // const isFavorite = true;
-  const staticIconClasses = 'size-7 hover:text-pr-text-darker hover:cursor-pointer hover:scale-105';
-  // const commonIconClasses = (isActive) =>
-  //   `${
-  //     isActive
-  //       ? `${staticIconClasses} text-pr-main fill-pr-main hover:text-pr-main hover:cursor-pointer hover:transform-none`
-  //       : staticIconClasses
-  //   }`;
-  const stats = {
+const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
+  const { edit } = useBookService();
+
+  const itemClasses = 'size-7 transition-all ';
+  const iconClasses = 'text-pr-text hover:text-pr-text-darker hover:cursor-pointer hover:scale-105';
+  const activeIconClasses = 'text-pr-main fill-pr-main';
+
+  const items = {
     private: [
       {
         name: 'favorite',
-        icon: BookmarkIcon,
-        className: staticIconClasses
+        renderIcon: (isActive) => (
+          <BookmarkIcon className={`${isActive ? activeIconClasses : iconClasses}`} />
+        ),
+        className: itemClasses,
+        initialIsActive: stats?.isFavorite,
+        onClick: async ({ isActive: isFavorite }) => {
+          await edit(bookId, { isFavorite });
+        }
       }
     ],
     public: [],
     common: [
-      {
-        name: 'likes',
-        icon: HeartIcon,
-        className: staticIconClasses
-      }
+      // {
+      //   name: 'likes',
+      //   icon: HeartIcon,
+      //   className: staticIconClasses
+      // }
     ]
   };
 
-  return (
+  return stats ? (
     <Stats
+      key={bookId}
       className={className}
-      list={[...stats.common, ...(isPublic ? stats.public : stats.private)]}
+      items={[...items.common, ...(isPublic ? items.public : items.private)]}
+      isStatic={false}
     />
+  ) : (
+    <Skeleton type="text" />
   );
 };
 

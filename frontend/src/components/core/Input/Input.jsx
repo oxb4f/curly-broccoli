@@ -1,7 +1,7 @@
 const Input = ({ className = '', ...props }) => {
   return (
     <input
-      className={`placeholder:text-pr-text-darker 
+      className={`
       disabled:opacity-50 disabled:cursor-default 
       ${className}`}
       {...props}

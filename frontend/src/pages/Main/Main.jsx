@@ -4,9 +4,7 @@ import MainSidebar from '../../components/sidebars/Main/Main';
 
 const MainPage = () => {
   return (
-    <MainLayout
-      {...{ sidebar: <MainSidebar />, main: <Outlet />, footer: <div className="p-20"></div> }}
-    />
+    <MainLayout {...{ sidebar: MainSidebar, main: Outlet, footer: <div className="p-20"></div> }} />
   );
 };
 

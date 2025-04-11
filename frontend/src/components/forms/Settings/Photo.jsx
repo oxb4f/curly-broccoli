@@ -3,16 +3,17 @@ import Form from '../../core/Form/Form';
 import ROUTES from '../../../constants/routes';
 import UserPhotoUpload from '../../uploads/User/Photo/Photo';
 import useUserService from '@/hooks/useUserService';
-import NavigationLink from '../../core/Navigation/Link/Link';
+import { useNavigate } from 'react-router';
 
 const PhotoSettingsForm = () => {
   const { changePhoto } = useUserService();
   const imageCropperRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleOnSubmit = async () => {
     const croppedBlob = await imageCropperRef.current.cropImage();
 
-    await changePhoto({ binaryImageData: croppedBlob });
+    await changePhoto({ binaryImage: croppedBlob });
 
     // const a = document.createElement('a');
     // a.href = imageUrl;
@@ -25,27 +26,26 @@ const PhotoSettingsForm = () => {
       controlPanel: {
         fields: {
           back: {
-            element: NavigationLink,
+            type: 'button',
             value: 'back',
-            args: {
-              text: 'back',
-              to: ROUTES.SETTINGS.PROFILE,
-              className:
-                'bg-pr-bg-secondary text-pr-text rounded-s-lg size-full py-2 text-center hover:bg-pr-bg-tertiary transition-colors'
+            className:
+              '!bg-pr-bg-secondary text-pr-text rounded-none !rounded-sm transition-all hover:enabled:!bg-pr-bg-tertiary',
+            onClick: () => {
+              navigate(ROUTES.SETTINGS.PROFILE);
             }
           },
           confirm: {
             type: 'submit',
             value: 'confirm',
             className:
-              '!bg-pr-bg-secondary text-pr-text rounded-none rounded-e-lg hover:enabled:!bg-pr-bg-tertiary transition-colors'
+              '!bg-pr-bg-secondary text-pr-text rounded-none !rounded-sm transition-all hover:enabled:!bg-pr-bg-tertiary'
           }
         },
-        className: 'flex'
+        className: 'flex gap-1 rounded-lg overflow-hidden'
       },
       photo: {
         element: UserPhotoUpload,
-        args: {
+        props: {
           imageCropperRef
         }
       }

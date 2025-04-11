@@ -21,7 +21,7 @@ export default function SessionProvider({ children }) {
     refetch
   } = useQuery({
     queryKey: ['user'],
-    queryFn: getUser,
+    queryFn: () => getUser(getUserFromStorage()?.id),
     select: (userData) => clearEmptyFields(userData),
     enabled: hasStoredUser,
     refetchOnWindowFocus: false

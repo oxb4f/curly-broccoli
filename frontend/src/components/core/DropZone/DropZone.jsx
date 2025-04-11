@@ -23,7 +23,10 @@ const DropZone = ({ onDropHandler, className = '' }) => {
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p className="text-center">
+          Click to select files
+          <span className="hidden xl:inline">, or drag 'n' drop some files here</span>
+        </p>
       )}
     </div>
   );

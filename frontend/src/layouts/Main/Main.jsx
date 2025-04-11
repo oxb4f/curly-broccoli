@@ -1,9 +1,9 @@
-const MainLayout = ({ sidebar, main, footer }) => {
+const MainLayout = ({ sidebar: Sidebar, main: Main, footer: Footer }) => {
   return (
     <>
-      {sidebar}
-      <main className="main">{main}</main>
-      {footer && <footer className="footer">{footer}</footer>}
+      {<Sidebar className="sidebar" />}
+      <main className="main">{<Main />}</main>
+      {Footer && <footer className="footer">{Footer}</footer>}
     </>
   );
 };

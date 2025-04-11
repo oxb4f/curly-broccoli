@@ -1,25 +1,23 @@
 import { NavLink } from 'react-router';
 
-const NavigationLink = ({ element, icon: Icon, text, ...args }) => {
-  const innerElement = <div>{element || (Icon ? <Icon /> : text || null)}</div>;
-
-  if (args.href) {
-    return <a {...args}>{innerElement}</a>;
-  }
-
-  if (args.onClick) {
-    return <button {...args}>{innerElement}</button>;
-  }
-
-  if (args.to) {
+const NavigationLink = ({ children, ...props }) => {
+  if (props.to) {
     return (
-      <NavLink {...args} end>
-        {innerElement}
+      <NavLink {...props} end>
+        {children}
       </NavLink>
     );
   }
 
-  return innerElement;
+  if (props.onClick) {
+    return <button {...props}>{children}</button>;
+  }
+
+  if (props.href) {
+    return <a {...props}>{children}</a>;
+  }
+
+  return children;
 };
 
 export default NavigationLink;

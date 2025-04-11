@@ -1,8 +1,6 @@
 import { BookOpenIcon } from '@heroicons/react/24/solid';
-import photo from '@/assets/images/profile-photo2.jpg';
 
 const BookPhoto = ({ imageUrl, className = '' }) => {
-  imageUrl = photo;
   return (
     <figure className={`relative flex justify-center items-center overflow-hidden ${className}`}>
       {imageUrl ? (
@@ -14,7 +12,7 @@ const BookPhoto = ({ imageUrl, className = '' }) => {
           <img src={imageUrl} alt="Book image" className="relative size-full object-contain" />
         </>
       ) : (
-        <BookOpenIcon />
+        <BookOpenIcon className="size-full" />
       )}
     </figure>
   );

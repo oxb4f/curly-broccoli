@@ -1,3 +1,7 @@
+html {
+  @apply text-xs sm:text-sm md:text-base;
+}
+
 #root {
   @apply grid;
   grid-template-columns: min-content 1fr;
@@ -14,6 +18,7 @@
 
 .main {
   grid-area: main;
+  @apply min-h-screen;
 }
 
 .footer {
@@ -25,7 +30,7 @@
 }
 
 .main {
-  @apply px-20;
+  @apply px-5 md:px-20;
 }
 
 .content {

@@ -1,14 +1,19 @@
 import './Skeleton.css';
 
-const Skeleton = ({ type, width, height, className = '' }) => {
+const Skeleton = ({ type, height, width = '100%', style = {}, className = '' }) => {
   const typeClass = type ? `skeleton-${type}` : '';
 
   const styles = {
     width,
-    height
+    height,
+    ...style
   };
 
-  return <div className={`skeleton ${typeClass} ${className}`} style={styles}></div>;
+  return (
+    <span className={`skeleton ${typeClass} ${className}`} style={styles}>
+      {type === 'text' && '.'}
+    </span>
+  );
 };
 
 export default Skeleton;
