@@ -1,4 +1,4 @@
-import { count, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import type { Book } from "../../../../entities/book";
 import type {
 	BookUpdateData,
@@ -21,7 +21,9 @@ export class PgBooksRepository
 			.select()
 			.from(books)
 			.innerJoin(bookProfiles, eq(books.bookProfileId, bookProfiles.id))
-			.where(eq(books.id, filter.id));
+			.where(and(...this.transformObjectIntoEqSequence(filter, books)))
+			.limit(1)
+			.execute();
 
 		if (!result?.[0]) {
 			return null;
@@ -44,40 +46,50 @@ export class PgBooksRepository
 	}
 
 	async list(filter: ListBookFilter) {
-		const result = await this._connection
-			.select({ total: count() })
-			.from(books);
+		const total = await this.getTotal();
 
-		const total = result[0]?.total ?? 0;
 		let data: BooksListDto["data"] = [];
 
-		if (total) {
-			const result = await this._connection
-				.select()
-				.from(books)
-				.innerJoin(bookProfiles, eq(books.bookProfileId, bookProfiles.id))
-				.limit(filter.limit)
-				.offset(filter.offset);
+		if (!total) return { data, total };
 
-			data = result.map((row) => ({
-				id: row.books.id,
-				profile: {
-					id: row.book_profiles.id,
-					title: row.book_profiles.title,
-					description: row.book_profiles.description,
-					author: row.book_profiles.author,
-					genre: row.book_profiles.genre,
-					imageUrl: row.book_profiles.imageUrl,
-					numberOfPages: row.book_profiles.numberOfPages,
-					isbn: row.book_profiles.isbn,
-				},
-			}));
-		}
+		const query = this._connection
+			.select()
+			.from(books)
+			.innerJoin(bookProfiles, eq(books.bookProfileId, bookProfiles.id))
+			.$dynamic();
+
+		this.addLimit(query, filter.limit);
+		this.addOffset(query, filter.offset);
+		this.addOrder(query, books, filter.orderDirection, filter.orderField);
+
+		const result = await query.execute();
+
+		data = result.map((row) => ({
+			id: row.books.id,
+			profile: {
+				id: row.book_profiles.id,
+				title: row.book_profiles.title,
+				description: row.book_profiles.description,
+				author: row.book_profiles.author,
+				genre: row.book_profiles.genre,
+				imageUrl: row.book_profiles.imageUrl,
+				numberOfPages: row.book_profiles.numberOfPages,
+				isbn: row.book_profiles.isbn,
+			},
+		}));
 
 		return {
 			data,
 			total,
 		};
+	}
+
+	private async getTotal() {
+		const result = await this._connection
+			.select({ total: count() })
+			.from(books);
+
+		return result[0]?.total ?? 0;
 	}
 
 	async create(book: Book) {

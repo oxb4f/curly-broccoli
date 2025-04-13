@@ -11,7 +11,12 @@ export const context = {
 		exists: mock(),
 		list: mock(),
 	},
-	accessesRepository: { get: mock(), update: mock(), list: mock(), create: mock() },
+	accessesRepository: {
+		get: mock(),
+		update: mock(),
+		list: mock(),
+		create: mock(),
+	},
 	config: {
 		APP_PORT: 8080,
 

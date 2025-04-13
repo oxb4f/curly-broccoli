@@ -20,3 +20,5 @@ export interface BaseRepository<T extends RepositoryTypes<any>> {
 	list(filter: T["listFilter"]): Promise<T["listResponse"]>;
 	get(filter: T["getFilter"]): Promise<T["getResponse"]>;
 }
+
+export type OrderDirection = "asc" | "desc";

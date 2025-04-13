@@ -14,6 +14,8 @@ jwtAccess: jsonpath "$.jwt.access"
 POST {{API_BASE}}/books
 Authorization: Bearer {{jwtAccess}}
 Content-Type: application/json
+[Options]
+delay: 500
 {
     "title": "0402{{rn}}{{rs}}book1",
     "description": "0402{{rn}}{{rs}}description1",
@@ -94,3 +96,68 @@ HTTP 200
 [Asserts]
 jsonpath "$.books" count == 1
 jsonpath "$.total" == 2
+
+# List books with order
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+orderField: createdAt
+orderDirection: desc
+limit: 2
+offset: 0
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[0].title" == "0402{{rn}}{{rs}}book2"
+jsonpath "$.books[1].title" == "0402{{rn}}{{rs}}book1"
+[Captures]
+bookId: jsonpath "$.books[0].id"
+
+# List books with order
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+orderField: createdAt
+orderDirection: asc
+limit: 2
+offset: 0
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[0].title" == "0402{{rn}}{{rs}}book1"
+jsonpath "$.books[1].title" == "0402{{rn}}{{rs}}book2"
+
+# Make book favorite
+PATCH {{API_BASE}}/books/private/{{bookId}}
+Authorization: Bearer {{jwtAccess}}
+Content-Type: application/json
+{
+    "isFavorite": true
+}
+
+HTTP 200
+
+# List books with order by isFavorite
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+orderField: isFavorite
+orderDirection: desc
+limit: 2
+offset: 0
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[0].title" == "0402{{rn}}{{rs}}book2"
+
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+orderField: isFavorite
+orderDirection: asc
+limit: 2
+offset: 0
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[0].title" == "0402{{rn}}{{rs}}book1"

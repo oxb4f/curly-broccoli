@@ -3,8 +3,10 @@ import { type InShape, ListDtoIn, ListDtoOut, type OutShape } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 	const { data, total } = await context.booksRepository.list({
-		limit: dto.limit ?? 10,
-		offset: dto.offset ?? 0,
+		limit: dto.limit,
+		offset: dto.offset,
+		orderDirection: dto.orderDirection,
+		orderField: dto.orderField,
 	});
 
 	return ListDtoOut.create({

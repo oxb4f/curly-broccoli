@@ -16,25 +16,34 @@ import type {
 	Review,
 	UserBook,
 } from "../../entities/userBook";
-import type { BaseRepository, RepositoryTypes } from "../base-repository";
+import type {
+	BaseRepository,
+	OrderDirection,
+	RepositoryTypes,
+} from "../base-repository";
 
 export type GetBookFilter = {
 	id: Id;
 };
 
 export type ListBookFilter = {
-	limit: number;
-	offset: number;
+	limit?: number | null;
+	offset?: number | null;
+	orderDirection?: OrderDirection | null;
+	orderField?: string | null;
 };
 
 export type ListUserBookFilter = {
-	limit: number;
-	offset: number;
+	limit?: number | null;
+	offset?: number | null;
+	orderDirection?: OrderDirection | null;
+	orderField?: string | null;
 	userId: Id;
 };
 
 export type GetBookDto = {
 	id: Id;
+	isPublic: boolean;
 	profile: {
 		id: Id;
 		title: Title;
@@ -104,8 +113,9 @@ export interface UserBooksListDto {
 }
 
 export type GetUserBookFilter = {
-	id: Id;
+	id?: Id;
 	userId?: Id;
+	bookId?: Id;
 };
 
 export type GetUserBookDto = {
@@ -161,4 +171,5 @@ export interface UserBooksRepository
 		filter: GetUserBookFilter,
 		userBook: UserBookUpdateData,
 	): Promise<void>;
+	delete(filter: GetUserBookFilter): Promise<void>;
 }

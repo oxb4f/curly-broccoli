@@ -1,5 +1,12 @@
 import { z } from "zod";
-import { url, id, limit, offset } from "../../../common/validation/schema";
+import {
+	url,
+	id,
+	limit,
+	offset,
+	orderDirection,
+	orderField,
+} from "../../../common/validation/schema";
 import {
 	type DtoShape,
 	createInputDto,
@@ -21,6 +28,12 @@ export const ListDtoIn = createInputDto(
 	z.object({
 		limit: limit.optional().nullable().default(10),
 		offset: offset.optional().nullable().default(0),
+		orderDirection: orderDirection.optional().nullable().default("desc"),
+		orderField: orderField
+			.optional()
+			.nullable()
+			.default("createdAt")
+			.readonly(),
 	}),
 );
 

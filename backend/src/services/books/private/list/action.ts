@@ -10,9 +10,11 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 	assert(getUserDto, "User not found");
 
 	const { data, total } = await context.userBooksRepository.list({
-		limit: dto.limit ?? 10,
-		offset: dto.offset ?? 0,
+		limit: dto.limit,
+		offset: dto.offset,
 		userId: getUserDto.id,
+		orderDirection: dto.orderDirection,
+		orderField: dto.orderField,
 	});
 
 	return ListDtoOut.create({

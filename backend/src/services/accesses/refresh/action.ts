@@ -37,11 +37,14 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		});
 	}
 
-	await context.accessesRepository.update({
-		id: dto.accessId,
-	}, {
-		refreshTokens: Object.fromEntries(access.getRefreshTokens().entries()),
-	});
+	await context.accessesRepository.update(
+		{
+			id: dto.accessId,
+		},
+		{
+			refreshTokens: Object.fromEntries(access.getRefreshTokens().entries()),
+		},
+	);
 
 	return RefreshDtoOut.create({
 		jwt: {

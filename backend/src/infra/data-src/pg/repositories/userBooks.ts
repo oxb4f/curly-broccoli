@@ -1,4 +1,4 @@
-import { count, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import type { UserBook } from "../../../../entities/userBook";
 import type {
 	GetUserBookFilter,
@@ -17,11 +17,15 @@ export class PgUserBooksRepository
 	implements UserBooksRepository
 {
 	async get(filter: GetUserBookFilter) {
+		const where = this.transformObjectIntoEqSequence(filter, userBooks);
+
+		if (!where.length) return null;
+
 		const query = this._connection
 			.select()
 			.from(userBooks)
 			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
-			.where(eq(userBooks.id, filter.id))
+			.where(and(...where))
 			.limit(1);
 
 		if (filter.userId) {
@@ -54,47 +58,58 @@ export class PgUserBooksRepository
 	}
 
 	async list(filter: ListUserBookFilter) {
-		const result = await this._connection
-			.select({ total: count() })
-			.from(userBooks)
-			.where(eq(userBooks.userId, filter.userId));
+		const total = await this.getTotal(filter);
 
-		const total = result[0]?.total ?? 0;
 		let data: UserBooksListDto["data"] = [];
 
-		if (total) {
-			const result = await this._connection
-				.select()
-				.from(userBooks)
-				.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
-				.where(eq(userBooks.userId, filter.userId))
-				.limit(filter.limit)
-				.offset(filter.offset);
+		if (!total) return { data, total };
 
-			data = result.map((row) => {
-				return {
-					id: row.user_books.id,
-					isFavorite: row.user_books.isFavorite,
-					isRead: row.user_books.isRead,
-					rating: row.user_books.rating,
-					review: row.user_books.review,
-					profile: {
-						title: row.book_profiles.title,
-						description: row.book_profiles.description,
-						author: row.book_profiles.author,
-						genre: row.book_profiles.genre,
-						imageUrl: row.book_profiles.imageUrl,
-						numberOfPages: row.book_profiles.numberOfPages,
-						isbn: row.book_profiles.isbn,
-					},
-				};
-			});
-		}
+		const query = this._connection
+			.select()
+			.from(userBooks)
+			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
+			.where(eq(userBooks.userId, filter.userId))
+			.$dynamic();
+
+		this.addLimit(query, filter.limit);
+		this.addOffset(query, filter.offset);
+		this.addOrder(query, userBooks, filter.orderDirection, filter.orderField);
+
+		const result = await query.execute();
+
+		data = result.map((row) => {
+			return {
+				id: row.user_books.id,
+				isFavorite: row.user_books.isFavorite,
+				isRead: row.user_books.isRead,
+				rating: row.user_books.rating,
+				review: row.user_books.review,
+				profile: {
+					title: row.book_profiles.title,
+					description: row.book_profiles.description,
+					author: row.book_profiles.author,
+					genre: row.book_profiles.genre,
+					imageUrl: row.book_profiles.imageUrl,
+					numberOfPages: row.book_profiles.numberOfPages,
+					isbn: row.book_profiles.isbn,
+				},
+			};
+		});
 
 		return {
 			data,
 			total,
 		};
+	}
+
+	private async getTotal(filter: ListUserBookFilter) {
+		const result = await this._connection
+			.select({ total: count() })
+			.from(userBooks)
+			.where(eq(userBooks.userId, filter.userId))
+			.execute();
+
+		return result[0]?.total ?? 0;
 	}
 
 	async create(userBook: UserBook) {
@@ -157,6 +172,8 @@ export class PgUserBooksRepository
 					.execute();
 			}
 
+			if (!filter.id) return;
+
 			await tx
 				.update(userBooks)
 				.set({
@@ -168,5 +185,24 @@ export class PgUserBooksRepository
 				.where(eq(userBooks.id, filter.id))
 				.execute();
 		});
+	}
+
+	async delete(filter: GetUserBookFilter) {
+		if (!filter.id) return;
+
+		const result = await this._connection
+			.delete(userBooks)
+			.where(eq(userBooks.id, filter.id))
+			.returning({
+				bookProfileId: userBooks.bookProfileId,
+			})
+			.execute();
+
+		if (result?.[0]?.bookProfileId) {
+			await this._connection
+				.delete(bookProfiles)
+				.where(eq(bookProfiles.id, result[0].bookProfileId))
+				.execute();
+		}
 	}
 }
