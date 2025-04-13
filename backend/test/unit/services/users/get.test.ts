@@ -1,7 +1,12 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { ServiceError } from "../../../../src/services/errors/error";
 import getUserService from "../../../../src/services/users/get/action";
-import { context, createdAccessFixture1, createdUserFixture1, userFixture1 } from "../fixtures";
+import {
+	context,
+	createdAccessFixture1,
+	createdUserFixture1,
+	userFixture1,
+} from "../fixtures";
 
 const fixture = {
 	userId: 1,
@@ -14,11 +19,10 @@ test("Unit test: User Get Service", () => {
 	beforeEach(() => mock.restore());
 
 	describe("should return valid dto", async () => {
-		context.usersRepository.get =
-			mock().mockResolvedValueOnce({
-				...userFixture1,
-				access: createdAccessFixture1,
-			});
+		context.usersRepository.get = mock().mockResolvedValueOnce({
+			...userFixture1,
+			access: createdAccessFixture1,
+		});
 
 		const dto = await service({ dto: fixture, context: context });
 

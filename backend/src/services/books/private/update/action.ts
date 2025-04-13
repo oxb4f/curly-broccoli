@@ -57,18 +57,18 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 			isFavorite: userBook.getIsFavorite(),
 			rating: userBook.getRating(),
 			review: userBook.getReview(),
-			...(userBook.getProfile()?.getId()
-				? {
-						id: userBook.getProfile()!.getId(),
-						title: userBook.getProfile()!.getTitle(),
-						description: userBook.getProfile()!.getDescription(),
-						author: userBook.getProfile()!.getAuthor(),
-						genre: userBook.getProfile()!.getGenre(),
-						imageUrl: userBook.getProfile()!.getImageUrl(),
-						numberOfPages: userBook.getProfile()!.getNumberOfPages(),
-						isbn: userBook.getProfile()!.getIsbn(),
-					}
-				: {}),
+			...(userBook.getProfile()?.getId() && {
+				profile: {
+					id: userBook.getProfile()!.getId(),
+					title: userBook.getProfile()!.getTitle(),
+					description: userBook.getProfile()!.getDescription(),
+					author: userBook.getProfile()!.getAuthor(),
+					genre: userBook.getProfile()!.getGenre(),
+					imageUrl: userBook.getProfile()!.getImageUrl(),
+					numberOfPages: userBook.getProfile()!.getNumberOfPages(),
+					isbn: userBook.getProfile()!.getIsbn(),
+				},
+			}),
 		},
 	);
 

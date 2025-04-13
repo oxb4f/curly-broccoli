@@ -30,8 +30,10 @@ HTTP 200
 POST {{API_BASE}}/books
 Authorization: Bearer {{jwtAccess}}
 Content-Type: application/json
+[Options]
+delay: 500
 {
-    "title": "0402{{rn}}{{rs}}book2",
+    "title": "0403{{rn}}{{rs}}book2",
     "description": "0403{{rn}}{{rs}}description2",
     "author": "0403{{rn}}{{rs}}author2",
     "genre": "0403{{rn}}{{rs}}genre2",
@@ -92,3 +94,29 @@ HTTP 200
 [Asserts]
 jsonpath "$.books" count >= 1
 jsonpath "$.total" >= 2
+
+# List books with order
+GET {{API_BASE}}/books/public
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+orderField: createdAt
+orderDirection: desc
+limit: 2
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[0].title" == "0403{{rn}}{{rs}}book2"
+jsonpath "$.books[1].title" == "0403{{rn}}{{rs}}book1"
+
+# List books with order
+GET {{API_BASE}}/books/public
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+orderField: createdAt
+orderDirection: asc
+limit: 2
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[0].title" != "0403{{rn}}{{rs}}book2"
+jsonpath "$.books[1].title" != "0403{{rn}}{{rs}}book1"

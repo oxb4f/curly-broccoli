@@ -19,3 +19,14 @@ export const url = z.string().trim().url().readonly();
 export const limit = z.coerce.number().int().safe().min(1).max(200).readonly();
 
 export const offset = z.coerce.number().int().safe().min(0).readonly();
+
+export const orderDirection = z.enum(["asc", "desc"]).readonly().default("asc");
+
+export const orderField = z.enum(["id", "createdAt", "updatedAt"]);
+
+export function getEnumValues<
+	T extends z.ZodEnum<any>,
+	K extends keyof T["Values"],
+>(enumType: T) {
+	return Object.values(enumType.Values) as Array<K>;
+}

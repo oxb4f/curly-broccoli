@@ -69,6 +69,25 @@ jsonpath "$.rating" == 4
 jsonpath "$.review" == "0406{{rn}}{{rs}}review2"
 jsonpath "$.isRead" == true
 
+# Get book
+GET {{API_BASE}}/books/private/{{userBookId}}
+Authorization: Bearer {{jwtAccess}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.id" == {{userBookId}}
+jsonpath "$.title" == "0406{{rn}}{{rs}}book2"
+jsonpath "$.description" == "0406{{rn}}{{rs}}description2"
+jsonpath "$.author" == "0406{{rn}}{{rs}}author2"
+jsonpath "$.genre" == "0406{{rn}}{{rs}}genre2"
+jsonpath "$.isbn" == "0406{{rn}}{{rs}}isbn2"
+jsonpath "$.numberOfPages" == 200
+jsonpath "$.imageUrl" == "https://example.com/image2.png"
+jsonpath "$.isFavorite" == true
+jsonpath "$.rating" == 4
+jsonpath "$.review" == "0406{{rn}}{{rs}}review2"
+jsonpath "$.isRead" == true
+
 # Update book which does not exist
 PATCH {{API_BASE}}/books/private/1
 Authorization: Bearer {{jwtAccess}}

@@ -26,8 +26,7 @@ test("Unit test: User Update Service", () => {
 		context.usersRepository.get =
 			mock().mockResolvedValueOnce(createdUserFixture1);
 		context.usersRepository.exists = mock().mockResolvedValueOnce(null);
-		context.usersRepository.update =
-			mock().mockResolvedValueOnce(fixture);
+		context.usersRepository.update = mock().mockResolvedValueOnce(fixture);
 
 		const dto = await service({ dto: fixture, context: context });
 

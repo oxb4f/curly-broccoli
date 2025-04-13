@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import Elysia, { t } from "elysia";
 import createBookService from "../../services/books/create/action";
+import deleteUserBookService from "../../services/books/private/delete/action";
 import getUserBookService from "../../services/books/private/get/action";
 import listUserBooksService from "../../services/books/private/list/action";
 import updateUserBookService from "../../services/books/private/update/action";
+import addBookService from "../../services/books/public/add/action";
 import getBookService from "../../services/books/public/get/action";
 import listBooksService from "../../services/books/public/list/action";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
@@ -17,6 +19,8 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 	.decorate("listUserBooksService", listUserBooksService)
 	.decorate("getUserBookService", getUserBookService)
 	.decorate("updateUserBookService", updateUserBookService)
+	.decorate("deleteUserBookService", deleteUserBookService)
+	.decorate("addBookService", addBookService)
 	.group("/books", (app) =>
 		app.guard((app) =>
 			app
@@ -65,13 +69,15 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 				)
 				.group("/public", (app) =>
 					app
-						.get(
-							"/",
-							async ({ query, context, listBooksService }) => {
-								const result = await listBooksService({
+						.post(
+							"/add/:bookId",
+							async ({ params, context, addBookService, store }) => {
+								assert(store.jwtAuthGuardPayload.payload?.accessId);
+
+								const result = await addBookService({
 									dto: {
-										limit: query.limit,
-										offset: query.offset,
+										accessId: store.jwtAuthGuardPayload.payload.accessId,
+										bookId: params.bookId,
 									},
 									context,
 								});
@@ -80,7 +86,41 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 							},
 							{
 								tags: ["Books"],
+								params: t.Object({
+									bookId: t.Number({
+										description: "Book ID",
+									}),
+								}),
+							},
+						)
+						.get(
+							"/",
+							async ({ query, context, listBooksService }) => {
+								const result = await listBooksService({
+									dto: query as any,
+									context,
+								});
+
+								return result;
+							},
+							{
+								tags: ["Books"],
 								query: t.Object({
+									orderDirection: t.Optional(
+										t.Nullable(
+											t.Enum({
+												asc: "asc",
+												desc: "desc",
+											}),
+										),
+									),
+									orderField: t.Optional(
+										t.Nullable(
+											t.String({
+												description: "Order field",
+											}),
+										),
+									),
 									limit: t.Optional(
 										t.Nullable(
 											t.Number({
@@ -132,9 +172,8 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 								const result = await listUserBooksService({
 									dto: {
 										accessId: store.jwtAuthGuardPayload.payload.accessId,
-										limit: query.limit,
-										offset: query.offset,
-									},
+										...query,
+									} as any,
 									context,
 								});
 
@@ -143,6 +182,22 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 							{
 								tags: ["Books"],
 								query: t.Object({
+									orderDirection: t.Optional(
+										t.Nullable(
+											t.Enum({
+												asc: "asc",
+												desc: "desc",
+												description: "Order direction",
+											}),
+										),
+									),
+									orderField: t.Optional(
+										t.Nullable(
+											t.String({
+												description: "Order field",
+											}),
+										),
+									),
 									limit: t.Optional(
 										t.Nullable(
 											t.Number({
@@ -282,6 +337,30 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 											}),
 										),
 									),
+								}),
+							},
+						)
+						.delete(
+							"/:id",
+							async ({ params, context, deleteUserBookService, store }) => {
+								assert(store.jwtAuthGuardPayload.payload?.accessId);
+
+								const result = await deleteUserBookService({
+									dto: {
+										accessId: store.jwtAuthGuardPayload.payload.accessId,
+										bookId: params.id,
+									},
+									context,
+								});
+
+								return result;
+							},
+							{
+								tags: ["Books"],
+								params: t.Object({
+									id: t.Number({
+										description: "Book ID",
+									}),
 								}),
 							},
 						),

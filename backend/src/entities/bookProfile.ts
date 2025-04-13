@@ -44,7 +44,7 @@ export class BookProfile extends Base {
 	}
 
 	static async from(payload: BookProfileData): Promise<BookProfile> {
-		return new BookProfile({ ...payload });
+		return new BookProfile(payload);
 	}
 
 	async update(payload: BookProfileUpdateData) {

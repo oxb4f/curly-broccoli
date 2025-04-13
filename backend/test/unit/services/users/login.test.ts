@@ -2,7 +2,11 @@ import { beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { User } from "../../../../src/entities/user";
 import { ServiceError } from "../../../../src/services/errors/error";
 import loginUserService from "../../../../src/services/users/login/action";
-import { context, createdAccessFixture1, createdUserFixture1 } from "../fixtures";
+import {
+	context,
+	createdAccessFixture1,
+	createdUserFixture1,
+} from "../fixtures";
 
 const fixture = {
 	username: "testuser",
@@ -22,7 +26,7 @@ test("Unit test: User Login Service", () => {
 		});
 
 		spyOn(context.usersRepository, "get").mockResolvedValue({
-            ...fixture,
+			...fixture,
 			access: createdAccessFixture1,
 		});
 
