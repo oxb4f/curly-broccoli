@@ -16,6 +16,7 @@ import SettingsPhotoPage from './pages/Settings/Photo/Photo.jsx';
 import BookPage from './pages/Main/Book/Book.jsx';
 import BookCreatePage from './pages/Main/Book/Create/Create.jsx';
 import BookEditPage from './pages/Main/Book/Edit/Edit.jsx';
+import BookReadPage from './pages/Main/Book/Read/Read.jsx';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path={`${ROUTES.MAIN.BOOK.ROOT}/:context/:bookId`} element={<BookPage />} />
                 <Route path={ROUTES.MAIN.BOOK.ADD} element={<BookCreatePage />} />
                 <Route path={`${ROUTES.MAIN.BOOK.EDIT}/:bookId`} element={<BookEditPage />} />
+                <Route path={`${ROUTES.MAIN.BOOK.READ}/:bookId`} element={<BookReadPage />} />
               </Route>
               <Route
                 path={ROUTES.SETTINGS.ROOT}

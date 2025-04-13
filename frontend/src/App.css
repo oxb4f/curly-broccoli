@@ -1,3 +1,18 @@
+@layer utilities {
+  .clip-play {
+    clip-path: polygon(20% 0%, 100% 50%, 20% 100%, 20% 50%);
+  }
+  .clip-play-first {
+    clip-path: polygon(20% 0%, 100% 22%, 100% 78%, 20% 100%);
+  }
+  .clip-play-second {
+    clip-path: polygon(0 22%, 100% 50%, 100% 50%, 0 78%);
+  }
+  .clip-stop {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
 html {
   @apply text-xs sm:text-sm md:text-base;
 }

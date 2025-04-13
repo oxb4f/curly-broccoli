@@ -8,7 +8,8 @@ const ROUTES = {
     BOOK: {
       ROOT: '/book',
       ADD: '/book/add',
-      EDIT: '/book/edit'
+      EDIT: '/book/edit',
+      READ: '/book/read'
     }
   },
   SETTINGS: {

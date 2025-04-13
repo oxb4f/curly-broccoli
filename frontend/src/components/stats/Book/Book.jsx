@@ -1,5 +1,5 @@
 import Stats from '../../core/Stats/Stats';
-import { BookmarkIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, CheckCircleIcon, HeartIcon } from '@heroicons/react/24/outline';
 import useBookService from '../../../hooks/useBookService';
 import Skeleton from '../../core/Skeleton/Skeleton';
 
@@ -12,6 +12,17 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
 
   const items = {
     private: [
+      {
+        name: 'read',
+        renderIcon: (isActive) => (
+          <CheckCircleIcon className={`${isActive ? 'text-pr-main' : iconClasses}`} />
+        ),
+        className: itemClasses,
+        initialIsActive: stats?.isRead,
+        onClick: async ({ isActive: isRead }) => {
+          await edit(bookId, { isRead: isRead });
+        }
+      },
       {
         name: 'favorite',
         renderIcon: (isActive) => (

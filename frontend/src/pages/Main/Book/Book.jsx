@@ -4,9 +4,9 @@ import BookStats from '../../../components/stats/Book/Book';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import useBookService from '../../../hooks/useBookService';
-import BookEditLink from '../../../components/core/Book/Link/Edit/Edit';
 import Navigation from '../../../components/core/Navigation/Navigation';
 import ROUTES from '../../../constants/routes';
+import Rating from '../../../components/core/Rating/Rating';
 
 const BookPage = () => {
   const { context, bookId } = useParams();
@@ -68,6 +68,7 @@ const BookPage = () => {
           stats={book?.stats}
           className="flex flex-row-reverse gap-3 justify-end"
         />
+        <Rating />
         <Navigation list={navigation} />
         {/* <BookEditLink /> */}
         {/* <BookActions /> */}

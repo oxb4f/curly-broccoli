@@ -17,7 +17,12 @@ export default {
         'pr-text-darker': 'var(--project-text-color-darker)',
         'pr-text-inverted': 'var(--project-text-color-inverted)',
         'pr-error': 'var(--project-error-color)',
-        'pr-error-soft': 'var(--project-error-color-soft)'
+        'pr-error-soft': 'var(--project-error-color-soft)',
+        'pr-important': 'var(--project-important-color)',
+        'pr-important-soft': 'var(--project-important-color-soft)',
+        'pr-important-mute': 'var(--project-important-color-mute)',
+        'pr-rating': 'var(--project-rating-color)',
+        'pr-rating-mute': 'var(--project-rating-color-mute)'
       },
       fontFamily: {
         'pr-main': 'var(--project-font)',

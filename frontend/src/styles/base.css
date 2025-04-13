@@ -25,6 +25,13 @@
   --project-error-color: #eb4848;
   --project-error-color-soft: #e78b8b;
 
+  --project-important-color: #eb4848;
+  --project-important-color-soft: #e78b8b;
+  --project-important-color-mute: #972424;
+
+  --project-rating-color: #fffb00;
+  --project-rating-color-mute: #ffd000;
+
   --project-font: 'Roboto', sans-serif;
   --project-logo-font: 'Pacifico', cursive;
 }
