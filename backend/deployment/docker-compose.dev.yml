@@ -15,7 +15,7 @@ services:
       db:
         condition: service_healthy
       minio:
-        condition: service_started
+        condition: service_healthy
     expose:
       - "${APP_PORT:-8080}"
 
@@ -47,11 +47,17 @@ services:
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
     volumes:
       - ./minio/data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "mc alias set dev http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   createbuckets:
     image: minio/mc:latest
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc config host add dev http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
