@@ -29,7 +29,7 @@ services:
       backend-db:
         condition: service_healthy
       backend-minio:
-        condition: service_started
+        condition: service_healthy
     expose:
       - "8080"
     healthcheck:
@@ -70,11 +70,17 @@ services:
       - MINIO_ROOT_PASSWORD=password12345
     volumes:
       - ./docker/minio/data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "mc alias set dev http://backend-minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend-createbuckets:
     image: minio/mc:latest
     depends_on:
-      - backend-minio
+      backend-minio:
+        condition: service_healthy
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc config host add dev http://backend-minio:9000 minio password12345;

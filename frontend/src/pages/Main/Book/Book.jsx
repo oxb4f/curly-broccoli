@@ -46,7 +46,7 @@ const BookPage = () => {
     },
     itemsClasses: 'flex-1',
     linksClasses:
-      'block size-full px-4 py-2 rounded-sm bg-pr-bg-secondary text-center transition-all hover:bg-pr-bg-tertiary'
+      'block size-full px-4 py-2 rounded-xs bg-pr-bg-secondary text-center transition-all hover:bg-pr-bg-tertiary'
   };
 
   return (

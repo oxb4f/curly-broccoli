@@ -6,7 +6,7 @@ const BookPhoto = ({ imageUrl, className = '' }) => {
       {imageUrl ? (
         <>
           <div
-            className="absolute inset-0 scale-105 blur-sm bg-cover bg-center"
+            className="absolute inset-0 scale-105 blur-xs bg-cover bg-center"
             style={{ backgroundImage: `url(${imageUrl})` }}
           />
           <img src={imageUrl} alt="Book image" className="relative size-full object-contain" />

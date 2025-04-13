@@ -8,7 +8,7 @@ const FormPlaceholder = ({
       {children}
       <span
         className={`absolute -top-3 left-2 px-1 transition-all text-[0.8em] text-pr-main-soft select-none
-          peer-placeholder-shown:peer-[:not(:focus)]:translate-y-5 peer-placeholder-shown:peer-[:not(:focus)]:text-base peer-placeholder-shown:peer-[:not(:focus)]:text-pr-text-darker peer-placeholder-shown:peer-[:not(:focus)]:cursor-text
+          peer-not-focus:peer-placeholder-shown:translate-y-5 peer-not-focus:peer-placeholder-shown:text-base peer-not-focus:peer-placeholder-shown:text-pr-text-darker peer-not-focus:peer-placeholder-shown:cursor-text
       		${className}`}
       >
         {value}

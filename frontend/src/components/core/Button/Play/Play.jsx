@@ -10,8 +10,8 @@ const PlayButton = ({ action, onClick, className = '' }) => {
     <button
       onClick={onClick}
       className={`size-14 flex rounded-full border-2 border-pr-text bg-pr-bg-main transition-all 
-						 before:block before:size-full before:bg-pr-main before:hover:bg-pr-main-soft before:active:bg-pr-main-mute before:scale-50 before:origin-right before:transition-all 
-						 after:block after:size-full after:bg-pr-main after:hover:bg-pr-main-soft after:active:bg-pr-main-mute after:scale-50 after:origin-left after:transition-all
+						 before:block before:size-full before:bg-pr-main hover:before:bg-pr-main-soft active:before:bg-pr-main-mute before:scale-50 before:origin-right before:transition-all 
+						 after:block after:size-full after:bg-pr-main hover:after:bg-pr-main-soft active:after:bg-pr-main-mute after:scale-50 after:origin-left after:transition-all
 						  ${
                 action === 'start'
                   ? `before:clip-play-first before:origin-right 
@@ -19,15 +19,15 @@ const PlayButton = ({ action, onClick, className = '' }) => {
                   : action === 'pause'
                   ? `before:clip-stop before:scale-x-[0.4] before:-translate-x-[0.1rem] 
 									after:clip-stop after:scale-x-[0.4] after:translate-x-[0.1rem]`
-                  : `before:clip-stop before:!bg-pr-important before:active:!bg-pr-important-mute  
-									after:clip-stop after:!bg-pr-important after:active:!bg-pr-important-mute`
+                  : `before:clip-stop before:!bg-pr-important active:before:bg-pr-important-mute!  
+									after:clip-stop after:!bg-pr-important active:after:bg-pr-important-mute!`
               }
 					  ${className}`}
     ></button>
     // <button
     // 	onClick={handleTimerStop}
     // 	className={`absolute top-1 size-12 rounded-full border-2 border-pr-text bg-pr-bg-main transition-all
-    // 		after:absolute after:inset-0 after:clip-stop after:bg-pr-important after:hover:bg-pr-important-soft after:scale-50
+    // 		after:absolute after:inset-0 after:clip-stop after:bg-pr-important hover:after:bg-pr-important-soft after:scale-50
     // 	 ${timerStatus === 'paused' ? '-translate-x-[130%]' : 'border-transparent after:bg-transparent'}`}
     // ></button>
   );

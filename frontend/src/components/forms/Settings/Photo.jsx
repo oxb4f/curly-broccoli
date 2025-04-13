@@ -29,7 +29,7 @@ const PhotoSettingsForm = () => {
             type: 'button',
             value: 'back',
             className:
-              '!bg-pr-bg-secondary text-pr-text rounded-none !rounded-sm transition-all hover:enabled:!bg-pr-bg-tertiary',
+              'bg-pr-bg-secondary! text-pr-text rounded-none rounded-xs! transition-all hover:enabled:bg-pr-bg-tertiary!',
             onClick: () => {
               navigate(ROUTES.SETTINGS.PROFILE);
             }
@@ -38,7 +38,7 @@ const PhotoSettingsForm = () => {
             type: 'submit',
             value: 'confirm',
             className:
-              '!bg-pr-bg-secondary text-pr-text rounded-none !rounded-sm transition-all hover:enabled:!bg-pr-bg-tertiary'
+              'bg-pr-bg-secondary! text-pr-text rounded-none rounded-xs! transition-all hover:enabled:bg-pr-bg-tertiary!'
           }
         },
         className: 'flex gap-1 rounded-lg overflow-hidden'

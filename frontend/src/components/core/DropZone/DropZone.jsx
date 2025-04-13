@@ -36,7 +36,7 @@ const DropZone = ({ onDropHandler, className = '' }) => {
 ref="dropZoneRef"
 class="drop-zone relative size-full border-4 border-dashed border-project-border-color text-project-border-color"
 :class="{
-	'!border-project-text-color !text-project-text-color': isOverDropZone
+	'border-project-text-color! text-project-text-color!': isOverDropZone
 }"
 >
 <div class="size-full flex justify-center items-center">
