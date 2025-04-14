@@ -18,9 +18,9 @@ const BookCard = ({ data, isPublic, isTile = true, className = '' }) => {
         to={`${ROUTES.MAIN.BOOK.ROOT}/${isPublic ? 'public' : 'private'}/${data.id}`}
         className="overflow-hidden "
       >
-        {data?.rating && (
-          <span className="absolute top-2 left-2 w-12 h-6 flex justify-evenly items-center rounded-md bg-pr-bg-secondary/10 backdrop-blur-xs text-pr-rating z-10">
-            {data.rating}
+        {data.stats.rating && (
+          <span className="absolute top-2 left-2 w-12 h-6 flex justify-evenly items-center rounded-md bg-pr-bg-secondary/40 backdrop-blur-xs text-pr-rating z-10">
+            {data.stats.rating}
             <StarIcon className="size-5" />
           </span>
         )}
@@ -30,10 +30,10 @@ const BookCard = ({ data, isPublic, isTile = true, className = '' }) => {
         />
       </NavigationLink>
       <div className="flex flex-col justify-center w-full p-2 gap-2">
-        <BookInfo className="max-h-24 w-full text-base text-center" data={data} isShort />
+        <BookInfo className="max-h-24 w-full text-base text-center" data={data.info} isShort />
         <BookStats
           bookId={data.id}
-          stats={data}
+          stats={data.stats}
           className="flex flex-wrap gap-1 justify-end"
           isPublic={isPublic}
         />

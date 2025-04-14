@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import formatDate from '../../../utils/formatDate';
 import { StarIcon } from '@heroicons/react/24/outline';
-import Skeleton from '../Skeleton/Skeleton';
 
 const Rating = ({
   initialRating,

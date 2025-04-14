@@ -97,7 +97,13 @@ const processResponse = (data, apiEndpoint) => {
       };
     }
     case 'books': {
-      const { id, title, author, imageUrl, isFavorite, isRead, rating, review, ...other } = data;
+      const { books, id, title, author, imageUrl, isFavorite, isRead, rating, review, ...other } =
+        data;
+
+      if (books) {
+        return { ...other, books: books.map((book) => processResponse(book, 'books')) };
+      }
+
       return {
         id,
         imageUrl,

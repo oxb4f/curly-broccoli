@@ -11,9 +11,8 @@ const getPublicBook = async (id) => {
 const getPublicBooks = async () => {
   const response = await api.get(`books/public/`);
   console.log(response);
-  return response;
 
-  // return processResponse(response, 'books');
+  return response.books.map((book) => processResponse(book, 'books'));
 };
 
 const getPrivateBook = async (id) => {
@@ -26,9 +25,8 @@ const getPrivateBook = async (id) => {
 const getPrivateBooks = async () => {
   const response = await api.get(`books/private/`);
   console.log(response);
-  return response;
 
-  // return processResponse(response, 'books');
+  return { ...response, books: response.books.map((book) => processResponse(book, 'books')) };
 };
 
 const createBook = async (inputData) => {
