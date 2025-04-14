@@ -12,7 +12,7 @@ const getPublicBooks = async () => {
   const response = await api.get(`books/public/`);
   console.log(response);
 
-  return response.books.map((book) => processResponse(book, 'books'));
+  return processResponse(response, 'books');
 };
 
 const getPrivateBook = async (id) => {
@@ -26,7 +26,7 @@ const getPrivateBooks = async () => {
   const response = await api.get(`books/private/`);
   console.log(response);
 
-  return { ...response, books: response.books.map((book) => processResponse(book, 'books')) };
+  return processResponse(response, 'books');
 };
 
 const createBook = async (inputData) => {
@@ -50,4 +50,16 @@ const editBook = async (id, inputData) => {
   // return { jwt: response.jwt, id: response.id, accessId: response.accessId };
 };
 
-export { getPublicBooks, getPublicBook, getPrivateBooks, getPrivateBook, createBook, editBook };
+const removeBook = async (id) => {
+  await api.delete(`books/private/${id}`);
+};
+
+export {
+  getPublicBooks,
+  getPublicBook,
+  getPrivateBooks,
+  getPrivateBook,
+  createBook,
+  editBook,
+  removeBook
+};

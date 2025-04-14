@@ -1,4 +1,4 @@
-import { BookmarkIcon, CheckCircleIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import useBookService from '../../../hooks/useBookService';
 import Skeleton from '../../core/Skeleton/Skeleton';
 import ChangeableStats from '../../core/Stats/Changeable/Changeable';

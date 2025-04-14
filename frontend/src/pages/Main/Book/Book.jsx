@@ -1,24 +1,18 @@
 import BookInfo from '../../../components/core/Book/Info/Info';
 import BookPhoto from '../../../components/core/Book/Photo/Photo';
 import BookStats from '../../../components/stats/Book/Book';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import useBookService from '../../../hooks/useBookService';
 import Navigation from '../../../components/core/Navigation/Navigation';
 import ROUTES from '../../../constants/routes';
-import Rating from '../../../components/core/Rating/Rating';
 import BookRating from '../../../components/core/Book/Rating/Rating';
 
 const BookPage = () => {
   const { context, bookId } = useParams();
   const isPublic = context === 'public';
-  const { get, edit } = useBookService();
-  const {
-    data: book,
-    isPending,
-    error,
-    refetch
-  } = useQuery({
+  const { get, remove } = useBookService();
+  const { data: book, isPending } = useQuery({
     queryKey: ['book', bookId],
     queryFn: () => get(bookId, isPublic)
   });
@@ -40,6 +34,15 @@ const BookPage = () => {
         linkProps: {
           to: `${ROUTES.MAIN.BOOK.EDIT}/${bookId}`,
           children: 'Edit book'
+        }
+      },
+      {
+        name: 'Delete',
+        linkProps: {
+          onClick: () => remove(bookId),
+          children: 'Delete',
+          className:
+            'text-pr-important block size-full px-4 py-2 rounded-xs bg-pr-bg-secondary text-center transition-all hover:bg-pr-bg-tertiary'
         }
       }
     ],

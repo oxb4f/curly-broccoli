@@ -36,10 +36,18 @@ const useBookService = () => {
       ...rest,
       ...(responseImage.imageUrl && responseImage)
     });
+
+    navigate(-1);
+
     return response;
   };
 
-  return { get, getAll, create, edit };
+  const remove = async (id) => {
+    await bookApi.removeBook(id);
+    navigate(ROUTES.MAIN.ROOT, { replace: true });
+  };
+
+  return { get, getAll, create, edit, remove };
 };
 
 export default useBookService;
