@@ -16,7 +16,7 @@ const Skeleton = ({ type, height, width = '100%', style = {}, className = '' }) 
 
   return (
     <span
-      className={`relative block bg-pr-bg-tertiary overflow-hidden 
+      className={`relative block bg-pr-bg-tertiary overflow-hidden
         after:animate-shimmer after:absolute after:block after:inset-0 after:bg-gradient-to-r after:from-transparent after:from-0% after:via-pr-text-darker after:via-85% after:to-transparent after:to-100% 
         ${typeClasses} ${className}`}
       style={styles}

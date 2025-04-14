@@ -27,7 +27,7 @@
   --project-important-color-mute: #972424;
 
   --project-rating-color: #fffb00;
-  --project-rating-color-mute: #ffd000;
+  --project-rating-color-mute: #ffa600;
 
   --project-font: 'Roboto', sans-serif;
   --project-logo-font: 'Pacifico', cursive;
@@ -65,6 +65,10 @@ body {
   font-style: normal;
   color: var(--project-text-color);
   background-color: var(--project-bg-main-color);
+}
+
+button {
+  cursor: pointer;
 }
 
 /* input {

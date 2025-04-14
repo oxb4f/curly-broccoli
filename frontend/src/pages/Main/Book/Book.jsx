@@ -7,11 +7,12 @@ import useBookService from '../../../hooks/useBookService';
 import Navigation from '../../../components/core/Navigation/Navigation';
 import ROUTES from '../../../constants/routes';
 import Rating from '../../../components/core/Rating/Rating';
+import BookRating from '../../../components/core/Book/Rating/Rating';
 
 const BookPage = () => {
   const { context, bookId } = useParams();
   const isPublic = context === 'public';
-  const { get } = useBookService();
+  const { get, edit } = useBookService();
   const {
     data: book,
     isPending,
@@ -23,6 +24,7 @@ const BookPage = () => {
   });
 
   console.dir(book);
+  console.log(book?.stats?.rating);
 
   const navigation = {
     items: [
@@ -63,12 +65,11 @@ const BookPage = () => {
         lg:max-w-lg lg:flex-col lg:py-4"
       >
         <BookInfo data={book?.info} />
-        <BookStats
-          bookId={bookId}
-          stats={book?.stats}
-          className="flex flex-row-reverse gap-3 justify-end"
-        />
-        <Rating />
+        <div className="flex justify-between">
+          <BookStats bookId={bookId} stats={book?.stats} className="flex flex-row-reverse gap-3" />
+          <BookRating id={bookId} initialRating={book?.stats?.rating} isLoading={isPending} />
+        </div>
+
         <Navigation list={navigation} />
         {/* <BookEditLink /> */}
         {/* <BookActions /> */}

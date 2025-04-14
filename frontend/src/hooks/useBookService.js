@@ -24,14 +24,18 @@ const useBookService = () => {
   };
 
   const edit = async (id, inputData) => {
+    const { image, ...rest } = inputData;
+
     const responseImage =
-      inputData.image instanceof Blob
-        ? await uploadImage({ binaryImage: inputData.image })
-        : { imageUrl: inputData.image };
+      image instanceof Blob ? await uploadImage({ binaryImage: image }) : { imageUrl: image };
+
     console.log(id);
     console.log(inputData);
 
-    const response = await bookApi.editBook(id, { ...inputData, imageUrl: responseImage.imageUrl });
+    const response = await bookApi.editBook(id, {
+      ...rest,
+      ...(responseImage.imageUrl && responseImage)
+    });
     return response;
   };
 

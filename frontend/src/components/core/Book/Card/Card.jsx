@@ -3,11 +3,12 @@ import BookPhoto from '../Photo/Photo';
 import BookStats from '../../../stats/Book/Book';
 import ROUTES from '../../../../constants/routes';
 import NavigationLink from '../../Navigation/Link/Link';
+import { StarIcon } from '@heroicons/react/24/solid';
 
 const BookCard = ({ data, isPublic, isTile = true, className = '' }) => {
   return (
     <article
-      className={`size-full grid ${
+      className={`relative size-full grid ${
         isTile
           ? 'grid grid-cols-[1fr_2fr] grid-rows-1 md:grid-rows-[2fr_1fr] md:grid-cols-1'
           : 'grid-rows-[2fr_1fr] grid-cols-1'
@@ -15,8 +16,14 @@ const BookCard = ({ data, isPublic, isTile = true, className = '' }) => {
     >
       <NavigationLink
         to={`${ROUTES.MAIN.BOOK.ROOT}/${isPublic ? 'public' : 'private'}/${data.id}`}
-        className="overflow-hidden"
+        className="overflow-hidden "
       >
+        {data?.rating && (
+          <span className="absolute top-2 left-2 w-12 h-6 flex justify-evenly items-center rounded-md bg-pr-bg-secondary/10 backdrop-blur-xs text-pr-rating z-10">
+            {data.rating}
+            <StarIcon className="size-5" />
+          </span>
+        )}
         <BookPhoto
           imageUrl={data.imageUrl}
           className="w-full h-full transition-transform hover:scale-110"

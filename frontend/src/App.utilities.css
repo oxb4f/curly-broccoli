@@ -13,3 +13,9 @@
 @utility clip-stop {
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
+
+@utility screen-reader-only {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}

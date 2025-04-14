@@ -1,7 +1,7 @@
-import Stats from '../../core/Stats/Stats';
 import { BookmarkIcon, CheckCircleIcon, HeartIcon } from '@heroicons/react/24/outline';
 import useBookService from '../../../hooks/useBookService';
 import Skeleton from '../../core/Skeleton/Skeleton';
+import ChangeableStats from '../../core/Stats/Changeable/Changeable';
 
 const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
   const { edit } = useBookService();
@@ -46,11 +46,9 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
   };
 
   return stats ? (
-    <Stats
-      key={bookId}
+    <ChangeableStats
       className={className}
       items={[...items.common, ...(isPublic ? items.public : items.private)]}
-      isStatic={false}
     />
   ) : (
     <Skeleton type="text" />

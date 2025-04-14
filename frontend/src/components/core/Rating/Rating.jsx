@@ -1,32 +1,52 @@
 import { useEffect, useState } from 'react';
 import formatDate from '../../../utils/formatDate';
 import { StarIcon } from '@heroicons/react/24/outline';
+import Skeleton from '../Skeleton/Skeleton';
 
-const Rating = ({ initialRating = 3, legendText, maxStars = 5, step = 1, className = '' }) => {
+const Rating = ({
+  initialRating,
+  legendText,
+  onChange,
+  maxStars = 5,
+  isRow = true,
+  className = ''
+}) => {
   const [rating, setRating] = useState(initialRating);
-  console.log();
   const ratingArray = Array.from({ length: maxStars }, (v, k) => maxStars - k);
+
+  const handleChange = (value) => {
+    console.log(value);
+
+    setRating(value);
+    onChange?.(value);
+  };
+
+  useEffect(() => {
+    setRating(initialRating);
+  }, [initialRating]);
+
   return (
-    <fieldset className="size-fit" style={{ '--hovered-rating': 0 }}>
+    <fieldset className={className}>
       {legendText && <legend>{legendText}</legend>}
-      <div className={`flex flex-row-reverse gap-1 ${className}`}>
+      <div className={`flex ${isRow ? 'flex-row-reverse' : 'flex-col-reverse'}`}>
         {ratingArray.map((ratingValue) => (
           <label
             key={ratingValue}
-            className={`relative cursor-pointer [&:hover ~ label .star]:fill-pr-rating`}
-            data-rating={ratingValue}
+            className={`relative px-0.5 cursor-pointer
+              [&:hover>*]:text-transparent [&:hover>*]:fill-pr-rating-mute 
+              [&:hover~label>*]:text-transparent [&:hover~label>*]:fill-pr-rating-mute`}
           >
             <input
               type="radio"
               name="rating"
               value={ratingValue}
-              className="absolute inset-0 opacity-0"
-              onChange={() => setRating(ratingValue)}
+              className="screen-reader-only peer"
+              onChange={() => handleChange(ratingValue)}
             />
-            <span className="absolute inset-0 opacity-0">{ratingValue}</span>
+            <span className="screen-reader-only">{ratingValue}</span>
             <StarIcon
-              className={`star size-6 text-pr-text ${
-                ratingValue <= rating ? 'fill-pr-rating text-pr-rating' : ''
+              className={`size-6 peer-focus:!text-pr-text  ${
+                ratingValue <= rating ? 'fill-pr-rating text-pr-rating' : 'text-pr-text'
               }`}
             />
           </label>

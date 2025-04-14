@@ -71,7 +71,7 @@ services:
     volumes:
       - ./docker/minio/data:/data
     healthcheck:
-      test: ["CMD-SHELL", "mc alias set dev http://backend-minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}"]
+      test: ["CMD-SHELL", "mc alias set dev http://backend-minio:9000 minio password12345"]
       interval: 5s
       timeout: 5s
       retries: 5

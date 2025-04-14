@@ -1,4 +1,4 @@
-import Stats from '../../core/Stats/Stats';
+import StaticStats from '../../core/Stats/Static/Static';
 
 const ProfileStats = ({ data, className = '' }) => {
   const stats = [
@@ -16,7 +16,7 @@ const ProfileStats = ({ data, className = '' }) => {
     }
   ];
 
-  return <Stats items={stats} className={className} />;
+  return <StaticStats items={stats} className={className} />;
 };
 
 export default ProfileStats;
