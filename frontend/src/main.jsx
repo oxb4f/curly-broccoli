@@ -17,6 +17,7 @@ import BookPage from './pages/Main/Book/Book.jsx';
 import BookCreatePage from './pages/Main/Book/Create/Create.jsx';
 import BookEditPage from './pages/Main/Book/Edit/Edit.jsx';
 import BookReadPage from './pages/Main/Book/Read/Read.jsx';
+import SearchPage from './pages/Main/Search/Search.jsx';
 
 const queryClient = new QueryClient();
 
@@ -39,9 +40,10 @@ createRoot(document.getElementById('root')).render(
                 <Route index element={<Navigate to={ROUTES.MAIN.PROFILE} replace />} />
                 <Route path={ROUTES.MAIN.PROFILE} element={<ProfilePage />} />
                 <Route path={`${ROUTES.MAIN.BOOK.ROOT}/:context/:bookId`} element={<BookPage />} />
-                <Route path={ROUTES.MAIN.BOOK.ADD} element={<BookCreatePage />} />
+                <Route path={ROUTES.MAIN.BOOK.CREATE} element={<BookCreatePage />} />
                 <Route path={`${ROUTES.MAIN.BOOK.EDIT}/:bookId`} element={<BookEditPage />} />
                 <Route path={`${ROUTES.MAIN.BOOK.READ}/:bookId`} element={<BookReadPage />} />
+                <Route path={ROUTES.MAIN.SEARCH} element={<SearchPage />} />
               </Route>
               <Route
                 path={ROUTES.SETTINGS.ROOT}

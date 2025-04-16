@@ -1,22 +1,30 @@
+const AUTH_ROOT = 'auth';
+const MAIN_ROOT = '';
+const BOOK_ROOT = 'book';
+const SETTINGS_ROOT = 'settings';
+
 const ROUTES = {
   AUTH: {
-    ROOT: '/auth'
+    ROOT: `/${AUTH_ROOT}`
   },
   MAIN: {
-    ROOT: '/',
-    PROFILE: '/profile',
+    ROOT: `/${MAIN_ROOT}`,
+    PROFILE: `${MAIN_ROOT}/profile`,
     BOOK: {
-      ROOT: '/book',
-      ADD: '/book/add',
-      EDIT: '/book/edit',
-      READ: '/book/read'
-    }
+      ROOT: `/${BOOK_ROOT}`,
+      PRIVATE: `/${BOOK_ROOT}/private`,
+      PUBLIC: `/${BOOK_ROOT}/public`,
+      CREATE: `/${BOOK_ROOT}/create`,
+      EDIT: `/${BOOK_ROOT}/edit`,
+      READ: `/${BOOK_ROOT}/read`
+    },
+    SEARCH: `${MAIN_ROOT}/search`
   },
   SETTINGS: {
-    ROOT: '/settings',
-    PROFILE: '/settings/profile',
-    PHOTO: '/settings/photo',
-    SECURITY: '/settings/security'
+    ROOT: `/${SETTINGS_ROOT}`,
+    PROFILE: `/${SETTINGS_ROOT}/profile`,
+    PHOTO: `/${SETTINGS_ROOT}/photo`,
+    SECURITY: `/${SETTINGS_ROOT}/security`
   }
 };
 

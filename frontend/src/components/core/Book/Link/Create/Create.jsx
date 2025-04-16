@@ -2,10 +2,10 @@ import ROUTES from '../../../../../constants/routes';
 import { PlusIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 import NavigationLink from '../../../Navigation/Link/Link';
 
-const BookAddLink = ({ className = '' }) => {
+const BookCreateLink = ({ className = '' }) => {
   return (
     <NavigationLink
-      to={ROUTES.MAIN.BOOK.ADD}
+      to={ROUTES.MAIN.BOOK.CREATE}
       className={`relative flex justify-center items-center border-2 border-pr-bg-secondary rounded-md bg-pr-bg-secondary transition-colors 
             hover:border-pr-text 
             before:content-[''] before:absolute before:inset-0 before:rounded-md before:bg-pr-bg-main before:scale-100 before:transition-transform 
@@ -23,4 +23,4 @@ const BookAddLink = ({ className = '' }) => {
   );
 };
 
-export default BookAddLink;
+export default BookCreateLink;

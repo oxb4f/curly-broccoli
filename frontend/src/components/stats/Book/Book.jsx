@@ -14,25 +14,25 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
     private: [
       {
         name: 'read',
-        renderIcon: (isActive) => (
-          <CheckCircleIcon className={`${isActive ? 'text-pr-main' : iconClasses}`} />
-        ),
         className: itemClasses,
         initialIsActive: stats?.isRead,
         onClick: async ({ isActive: isRead }) => {
           await edit(bookId, { isRead: isRead });
-        }
+        },
+        children: (isActive) => (
+          <CheckCircleIcon className={`${isActive ? 'text-pr-main' : iconClasses}`} />
+        )
       },
       {
         name: 'favorite',
-        renderIcon: (isActive) => (
-          <BookmarkIcon className={`${isActive ? activeIconClasses : iconClasses}`} />
-        ),
         className: itemClasses,
         initialIsActive: stats?.isFavorite,
         onClick: async ({ isActive: isFavorite }) => {
           await edit(bookId, { isFavorite });
-        }
+        },
+        children: (isActive) => (
+          <BookmarkIcon className={`${isActive ? activeIconClasses : iconClasses}`} />
+        )
       }
     ],
     public: [],

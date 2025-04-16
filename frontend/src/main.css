@@ -10,10 +10,11 @@
   --color-pr-main-soft: var(--project-main-color-soft);
   --color-pr-main-mute: var(--project-main-color-mute);
   --color-pr-bg-main: var(--project-bg-main-color);
+  --color-pr-bg-main-inverted: var(--project-bg-main-color-inverted);
   --color-pr-bg-secondary: var(--project-bg-secondary-color);
+  --color-pr-bg-secondary-inverted: var(--project-bg-secondary-color-inverted);
   --color-pr-bg-tertiary: var(--project-bg-tertiary-color);
-  --color-pr-bg-hover: var(--project-bg-hover-color);
-  --color-pr-bg-disable: var(--project-bg-disable-color);
+  --color-pr-bg-tertiary-inverted: var(--project-bg-tertiary-color-inverted);
   --color-pr-border: var(--project-border-color);
   --color-pr-text: var(--project-text-color);
   --color-pr-text-darker: var(--project-text-color-darker);

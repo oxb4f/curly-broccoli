@@ -11,7 +11,7 @@ import BookRating from '../../../components/core/Book/Rating/Rating';
 const BookPage = () => {
   const { context, bookId } = useParams();
   const isPublic = context === 'public';
-  const { get, remove } = useBookService();
+  const { get, remove, add } = useBookService();
   const { data: book, isPending } = useQuery({
     queryKey: ['book', bookId],
     queryFn: () => get(bookId, isPublic)
@@ -20,8 +20,8 @@ const BookPage = () => {
   console.dir(book);
   console.log(book?.stats?.rating);
 
-  const navigation = {
-    items: [
+  const navigationItems = {
+    private: [
       {
         name: 'Start reading',
         linkProps: {
@@ -37,15 +37,28 @@ const BookPage = () => {
         }
       },
       {
-        name: 'Delete',
+        name: 'Remove',
         linkProps: {
           onClick: () => remove(bookId),
-          children: 'Delete',
+          children: 'Remove',
           className:
             'text-pr-important block size-full px-4 py-2 rounded-xs bg-pr-bg-secondary text-center transition-all hover:bg-pr-bg-tertiary'
         }
       }
     ],
+    public: [
+      {
+        name: 'Add book',
+        linkProps: {
+          onClick: () => add(bookId),
+          children: 'Add book'
+        }
+      }
+    ]
+  };
+
+  const navigation = {
+    items: navigationItems[context],
     props: {
       className: 'flex gap-1 rounded-lg text-base overflow-hidden'
     },
@@ -68,10 +81,16 @@ const BookPage = () => {
         lg:max-w-lg lg:flex-col lg:py-4"
       >
         <BookInfo data={book?.info} />
-        <div className="flex justify-between">
-          <BookStats bookId={bookId} stats={book?.stats} className="flex flex-row-reverse gap-3" />
-          <BookRating id={bookId} initialRating={book?.stats?.rating} isLoading={isPending} />
-        </div>
+        {!isPublic && (
+          <div className={'flex justify-between'}>
+            <BookStats
+              bookId={bookId}
+              stats={book?.stats}
+              className="flex flex-row-reverse gap-3"
+            />
+            <BookRating id={bookId} initialRating={book?.stats?.rating} isLoading={isPending} />
+          </div>
+        )}
 
         <Navigation list={navigation} />
         {/* <BookEditLink /> */}

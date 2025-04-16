@@ -24,10 +24,12 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
 
           return {
             ...rest,
-            social: {
-              telegram,
-              instagram
-            }
+            ...((telegram === undefined && instagram === undefined) || {
+              social: {
+                telegram,
+                instagram
+              }
+            })
           };
         }
         default:

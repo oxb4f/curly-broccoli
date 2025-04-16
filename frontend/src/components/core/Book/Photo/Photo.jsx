@@ -9,7 +9,11 @@ const BookPhoto = ({ imageUrl, className = '' }) => {
             className="absolute inset-0 scale-105 blur-xs bg-cover bg-center"
             style={{ backgroundImage: `url(${imageUrl})` }}
           />
-          <img src={imageUrl} alt="Book image" className="relative size-full object-contain" />
+          <img
+            src={imageUrl}
+            alt="Book image"
+            className="relative size-full text-center object-contain"
+          />
         </>
       ) : (
         <BookOpenIcon className="size-full" />

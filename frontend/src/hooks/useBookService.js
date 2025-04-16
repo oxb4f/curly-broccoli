@@ -10,8 +10,8 @@ const useBookService = () => {
     return isPublic ? await bookApi.getPublicBook(id) : await bookApi.getPrivateBook(id);
   };
 
-  const getAll = async (isPublic) => {
-    return isPublic ? await bookApi.getPublicBooks() : await bookApi.getPrivateBooks();
+  const getAll = async (isPublic, params) => {
+    return isPublic ? await bookApi.getPublicBooks(params) : await bookApi.getPrivateBooks(params);
   };
 
   const create = async (inputData) => {
@@ -37,8 +37,6 @@ const useBookService = () => {
       ...(responseImage.imageUrl && responseImage)
     });
 
-    navigate(-1);
-
     return response;
   };
 
@@ -47,7 +45,12 @@ const useBookService = () => {
     navigate(ROUTES.MAIN.ROOT, { replace: true });
   };
 
-  return { get, getAll, create, edit, remove };
+  const add = async (id) => {
+    await bookApi.addBook(id);
+    navigate(`${ROUTES.MAIN.BOOK.PRIVATE}/${id}`, { replace: true });
+  };
+
+  return { get, getAll, create, edit, remove, add };
 };
 
 export default useBookService;

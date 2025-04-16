@@ -15,11 +15,11 @@ const BookCard = ({ data, isPublic, isTile = true, className = '' }) => {
       } rounded-md bg-pr-bg-secondary overflow-hidden ${className}`}
     >
       <NavigationLink
-        to={`${ROUTES.MAIN.BOOK.ROOT}/${isPublic ? 'public' : 'private'}/${data.id}`}
+        to={`${isPublic ? ROUTES.MAIN.BOOK.PUBLIC : ROUTES.MAIN.BOOK.PRIVATE}/${data.id}`}
         className="overflow-hidden "
       >
         {data.stats.rating && (
-          <span className="absolute top-2 left-2 w-12 h-6 flex justify-evenly items-center rounded-md bg-pr-bg-secondary/40 backdrop-blur-xs text-pr-rating z-10">
+          <span className="absolute top-2 left-2 w-12 h-6 flex justify-evenly items-center rounded-md bg-pr-bg-secondary/50 text-pr-rating z-10">
             {data.stats.rating}
             <StarIcon className="size-5" />
           </span>

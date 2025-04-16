@@ -8,10 +8,11 @@
   --project-secondary-color-mute: #d3b8e9;
 
   --project-bg-main-color: #000000;
+  --project-bg-main-color-inverted: #ededed;
   --project-bg-secondary-color: #1a1a1a;
+  --project-bg-secondary-color-inverted: #4d4d4d;
   --project-bg-tertiary-color: #2a2a2a;
-  --project-bg-hover-color: rgba(255, 255, 255, 0.1);
-  --project-bg-disable-color: rgba(255, 255, 255, 0.09);
+  --project-bg-tertiary-color-inverted: #666666;
 
   --project-border-color: rgba(255, 255, 255, 0.14);
 

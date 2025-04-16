@@ -52,7 +52,7 @@ const MainSidebar = ({ className = '' }) => {
           {
             name: 'search',
             linkProps: {
-              to: '/search',
+              to: ROUTES.MAIN.SEARCH,
               children: <MagnifyingGlassIcon />
             }
           }

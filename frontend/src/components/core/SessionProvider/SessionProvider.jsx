@@ -42,12 +42,13 @@ export default function SessionProvider({ children }) {
   };
 
   const updateUserSession = (userData) => {
-    queryClient.setQueryData(['user'], { ...user, ...userData });
+    queryClient.setQueryData(QUERY_KEYS.USERS.ALL, { ...user, ...userData });
   };
 
   const clearUserSession = () => {
     removeUserFromStorage();
-    queryClient.removeQueries({ queryKey: ['user'] });
+    queryClient.removeQueries({ queryKey: QUERY_KEYS.USERS.ALL });
+
     setHasStoredUser(false);
   };
 

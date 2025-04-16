@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 
 const ChangeableStatsItem = ({
   name,
-  renderIcon,
   initialCount,
   initialIsActive,
   onClick,
-  className = ''
+  className = '',
+  children
 }) => {
   const [count, setCount] = useState(initialCount);
   const [isActive, setIsActive] = useState(initialIsActive);
@@ -25,6 +25,7 @@ const ChangeableStatsItem = ({
 
   return (
     <label
+      title={name}
       className={`relative cursor-pointer 
 				focus-within:outline-1 focus-within:outline-pr-text 
 				${className}`}
@@ -40,8 +41,8 @@ const ChangeableStatsItem = ({
         checked={isActive}
         onChange={handleChange}
       />
-      <span className={renderIcon ? 'screen-reader-only' : ''}>{name}</span>
-      {renderIcon && renderIcon(isActive)}
+      <span className="screen-reader-only">{name}</span>
+      {typeof children === 'function' ? children(isActive) : children}
     </label>
   );
 };

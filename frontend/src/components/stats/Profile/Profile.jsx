@@ -4,15 +4,18 @@ const ProfileStats = ({ data, className = '' }) => {
   const stats = [
     {
       name: 'books read',
-      initialCount: 1
+      initialCount: 1,
+      children: 'books read'
     },
     {
       name: 'followers',
-      initialCount: 0
+      initialCount: 0,
+      children: 'followers'
     },
     {
       name: 'following',
-      initialCount: 0
+      initialCount: 0,
+      children: 'following'
     }
   ];
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const StaticStatsItem = ({ name, renderIcon, initialCount, className = '' }) => {
+const StaticStatsItem = ({ name, initialCount, className = '', children }) => {
   const [count, setCount] = useState(initialCount);
 
   useEffect(() => {
@@ -8,11 +8,11 @@ const StaticStatsItem = ({ name, renderIcon, initialCount, className = '' }) => 
   }, [initialCount]);
 
   return (
-    <li className={className}>
+    <li className={className} title={name}>
       {Number.isFinite(initialCount) && (
         <p className="font-bold text-center break-words">{count}</p>
       )}
-      <p className={`text-center break-words`}>{renderIcon ? renderIcon() : name}</p>
+      <p className={`text-center break-words`}>{children}</p>
     </li>
   );
 };
