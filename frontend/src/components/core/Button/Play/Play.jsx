@@ -1,10 +1,3 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import useBookService from '../../../../hooks/useBookService';
-import BookPhoto from '../../../../components/core/Book/Photo/Photo';
-import Timer from '../../../../components/core/Timer/Timer';
-import { useState } from 'react';
-
 const PlayButton = ({ action, onClick, className = '' }) => {
   return (
     <button
@@ -24,12 +17,6 @@ const PlayButton = ({ action, onClick, className = '' }) => {
               }
 					  ${className}`}
     ></button>
-    // <button
-    // 	onClick={handleTimerStop}
-    // 	className={`absolute top-1 size-12 rounded-full border-2 border-pr-text bg-pr-bg-main transition-all
-    // 		after:absolute after:inset-0 after:clip-stop after:bg-pr-important hover:after:bg-pr-important-soft after:scale-50
-    // 	 ${timerStatus === 'paused' ? '-translate-x-[130%]' : 'border-transparent after:bg-transparent'}`}
-    // ></button>
   );
 };
 

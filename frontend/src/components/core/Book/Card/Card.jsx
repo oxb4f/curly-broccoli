@@ -19,14 +19,14 @@ const BookCard = ({ data, isPublic, isTile = true, className = '' }) => {
         className="overflow-hidden "
       >
         {data.stats.rating && (
-          <span className="absolute top-2 left-2 w-12 h-6 flex justify-evenly items-center rounded-md bg-pr-bg-secondary/50 text-pr-rating z-10">
+          <span className="absolute top-2 right-2 w-12 h-6 flex justify-evenly items-center rounded-md bg-pr-bg-secondary/50 text-pr-rating z-10">
             {data.stats.rating}
             <StarIcon className="size-5" />
           </span>
         )}
         <BookPhoto
           imageUrl={data.imageUrl}
-          className="w-full h-full transition-transform hover:scale-110"
+          className="size-full transition-transform hover:scale-110"
         />
       </NavigationLink>
       <div className="flex flex-col justify-center w-full p-2 gap-2">

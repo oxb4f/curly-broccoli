@@ -7,13 +7,14 @@ import useBookService from '../../../hooks/useBookService';
 import Navigation from '../../../components/core/Navigation/Navigation';
 import ROUTES from '../../../constants/routes';
 import BookRating from '../../../components/core/Book/Rating/Rating';
+import QUERY_KEYS from '../../../constants/queryKeys';
 
 const BookPage = () => {
   const { context, bookId } = useParams();
   const isPublic = context === 'public';
   const { get, remove, add } = useBookService();
   const { data: book, isPending } = useQuery({
-    queryKey: ['book', bookId],
+    queryKey: [...(isPublic ? QUERY_KEYS.BOOKS.PUBLIC : QUERY_KEYS.BOOKS.PRIVATE), bookId],
     queryFn: () => get(bookId, isPublic)
   });
 

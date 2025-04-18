@@ -6,6 +6,7 @@ import Timer from '../../../../components/core/Timer/Timer';
 import { useState } from 'react';
 import PlayButton from '../../../../components/core/Button/Play/Play';
 import formatDate from '../../../../utils/formatDate';
+import QUERY_KEYS from '../../../../constants/queryKeys';
 
 const BookReadPage = () => {
   const [timerStatus, setTimerStatus] = useState('stopped');
@@ -18,7 +19,7 @@ const BookReadPage = () => {
     error,
     refetch
   } = useQuery({
-    queryKey: ['book', bookId],
+    queryKey: [...QUERY_KEYS.BOOKS.PRIVATE, bookId],
     queryFn: () => get(bookId, false)
   });
 

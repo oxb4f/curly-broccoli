@@ -1,30 +1,36 @@
-import BookCard from '../Card/Card';
-import BookCreateLink from '../Link/Create/Create';
+import useBookCatalog from './hooks/useBookCatalog';
+import BookCatalogControls from './components/Controls';
+import BookList from '../List/List';
 
-const BookCatalog = ({ items = [], isPublic = true, className = '' }) => {
+const BookCatalog = ({ items = [], isPublic = true }) => {
+  const {
+    editMode,
+    selectedBooks,
+    isAllSelected,
+    toggleEditMode,
+    handleSelect,
+    handleSelectAll,
+    handleRemove
+  } = useBookCatalog(items);
+
   return (
-    <ul
-      className={`w-full grid grid-cols-1 gap-4 
-        md:grid-cols-2 md:${isPublic ? 'auto-rows-[20rem]' : 'auto-rows-auto'} 
-        lg:grid-cols-4 
-        xl:grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]
-        ${className}`}
-    >
-      {!isPublic && (
-        <li
-          className="group h-8 col-span-full 
-          lg:col-span-1 
-          lg:h-60"
-        >
-          <BookCreateLink className="size-full" />
-        </li>
-      )}
-      {items.map((item) => (
-        <li key={item.id} className="h-24 md:h-60">
-          <BookCard isPublic={isPublic} data={item} />
-        </li>
-      ))}
-    </ul>
+    <div className="flex flex-col gap-4">
+      <BookCatalogControls
+        isPublic={isPublic}
+        editMode={editMode}
+        isAllSelected={isAllSelected}
+        onEditToggle={toggleEditMode}
+        onSelectAll={handleSelectAll}
+        onRemove={handleRemove}
+      />
+      <BookList
+        items={items}
+        isPublic={isPublic}
+        selectionEnabled={editMode}
+        isItemSelected={(id) => selectedBooks.has(id)}
+        onItemSelect={handleSelect}
+      />
+    </div>
   );
 };
 

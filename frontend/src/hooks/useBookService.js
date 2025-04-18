@@ -42,7 +42,7 @@ const useBookService = () => {
 
   const remove = async (id) => {
     await bookApi.removeBook(id);
-    navigate(ROUTES.MAIN.ROOT, { replace: true });
+    // navigate(ROUTES.MAIN.ROOT, { replace: true });
   };
 
   const add = async (id) => {

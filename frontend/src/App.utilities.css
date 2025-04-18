@@ -14,6 +14,10 @@
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
+@utility clip-check {
+  clip-path: polygon(25% 40%, 41% 59%, 77% 27%, 83% 33%, 40% 73%, 18% 45%);
+}
+
 @utility screen-reader-only {
   position: absolute;
   inset: 0;

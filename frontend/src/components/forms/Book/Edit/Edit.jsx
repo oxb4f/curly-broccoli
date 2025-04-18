@@ -1,13 +1,9 @@
-import Form from '../../../core/Form/Form';
-import BookPhoto from '../../../core/Book/Photo/Photo';
-import DropZone from '../../../core/DropZone/DropZone';
-import { useState, useEffect } from 'react';
-import useReactiveForm from '../../../core/Form/hooks/useReactiveForm';
 import BookPhotoUpload from '../../../uploads/Book/Photo/Photo';
 import useBookService from '../../../../hooks/useBookService';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import AsyncForm from '../../../core/Form/Async/Async';
+import QUERY_KEYS from '../../../../constants/queryKeys';
 
 const BookEditForm = ({ className = '' }) => {
   // const { changeInfo } = useUserService();
@@ -20,7 +16,7 @@ const BookEditForm = ({ className = '' }) => {
     error,
     refetch
   } = useQuery({
-    queryKey: ['book', bookId],
+    queryKey: [...QUERY_KEYS.BOOKS.PRIVATE, bookId],
     queryFn: () => get(bookId, false)
   });
 

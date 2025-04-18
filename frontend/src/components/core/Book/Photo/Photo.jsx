@@ -12,7 +12,7 @@ const BookPhoto = ({ imageUrl, className = '' }) => {
           <img
             src={imageUrl}
             alt="Book image"
-            className="relative size-full text-center object-contain"
+            className="size-full text-center object-contain z-0"
           />
         </>
       ) : (

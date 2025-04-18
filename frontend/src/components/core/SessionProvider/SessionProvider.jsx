@@ -7,6 +7,7 @@ import {
 import { clearEmptyFields } from '../../../utils/dataTransformers';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUser } from '../../../services/api/user';
+import QUERY_KEYS from '../../../constants/queryKeys';
 
 const SessionContext = createContext(null);
 
@@ -20,7 +21,7 @@ export default function SessionProvider({ children }) {
     error,
     refetch
   } = useQuery({
-    queryKey: ['user'],
+    queryKey: QUERY_KEYS.USERS.ALL,
     queryFn: () => getUser(getUserFromStorage()?.id),
     select: (userData) => clearEmptyFields(userData),
     enabled: hasStoredUser,
