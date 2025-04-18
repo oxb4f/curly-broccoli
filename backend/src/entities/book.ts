@@ -1,4 +1,4 @@
-import { Base } from "./base";
+import { Base, type UpdatedAt, type CreatedAt } from "./base";
 import { BookProfile, type BookProfileData } from "./bookProfile";
 import type { MaybeNumberId } from "./types/id";
 
@@ -8,6 +8,8 @@ interface BookData {
 	id?: MaybeNumberId;
 	isPublic: IsPublic;
 	profile: BookProfile;
+	createdAt?: CreatedAt;
+	updatedAt?: UpdatedAt;
 }
 
 type BookWithProfileData = Omit<BookData, "profile"> & {
@@ -19,7 +21,7 @@ export class Book extends Base {
 	private _profile: BookProfile;
 
 	private constructor(payload: BookData) {
-		super(payload.id);
+		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
 
 		this._isPublic = payload.isPublic;
 		this._profile = payload.profile;

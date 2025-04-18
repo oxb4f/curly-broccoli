@@ -1,6 +1,6 @@
 import { P, match } from "ts-pattern";
-import { FileStorageNotFoundError } from "../../infra/file-storage/errors/not-found";
 import { FileStorageDeniedError } from "../../infra/file-storage/errors/denied";
+import { FileStorageNotFoundError } from "../../infra/file-storage/errors/not-found";
 import { ServiceError } from "../errors/error";
 
 function catchFileStorageError(error: any, notFoundOnDenied = false): never {

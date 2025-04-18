@@ -184,11 +184,13 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 								query: t.Object({
 									orderDirection: t.Optional(
 										t.Nullable(
-											t.Enum({
-												asc: "asc",
-												desc: "desc",
-												description: "Order direction",
-											}),
+											t.Enum(
+												{
+													asc: "asc",
+													desc: "desc",
+												},
+												{ description: "Order direction" },
+											),
 										),
 									),
 									orderField: t.Optional(

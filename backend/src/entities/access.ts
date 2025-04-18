@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { TokenError, createSigner, createVerifier } from "fast-jwt";
 
-import { Base } from "./base";
+import { Base, type CreatedAt, type UpdatedAt } from "./base";
 import type { Id, MaybeNumberId } from "./types/id";
 
 const SALT_ROUNDS = 10;
@@ -25,6 +25,8 @@ interface AccessData {
 	login: Login;
 	password: Password;
 	refreshTokens?: RefreshTokens;
+	createdAt?: CreatedAt;
+	updatedAt?: UpdatedAt;
 }
 
 export interface AccessProfileData {
@@ -61,7 +63,7 @@ export class Access extends Base {
 	private _refreshTokens: Map<string, string>;
 
 	private constructor(payload: AccessData) {
-		super(payload.id);
+		super({ id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt });
 
 		this._login = payload.login;
 		this._password = payload.password;

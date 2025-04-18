@@ -7,6 +7,7 @@ import { accessesRoute } from "./routes/accesses";
 import { booksRoute } from "./routes/books";
 import { imagesRoute } from "./routes/images";
 import { pingRoute } from "./routes/ping";
+import { readingTrackersRoute } from "./routes/readingTrackers";
 import { usersRoute } from "./routes/users";
 
 export const app = new Elysia()
@@ -27,6 +28,7 @@ export const app = new Elysia()
 					{ name: "Ping" },
 					{ name: "Images" },
 					{ name: "Books" },
+					{ name: "Reading Trackers" },
 				],
 			},
 		}),
@@ -38,6 +40,7 @@ export const app = new Elysia()
 	.use(accessesRoute)
 	.use(imagesRoute)
 	.use(booksRoute)
+	.use(readingTrackersRoute)
 	.listen({ port: process.env.APP_PORT }, () =>
 		console.log(`🦊 Elysia is running at :${process.env.APP_PORT}`),
 	);

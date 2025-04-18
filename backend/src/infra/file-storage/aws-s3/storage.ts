@@ -5,9 +5,9 @@ import type {
 	FileStorageGetPayload,
 	FileStoragePutPayload,
 } from "../../../services/context";
-import { FileStorageNotFoundError } from "../errors/not-found";
-import { FileStorageDeniedError } from "../errors/denied";
 import type { Config } from "../../config";
+import { FileStorageDeniedError } from "../errors/denied";
+import { FileStorageNotFoundError } from "../errors/not-found";
 
 export class AwsS3FileStorage implements FileStorage {
 	constructor(private readonly _config: Config) {}

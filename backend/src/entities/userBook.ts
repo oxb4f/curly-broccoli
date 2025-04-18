@@ -1,4 +1,4 @@
-import { Base } from "./base";
+import { Base, type CreatedAt, type UpdatedAt } from "./base";
 import type { Book } from "./book";
 import { BookProfile, type BookProfileData } from "./bookProfile";
 import type { MaybeNumberId } from "./types/id";
@@ -18,6 +18,8 @@ export interface UserBookData {
 	book?: Book;
 	profile?: BookProfile;
 	user?: User;
+	createdAt?: CreatedAt;
+	updatedAt?: UpdatedAt;
 }
 
 export interface UserBookUpdateData {
@@ -42,7 +44,7 @@ export class UserBook extends Base {
 	private _user?: User;
 
 	private constructor(payload: UserBookData) {
-		super(payload.id);
+		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
 
 		this._isFavorite = payload.isFavorite ?? false;
 		this._isRead = payload.isRead ?? false;
@@ -88,6 +90,8 @@ export class UserBook extends Base {
 		if (payload.profile && this._profile) {
 			await this._profile.update(payload.profile);
 		}
+
+		this._updatedAt = new Date();
 
 		return this;
 	}

@@ -4,6 +4,7 @@ import { getConnection } from "../../infra/data-src/pg/connection";
 import { PgAccessesRepository } from "../../infra/data-src/pg/repositories/accesses";
 import { PgBooksRepository } from "../../infra/data-src/pg/repositories/books";
 import { PgImagesRepository } from "../../infra/data-src/pg/repositories/images";
+import { PgReadingTrackersRepository } from "../../infra/data-src/pg/repositories/readingTrackers";
 import { PgUserBooksRepository } from "../../infra/data-src/pg/repositories/userBooks";
 import { PgUsersRepository } from "../../infra/data-src/pg/repositories/users";
 import { createStorage } from "../../infra/file-storage/factory";
@@ -33,6 +34,9 @@ export const contextPlugin = new Elysia({ name: "contextPlugin" })
 				imagesRepository: new PgImagesRepository(dbConnection),
 				booksRepository: new PgBooksRepository(dbConnection),
 				userBooksRepository: new PgUserBooksRepository(dbConnection),
+				readingTrackersRepository: new PgReadingTrackersRepository(
+					dbConnection,
+				),
 				fileStorage: createStorage(),
 			} satisfies Context,
 		};

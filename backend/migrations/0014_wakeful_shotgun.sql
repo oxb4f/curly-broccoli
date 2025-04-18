@@ -1,0 +1,1 @@
+ALTER TABLE "reading_records" DROP COLUMN "number_of_pages";
