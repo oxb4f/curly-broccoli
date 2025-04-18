@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { Access, type JwtAccessPayload, type RefreshPayload } from "./access";
-import { Base } from "./base";
+import { Base, type CreatedAt, type UpdatedAt } from "./base";
 import type { MaybeNumberId } from "./types/id";
 
 export type FirstName = string | null | undefined;
@@ -20,6 +20,8 @@ interface UserProfileData {
 	social?: Social;
 	imageUrl?: ImageUrl;
 	access?: Access;
+	createdAt?: CreatedAt;
+	updatedAt?: UpdatedAt;
 }
 
 type UserProfileUpdateData = Partial<Omit<UserProfileData, "id" | "access">>;
@@ -49,7 +51,7 @@ export class User extends Base {
 	private _imageUrl: ImageUrl;
 
 	private constructor(payload: UserProfileData) {
-		super(payload.id);
+		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
 
 		this._username = payload.username;
 		this._firstName = payload.firstName ?? null;
@@ -113,6 +115,8 @@ export class User extends Base {
 		if (social || social === null) this.setSocial(social);
 		if (imageUrl || imageUrl === null) this.setImageUrl(imageUrl);
 		if (username) this.setUsername(username);
+
+		this._updatedAt = new Date();
 
 		return this;
 	}

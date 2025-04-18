@@ -1,0 +1,1 @@
+ALTER TABLE "reading_trackers" ADD COLUMN "last_resume_at" timestamp;

@@ -13,11 +13,11 @@ import {
 
 export const base = {
 	id: bigint("id", { mode: "number" }).notNull().primaryKey(),
-	createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
-	updatedAt: timestamp("updated_at", { mode: "string" })
+	createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+	updatedAt: timestamp("updated_at", { mode: "date" })
 		.notNull()
 		.defaultNow()
-		.$onUpdateFn(() => new Date().toISOString()),
+		.$onUpdateFn(() => new Date()),
 };
 
 export const accesses = pgTable(
@@ -87,3 +87,30 @@ export const userBooks = pgTable(
 		index("favorite_user_idx").on(userBooks.isFavorite, userBooks.userId),
 	],
 );
+
+export const readingTrackers = pgTable(
+	"reading_trackers",
+	{
+		...base,
+		finishedAt: timestamp("finished_at", { mode: "date" }),
+		state: varchar("state", { length: 255 }).notNull(),
+		userBookId: bigint("user_book_id", { mode: "number" })
+			.references(() => userBooks.id)
+			.notNull(),
+		lastResumeAt: timestamp("last_resume_at", { mode: "date" }),
+	},
+	(readingTrackers) => [
+		index("state_user_book_idx").on(
+			readingTrackers.state,
+			readingTrackers.userBookId,
+		),
+	],
+);
+
+export const readingRecords = pgTable("reading_records", {
+	...base,
+	readingTrackerId: bigint("reading_tracker_id", { mode: "number" })
+		.references(() => readingTrackers.id)
+		.notNull(),
+	duration: integer("duration").notNull(),
+});

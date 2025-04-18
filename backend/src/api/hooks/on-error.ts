@@ -1,5 +1,6 @@
 import { type Context, NotFoundError } from "elysia";
 import { match } from "ts-pattern";
+import { P } from "ts-pattern";
 import { ServiceError } from "../../services/errors/error";
 
 function getErrorResponse(error: Record<string, any>) {
@@ -11,50 +12,45 @@ export function onError<E extends Error = Error>(
 	set: Context["set"],
 ) {
 	console.trace(error);
-	const result = match(error)
-		.when(
-			(e: E) => e instanceof ServiceError,
-			(e: ServiceError) => {
-				let statusCode = 422;
 
-				if (e.isAuthError()) statusCode = 401;
-				if (e.isNotFoundError()) statusCode = 404;
+	return match(error as any)
+		.with({ constructor: ServiceError }, (e: any) => {
+			set.status = match(e)
+				.when(
+					(e) => e.isAuthError(),
+					() => 401,
+				)
+				.when(
+					(e) => e.isNotFoundError(),
+					() => 404,
+				)
+				.when(
+					(e) => e.isConflictError(),
+					() => 409,
+				)
+				.otherwise(() => 422);
 
-				set.status = statusCode;
-
-				return getErrorResponse(e.toJSON());
-			},
-		)
-		.when(
-			(e: any) => e && e.code === "VALIDATION" && Array.isArray(e.all),
-			(e: any) => {
-				set.status = 422;
-
-				return getErrorResponse({
-					type: "VALIDATION",
-					payload: {
-						message: "Validation error",
-						details: e.all.map((r: { path: string; message: string }) => ({
-							path: r.path.slice(1).split("/"),
-							message: "Invalid data",
-						})),
-					},
-				});
-			},
-		)
-		.when(
-			(e: any) => e instanceof NotFoundError,
-			() => {
-				set.status = 404;
-
-				return getErrorResponse({ message: "Not found", details: [] });
-			},
-		)
+			return getErrorResponse(e.toJSON());
+		})
+		.with({ code: "VALIDATION", all: P.array() }, (e: any) => {
+			set.status = 422;
+			return getErrorResponse({
+				type: "VALIDATION",
+				payload: {
+					message: "Validation error",
+					details: e.all.map((r: { path: string; message: string }) => ({
+						path: r.path.slice(1).split("/"),
+						message: "Invalid data",
+					})),
+				},
+			});
+		})
+		.with({ constructor: NotFoundError }, () => {
+			set.status = 404;
+			return getErrorResponse({ message: "Not found", details: [] });
+		})
 		.otherwise(() => {
 			set.status = 500;
-
 			return getErrorResponse({ type: "INTERNAL_SERVER_ERROR" });
 		});
-
-	return result;
 }

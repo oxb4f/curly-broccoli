@@ -12,6 +12,7 @@ export class ServiceError<C extends Error = Error> extends Error {
 		VALIDATION: "VALIDATION",
 		AUTH: "AUTH",
 		WRONG_INTERNAL_STATE: "WRONG_INTERNAL_STATE",
+		CONFLICT: "CONFLICT",
 	} as const);
 
 	protected constructor(
@@ -32,6 +33,13 @@ export class ServiceError<C extends Error = Error> extends Error {
 		});
 	}
 
+	static throwConflict(message: string): never {
+		throw new ServiceError(ServiceError.ERROR_TYPE.CONFLICT, {
+			message,
+			details: [],
+		});
+	}
+
 	static throw(errorType: ErrorType, payload: ErrorPayload): never {
 		throw new ServiceError(errorType, payload);
 	}
@@ -42,6 +50,10 @@ export class ServiceError<C extends Error = Error> extends Error {
 
 	isNotFoundError() {
 		return this.type === ServiceError.ERROR_TYPE.NOT_FOUND;
+	}
+
+	isConflictError() {
+		return this.type === ServiceError.ERROR_TYPE.CONFLICT;
 	}
 
 	toJSON() {
