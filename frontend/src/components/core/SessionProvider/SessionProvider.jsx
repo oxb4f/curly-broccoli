@@ -12,19 +12,18 @@ import QUERY_KEYS from '../../../constants/queryKeys';
 const SessionContext = createContext(null);
 
 export default function SessionProvider({ children }) {
-  const [hasStoredUser, setHasStoredUser] = useState(Boolean(getUserFromStorage()));
+  const [credentials, setCredentials] = useState(getUserFromStorage());
   const queryClient = useQueryClient();
 
   const {
     data: user,
     isPending,
-    error,
-    refetch
+    error
   } = useQuery({
     queryKey: QUERY_KEYS.USERS.ALL,
-    queryFn: () => getUser(getUserFromStorage()?.id),
+    queryFn: () => getUser(credentials?.id),
     select: (userData) => clearEmptyFields(userData),
-    enabled: hasStoredUser,
+    enabled: Boolean(credentials),
     refetchOnWindowFocus: false
   });
 
@@ -36,30 +35,32 @@ export default function SessionProvider({ children }) {
     }
   }, [user]);
 
-  const storeUserSession = (userData) => {
-    setUserToStorage(userData);
-    setHasStoredUser(true);
-    refetch();
+  const storeUserSession = (userCredentials) => {
+    setUserToStorage(userCredentials);
+    setCredentials(userCredentials);
+    queryClient.invalidateQueries(QUERY_KEYS.USERS.ALL);
   };
 
   const updateUserSession = (userData) => {
-    queryClient.setQueryData(QUERY_KEYS.USERS.ALL, { ...user, ...userData });
+    queryClient.setQueryData(QUERY_KEYS.USERS.ALL, (oldUserData) => ({
+      ...oldUserData,
+      ...userData
+    }));
   };
 
   const clearUserSession = () => {
     removeUserFromStorage();
+    setCredentials(null);
     queryClient.removeQueries({ queryKey: QUERY_KEYS.USERS.ALL });
-
-    setHasStoredUser(false);
   };
 
   return (
     <SessionContext.Provider
       value={{
         user,
-        hasStoredUser,
         isPending,
         error,
+        hasCredentials: Boolean(credentials),
         storeUserSession,
         updateUserSession,
         clearUserSession

@@ -1,27 +1,9 @@
 import Form from '../../../core/Form/Form';
-import BookPhoto from '../../../core/Book/Photo/Photo';
-import DropZone from '../../../core/DropZone/DropZone';
-import { useState, useEffect } from 'react';
-import useReactiveForm from '../../../core/Form/hooks/useReactiveForm';
 import BookPhotoUpload from '../../../uploads/Book/Photo/Photo';
-import useBookService from '../../../../hooks/useBookService';
+import useBooksService from '../../../../hooks/useBooksService';
 
 const BookCreateForm = ({ className = '' }) => {
-  // const { changeInfo } = useUserService();
-
-  // const [imageUrl, setImageUrl] = useState(null);
-
-  // const handleOnDrop = (file) => {
-  //   const objectUrl = URL.createObjectURL(file);
-  //   setImageUrl(objectUrl);
-  // };
-
-  // useEffect(() => {
-  //   return () => {
-  //     if (imageUrl) URL.revokeObjectURL(imageUrl);
-  //   };
-  // }, [imageUrl]);
-  const { create } = useBookService();
+  const { create } = useBooksService();
 
   const handleOnSubmit = async (bookData) => {
     console.log(bookData.imageUrl);

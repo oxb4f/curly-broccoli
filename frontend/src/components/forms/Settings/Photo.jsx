@@ -2,8 +2,8 @@ import { useRef, useMemo } from 'react';
 import Form from '../../core/Form/Form';
 import ROUTES from '../../../constants/routes';
 import UserPhotoUpload from '../../uploads/User/Photo/Photo';
-import useUserService from '@/hooks/useUserService';
 import { useNavigate } from 'react-router';
+import useUserService from '../../../hooks/useUsersService';
 
 const PhotoSettingsForm = () => {
   const { changePhoto } = useUserService();
@@ -13,7 +13,7 @@ const PhotoSettingsForm = () => {
   const handleOnSubmit = async () => {
     const croppedBlob = await imageCropperRef.current.cropImage();
 
-    await changePhoto({ binaryImage: croppedBlob });
+    await changePhoto({ binaryImage: croppedBlob }, { navigateTo: ROUTES.MAIN.PROFILE });
 
     // const a = document.createElement('a');
     // a.href = imageUrl;

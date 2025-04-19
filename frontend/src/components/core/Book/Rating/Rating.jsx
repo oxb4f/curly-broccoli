@@ -1,11 +1,11 @@
 import Rating from '../../Rating/Rating';
 import Skeleton from '../../Skeleton/Skeleton';
-import useBookService from '../../../../hooks/useBookService';
+import useBooksService from '../../../../hooks/useBooksService';
 
 const BookRating = ({ id, initialRating, isLoading, isRow, className = '' }) => {
-  const { edit } = useBookService();
+  const { edit } = useBooksService();
 
-  const handleChange = async (value) => await edit(id, { rating: value });
+  const handleChange = async (value) => await edit({ id, inputData: { rating: value } });
 
   return isLoading ? (
     <Skeleton type="text" />

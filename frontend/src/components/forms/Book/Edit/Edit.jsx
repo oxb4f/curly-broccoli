@@ -1,24 +1,19 @@
 import BookPhotoUpload from '../../../uploads/Book/Photo/Photo';
-import useBookService from '../../../../hooks/useBookService';
+import useBooksService from '../../../../hooks/useBooksService';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import AsyncForm from '../../../core/Form/Async/Async';
 import QUERY_KEYS from '../../../../constants/queryKeys';
+import ROUTES from '../../../../constants/routes';
+import { useBook } from '../../../../pages/Main/Book/Provider/Provider';
 
 const BookEditForm = ({ className = '' }) => {
-  // const { changeInfo } = useUserService();
-  const { bookId } = useParams();
-  const { get } = useBookService();
+  const { book, isPending } = useBook();
 
-  const {
-    data: book,
-    isPending,
-    error,
-    refetch
-  } = useQuery({
-    queryKey: [...QUERY_KEYS.BOOKS.PRIVATE, bookId],
-    queryFn: () => get(bookId, false)
-  });
+  // const { data: book, isPending } = useQuery({
+  //   queryKey: [...QUERY_KEYS.BOOKS.PRIVATE, bookId],
+  //   queryFn: () => get(bookId, false)
+  // });
 
   // const [imageUrl, setImageUrl] = useState(null);
 
@@ -32,13 +27,13 @@ const BookEditForm = ({ className = '' }) => {
   //     if (imageUrl) URL.revokeObjectURL(imageUrl);
   //   };
   // }, [imageUrl]);
-  const { edit } = useBookService();
+  const { edit } = useBooksService();
   console.log(book);
 
   const handleOnSubmit = async (bookData) => {
     console.log(bookData);
 
-    await edit(bookId, bookData);
+    await edit({ id: book.id, inputData: bookData }, { navigateTo: -1 });
   };
 
   const fields = {

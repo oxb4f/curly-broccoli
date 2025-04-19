@@ -1,27 +1,14 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import useBookService from '../../../../hooks/useBookService';
 import BookPhoto from '../../../../components/core/Book/Photo/Photo';
 import Timer from '../../../../components/core/Timer/Timer';
 import { useState } from 'react';
 import PlayButton from '../../../../components/core/Button/Play/Play';
 import formatDate from '../../../../utils/formatDate';
-import QUERY_KEYS from '../../../../constants/queryKeys';
+import { useBook } from '../Provider/Provider';
 
 const BookReadPage = () => {
   const [timerStatus, setTimerStatus] = useState('stopped');
   const buttonAction = timerStatus === 'started' ? 'pause' : 'start';
-  const { bookId } = useParams();
-  const { get } = useBookService();
-  const {
-    data: book,
-    isPending,
-    error,
-    refetch
-  } = useQuery({
-    queryKey: [...QUERY_KEYS.BOOKS.PRIVATE, bookId],
-    queryFn: () => get(bookId, false)
-  });
+  const { book } = useBook();
 
   console.log(timerStatus);
 

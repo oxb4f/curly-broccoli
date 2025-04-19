@@ -1,5 +1,6 @@
-import useUserService from '@/hooks/useUserService';
 import AsyncForm from '../../core/Form/Async/Async';
+import ROUTES from '../../../constants/routes';
+import useUserService from '../../../hooks/useUsersService';
 
 const ProfileSettingsForm = ({ userCurrentData, isPending }) => {
   const { changeInfo } = useUserService();
@@ -55,7 +56,9 @@ const ProfileSettingsForm = ({ userCurrentData, isPending }) => {
     }
   };
 
-  const handleSubmit = (userData) => changeInfo(userData);
+  const handleSubmit = async (userData) => {
+    await changeInfo(userData, { navigateTo: ROUTES.MAIN.PROFILE });
+  };
 
   return (
     <AsyncForm

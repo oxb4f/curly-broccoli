@@ -29,8 +29,6 @@ const Social = ({ social, className = '' }) => {
     linksClasses: 'block size-7 text-center transition-transform hover:scale-110'
   };
 
-  console.log(navigation);
-
   return (
     <>
       {social ? (

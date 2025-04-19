@@ -18,6 +18,7 @@ import BookCreatePage from './pages/Main/Book/Create/Create.jsx';
 import BookEditPage from './pages/Main/Book/Edit/Edit.jsx';
 import BookReadPage from './pages/Main/Book/Read/Read.jsx';
 import SearchPage from './pages/Main/Search/Search.jsx';
+import { BookProviderPage } from './pages/Main/Book/Provider/Provider.jsx';
 
 const queryClient = new QueryClient();
 
@@ -39,10 +40,16 @@ createRoot(document.getElementById('root')).render(
               >
                 <Route index element={<Navigate to={ROUTES.MAIN.PROFILE} replace />} />
                 <Route path={ROUTES.MAIN.PROFILE} element={<ProfilePage />} />
-                <Route path={`${ROUTES.MAIN.BOOK.ROOT}/:context/:bookId`} element={<BookPage />} />
                 <Route path={ROUTES.MAIN.BOOK.CREATE} element={<BookCreatePage />} />
-                <Route path={`${ROUTES.MAIN.BOOK.EDIT}/:bookId`} element={<BookEditPage />} />
-                <Route path={`${ROUTES.MAIN.BOOK.READ}/:bookId`} element={<BookReadPage />} />
+                <Route
+                  path={`${ROUTES.MAIN.BOOK.ROOT}/:context/:bookId`}
+                  element={<BookProviderPage />}
+                >
+                  <Route index element={<BookPage />} />
+                  <Route path={ROUTES.MAIN.BOOK.EDIT} element={<BookEditPage />} />
+                  <Route path={ROUTES.MAIN.BOOK.READ} element={<BookReadPage />} />
+                </Route>
+
                 <Route path={ROUTES.MAIN.SEARCH} element={<SearchPage />} />
               </Route>
               <Route
@@ -56,6 +63,7 @@ createRoot(document.getElementById('root')).render(
                 <Route index element={<Navigate to={ROUTES.SETTINGS.PROFILE} replace />} />
                 <Route path={ROUTES.SETTINGS.PROFILE} element={<SettingsProfilePage />} />
                 <Route path={ROUTES.SETTINGS.PHOTO} element={<SettingsPhotoPage />} />
+
                 {/* <Route path={ROUTES.SETTINGS.SECURITY} element={<SettingsSequrityPage />} /> */}
               </Route>
             </Routes>

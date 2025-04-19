@@ -1,5 +1,6 @@
 import Form from '../../core/Form/Form';
-import useUserService from '@/hooks/useUserService';
+import ROUTES from '../../../constants/routes';
+import useUserService from '../../../hooks/useUsersService';
 
 const AuthSignUpForm = () => {
   const { signUp } = useUserService();
@@ -21,7 +22,7 @@ const AuthSignUpForm = () => {
   };
 
   const handleSubmit = async (values) => {
-    await signUp(values);
+    await signUp(values, { navigateTo: ROUTES.MAIN.ROOT, navigateOptions: { replace: true } });
   };
 
   return (

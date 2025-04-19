@@ -1,10 +1,10 @@
 import { BookmarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
-import useBookService from '../../../hooks/useBookService';
+import useBooksService from '../../../hooks/useBooksService';
 import Skeleton from '../../core/Skeleton/Skeleton';
 import ChangeableStats from '../../core/Stats/Changeable/Changeable';
 
 const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
-  const { edit } = useBookService();
+  const { edit } = useBooksService();
 
   const itemClasses = 'size-7 transition-all ';
   const iconClasses = 'text-pr-text hover:text-pr-text-darker hover:cursor-pointer hover:scale-105';
@@ -17,7 +17,7 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
         className: itemClasses,
         initialIsActive: stats?.isRead,
         onClick: async ({ isActive: isRead }) => {
-          await edit(bookId, { isRead: isRead });
+          await edit({ id: bookId, inputData: { isRead } });
         },
         children: (isActive) => (
           <CheckCircleIcon className={`${isActive ? 'text-pr-main' : iconClasses}`} />
@@ -28,7 +28,7 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
         className: itemClasses,
         initialIsActive: stats?.isFavorite,
         onClick: async ({ isActive: isFavorite }) => {
-          await edit(bookId, { isFavorite });
+          await edit({ id: bookId, inputData: { isFavorite } });
         },
         children: (isActive) => (
           <BookmarkIcon className={`${isActive ? activeIconClasses : iconClasses}`} />

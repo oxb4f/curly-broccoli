@@ -1,15 +1,10 @@
 import ProfileCard from '../../../components/core/Profile/Card/Card';
 import BookCatalog from '../../../components/core/Book/Catalog/Catalog';
-import useBookService from '../../../hooks/useBookService';
+import { getPrivateBooks } from '../../../services/api/book';
 import InfiniteQuery from '../../../components/core/InfiniteQuery/InfiniteQuery';
 import QUERY_KEYS from '../../../constants/queryKeys';
 
 const ProfilePage = () => {
-  const { getAll } = useBookService();
-  // const { data, isPending, error, refetch } = useQuery({
-  //   queryKey: ['books', 'private'],
-  //   queryFn: () => getAll(false)
-  // });
   const transformData = (data) => data.books;
 
   return (
@@ -19,7 +14,7 @@ const ProfilePage = () => {
       </header>
       <section>
         <InfiniteQuery
-          callback={(offset) => getAll(false, { offset })}
+          callback={(offset) => getPrivateBooks({ offset })}
           keys={QUERY_KEYS.BOOKS.PRIVATE}
           dataTransformer={transformData}
         >

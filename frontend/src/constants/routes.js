@@ -9,20 +9,20 @@ const ROUTES = {
   },
   MAIN: {
     ROOT: `/${MAIN_ROOT}`,
-    PROFILE: `${MAIN_ROOT}/profile`,
+    PROFILE: `profile`,
     BOOK: {
       ROOT: `/${BOOK_ROOT}`,
       PRIVATE: `/${BOOK_ROOT}/private`,
       PUBLIC: `/${BOOK_ROOT}/public`,
       CREATE: `/${BOOK_ROOT}/create`,
-      EDIT: `/${BOOK_ROOT}/edit`,
-      READ: `/${BOOK_ROOT}/read`
+      EDIT: `edit`,
+      READ: `read`
     },
-    SEARCH: `${MAIN_ROOT}/search`
+    SEARCH: `search`
   },
   SETTINGS: {
     ROOT: `/${SETTINGS_ROOT}`,
-    PROFILE: `/${SETTINGS_ROOT}/profile`,
+    PROFILE: `profile`,
     PHOTO: `/${SETTINGS_ROOT}/photo`,
     SECURITY: `/${SETTINGS_ROOT}/security`
   }

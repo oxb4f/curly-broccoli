@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import Spinner from '../Spinner/Spinner';
 import useIntersectionObserver from '../../../hooks/useIntersectionObserver';
 
-const InfiniteQuery = ({ callback, keys, dataTransformer, children, step = 20 }) => {
+const InfiniteQuery = ({ callback, keys, dataTransformer, children, step = 15 }) => {
   let { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
     queryKey: keys,
     queryFn: ({ pageParam }) => callback(pageParam),

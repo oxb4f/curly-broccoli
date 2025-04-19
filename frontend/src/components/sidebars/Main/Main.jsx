@@ -12,9 +12,9 @@ import {
   ArrowLeftStartOnRectangleIcon
 } from '@heroicons/react/24/outline';
 import ROUTES from '../../../constants/routes';
-import useUserService from '../../../hooks/useUserService';
 import { useSession } from '@/components/core/SessionProvider/SessionProvider';
 import { useMemo } from 'react';
+import useUserService from '../../../hooks/useUsersService';
 
 const MainSidebar = ({ className = '' }) => {
   const { user, isPending } = useSession();

@@ -1,22 +1,15 @@
 import BookInfo from '../../../components/core/Book/Info/Info';
 import BookPhoto from '../../../components/core/Book/Photo/Photo';
 import BookStats from '../../../components/stats/Book/Book';
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import useBookService from '../../../hooks/useBookService';
+import useBooksService from '../../../hooks/useBooksService';
 import Navigation from '../../../components/core/Navigation/Navigation';
 import ROUTES from '../../../constants/routes';
 import BookRating from '../../../components/core/Book/Rating/Rating';
-import QUERY_KEYS from '../../../constants/queryKeys';
+import { useBook } from './Provider/Provider';
 
 const BookPage = () => {
-  const { context, bookId } = useParams();
-  const isPublic = context === 'public';
-  const { get, remove, add } = useBookService();
-  const { data: book, isPending } = useQuery({
-    queryKey: [...(isPublic ? QUERY_KEYS.BOOKS.PUBLIC : QUERY_KEYS.BOOKS.PRIVATE), bookId],
-    queryFn: () => get(bookId, isPublic)
-  });
+  const { book, isPending, isPublic } = useBook();
+  const { remove, add } = useBooksService();
 
   console.dir(book);
   console.log(book?.stats?.rating);
@@ -26,21 +19,21 @@ const BookPage = () => {
       {
         name: 'Start reading',
         linkProps: {
-          to: `${ROUTES.MAIN.BOOK.READ}/${bookId}`,
+          to: ROUTES.MAIN.BOOK.READ,
           children: 'Start reading'
         }
       },
       {
         name: 'Edit',
         linkProps: {
-          to: `${ROUTES.MAIN.BOOK.EDIT}/${bookId}`,
+          to: ROUTES.MAIN.BOOK.EDIT,
           children: 'Edit book'
         }
       },
       {
         name: 'Remove',
         linkProps: {
-          onClick: () => remove(bookId),
+          onClick: () => remove(book.id, { navigateTo: ROUTES.MAIN.PROFILE }),
           children: 'Remove',
           className:
             'text-pr-important block size-full px-4 py-2 rounded-xs bg-pr-bg-secondary text-center transition-all hover:bg-pr-bg-tertiary'
@@ -51,7 +44,7 @@ const BookPage = () => {
       {
         name: 'Add book',
         linkProps: {
-          onClick: () => add(bookId),
+          onClick: () => add(book.id),
           children: 'Add book'
         }
       }
@@ -59,7 +52,7 @@ const BookPage = () => {
   };
 
   const navigation = {
-    items: navigationItems[context],
+    items: navigationItems[isPublic ? 'public' : 'private'],
     props: {
       className: 'flex gap-1 rounded-lg text-base overflow-hidden'
     },
@@ -85,11 +78,11 @@ const BookPage = () => {
         {!isPublic && (
           <div className={'flex justify-between'}>
             <BookStats
-              bookId={bookId}
+              bookId={book?.id}
               stats={book?.stats}
               className="flex flex-row-reverse gap-3"
             />
-            <BookRating id={bookId} initialRating={book?.stats?.rating} isLoading={isPending} />
+            <BookRating id={book?.id} initialRating={book?.stats?.rating} isLoading={isPending} />
           </div>
         )}
 

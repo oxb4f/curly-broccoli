@@ -13,7 +13,7 @@ const getPublicBooks = async (params = {}) => {
     params: {
       orderDirection: 'desc',
       orderField: 'createdAt',
-      limit: 20,
+      limit: 15,
       offset: 0,
       ...params
     }
@@ -35,7 +35,7 @@ const getPrivateBooks = async (params = {}) => {
     params: {
       orderDirection: 'desc',
       orderField: 'updatedAt',
-      limit: 20,
+      limit: 15,
       offset: 0,
       ...params
     }

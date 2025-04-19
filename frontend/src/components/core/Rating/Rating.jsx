@@ -19,10 +19,6 @@ const Rating = ({
     onChange?.(value);
   };
 
-  useEffect(() => {
-    setRating(initialRating);
-  }, [initialRating]);
-
   return (
     <fieldset className={className}>
       {legendText && <legend>{legendText}</legend>}
