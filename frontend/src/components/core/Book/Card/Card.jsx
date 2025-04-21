@@ -15,7 +15,7 @@ const BookCard = ({ data, isPublic, isTile = true, className = '' }) => {
       } rounded-md bg-pr-bg-secondary overflow-hidden ${className}`}
     >
       <NavigationLink
-        to={`${isPublic ? ROUTES.MAIN.BOOK.PUBLIC : ROUTES.MAIN.BOOK.PRIVATE}/${data.id}`}
+        to={`${isPublic ? ROUTES.MAIN.BOOK.PUBLIC.ROOT : ROUTES.MAIN.BOOK.PRIVATE.ROOT}/${data.id}`}
         className="overflow-hidden "
       >
         {data.stats.rating && (

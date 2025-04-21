@@ -19,14 +19,14 @@ const BookPage = () => {
       {
         name: 'Start reading',
         linkProps: {
-          to: ROUTES.MAIN.BOOK.READ,
+          to: ROUTES.MAIN.BOOK.PRIVATE.READ,
           children: 'Start reading'
         }
       },
       {
         name: 'Edit',
         linkProps: {
-          to: ROUTES.MAIN.BOOK.EDIT,
+          to: ROUTES.MAIN.BOOK.PRIVATE.EDIT,
           children: 'Edit book'
         }
       },

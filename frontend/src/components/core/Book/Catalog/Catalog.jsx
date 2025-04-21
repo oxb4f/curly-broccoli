@@ -16,8 +16,8 @@ const BookCatalog = ({ items = [], isPublic = true }) => {
   return (
     <div className="flex flex-col gap-4">
       <BookCatalogControls
-        isPublic={isPublic}
         editMode={editMode}
+        isPublic={isPublic}
         isAllSelected={isAllSelected}
         onEditToggle={toggleEditMode}
         onSelectAll={handleSelectAll}

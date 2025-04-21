@@ -19,6 +19,7 @@ import BookEditPage from './pages/Main/Book/Edit/Edit.jsx';
 import BookReadPage from './pages/Main/Book/Read/Read.jsx';
 import SearchPage from './pages/Main/Search/Search.jsx';
 import { BookProviderPage } from './pages/Main/Book/Provider/Provider.jsx';
+import QUERY_KEYS from './constants/queryKeys.js';
 
 const queryClient = new QueryClient();
 
@@ -42,14 +43,19 @@ createRoot(document.getElementById('root')).render(
                 <Route path={ROUTES.MAIN.PROFILE} element={<ProfilePage />} />
                 <Route path={ROUTES.MAIN.BOOK.CREATE} element={<BookCreatePage />} />
                 <Route
-                  path={`${ROUTES.MAIN.BOOK.ROOT}/:context/:bookId`}
-                  element={<BookProviderPage />}
+                  path={`${ROUTES.MAIN.BOOK.PRIVATE.ROOT}/:bookId`}
+                  element={<BookProviderPage queryKey={QUERY_KEYS.BOOKS.PRIVATE} />}
                 >
                   <Route index element={<BookPage />} />
-                  <Route path={ROUTES.MAIN.BOOK.EDIT} element={<BookEditPage />} />
-                  <Route path={ROUTES.MAIN.BOOK.READ} element={<BookReadPage />} />
+                  <Route path={ROUTES.MAIN.BOOK.PRIVATE.EDIT} element={<BookEditPage />} />
+                  <Route path={ROUTES.MAIN.BOOK.PRIVATE.READ} element={<BookReadPage />} />
                 </Route>
-
+                <Route
+                  path={`${ROUTES.MAIN.BOOK.PUBLIC.ROOT}/:bookId`}
+                  element={<BookProviderPage queryKey={QUERY_KEYS.BOOKS.PUBLIC} />}
+                >
+                  <Route index element={<BookPage />} />
+                </Route>
                 <Route path={ROUTES.MAIN.SEARCH} element={<SearchPage />} />
               </Route>
               <Route

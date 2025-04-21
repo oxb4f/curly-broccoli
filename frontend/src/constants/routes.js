@@ -12,11 +12,13 @@ const ROUTES = {
     PROFILE: `profile`,
     BOOK: {
       ROOT: `/${BOOK_ROOT}`,
-      PRIVATE: `/${BOOK_ROOT}/private`,
-      PUBLIC: `/${BOOK_ROOT}/public`,
-      CREATE: `/${BOOK_ROOT}/create`,
-      EDIT: `edit`,
-      READ: `read`
+      PRIVATE: {
+        ROOT: `/${BOOK_ROOT}/private`,
+        EDIT: `edit`,
+        READ: `read`
+      },
+      PUBLIC: { ROOT: `/${BOOK_ROOT}/public` },
+      CREATE: `/${BOOK_ROOT}/create`
     },
     SEARCH: `search`
   },

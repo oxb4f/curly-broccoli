@@ -38,11 +38,11 @@ const useBooksService = () => {
     },
     onSuccess: (bookData) => {
       console.log(bookData);
-      queryClient.invalidateQueries([...QUERY_KEYS.BOOKS.PRIVATE, bookData.id]);
-      // queryClient.setQueryData(QUERY_KEYS.BOOKS.PRIVATE, (oldBookData) => ({
-      //   ...oldBookData,
-      //   ...bookData
-      // }));
+      // queryClient.invalidateQueries([...QUERY_KEYS.BOOKS.PRIVATE, bookData.id]);
+      queryClient.setQueryData(QUERY_KEYS.BOOKS.PRIVATE, (oldBookData) => ({
+        ...oldBookData,
+        ...bookData
+      }));
     }
   });
 

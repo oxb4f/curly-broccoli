@@ -6,18 +6,17 @@ import { Outlet, useParams } from 'react-router';
 
 const BookContext = createContext(null);
 
-export const BookProviderPage = () => {
-  const { context, bookId: id } = useParams();
+export const BookProviderPage = ({ queryKey }) => {
+  const { bookId: id } = useParams();
 
-  const isPublic = context === 'public';
-  const queryKey = [...(isPublic ? QUERY_KEYS.BOOKS.PUBLIC : QUERY_KEYS.BOOKS.PRIVATE), id];
+  const isPublic = queryKey === QUERY_KEYS.BOOKS.PUBLIC;
 
   const {
     data: book,
     isPending,
     error
   } = useQuery({
-    queryKey,
+    queryKey: [...queryKey, id],
     queryFn: () => (isPublic ? getPublicBook(id) : getPrivateBook(id)),
     enabled: Boolean(id)
   });
