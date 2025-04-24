@@ -1,4 +1,4 @@
-import { User } from "../../../entities/user";
+import assert from "node:assert";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
 import {
@@ -9,9 +9,17 @@ import {
 } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
+	const selfUserDto = await context.usersRepository.get({
+		accessId: dto.accessId,
+	});
+
+	assert(selfUserDto, "User not found");
+
 	const getUserDto = await context.usersRepository.get({
 		id: dto.userId,
-		accessId: dto.accessId,
+		...(selfUserDto.id !== dto.userId && {
+			followedByUserId: selfUserDto.id,
+		}),
 	});
 
 	if (!getUserDto) {
@@ -21,15 +29,14 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		});
 	}
 
-	const user = await User.from(getUserDto);
-
 	return GetUserDtoOut.create({
-		id: user.getId(),
-		username: user.getUsername(),
-		firstName: user.getFirstName(),
-		lastName: user.getLastName(),
-		birthday: user.getBirthday(),
-		social: user.getSocial(),
-		imageUrl: user.getImageUrl(),
+		id: getUserDto.id,
+		username: getUserDto.username,
+		firstName: getUserDto.firstName,
+		lastName: getUserDto.lastName,
+		birthday: getUserDto.birthday,
+		social: getUserDto.social,
+		imageUrl: getUserDto.imageUrl,
+		followed: getUserDto.followed ?? null,
 	});
 }, GetUserDtoIn);

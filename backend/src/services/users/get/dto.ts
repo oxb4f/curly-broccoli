@@ -26,5 +26,6 @@ export const GetUserDtoOut = createOutputDto(
 		birthday: date.nullable(),
 		social: social.nullable(),
 		imageUrl: url.nullable(),
+		followed: z.boolean().nullable(),
 	}),
 );

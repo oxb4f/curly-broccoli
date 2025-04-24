@@ -23,6 +23,7 @@ export type GetUserFilter = {
 	username?: string;
 	id?: Id;
 	accessId?: Id;
+	followedByUserId?: Id;
 };
 
 export interface GetUserDto {
@@ -34,6 +35,7 @@ export interface GetUserDto {
 	social: Social;
 	imageUrl?: ImageUrl;
 	access: Access;
+	followed?: boolean;
 }
 
 export type UserUpdateData = {

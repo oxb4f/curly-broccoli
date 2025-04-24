@@ -10,7 +10,7 @@ import type {
 	UserUpdateData,
 	UsersRepository,
 } from "../../../../services/users/repository";
-import { accesses, userBooks, users } from "../schema";
+import { accesses, users } from "../schema";
 import { BaseRepository } from "./base";
 
 export type SelectUser = typeof users.$inferSelect;
@@ -171,7 +171,18 @@ export class PgUsersRepository
 			: eq(accesses.userId, users.id);
 
 		const result = await this._connection
-			.select()
+			.select({
+				users: users,
+				...(Number.isInteger(filter.followedByUserId) && {
+					followed: sql<boolean>`EXISTS (
+						SELECT 1
+						FROM followers
+						WHERE followers.user_id = users.id
+						AND followers.follower_id = ${filter.followedByUserId}
+					)`,
+				}),
+				accesses: accesses,
+			})
 			.from(users)
 			.innerJoin(accesses, innerJoinAccessOn)
 			.where(this.#buildWhereToGetUser(filter))
@@ -187,6 +198,7 @@ export class PgUsersRepository
 			social: record.users.social as Social,
 			birthday: record.users.birthday ? new Date(record.users.birthday) : null,
 			access: await Access.fromHashed(record.accesses as AccessHashedPayload),
+			followed: record.followed,
 		};
 	}
 
@@ -194,7 +206,7 @@ export class PgUsersRepository
 		const eqArray = [];
 
 		for (const k of Object.keys(filter) as Array<keyof typeof filter>) {
-			if (k === "accessId" || filter[k] === undefined) continue;
+			if (k === "accessId" || filter[k] === undefined || k === "followedByUserId") continue;
 
 			eqArray.push(eq(users[k], filter[k]));
 		}
