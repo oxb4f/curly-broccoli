@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { Base } from "./base";
+import { Base, type CreatedAt, type UpdatedAt } from "./base";
 import type { MaybeNumberId } from "./types/id";
 
 export type ImagePath = string;
@@ -7,6 +7,8 @@ export type ImagePath = string;
 interface ImageData {
 	id: MaybeNumberId;
 	path: ImagePath;
+	createdAt?: CreatedAt;
+	updatedAt?: UpdatedAt;
 }
 
 interface ImageBucketData {
@@ -18,7 +20,7 @@ export class Image extends Base {
 	private _path: ImagePath;
 
 	private constructor(payload: ImageData) {
-		super(payload.id);
+		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
 		this._path = payload.path;
 	}
 
