@@ -20,7 +20,11 @@ export class Image extends Base {
 	private _path: ImagePath;
 
 	private constructor(payload: ImageData) {
-		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 		this._path = payload.path;
 	}
 

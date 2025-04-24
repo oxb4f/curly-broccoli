@@ -44,7 +44,11 @@ export class UserBook extends Base {
 	private _user?: User;
 
 	private constructor(payload: UserBookData) {
-		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 
 		this._isFavorite = payload.isFavorite ?? false;
 		this._isRead = payload.isRead ?? false;

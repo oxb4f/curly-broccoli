@@ -1,6 +1,10 @@
-import type { ReadingRecord, State } from "../../entities/readingRecord";
-import type { FinishedAt, LastResumeAt, ReadingTracker } from "../../entities/readingTracker";
 import type { CreatedAt, UpdatedAt } from "../../entities/base";
+import type { ReadingRecord, State } from "../../entities/readingRecord";
+import type {
+	FinishedAt,
+	LastResumeAt,
+	ReadingTracker,
+} from "../../entities/readingTracker";
 import type { Id } from "../../entities/types/id";
 import type { BaseRepository, OrderDirection } from "../base-repository";
 import type { RepositoryTypes } from "../base-repository";

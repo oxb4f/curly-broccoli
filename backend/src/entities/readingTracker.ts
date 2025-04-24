@@ -32,13 +32,17 @@ export class ReadingTracker extends Base {
 	private _readingRecords: ReadingRecord[];
 
 	private constructor(payload: ReadingTrackerData) {
-		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 
 		this._userBookId = payload.userBookId;
 		this._finishedAt = payload.finishedAt ?? null;
 		this._state = payload.state ?? "reading";
 		this._readingRecords = payload.readingRecords ?? [];
-        this._lastResumeAt = payload.lastResumeAt ?? null;
+		this._lastResumeAt = payload.lastResumeAt ?? null;
 	}
 
 	static async from(payload: ReadingTrackerData): Promise<ReadingTracker> {
@@ -93,14 +97,14 @@ export class ReadingTracker extends Base {
 			);
 		}
 
-        const oldState = this._state;
+		const oldState = this._state;
 
 		this._state = STATE.FINISHED;
 		this._finishedAt = new Date();
 
 		if (oldState !== STATE.PAUSED) {
-            await this._addReadingRecord();
-        }
+			await this._addReadingRecord();
+		}
 
 		this._updatedAt = new Date();
 	}
@@ -108,12 +112,14 @@ export class ReadingTracker extends Base {
 	private async _addReadingRecord() {
 		if (!this._finishedAt) return;
 
-        const duration = this._finishedAt.getTime() - (this._lastResumeAt?.getTime() ?? this._createdAt.getTime());
+		const duration =
+			this._finishedAt.getTime() -
+			(this._lastResumeAt?.getTime() ?? this._createdAt.getTime());
 
-        const readingRecord = await ReadingRecord.from({
-            readingTrackerId: this._id,
-            duration,
-        });
+		const readingRecord = await ReadingRecord.from({
+			readingTrackerId: this._id,
+			duration,
+		});
 
 		this._readingRecords.push(readingRecord);
 	}
@@ -127,7 +133,9 @@ export class ReadingTracker extends Base {
 	}
 
 	static sortReadingRecords(readingRecords: ReadingRecord[]): ReadingRecord[] {
-		return readingRecords.sort((a, b) => b.getCreatedAt().getTime() - a.getCreatedAt().getTime());
+		return readingRecords.sort(
+			(a, b) => b.getCreatedAt().getTime() - a.getCreatedAt().getTime(),
+		);
 	}
 
 	toPlainObject(): ReadingTrackerData & {

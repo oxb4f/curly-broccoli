@@ -2,6 +2,7 @@ import type { Config } from "../infra/config";
 import type { AccessesRepository } from "./accesses/repository";
 import type { BooksRepository } from "./books/repository";
 import type { UserBooksRepository } from "./books/repository";
+import type { FollowersRepository } from "./followers/repository";
 import type { ImagesRepository } from "./images/repository";
 import type { ReadingTrackersRepository } from "./readingTracker/repository";
 import type { UsersRepository } from "./users/repository";
@@ -33,4 +34,5 @@ export interface Context {
 	booksRepository: BooksRepository;
 	userBooksRepository: UserBooksRepository;
 	readingTrackersRepository: ReadingTrackersRepository;
+	followersRepository: FollowersRepository;
 }

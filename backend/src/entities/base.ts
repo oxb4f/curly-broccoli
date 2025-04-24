@@ -10,7 +10,11 @@ export abstract class Base {
 
 	abstract toPlainObject(): Record<string, any>;
 
-	protected constructor({id, createdAt, updatedAt}: {id: MaybeNumberId, createdAt: CreatedAt, updatedAt: UpdatedAt}) {
+	protected constructor({
+		id,
+		createdAt,
+		updatedAt,
+	}: { id: MaybeNumberId; createdAt: CreatedAt; updatedAt: UpdatedAt }) {
 		this._id = id ?? Base._generateUniqueId();
 		this._createdAt = createdAt ?? new Date();
 		this._updatedAt = updatedAt ?? new Date();

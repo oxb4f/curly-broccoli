@@ -1,4 +1,4 @@
-import { Base, type UpdatedAt, type CreatedAt } from "./base";
+import { Base, type CreatedAt, type UpdatedAt } from "./base";
 import { BookProfile, type BookProfileData } from "./bookProfile";
 import type { MaybeNumberId } from "./types/id";
 
@@ -21,7 +21,11 @@ export class Book extends Base {
 	private _profile: BookProfile;
 
 	private constructor(payload: BookData) {
-		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 
 		this._isPublic = payload.isPublic;
 		this._profile = payload.profile;

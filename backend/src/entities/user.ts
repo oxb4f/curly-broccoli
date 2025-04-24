@@ -51,7 +51,11 @@ export class User extends Base {
 	private _imageUrl: ImageUrl;
 
 	private constructor(payload: UserProfileData) {
-		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 
 		this._username = payload.username;
 		this._firstName = payload.firstName ?? null;

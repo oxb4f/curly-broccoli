@@ -39,7 +39,9 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 			state: readingTracker.state,
 			finishedAt: readingTracker.finishedAt,
 			createdAt: readingTracker.createdAt,
-			readingRecords: ReadingTracker.sortReadingRecords(readingTracker.readingRecords).map((readingRecord) => ({
+			readingRecords: ReadingTracker.sortReadingRecords(
+				readingTracker.readingRecords,
+			).map((readingRecord) => ({
 				id: readingRecord.getId(),
 				createdAt: readingRecord.getCreatedAt(),
 				duration: readingRecord.getDuration(),

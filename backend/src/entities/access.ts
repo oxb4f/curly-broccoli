@@ -63,7 +63,11 @@ export class Access extends Base {
 	private _refreshTokens: Map<string, string>;
 
 	private constructor(payload: AccessData) {
-		super({ id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt });
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 
 		this._login = payload.login;
 		this._password = payload.password;

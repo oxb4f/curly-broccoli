@@ -34,7 +34,11 @@ export class BookProfile extends Base {
 	private _isbn: Isbn;
 
 	private constructor(payload: BookProfileData) {
-		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 
 		this._title = payload.title;
 		this._description = payload.description;
