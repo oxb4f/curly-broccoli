@@ -14,7 +14,7 @@ import type {
 	User,
 	Username,
 } from "../../entities/user";
-import type { BaseRepository } from "../base-repository";
+import type { BaseRepository, OrderDirection } from "../base-repository";
 import type { RepositoryTypes } from "../base-repository";
 
 export type ExistsArgs = { username: string; notId?: Id };
@@ -51,13 +51,36 @@ export type UserUpdateData = {
 	};
 };
 
+export type ListUserFilter = {
+	followedByUserId?: Id;
+	notId?: Id;
+	limit?: number;
+	offset?: number;
+	orderDirection?: OrderDirection;
+	orderField?: string;
+};
+
+export type ListUserDto = {
+	data: {
+		id: Id;
+		username: Username;
+		firstName: FirstName;
+		lastName: LastName;
+		birthday: Birthday;
+		social: Social;
+		imageUrl: ImageUrl;
+		followed: boolean;
+	}[];
+	total: number;
+};
+
 export interface UsersRepository
 	extends BaseRepository<
 		RepositoryTypes<
 			User,
-			never,
+			ListUserDto,
 			GetUserDto | null,
-			never,
+			ListUserFilter,
 			GetUserFilter,
 			UserUpdateData
 		>
@@ -66,4 +89,5 @@ export interface UsersRepository
 	update(filter: GetUserFilter, user: UserUpdateData): Promise<void>;
 	get(filter: GetUserFilter): Promise<GetUserDto | null>;
 	exists(args: ExistsArgs): Promise<boolean>;
+	list(filter: ListUserFilter): Promise<ListUserDto>;
 }

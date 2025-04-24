@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import Elysia, { t } from "elysia";
 import createUserService from "../../services/users/create/action";
 import getUserService from "../../services/users/get/action";
+import listUserService from "../../services/users/list/action";
 import loginUserService from "../../services/users/login/action";
 import updateUserService from "../../services/users/update/action";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
@@ -14,6 +15,7 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 	.decorate("loginUserService", loginUserService)
 	.decorate("updateUserService", updateUserService)
 	.decorate("getUserService", getUserService)
+	.decorate("listUserService", listUserService)
 	.group("/users", (app) =>
 		app.guard((app) =>
 			app
@@ -91,6 +93,57 @@ export const usersRoute = new Elysia({ name: "usersRoute" })
 							userId: t.Numeric({
 								description: "User id",
 							}),
+						}),
+					},
+				)
+				.get(
+					"/",
+					async ({ query, context, listUserService, store }) => {
+						assert(store.jwtAuthGuardPayload.payload?.accessId);
+
+						const result = await listUserService({
+							dto: {
+								accessId: store.jwtAuthGuardPayload.payload.accessId,
+								notId: query.notId,
+								limit: query.limit,
+								offset: query.offset,
+								orderDirection: query.orderDirection,
+								orderField: query.orderField as any,
+							},
+							context,
+						});
+
+						return result;
+					},
+					{
+						tags: ["Users"],
+						query: t.Object({
+							notId: t.Optional(
+								t.Number({
+									description: "Not id",
+								}),
+							),
+							limit: t.Optional(
+								t.Number({
+									description: "Limit",
+								}),
+							),
+							offset: t.Optional(
+								t.Number({
+									description: "Offset",
+								}),
+							),
+							orderDirection: t.Optional(
+								t.Enum({
+									asc: "asc",
+									desc: "desc",
+								}),
+							),
+							orderField: t.Optional(
+								t.String({
+									description: "Order field",
+								}),
+							),
 						}),
 					},
 				)
