@@ -6,7 +6,7 @@ const PlayButton = ({ action, onClick, className = '' }) => {
 						 before:block before:size-full before:bg-pr-main hover:before:bg-pr-main-soft active:before:bg-pr-main-mute before:scale-50 before:origin-right before:transition-all 
 						 after:block after:size-full after:bg-pr-main hover:after:bg-pr-main-soft active:after:bg-pr-main-mute after:scale-50 after:origin-left after:transition-all
 						  ${
-                action === 'start'
+                action === 'start' || action === 'resume'
                   ? `before:clip-play-first before:origin-right 
 									after:clip-play-second after:origin-left`
                   : action === 'pause'

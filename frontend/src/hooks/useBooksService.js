@@ -37,12 +37,19 @@ const useBooksService = () => {
       return response;
     },
     onSuccess: (bookData) => {
-      console.log(bookData);
-      // queryClient.invalidateQueries([...QUERY_KEYS.BOOKS.PRIVATE, bookData.id]);
-      queryClient.setQueryData(QUERY_KEYS.BOOKS.PRIVATE, (oldBookData) => ({
-        ...oldBookData,
-        ...bookData
-      }));
+      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE, bookData.id], () => bookData);
+
+      queryClient.setQueryData(QUERY_KEYS.BOOKS.PRIVATE, (oldBookData) => {
+        if (!oldBookData?.pages) return;
+
+        return {
+          ...oldBookData,
+          pages: oldBookData.pages.map((page) => ({
+            ...page,
+            books: page.books.map((book) => (book.id === bookData.id ? bookData : book))
+          }))
+        };
+      });
     }
   });
 

@@ -1,27 +1,8 @@
-import { useState, useEffect } from 'react';
-
-const ChangeableStatsItem = ({
-  name,
-  initialCount,
-  initialIsActive,
-  onClick,
-  className = '',
-  children
-}) => {
-  const [count, setCount] = useState(initialCount);
-  const [isActive, setIsActive] = useState(initialIsActive);
-
+const ChangeableStatsItem = ({ name, count, isActive, onClick, className = '', children }) => {
   const handleChange = async () => {
     const newCount = isActive ? count - 1 : count + 1;
     await onClick({ count: newCount, isActive: !isActive });
-    setCount(newCount);
-    setIsActive(!isActive);
   };
-
-  useEffect(() => {
-    setCount(initialCount);
-    setIsActive(initialIsActive);
-  }, [initialCount, initialIsActive]);
 
   return (
     <label
@@ -30,9 +11,7 @@ const ChangeableStatsItem = ({
 				focus-within:outline-1 focus-within:outline-pr-text 
 				${className}`}
     >
-      {Number.isFinite(initialCount) && (
-        <p className="font-bold text-center break-words">{count}</p>
-      )}
+      {Number.isFinite(count) && <p className="font-bold text-center break-words">{count}</p>}
       <input
         type="checkbox"
         name="stats"

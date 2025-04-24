@@ -1,4 +1,5 @@
 import calculateAge from './calculateAge';
+import formatDate from './formatDate';
 
 const prepareRequest = (data, apiEndpoint, apiAction) => {
   switch (apiEndpoint) {
@@ -120,6 +121,56 @@ const processResponse = (data, apiEndpoint) => {
     case 'images': {
       return {
         imageUrl: data.url
+      };
+    }
+    case 'reading-trackers': {
+      if (data.trackers) {
+        const dateSet = new Set();
+        const formattedTrackers = [];
+
+        for (const tracker of data.trackers) {
+          const datetime = new Date(tracker.finishedAt);
+          const date = `${datetime.getDate()}${datetime.getMonth()}${datetime.getFullYear()}`;
+          const defaultFormat = processResponse(tracker, 'reading-trackers');
+
+          if (dateSet.has(date)) {
+            formattedTrackers.push({
+              ...defaultFormat,
+              finishedDatetime: formatDate(datetime, { timeStyle: 'short' })
+            });
+          } else {
+            dateSet.add(date);
+            formattedTrackers.push({
+              ...defaultFormat,
+              finishedDatetime: formatDate(datetime, {
+                dateStyle: 'relative',
+                timeStyle: 'short'
+              })
+            });
+          }
+        }
+
+        return {
+          ...data,
+          trackers: formattedTrackers
+        };
+      }
+
+      return {
+        ...data,
+        state: {
+          isReading: data.state === 'reading',
+          isPaused: data.state === 'paused',
+          isFinished: data.state === 'finished',
+          isStarted: data.state === 'reading' || data.state === 'paused'
+        },
+        readingRecords: data.readingRecords.map((record) => ({
+          ...record,
+          totalMinutesDuration: formatDate(new Date(record.duration), {
+            minute: 'total'
+          })
+        })),
+        totalDuration: data.readingRecords.reduce((result, record) => result + record.duration, 0)
       };
     }
   }

@@ -10,13 +10,14 @@ export const BookProviderPage = ({ queryKey }) => {
   const { bookId: id } = useParams();
 
   const isPublic = queryKey === QUERY_KEYS.BOOKS.PUBLIC;
+  console.log([...queryKey, Number(id)]);
 
   const {
     data: book,
     isPending,
     error
   } = useQuery({
-    queryKey: [...queryKey, id],
+    queryKey: [...queryKey, Number(id)],
     queryFn: () => (isPublic ? getPublicBook(id) : getPrivateBook(id)),
     enabled: Boolean(id)
   });

@@ -61,7 +61,7 @@ const editBook = async (id, inputData) => {
   console.log(response);
   console.log(id);
 
-  return response;
+  return processResponse(response, 'books');
 
   // return { jwt: response.jwt, id: response.id, accessId: response.accessId };
 };

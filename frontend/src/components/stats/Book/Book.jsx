@@ -15,7 +15,7 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
       {
         name: 'read',
         className: itemClasses,
-        initialIsActive: stats?.isRead,
+        isActive: stats?.isRead,
         onClick: async ({ isActive: isRead }) => {
           await edit({ id: bookId, inputData: { isRead } });
         },
@@ -26,7 +26,7 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
       {
         name: 'favorite',
         className: itemClasses,
-        initialIsActive: stats?.isFavorite,
+        isActive: stats?.isFavorite,
         onClick: async ({ isActive: isFavorite }) => {
           await edit({ id: bookId, inputData: { isFavorite } });
         },

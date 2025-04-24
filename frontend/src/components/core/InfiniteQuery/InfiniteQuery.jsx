@@ -2,20 +2,29 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import Spinner from '../Spinner/Spinner';
 import useIntersectionObserver from '../../../hooks/useIntersectionObserver';
 
-const InfiniteQuery = ({ callback, keys, dataTransformer, children, step = 15 }) => {
+const InfiniteQuery = ({
+  callback,
+  keys,
+  dataTransformer,
+  children,
+  offset = 15,
+  initialOffset = 0,
+  options = {}
+}) => {
   let { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
     queryKey: keys,
     queryFn: ({ pageParam }) => callback(pageParam),
     getNextPageParam: (lastPage, _, lastPageParam) => {
-      const cursor = lastPageParam + Number(step);
+      const cursor = lastPageParam + Number(offset);
 
       if (lastPage.total <= cursor) return;
 
       return cursor;
     },
     select: (data) => data.pages.flatMap(dataTransformer),
-    initialPageParam: 0,
-    gcTime: 0
+    initialPageParam: initialOffset,
+    gcTime: 0,
+    ...options
   });
 
   const lastElementRef = useIntersectionObserver(fetchNextPage, [hasNextPage]);
@@ -23,7 +32,7 @@ const InfiniteQuery = ({ callback, keys, dataTransformer, children, step = 15 })
 
   return (
     <div className={`relative flex-col ${isLoading ? 'size-full' : ''}`}>
-      {typeof children === 'function' ? children(data) : children}
+      {!data ? null : typeof children === 'function' ? children(data) : children}
       <div
         ref={lastElementRef}
         className={`size-full p-4 flex justify-center items-center bg-pr-bg-main ${

@@ -4,6 +4,7 @@ import formatDate from '../../../utils/formatDate';
 const Timer = ({
   isStarted,
   isStopped,
+  initialSeconds,
   initialTime = '00:00:00',
   isIncrement = true,
   formatParameters = { hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' },
@@ -14,7 +15,7 @@ const Timer = ({
     return hours * 3600 + minutes * 60 + seconds;
   };
 
-  const [seconds, setSeconds] = useState(parseTimeToSeconds(initialTime));
+  const [seconds, setSeconds] = useState(initialSeconds || parseTimeToSeconds(initialTime));
 
   useEffect(() => {
     if (!isStarted) return;
