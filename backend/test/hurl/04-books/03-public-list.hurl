@@ -43,6 +43,8 @@ delay: 500
 }
 
 HTTP 200
+[Captures]
+bookId: jsonpath "$.id"
 
 # List books
 GET {{API_BASE}}/books/public
@@ -59,6 +61,9 @@ jsonpath "$.books[*].genre" nth 0 isString
 jsonpath "$.books[*].isbn" nth 0 isString
 jsonpath "$.books[*].numberOfPages" nth 0 isNumber
 jsonpath "$.books[*].imageUrl" nth 0 isString
+jsonpath "$.books[*].isPrivateAdded" nth 0 isBoolean
+jsonpath "$.books[0].isPrivateAdded" == true
+jsonpath "$.books[1].isPrivateAdded" == true
 jsonpath "$.total" >= 2
 
 # List books with limit
@@ -120,3 +125,37 @@ HTTP 200
 [Asserts]
 jsonpath "$.books[0].title" != "0403{{rn}}{{rs}}book2"
 jsonpath "$.books[1].title" != "0403{{rn}}{{rs}}book1"
+
+# Create new user
+POST {{API_BASE}}/users
+Content-Type: application/json
+{
+    "username": "0403{{rn}}{{rs}}user2",
+    "password": "0403{{rn}}{{rs}}pass2"
+}
+
+HTTP 200
+[Captures]
+jwtAccess2: jsonpath "$.jwt.access"
+
+# List books with isAddedByUserId
+GET {{API_BASE}}/books/public
+Authorization: Bearer {{jwtAccess2}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[?(@.id == {{bookId}})].isPrivateAdded" includes false
+
+# Add book to new user
+POST {{API_BASE}}/books/public/add/{{bookId}}
+Authorization: Bearer {{jwtAccess2}}
+
+HTTP 200
+
+# List books with isAddedByUserId
+GET {{API_BASE}}/books/public
+Authorization: Bearer {{jwtAccess2}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[?(@.id == {{bookId}})].isPrivateAdded" includes true

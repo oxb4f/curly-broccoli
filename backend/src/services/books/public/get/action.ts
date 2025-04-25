@@ -1,10 +1,18 @@
+import assert from "node:assert/strict";
 import { ServiceError } from "../../../errors/error";
 import { makeService } from "../../../make-service";
 import { GetDtoIn, GetDtoOut, type InShape, type OutShape } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
+    const getUserDto = await context.usersRepository.get({
+		accessId: dto.accessId,
+	});
+
+	assert(getUserDto, "User not found");
+
 	const book = await context.booksRepository.get({
 		id: dto.bookId,
+		isAddedByUserId: getUserDto.id,
 	});
 
 	if (!book) {
@@ -23,5 +31,6 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		imageUrl: book.profile.imageUrl,
 		numberOfPages: book.profile.numberOfPages,
 		isbn: book.profile.isbn,
+		isPrivateAdded: book.isPrivateAdded,
 	});
 }, GetDtoIn);

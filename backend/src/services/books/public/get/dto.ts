@@ -19,6 +19,7 @@ export type OutShape = DtoShape<typeof GetDtoOut>;
 
 export const GetDtoIn = createInputDto(
 	z.object({
+		accessId: id,
 		bookId: id,
 	}),
 );
@@ -33,5 +34,6 @@ export const GetDtoOut = createOutputDto(
 		imageUrl: url.nullable(),
 		numberOfPages: numberOfPages,
 		isbn: isbn.nullable(),
+		isPrivateAdded: z.boolean(),
 	}),
 );

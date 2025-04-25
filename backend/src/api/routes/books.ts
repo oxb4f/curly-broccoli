@@ -95,9 +95,14 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 						)
 						.get(
 							"/",
-							async ({ query, context, listBooksService }) => {
+							async ({ query, context, listBooksService, store }) => {
+								assert(store.jwtAuthGuardPayload.payload?.accessId);
+
 								const result = await listBooksService({
-									dto: query as any,
+									dto: {
+										...query,
+                                        accessId: store.jwtAuthGuardPayload.payload.accessId,
+									} as any,
 									context,
 								});
 
@@ -142,9 +147,12 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 						)
 						.get(
 							"/:id",
-							async ({ params, context, getBookService }) => {
+							async ({ params, context, getBookService, store }) => {
+								assert(store.jwtAuthGuardPayload.payload?.accessId);
+
 								const result = await getBookService({
 									dto: {
+										accessId: store.jwtAuthGuardPayload.payload.accessId,
 										bookId: params.id,
 									},
 									context,

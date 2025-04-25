@@ -26,6 +26,7 @@ export type OutShape = DtoShape<typeof ListDtoOut>;
 
 export const ListDtoIn = createInputDto(
 	z.object({
+		accessId: id,
 		limit: limit.optional().nullable().default(10),
 		offset: offset.optional().nullable().default(0),
 		orderDirection: orderDirection.optional().nullable().default("desc"),
@@ -49,6 +50,7 @@ export const ListDtoOut = createOutputDto(
 				imageUrl: url.nullable(),
 				numberOfPages: numberOfPages,
 				isbn: isbn.nullable(),
+				isPrivateAdded: z.boolean(),
 			}),
 		),
 		total: z.number().int().min(0),

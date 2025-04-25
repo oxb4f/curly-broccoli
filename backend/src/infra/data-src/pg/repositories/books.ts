@@ -1,4 +1,4 @@
-import { and, count, eq } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 import type { Book } from "../../../../entities/book";
 import type {
 	BookUpdateData,
@@ -18,7 +18,18 @@ export class PgBooksRepository
 {
 	async get(filter: GetBookFilter) {
 		const result = await this._connection
-			.select()
+			.select({
+                books,
+                book_profiles: bookProfiles,
+                ...(Number.isInteger(filter.isAddedByUserId) && {
+                    isPrivateAdded: sql<boolean>`EXISTS (
+						SELECT 1
+						FROM user_books
+						WHERE user_books.book_id = books.id
+						AND user_books.user_id = ${filter.isAddedByUserId}
+					)`,
+                }),
+            })
 			.from(books)
 			.innerJoin(bookProfiles, eq(books.bookProfileId, bookProfiles.id))
 			.where(and(...this.transformObjectIntoEqSequence(filter, books)))
@@ -32,6 +43,7 @@ export class PgBooksRepository
 		return {
 			id: result[0].books.id,
 			isPublic: result[0].books.isPublic,
+            isPrivateAdded: result[0].isPrivateAdded ?? false,
 			profile: {
 				id: result[0].book_profiles.id,
 				title: result[0].book_profiles.title,
@@ -53,7 +65,18 @@ export class PgBooksRepository
 		if (!total) return { data, total };
 
 		const query = this._connection
-			.select()
+			.select({
+                books,
+                book_profiles: bookProfiles,
+				...(Number.isInteger(filter.isAddedByUserId) && {
+					isPrivateAdded: sql<boolean>`EXISTS (
+						SELECT 1
+						FROM user_books
+						WHERE user_books.book_id = books.id
+						AND user_books.user_id = ${filter.isAddedByUserId}
+					)`,
+				}),
+            })
 			.from(books)
 			.innerJoin(bookProfiles, eq(books.bookProfileId, bookProfiles.id))
 			.$dynamic();
@@ -66,6 +89,7 @@ export class PgBooksRepository
 
 		data = result.map((row) => ({
 			id: row.books.id,
+            isPrivateAdded: row.isPrivateAdded ?? false,
 			profile: {
 				id: row.book_profiles.id,
 				title: row.book_profiles.title,

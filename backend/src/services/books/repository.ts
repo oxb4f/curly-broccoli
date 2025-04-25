@@ -24,9 +24,11 @@ import type {
 
 export type GetBookFilter = {
 	id: Id;
+    isAddedByUserId?: Id;
 };
 
 export type ListBookFilter = {
+    isAddedByUserId?: Id;
 	limit?: number | null;
 	offset?: number | null;
 	orderDirection?: OrderDirection | null;
@@ -44,6 +46,7 @@ export type ListUserBookFilter = {
 export type GetBookDto = {
 	id: Id;
 	isPublic: boolean;
+    isPrivateAdded: boolean;
 	profile: {
 		id: Id;
 		title: Title;
@@ -59,6 +62,7 @@ export type GetBookDto = {
 export type BooksListDto = {
 	data: {
 		id: Id;
+		isPrivateAdded: boolean;
 		profile: {
 			id: Id;
 			title: Title;
