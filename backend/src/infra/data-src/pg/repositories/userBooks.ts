@@ -1,4 +1,4 @@
-import { and, count, eq } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 import type { UserBook } from "../../../../entities/userBook";
 import type {
 	GetUserBookFilter,
@@ -65,7 +65,20 @@ export class PgUserBooksRepository
 		if (!total) return { data, total };
 
 		const query = this._connection
-			.select()
+			.select(
+                {
+                    user_books: userBooks,
+                    book_profiles: bookProfiles,
+                    ...(filter.checkIsReadingTrackerStarted && {
+                        isReadingTrackerStarted: sql<boolean>`EXISTS (
+                            SELECT 1
+                            FROM reading_trackers
+                            WHERE reading_trackers.user_book_id = user_books.id
+                            AND reading_trackers.state IN ('paused', 'reading')
+                        )`,
+                    }),
+                }
+            )
 			.from(userBooks)
 			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
 			.where(eq(userBooks.userId, filter.userId))
@@ -84,6 +97,7 @@ export class PgUserBooksRepository
 				isRead: row.user_books.isRead,
 				rating: row.user_books.rating,
 				review: row.user_books.review,
+				isReadingTrackerStarted: row.isReadingTrackerStarted ?? false,
 				profile: {
 					title: row.book_profiles.title,
 					description: row.book_profiles.description,

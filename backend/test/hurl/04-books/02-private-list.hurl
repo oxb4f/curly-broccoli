@@ -77,6 +77,8 @@ HTTP 200
 [Asserts]
 jsonpath "$.books" count == 1
 jsonpath "$.total" == 2
+[Captures]
+userBookId: jsonpath "$.books[0].id"
 
 # List books with limit and offset
 GET {{API_BASE}}/books/private
@@ -173,3 +175,35 @@ offset: 0
 HTTP 200
 [Asserts]
 jsonpath "$.books[0].title" == "0402{{rn}}{{rs}}book1"
+
+# List books with isReadingTrackerStarted
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+userId: {{userId}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[?(@.id == {{userBookId}})].isReadingTrackerStarted" includes false
+
+# Start reading tracker
+POST {{API_BASE}}/books/{{userBookId}}/readingTrackers/start
+Authorization: Bearer {{jwtAccess}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.id" exists
+jsonpath "$.id" isInteger
+jsonpath "$.userBookId" == {{userBookId}}
+jsonpath "$.state" == "reading"
+jsonpath "$.finishedAt" == null
+
+# List books with isReadingTrackerStarted
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+userId: {{userId}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[?(@.id == {{userBookId}})].isReadingTrackerStarted" includes true

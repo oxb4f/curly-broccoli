@@ -57,6 +57,7 @@ export const ListDtoOut = createOutputDto(
 				isRead: z.boolean().nullable(),
 				rating: z.number().int().min(0).max(5).nullable(),
 				review: z.string().nullable(),
+                isReadingTrackerStarted: z.boolean(),
 			}),
 		),
 		total: z.number().int().min(0),

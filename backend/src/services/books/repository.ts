@@ -41,6 +41,7 @@ export type ListUserBookFilter = {
 	orderDirection?: OrderDirection | null;
 	orderField?: string | null;
 	userId: Id;
+    checkIsReadingTrackerStarted?: boolean;
 };
 
 export type GetBookDto = {
@@ -112,6 +113,7 @@ export interface UserBooksListDto {
 			isbn: Isbn;
 		};
 		isRead: IsRead;
+		isReadingTrackerStarted: boolean;
 	}[];
 	total: number;
 }
