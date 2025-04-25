@@ -182,6 +182,9 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 							{
 								tags: ["Books"],
 								query: t.Object({
+									userId: t.Number({
+                                        description: "User id",
+                                    }),
 									orderDirection: t.Optional(
 										t.Nullable(
 											t.Enum(

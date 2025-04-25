@@ -29,7 +29,7 @@ const orderFieldValues = [...getEnumValues(orderField), "isFavorite", "isRead"];
 
 export const ListDtoIn = createInputDto(
 	z.object({
-		accessId: id,
+		userId: id,
 		limit: limit.optional().nullable().default(10),
 		offset: offset.optional().nullable().default(0),
 		orderDirection: orderDirection.optional().nullable().default("desc"),

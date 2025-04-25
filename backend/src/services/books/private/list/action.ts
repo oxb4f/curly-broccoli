@@ -1,18 +1,11 @@
-import assert from "node:assert";
 import { makeService } from "../../../make-service";
 import { type InShape, ListDtoIn, ListDtoOut, type OutShape } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
-	const getUserDto = await context.usersRepository.get({
-		accessId: dto.accessId,
-	});
-
-	assert(getUserDto, "User not found");
-
 	const { data, total } = await context.userBooksRepository.list({
 		limit: dto.limit,
 		offset: dto.offset,
-		userId: getUserDto.id,
+		userId: dto.userId,
 		orderDirection: dto.orderDirection,
 		orderField: dto.orderField,
 	});

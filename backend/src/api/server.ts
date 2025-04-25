@@ -15,9 +15,18 @@ export const app = new Elysia()
 	.onError(({ error, set }) => {
 		return onError(error as Error, set);
 	})
+	.use(configPlugin)
+	.use(contextPlugin)
+	.use(pingRoute)
+	.use(usersRoute)
+	.use(accessesRoute)
+	.use(imagesRoute)
+	.use(booksRoute)
+	.use(readingTrackersRoute)
+	.use(followersRoute)
 	.use(
 		swagger({
-			path: "doc",
+			path: "/docs",
 			documentation: {
 				info: {
 					title: "API Documentation",
@@ -35,15 +44,6 @@ export const app = new Elysia()
 			},
 		}),
 	)
-	.use(configPlugin)
-	.use(contextPlugin)
-	.use(pingRoute)
-	.use(usersRoute)
-	.use(accessesRoute)
-	.use(imagesRoute)
-	.use(booksRoute)
-	.use(readingTrackersRoute)
-	.use(followersRoute)
 	.listen({ port: process.env.APP_PORT }, () =>
 		console.log(`🦊 Elysia is running at :${process.env.APP_PORT}`),
 	);
