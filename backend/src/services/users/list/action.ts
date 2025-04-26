@@ -18,8 +18,6 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		orderField: dto.orderField,
 	});
 
-	console.log(listDto);
-
 	return ListDtoOut.create({
 		users: listDto.data.map((user) => ({
 			id: user.id,

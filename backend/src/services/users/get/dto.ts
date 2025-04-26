@@ -27,5 +27,6 @@ export const GetUserDtoOut = createOutputDto(
 		social: social.nullable(),
 		imageUrl: url.nullable(),
 		followed: z.boolean().nullable(),
+		followersId: z.number().nullable(),
 	}),
 );

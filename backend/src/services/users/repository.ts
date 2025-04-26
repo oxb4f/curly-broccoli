@@ -35,7 +35,8 @@ export interface GetUserDto {
 	social: Social;
 	imageUrl?: ImageUrl;
 	access: Access;
-	followed?: boolean;
+	followed?: boolean | null;
+	followersId?: number | null;
 }
 
 export type UserUpdateData = {

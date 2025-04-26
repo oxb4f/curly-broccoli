@@ -10,7 +10,7 @@ import type {
 	UserUpdateData,
 	UsersRepository,
 } from "../../../../services/users/repository";
-import { accesses, users } from "../schema";
+import { accesses, followers, users } from "../schema";
 import { BaseRepository } from "./base";
 
 export type SelectUser = typeof users.$inferSelect;
@@ -171,18 +171,7 @@ export class PgUsersRepository
 			: eq(accesses.userId, users.id);
 
 		const result = await this._connection
-			.select({
-				users: users,
-				...(Number.isInteger(filter.followedByUserId) && {
-					followed: sql<boolean>`EXISTS (
-						SELECT 1
-						FROM followers
-						WHERE followers.user_id = users.id
-						AND followers.follower_id = ${filter.followedByUserId}
-					)`,
-				}),
-				accesses: accesses,
-			})
+			.select()
 			.from(users)
 			.innerJoin(accesses, innerJoinAccessOn)
 			.where(this.#buildWhereToGetUser(filter))
@@ -193,12 +182,27 @@ export class PgUsersRepository
 
 		if (!record?.users?.id) return null;
 
+		let followersId: number | null = null;
+
+		if (filter.followedByUserId && filter.id) {
+			const followersResult = await this._connection
+				.select({ id: followers.id })
+				.from(followers)
+				.where(
+					and(eq(followers.followerId, filter.followedByUserId), eq(followers.userId, filter.id)),
+				)
+				.execute();
+
+			followersId = followersResult?.[0]?.id ?? null;
+		}
+
 		return {
 			...record.users,
 			social: record.users.social as Social,
 			birthday: record.users.birthday ? new Date(record.users.birthday) : null,
 			access: await Access.fromHashed(record.accesses as AccessHashedPayload),
-			followed: record.followed,
+			followed: Number.isInteger(followersId),
+			followersId,
 		};
 	}
 

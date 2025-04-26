@@ -38,5 +38,6 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		social: getUserDto.social,
 		imageUrl: getUserDto.imageUrl,
 		followed: getUserDto.followed ?? null,
+		followersId: getUserDto.followersId ?? null,
 	});
 }, GetUserDtoIn);

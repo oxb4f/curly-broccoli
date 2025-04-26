@@ -95,6 +95,7 @@ Authorization: Bearer {{jwtAccess}}
 HTTP 200
 [Asserts]
 jsonpath "$.followed" == false
+jsonpath "$.followersId" == null
 
 # User follows User 3
 POST {{API_BASE}}/followers
@@ -113,3 +114,4 @@ Authorization: Bearer {{jwtAccess}}
 HTTP 200
 [Asserts]
 jsonpath "$.followed" == true
+jsonpath "$.followersId" isInteger
