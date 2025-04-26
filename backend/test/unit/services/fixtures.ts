@@ -67,6 +67,7 @@ export const context = {
 } satisfies Context;
 
 export const userFixture1 = {
+    id: 1,
 	firstName: "John",
 	lastName: "Doe",
 	username: "test",
@@ -81,6 +82,8 @@ export const userFixture1 = {
 	refreshId: "1",
 	secret: "test",
 	refreshLifetime: 100000000,
+	followed: false,
+	followersId: 1,
 };
 
 export const imageFixture1 = {

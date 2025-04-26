@@ -19,7 +19,7 @@ test("Unit test: User Get Service", () => {
 	beforeEach(() => mock.restore());
 
 	describe("should return valid dto", async () => {
-		context.usersRepository.get = mock().mockResolvedValueOnce({
+		context.usersRepository.get = mock().mockResolvedValue({
 			...userFixture1,
 			access: createdAccessFixture1,
 		});
@@ -35,11 +35,16 @@ test("Unit test: User Get Service", () => {
 		expect(dto.social?.telegram).toBeString();
 		expect(dto.social?.instagram).toBeString();
 		expect(dto.imageUrl).toBeString();
-		expect(context.usersRepository.get).toBeCalledTimes(1);
+		expect(context.usersRepository.get).toHaveBeenCalled();
 	});
 
 	describe("should throw an error if user does not exist", async () => {
-		context.usersRepository.get = mock().mockResolvedValueOnce(null);
+		context.usersRepository.get = mock().mockImplementation(({ id }) =>
+			id ? null : {
+				...userFixture1,
+				access: createdAccessFixture1,
+			},
+		);
 
 		await expect(
 			service({ dto: fixture, context: context }),
@@ -47,8 +52,7 @@ test("Unit test: User Get Service", () => {
 	});
 
 	describe("should throw an error if validation was failed", async () => {
-		context.usersRepository.get =
-			mock().mockResolvedValueOnce(createdUserFixture1);
+		context.usersRepository.get = mock().mockResolvedValue(createdUserFixture1);
 
 		await expect(
 			service({

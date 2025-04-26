@@ -57,7 +57,7 @@ export abstract class BaseRepository {
 			.map(([key, value]) => {
 				const column = tableColumns[key as keyof typeof tableColumns];
 
-				if (!column) return null;
+				if (!column || value === undefined) return null;
 
 				return eq(column, value);
 			})

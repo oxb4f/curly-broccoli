@@ -19,7 +19,11 @@ export class ReadingRecord extends Base {
 	private _duration: Duration;
 
 	private constructor(payload: ReadingRecordData) {
-		super({id: payload.id, createdAt: payload.createdAt, updatedAt: payload.updatedAt});
+		super({
+			id: payload.id,
+			createdAt: payload.createdAt,
+			updatedAt: payload.updatedAt,
+		});
 
 		this._readingTrackerId = payload.readingTrackerId;
 		this._duration = payload.duration;

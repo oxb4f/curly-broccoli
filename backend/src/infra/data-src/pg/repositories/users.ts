@@ -1,14 +1,16 @@
-import { and, count, eq, not } from "drizzle-orm";
+import { and, count, eq, not, sql } from "drizzle-orm";
 import { Access, type AccessHashedPayload } from "../../../../entities/access";
 import type { Social, User } from "../../../../entities/user";
 import type {
 	ExistsArgs,
 	GetUserDto,
 	GetUserFilter,
+	ListUserDto,
+	ListUserFilter,
 	UserUpdateData,
 	UsersRepository,
 } from "../../../../services/users/repository";
-import { accesses, users } from "../schema";
+import { accesses, followers, users } from "../schema";
 import { BaseRepository } from "./base";
 
 export type SelectUser = typeof users.$inferSelect;
@@ -17,8 +19,70 @@ export class PgUsersRepository
 	extends BaseRepository
 	implements UsersRepository
 {
-	async list(): Promise<never> {
-		throw new Error("Not implemented");
+	async list(filter: ListUserFilter): Promise<ListUserDto> {
+		const total = await this.getTotal();
+
+		let data: ListUserDto["data"] = [];
+
+		if (!total) return { data, total };
+
+		const query = this._connection
+			.select({
+				id: users.id,
+				username: users.username,
+				firstName: users.firstName,
+				lastName: users.lastName,
+				birthday: users.birthday,
+				social: users.social,
+				imageUrl: users.imageUrl,
+				...(Number.isInteger(filter.followedByUserId) && {
+					followed: sql<boolean>`EXISTS (
+						SELECT 1
+						FROM followers
+						WHERE followers.user_id = users.id
+						AND followers.follower_id = ${filter.followedByUserId}
+					)`,
+				}),
+			})
+			.from(users)
+			.$dynamic();
+
+		this.addLimit(query, filter.limit);
+		this.addOffset(query, filter.offset);
+		this.addOrder(query, users, filter.orderDirection, filter.orderField);
+
+		if (filter.notId) {
+			query.where(not(eq(users.id, filter.notId)));
+		}
+
+		const result = await query.execute();
+
+		data = result.map((row) => {
+			return {
+				id: row.id,
+				username: row.username,
+				firstName: row.firstName,
+				lastName: row.lastName,
+				birthday: row.birthday ? new Date(row.birthday) : null,
+				social: row.social as Social,
+				imageUrl: row.imageUrl,
+				followed: row.followed ?? false,
+			};
+		});
+
+		return {
+			data,
+			total,
+		};
+	}
+
+	private async getTotal() {
+		const result = await this._connection
+			.select({ total: count() })
+			.from(users)
+			.execute();
+
+		return result[0]?.total ?? 0;
 	}
 
 	async exists({ username, notId }: ExistsArgs) {
@@ -118,11 +182,27 @@ export class PgUsersRepository
 
 		if (!record?.users?.id) return null;
 
+		let followersId: number | null = null;
+
+		if (filter.followedByUserId && filter.id) {
+			const followersResult = await this._connection
+				.select({ id: followers.id })
+				.from(followers)
+				.where(
+					and(eq(followers.followerId, filter.followedByUserId), eq(followers.userId, filter.id)),
+				)
+				.execute();
+
+			followersId = followersResult?.[0]?.id ?? null;
+		}
+
 		return {
 			...record.users,
 			social: record.users.social as Social,
 			birthday: record.users.birthday ? new Date(record.users.birthday) : null,
 			access: await Access.fromHashed(record.accesses as AccessHashedPayload),
+			followed: Number.isInteger(followersId),
+			followersId,
 		};
 	}
 
@@ -130,7 +210,7 @@ export class PgUsersRepository
 		const eqArray = [];
 
 		for (const k of Object.keys(filter) as Array<keyof typeof filter>) {
-			if (k === "accessId" || filter[k] === undefined) continue;
+			if (k === "accessId" || filter[k] === undefined || k === "followedByUserId") continue;
 
 			eqArray.push(eq(users[k], filter[k]));
 		}

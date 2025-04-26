@@ -24,9 +24,11 @@ import type {
 
 export type GetBookFilter = {
 	id: Id;
+    isAddedByUserId?: Id;
 };
 
 export type ListBookFilter = {
+    isAddedByUserId?: Id;
 	limit?: number | null;
 	offset?: number | null;
 	orderDirection?: OrderDirection | null;
@@ -39,11 +41,13 @@ export type ListUserBookFilter = {
 	orderDirection?: OrderDirection | null;
 	orderField?: string | null;
 	userId: Id;
+    checkIsReadingTrackerStarted?: boolean;
 };
 
 export type GetBookDto = {
 	id: Id;
 	isPublic: boolean;
+    isPrivateAdded: boolean;
 	profile: {
 		id: Id;
 		title: Title;
@@ -59,6 +63,7 @@ export type GetBookDto = {
 export type BooksListDto = {
 	data: {
 		id: Id;
+		isPrivateAdded: boolean;
 		profile: {
 			id: Id;
 			title: Title;
@@ -108,6 +113,7 @@ export interface UserBooksListDto {
 			isbn: Isbn;
 		};
 		isRead: IsRead;
+		isReadingTrackerStarted: boolean;
 	}[];
 	total: number;
 }

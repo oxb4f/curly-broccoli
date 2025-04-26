@@ -34,19 +34,22 @@ export class PgReadingTrackersRepository
 			return null;
 		}
 
-        const id = result[0].reading_trackers.id;
+		const id = result[0].reading_trackers.id;
 
-        const readingRecordsResult = await this.getReadingRecords([id]);
+		const readingRecordsResult = await this.getReadingRecords([id]);
 
 		return {
 			id: result[0].reading_trackers.id,
 			userBookId: result[0].reading_trackers.userBookId,
 			createdAt: result[0].reading_trackers.createdAt,
-            updatedAt: result[0].reading_trackers.updatedAt,
+			updatedAt: result[0].reading_trackers.updatedAt,
 			finishedAt: result[0].reading_trackers.finishedAt,
 			state: result[0].reading_trackers.state as State,
-            lastResumeAt: result[0].reading_trackers.lastResumeAt,
-			readingRecords: await Promise.all(readingRecordsResult[id]?.map((record) => ReadingRecord.from(record)) ?? []),
+			lastResumeAt: result[0].reading_trackers.lastResumeAt,
+			readingRecords: await Promise.all(
+				readingRecordsResult[id]?.map((record) => ReadingRecord.from(record)) ??
+					[],
+			),
 		};
 	}
 
@@ -153,18 +156,20 @@ export class PgReadingTrackersRepository
 	) {
 		if (!filter.id) return;
 
-        if (Array.isArray(readingTracker.readingRecords)) {
-            await this._connection
-                .insert(readingRecords)
-                .values(readingTracker.readingRecords.map((record) => ({
-                    id: record.getId(),
-                    readingTrackerId: record.getReadingTrackerId(),
-                    duration: record.getDuration(),
-                    createdAt: record.getCreatedAt(),
-                })) ?? [])
-                .onConflictDoNothing({ target: readingRecords.id })
-                .execute();
-        }
+		if (Array.isArray(readingTracker.readingRecords)) {
+			await this._connection
+				.insert(readingRecords)
+				.values(
+					readingTracker.readingRecords.map((record) => ({
+						id: record.getId(),
+						readingTrackerId: record.getReadingTrackerId(),
+						duration: record.getDuration(),
+						createdAt: record.getCreatedAt(),
+					})) ?? [],
+				)
+				.onConflictDoNothing({ target: readingRecords.id })
+				.execute();
+		}
 
 		await this._connection
 			.update(readingTrackers)
@@ -197,17 +202,12 @@ export class PgReadingTrackersRepository
 		return !!result?.[0];
 	}
 
-    private async getReadingRecords(readingTrackerIds: number[]) {
-        return (
+	private async getReadingRecords(readingTrackerIds: number[]) {
+		return (
 			await this._connection
 				.select()
 				.from(readingRecords)
-				.where(
-					inArray(
-						readingRecords.readingTrackerId,
-						readingTrackerIds,
-					),
-				)
+				.where(inArray(readingRecords.readingTrackerId, readingTrackerIds))
 				.execute()
 		).reduce(
 			(acc, record) => {
@@ -220,5 +220,5 @@ export class PgReadingTrackersRepository
 			},
 			{} as Record<number, (typeof readingRecords.$inferSelect)[]>,
 		);
-    }
+	}
 }

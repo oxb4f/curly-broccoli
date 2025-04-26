@@ -9,6 +9,7 @@ Content-Type: application/json
 HTTP 200
 [Captures]
 jwtAccess: jsonpath "$.jwt.access"
+userId: jsonpath "$.id"
 
 # Create book
 POST {{API_BASE}}/books
@@ -47,6 +48,8 @@ HTTP 200
 # List books
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+userId: {{userId}}
 
 HTTP 200
 [Asserts]
@@ -67,17 +70,21 @@ jsonpath "$.total" == 2
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
 [QueryStringParams]
+userId: {{userId}}
 limit: 1
 
 HTTP 200
 [Asserts]
 jsonpath "$.books" count == 1
 jsonpath "$.total" == 2
+[Captures]
+userBookId: jsonpath "$.books[0].id"
 
 # List books with limit and offset
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
 [QueryStringParams]
+userId: {{userId}}
 limit: 1
 offset: 1
 
@@ -90,6 +97,7 @@ jsonpath "$.total" == 2
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
 [QueryStringParams]
+userId: {{userId}}
 offset: 1
 
 HTTP 200
@@ -101,6 +109,7 @@ jsonpath "$.total" == 2
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
 [QueryStringParams]
+userId: {{userId}}
 orderField: createdAt
 orderDirection: desc
 limit: 2
@@ -117,6 +126,7 @@ bookId: jsonpath "$.books[0].id"
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
 [QueryStringParams]
+userId: {{userId}}
 orderField: createdAt
 orderDirection: asc
 limit: 2
@@ -131,6 +141,8 @@ jsonpath "$.books[1].title" == "0402{{rn}}{{rs}}book2"
 PATCH {{API_BASE}}/books/private/{{bookId}}
 Authorization: Bearer {{jwtAccess}}
 Content-Type: application/json
+[QueryStringParams]
+userId: {{userId}}
 {
     "isFavorite": true
 }
@@ -141,6 +153,7 @@ HTTP 200
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
 [QueryStringParams]
+userId: {{userId}}
 orderField: isFavorite
 orderDirection: desc
 limit: 2
@@ -153,6 +166,7 @@ jsonpath "$.books[0].title" == "0402{{rn}}{{rs}}book2"
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
 [QueryStringParams]
+userId: {{userId}}
 orderField: isFavorite
 orderDirection: asc
 limit: 2
@@ -161,3 +175,35 @@ offset: 0
 HTTP 200
 [Asserts]
 jsonpath "$.books[0].title" == "0402{{rn}}{{rs}}book1"
+
+# List books with isReadingTrackerStarted
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+userId: {{userId}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[?(@.id == {{userBookId}})].isReadingTrackerStarted" includes false
+
+# Start reading tracker
+POST {{API_BASE}}/books/{{userBookId}}/readingTrackers/start
+Authorization: Bearer {{jwtAccess}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.id" exists
+jsonpath "$.id" isInteger
+jsonpath "$.userBookId" == {{userBookId}}
+jsonpath "$.state" == "reading"
+jsonpath "$.finishedAt" == null
+
+# List books with isReadingTrackerStarted
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+userId: {{userId}}
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[?(@.id == {{userBookId}})].isReadingTrackerStarted" includes true

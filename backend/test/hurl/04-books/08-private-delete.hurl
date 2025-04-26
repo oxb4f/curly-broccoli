@@ -9,6 +9,7 @@ Content-Type: application/json
 HTTP 200
 [Captures]
 jwtAccess: jsonpath "$.jwt.access"
+userId: jsonpath "$.id"
 
 # Create book
 POST {{API_BASE}}/books
@@ -31,6 +32,8 @@ bookId: jsonpath "$.id"
 # List user books
 GET {{API_BASE}}/books/private
 Authorization: Bearer {{jwtAccess}}
+[QueryStringParams]
+userId: {{userId}}
 
 HTTP 200
 [Asserts]

@@ -114,3 +114,19 @@ export const readingRecords = pgTable("reading_records", {
 		.notNull(),
 	duration: integer("duration").notNull(),
 });
+
+export const followers = pgTable(
+	"followers",
+	{
+		...base,
+		userId: bigint("user_id", { mode: "number" })
+			.references(() => users.id)
+			.notNull(),
+		followerId: bigint("follower_id", { mode: "number" })
+			.references(() => users.id)
+			.notNull(),
+	},
+	(followers) => [
+		index("user_follower_idx").on(followers.userId, followers.followerId),
+	],
+);
