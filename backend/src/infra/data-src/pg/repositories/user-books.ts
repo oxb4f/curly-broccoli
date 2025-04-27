@@ -54,6 +54,7 @@ export class PgUserBooksRepository
 				isbn: result[0].book_profiles.isbn,
 			},
 			isRead: result[0].user_books.isRead,
+            userId: result[0].user_books.userId
 		};
 	}
 
@@ -65,20 +66,18 @@ export class PgUserBooksRepository
 		if (!total) return { data, total };
 
 		const query = this._connection
-			.select(
-                {
-                    user_books: userBooks,
-                    book_profiles: bookProfiles,
-                    ...(filter.checkIsReadingTrackerStarted && {
-                        isReadingTrackerStarted: sql<boolean>`EXISTS (
+			.select({
+				user_books: userBooks,
+				book_profiles: bookProfiles,
+				...(filter.checkIsReadingTrackerStarted && {
+					isReadingTrackerStarted: sql<boolean>`EXISTS (
                             SELECT 1
                             FROM reading_trackers
                             WHERE reading_trackers.user_book_id = user_books.id
                             AND reading_trackers.state IN ('paused', 'reading')
                         )`,
-                    }),
-                }
-            )
+				}),
+			})
 			.from(userBooks)
 			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
 			.where(eq(userBooks.userId, filter.userId))

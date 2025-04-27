@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { Book } from "../../../src/entities/book";
-import { BookProfile } from "../../../src/entities/bookProfile";
+import { BookProfile } from "../../../src/entities/book-profile";
 import { UserBook } from "../../../src/entities/userBook";
 
 const fixture = {

@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { ReadingTracker, type State } from "../../../entities/readingTracker";
+import { ReadingTracker, type State } from "../../../entities/reading-tracker";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
 import { type InShape, ListDtoIn, ListDtoOut, type OutShape } from "./dto";

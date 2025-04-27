@@ -189,7 +189,10 @@ export class PgUsersRepository
 				.select({ id: followers.id })
 				.from(followers)
 				.where(
-					and(eq(followers.followerId, filter.followedByUserId), eq(followers.userId, filter.id)),
+					and(
+						eq(followers.followerId, filter.followedByUserId),
+						eq(followers.userId, filter.id),
+					),
 				)
 				.execute();
 
@@ -210,7 +213,12 @@ export class PgUsersRepository
 		const eqArray = [];
 
 		for (const k of Object.keys(filter) as Array<keyof typeof filter>) {
-			if (k === "accessId" || filter[k] === undefined || k === "followedByUserId") continue;
+			if (
+				k === "accessId" ||
+				filter[k] === undefined ||
+				k === "followedByUserId"
+			)
+				continue;
 
 			eqArray.push(eq(users[k], filter[k]));
 		}

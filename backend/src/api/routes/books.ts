@@ -101,7 +101,7 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 								const result = await listBooksService({
 									dto: {
 										...query,
-                                        accessId: store.jwtAuthGuardPayload.payload.accessId,
+										accessId: store.jwtAuthGuardPayload.payload.accessId,
 									} as any,
 									context,
 								});
@@ -191,8 +191,8 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 								tags: ["Books"],
 								query: t.Object({
 									userId: t.Number({
-                                        description: "User id",
-                                    }),
+										description: "User id",
+									}),
 									orderDirection: t.Optional(
 										t.Nullable(
 											t.Enum(

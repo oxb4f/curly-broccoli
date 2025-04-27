@@ -3,7 +3,7 @@ import { makeService } from "../../../make-service";
 import { type InShape, ListDtoIn, ListDtoOut, type OutShape } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
-    const getUserDto = await context.usersRepository.get({
+	const getUserDto = await context.usersRepository.get({
 		accessId: dto.accessId,
 	});
 
