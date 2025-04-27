@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { EntityValidationError } from "../../../entities/errors/validation";
-import { ReadingTracker } from "../../../entities/readingTracker";
+import { ReadingTracker } from "../../../entities/reading-tracker";
 import { ServiceError } from "../../errors/error";
 import { makeService } from "../../make-service";
 import {

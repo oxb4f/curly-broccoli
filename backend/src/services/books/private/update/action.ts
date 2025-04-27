@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { BookProfile } from "../../../../entities/bookProfile";
+import { BookProfile } from "../../../../entities/book-profile";
 import { UserBook } from "../../../../entities/userBook";
 import { ServiceError } from "../../../errors/error";
 import { makeService } from "../../../make-service";

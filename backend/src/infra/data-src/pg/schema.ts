@@ -130,3 +130,19 @@ export const followers = pgTable(
 		index("user_follower_idx").on(followers.userId, followers.followerId),
 	],
 );
+
+export const events = pgTable(
+	"events",
+	{
+		...base,
+		name: varchar("name", { length: 255 }).notNull(),
+		payload: json("payload").notNull(),
+		toUserId: bigint("to_user_id", { mode: "number" })
+			.references(() => users.id)
+			.notNull(),
+		fromUserId: bigint("from_user_id", { mode: "number" })
+			.references(() => users.id)
+			.notNull(),
+	},
+	(events) => [index("name_to_user_id_idx").on(events.name, events.toUserId)],
+);

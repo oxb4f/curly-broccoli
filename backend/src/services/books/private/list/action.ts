@@ -8,7 +8,7 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		userId: dto.userId,
 		orderDirection: dto.orderDirection,
 		orderField: dto.orderField,
-        checkIsReadingTrackerStarted: true,
+		checkIsReadingTrackerStarted: true,
 	});
 
 	return ListDtoOut.create({
