@@ -127,3 +127,37 @@ jsonpath "$.data[*].toUserId" includes {{user3_id}}
 jsonpath "$.data[*].payload" count >= 1
 jsonpath "$.data[0].payload" exists
 jsonpath "$.data[*].name" includes "user_books.add"
+
+# List books
+GET {{API_BASE}}/books/private
+Authorization: Bearer {{user1_jwt_access}}
+[QueryStringParams]
+userId: {{user1_id}}
+
+HTTP 200
+[Captures]
+user1_book_id: jsonpath "$.books[0].id"
+
+# Start reading tracker
+POST {{API_BASE}}/books/{{user1_book_id}}/readingTrackers/start
+Authorization: Bearer {{user1_jwt_access}}
+
+HTTP 200
+
+# List events by user 3
+GET {{API_BASE}}/events
+Authorization: Bearer {{user3_jwt_access}}
+[QueryStringParams]
+orderField: createdAt
+orderDirection: desc
+limit: 10
+
+HTTP 200
+[Asserts]
+jsonpath "$.total" == 4
+jsonpath "$.data" count == 4
+jsonpath "$.data[*].fromUserId" includes {{user1_id}}
+jsonpath "$.data[*].toUserId" includes {{user3_id}}
+jsonpath "$.data[*].payload" count >= 1
+jsonpath "$.data[0].payload" exists
+jsonpath "$.data[*].name" includes "reading_trackers.start"
