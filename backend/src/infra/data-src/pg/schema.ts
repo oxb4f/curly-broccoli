@@ -72,11 +72,11 @@ export const userBooks = pgTable(
 	"user_books",
 	{
 		...base,
-		bookId: bigint("book_id", { mode: "number" }).references(() => books.id),
-		userId: bigint("user_id", { mode: "number" }).references(() => users.id),
+		bookId: bigint("book_id", { mode: "number" }).references(() => books.id).notNull(),
+		userId: bigint("user_id", { mode: "number" }).references(() => users.id).notNull(),
 		bookProfileId: bigint("book_profile_id", { mode: "number" }).references(
 			() => bookProfiles.id,
-		),
+		).notNull(),
 		isFavorite: boolean("is_favorite").notNull().default(false),
 		isRead: boolean("is_read").notNull().default(false),
 		rating: integer("rating"),

@@ -54,6 +54,7 @@ export class PgUserBooksRepository
 				isbn: result[0].book_profiles.isbn,
 			},
 			isRead: result[0].user_books.isRead,
+            userId: result[0].user_books.userId
 		};
 	}
 
@@ -105,6 +106,7 @@ export class PgUserBooksRepository
 					numberOfPages: row.book_profiles.numberOfPages,
 					isbn: row.book_profiles.isbn,
 				},
+				userId: row.user_books.userId,
 			};
 		});
 

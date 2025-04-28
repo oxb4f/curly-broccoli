@@ -27,5 +27,6 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		numberOfPages: userBook.profile.numberOfPages,
 		isbn: userBook.profile.isbn,
 		isRead: userBook.isRead,
+		userId: userBook.userId,
 	});
 }, GetDtoIn);

@@ -58,6 +58,7 @@ export const ListDtoOut = createOutputDto(
 				rating: z.number().int().min(0).max(5).nullable(),
 				review: z.string().nullable(),
 				isReadingTrackerStarted: z.boolean(),
+				userId: id,
 			}),
 		),
 		total: z.number().int().min(0),

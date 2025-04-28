@@ -114,6 +114,7 @@ export interface UserBooksListDto {
 		};
 		isRead: IsRead;
 		isReadingTrackerStarted: boolean;
+        userId: Id
 	}[];
 	total: number;
 }
@@ -140,6 +141,7 @@ export type GetUserBookDto = {
 		isbn: Isbn;
 	};
 	isRead: IsRead;
+    userId: Id
 };
 
 export type UserBookUpdateData = {
