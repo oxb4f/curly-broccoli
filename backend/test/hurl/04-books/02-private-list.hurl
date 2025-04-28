@@ -64,6 +64,7 @@ jsonpath "$.books[*].numberOfPages" nth 0 isNumber
 jsonpath "$.books[*].imageUrl" nth 0 isString
 jsonpath "$.books[*].isRead" nth 0 isBoolean
 jsonpath "$.books[*].isFavorite" nth 0 isBoolean
+jsonpath "$.books[*].userId" nth 0 isNumber
 jsonpath "$.total" == 2
 
 # List books with limit

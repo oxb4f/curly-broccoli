@@ -106,6 +106,7 @@ export class PgUserBooksRepository
 					numberOfPages: row.book_profiles.numberOfPages,
 					isbn: row.book_profiles.isbn,
 				},
+				userId: row.user_books.userId,
 			};
 		});
 

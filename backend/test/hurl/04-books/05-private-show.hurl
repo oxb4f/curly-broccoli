@@ -59,6 +59,7 @@ jsonpath "$.isFavorite" isBoolean
 jsonpath "$.rating" exists
 jsonpath "$.review" exists
 jsonpath "$.isRead" isBoolean
+jsonpath "$.userId" isNumber
 
 # Show book that does not exist
 GET {{API_BASE}}/books/private/1
