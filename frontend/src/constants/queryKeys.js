@@ -4,7 +4,9 @@ const READING_TRACKERS_ALL = 'reading-trackers';
 
 const QUERY_KEYS = {
   USERS: {
-    ALL: [USERS_ALL]
+    ALL: [USERS_ALL],
+    OWN: [USERS_ALL, 'own'],
+    OTHERS: [USERS_ALL, 'others']
   },
   BOOKS: {
     ALL: [BOOKS_ALL],

@@ -9,15 +9,19 @@ const getPublicBook = async (id) => {
 };
 
 const getPublicBooks = async (params = {}) => {
-  const response = await api.get(`books/public/`, {
-    params: {
+  const requestPayload = prepareRequest(
+    {
       orderDirection: 'desc',
       orderField: 'createdAt',
       limit: 15,
       offset: 0,
       ...params
-    }
-  });
+    },
+    'books',
+    'get'
+  );
+
+  const response = await api.get(`books/public/`, requestPayload);
   console.log(response);
 
   return processResponse(response, 'books');
@@ -30,16 +34,21 @@ const getPrivateBook = async (id) => {
   return processResponse(response, 'books');
 };
 
-const getPrivateBooks = async (params = {}) => {
-  const response = await api.get(`books/private/`, {
-    params: {
+const getPrivateBooks = async (userId, params = {}) => {
+  const requestPayload = prepareRequest(
+    {
+      userId,
       orderDirection: 'desc',
       orderField: 'updatedAt',
       limit: 15,
       offset: 0,
       ...params
-    }
-  });
+    },
+    'books',
+    'get'
+  );
+
+  const response = await api.get(`books/private/`, requestPayload);
   console.log(response);
 
   return processResponse(response, 'books');
@@ -74,7 +83,7 @@ const addBook = async (id) => {
   const response = await api.post(`books/public/add/${id}`);
   console.log(response);
 
-  // return { jwt: response.jwt, id: response.id, accessId: response.accessId };
+  return processResponse(response, 'books');
 };
 
 export {

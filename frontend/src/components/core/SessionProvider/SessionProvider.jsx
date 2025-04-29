@@ -11,7 +11,7 @@ import QUERY_KEYS from '../../../constants/queryKeys';
 
 const SessionContext = createContext(null);
 
-export default function SessionProvider({ children }) {
+export default function SessionProvider({ queryKey, children }) {
   const [credentials, setCredentials] = useState(getUserFromStorage());
   const queryClient = useQueryClient();
 
@@ -20,9 +20,8 @@ export default function SessionProvider({ children }) {
     isPending,
     error
   } = useQuery({
-    queryKey: QUERY_KEYS.USERS.ALL,
+    queryKey,
     queryFn: () => getUser(credentials?.id),
-    select: (userData) => clearEmptyFields(userData),
     enabled: Boolean(credentials),
     refetchOnWindowFocus: false
   });
@@ -38,11 +37,11 @@ export default function SessionProvider({ children }) {
   const storeUserSession = (userCredentials) => {
     setUserToStorage(userCredentials);
     setCredentials(userCredentials);
-    queryClient.invalidateQueries(QUERY_KEYS.USERS.ALL);
+    queryClient.invalidateQueries(QUERY_KEYS.USERS.OWN);
   };
 
   const updateUserSession = (userData) => {
-    queryClient.setQueryData(QUERY_KEYS.USERS.ALL, (oldUserData) => ({
+    queryClient.setQueryData(QUERY_KEYS.USERS.OWN, (oldUserData) => ({
       ...oldUserData,
       ...userData
     }));
@@ -51,7 +50,7 @@ export default function SessionProvider({ children }) {
   const clearUserSession = () => {
     removeUserFromStorage();
     setCredentials(null);
-    queryClient.removeQueries({ queryKey: QUERY_KEYS.USERS.ALL });
+    queryClient.removeQueries(QUERY_KEYS.USERS.OWN);
   };
 
   return (

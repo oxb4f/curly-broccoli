@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import AsyncForm from '../../../core/Form/Async/Async';
 import QUERY_KEYS from '../../../../constants/queryKeys';
 import ROUTES from '../../../../constants/routes';
-import { useBook } from '../../../../pages/Main/Book/Provider/Provider';
+import { useBook } from '../../../core/Book/Provider/Provider';
 
 const BookEditForm = ({ className = '' }) => {
   const { book, isPending } = useBook();

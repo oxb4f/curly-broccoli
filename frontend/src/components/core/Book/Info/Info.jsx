@@ -2,7 +2,7 @@ import { formatKey } from '../../../../utils/dataTransformers';
 import Skeleton from '../../Skeleton/Skeleton';
 
 const BookInfo = ({ data, isShort = false, className = '' }) => {
-  const shortClassName = isShort ? 'overflow-hidden text-ellipsis whitespace-nowrap ' : '';
+  const shortClassName = isShort ? 'truncate' : '';
 
   return (
     <section className={`text-pr-text ${className}`}>

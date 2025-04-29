@@ -2,11 +2,11 @@ import StaticStatsItem from './Item';
 
 const StaticStats = ({ items, className = '' }) => {
   return (
-    <ul className={className}>
+    <dl className={className}>
       {items.map((item) => (
         <StaticStatsItem key={item.name} {...item} />
       ))}
-    </ul>
+    </dl>
   );
 };
 

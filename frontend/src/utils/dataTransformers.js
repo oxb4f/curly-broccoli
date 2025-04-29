@@ -1,6 +1,24 @@
 import calculateAge from './calculateAge';
 import formatDate from './formatDate';
 
+const clearEmptyFields = (object) => {
+  const result = {};
+  for (const [key, value] of Object.entries(object)) {
+    if (value === null) continue;
+    else if (typeof value === 'object') result[key] = clearEmptyFields(value);
+    else result[key] = value;
+  }
+  return result;
+};
+
+const formatKey = (key) => {
+  if (typeof key !== 'string') throw new Error('Key must be string');
+  return key
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .toLowerCase()
+    .replace(/^\w/, (c) => c.toUpperCase());
+};
+
 const prepareRequest = (data, apiEndpoint, apiAction) => {
   switch (apiEndpoint) {
     case 'users':
@@ -36,8 +54,40 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
         default:
           return;
       }
+    case 'followers':
+      switch (apiAction) {
+        case 'get':
+          return {
+            params: {
+              userId: data.userId,
+              limit: data.limit,
+              offset: data.offset,
+              orderDirection: data.orderDirection
+            }
+          };
+        case 'get-count':
+          return {
+            params: {
+              userId: data
+            }
+          };
+        case 'follow':
+          return {
+            userId: data
+          };
+        case 'unfollow':
+          return {
+            params: {
+              id: data
+            }
+          };
+        default:
+          return;
+      }
     case 'books':
       switch (apiAction) {
+        case 'get':
+          return { params: data };
         case 'create':
           return {
             title: data.title,
@@ -77,6 +127,12 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
 const processResponse = (data, apiEndpoint) => {
   switch (apiEndpoint) {
     case 'users': {
+      if (data.users)
+        return {
+          ...data,
+          users: data.users.map((user) => processResponse(user, 'users'))
+        };
+
       const getPersonalInfo = (userData) => {
         const fullName = `${userData.firstName ?? ''} ${userData.lastName ?? ''}`.trim();
         const age = calculateAge(userData.birthday);
@@ -93,27 +149,39 @@ const processResponse = (data, apiEndpoint) => {
       const { firstName, lastName, birthday, ...rest } = data;
       const formatedBirthday = birthday?.split('T')?.[0] ?? null;
       const personalInfo = getPersonalInfo({ firstName, lastName, birthday: formatedBirthday });
+      const clearedData = clearEmptyFields({ ...rest, personalInfo });
 
-      return {
-        ...rest,
-        personalInfo
-      };
+      return clearedData;
     }
     case 'books': {
-      const { books, id, title, author, imageUrl, isFavorite, isRead, rating, review, ...other } =
-        data;
+      const {
+        books,
+        id,
+        userId,
+        isPrivateAdded,
+        title,
+        author,
+        imageUrl,
+        isFavorite,
+        isRead,
+        rating,
+        review,
+        ...otherInfo
+      } = data;
 
       if (books) {
-        return { ...other, books: books.map((book) => processResponse(book, 'books')) };
+        return { ...otherInfo, books: books.map((book) => processResponse(book, 'books')) };
       }
 
       return {
         id,
+        userId,
         imageUrl,
+        isPrivateAdded,
         info: {
           title,
           author,
-          other
+          other: otherInfo
         },
         stats: { isFavorite, isRead, rating, review }
       };
@@ -121,6 +189,12 @@ const processResponse = (data, apiEndpoint) => {
     case 'images': {
       return {
         imageUrl: data.url
+      };
+    }
+    case 'followers': {
+      return {
+        followersId: data.id,
+        followed: Boolean(data.id)
       };
     }
     case 'reading-trackers': {
@@ -174,24 +248,6 @@ const processResponse = (data, apiEndpoint) => {
       };
     }
   }
-};
-
-const clearEmptyFields = (object) => {
-  const result = {};
-  for (const [key, value] of Object.entries(object)) {
-    if (value === null) continue;
-    else if (typeof value === 'object') result[key] = clearEmptyFields(value);
-    else result[key] = value;
-  }
-  return result;
-};
-
-const formatKey = (key) => {
-  if (typeof key !== 'string') throw new Error('Key must be string');
-  return key
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-    .toLowerCase()
-    .replace(/^\w/, (c) => c.toUpperCase());
 };
 
 export { prepareRequest, processResponse, clearEmptyFields, formatKey };

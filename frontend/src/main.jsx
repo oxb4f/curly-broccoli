@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client';
 import './main.css';
 import WelcomePage from './pages/Welcome/Welcome.jsx';
 import MainPage from './pages/Main/Main.jsx';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
-import ProfilePage from './pages/Main/Profile/Profile.jsx';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router';
+import OwnProfilePage from './pages/Main/Profile/Own/Own.jsx';
 import SettingsPage from './pages/Settings/Settings.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import SettingsProfilePage from './pages/Settings/Profile/Profile.jsx';
@@ -18,15 +18,18 @@ import BookCreatePage from './pages/Main/Book/Create/Create.jsx';
 import BookEditPage from './pages/Main/Book/Edit/Edit.jsx';
 import BookReadPage from './pages/Main/Book/Read/Read.jsx';
 import SearchPage from './pages/Main/Search/Search.jsx';
-import { BookProviderPage } from './pages/Main/Book/Provider/Provider.jsx';
+import { BookProvider } from './components/core/Book/Provider/Provider.jsx';
 import QUERY_KEYS from './constants/queryKeys.js';
+import UsersPage from './pages/Main/Users/Users.jsx';
+import { UserProvider } from './components/core/User/Provider/Provider.jsx';
+import OthersProfilePage from './pages/Main/Profile/Others/Others.jsx';
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <SessionProvider>
+      <SessionProvider queryKey={QUERY_KEYS.USERS.OWN}>
         <BrowserRouter>
           <ScrollToTopRouter>
             <Routes>
@@ -40,11 +43,15 @@ createRoot(document.getElementById('root')).render(
                 }
               >
                 <Route index element={<Navigate to={ROUTES.MAIN.PROFILE} replace />} />
-                <Route path={ROUTES.MAIN.PROFILE} element={<ProfilePage />} />
+                <Route path={ROUTES.MAIN.PROFILE} element={<OwnProfilePage />} />
                 <Route path={ROUTES.MAIN.BOOK.CREATE} element={<BookCreatePage />} />
                 <Route
                   path={`${ROUTES.MAIN.BOOK.PRIVATE.ROOT}/:bookId`}
-                  element={<BookProviderPage queryKey={QUERY_KEYS.BOOKS.PRIVATE} />}
+                  element={
+                    <BookProvider queryKey={QUERY_KEYS.BOOKS.PRIVATE}>
+                      <Outlet />
+                    </BookProvider>
+                  }
                 >
                   <Route index element={<BookPage />} />
                   <Route path={ROUTES.MAIN.BOOK.PRIVATE.EDIT} element={<BookEditPage />} />
@@ -52,11 +59,26 @@ createRoot(document.getElementById('root')).render(
                 </Route>
                 <Route
                   path={`${ROUTES.MAIN.BOOK.PUBLIC.ROOT}/:bookId`}
-                  element={<BookProviderPage queryKey={QUERY_KEYS.BOOKS.PUBLIC} />}
+                  element={
+                    <BookProvider queryKey={QUERY_KEYS.BOOKS.PUBLIC}>
+                      <Outlet />
+                    </BookProvider>
+                  }
                 >
                   <Route index element={<BookPage />} />
                 </Route>
                 <Route path={ROUTES.MAIN.SEARCH} element={<SearchPage />} />
+                <Route path={ROUTES.MAIN.USERS} element={<UsersPage />} />
+                <Route
+                  path={`${ROUTES.MAIN.USERS}/:userId`}
+                  element={
+                    <UserProvider queryKey={QUERY_KEYS.USERS.OTHERS}>
+                      <Outlet />
+                    </UserProvider>
+                  }
+                >
+                  <Route index element={<OthersProfilePage />} />
+                </Route>
               </Route>
               <Route
                 path={ROUTES.SETTINGS.ROOT}

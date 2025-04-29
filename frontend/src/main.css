@@ -41,6 +41,8 @@
   --animate-bump: bump 0.6s ease-out;
   --animate-shimmer: shimmer 1.5s linear infinite;
 
+  --breakpoint-xs: 30rem;
+
   @keyframes slideInFromRightFull {
     from {
       transform: translateX(100%);

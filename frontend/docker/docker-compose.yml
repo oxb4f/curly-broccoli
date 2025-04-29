@@ -51,6 +51,8 @@ services:
       - POSTGRES_DB=app
       - POSTGRES_HOST=backend-db
       - POSTGRES_PORT=5432
+    volumes:
+      - ./dumpfile.sql:/docker-entrypoint-initdb.d/dumpfile.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U app -d app -p 5432 -h backend-db"]
       interval: 5s
@@ -69,7 +71,7 @@ services:
       - MINIO_ROOT_USER=minio
       - MINIO_ROOT_PASSWORD=password12345
     volumes:
-      - ./docker/minio/data:/data
+      - ~/minio/data:/data
     healthcheck:
       test: ["CMD-SHELL", "mc alias set dev http://backend-minio:9000 minio password12345"]
       interval: 5s

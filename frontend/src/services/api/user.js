@@ -12,6 +12,13 @@ const getUser = async (id) => {
   return processResponse(response, 'users');
 };
 
+const getUsers = async () => {
+  const response = await api.get('users');
+  console.log(response);
+
+  return processResponse(response, 'users');
+};
+
 const createUser = async (inputData) => {
   const requestPayload = prepareRequest(inputData, 'users', 'signUp');
   const response = await api.post('users', requestPayload);
@@ -38,4 +45,4 @@ const changeUserInfo = async (id, inputData) => {
   return processResponse(response, 'users');
 };
 
-export { getUser, createUser, signInUser, changeUserInfo };
+export { getUser, getUsers, createUser, signInUser, changeUserInfo };

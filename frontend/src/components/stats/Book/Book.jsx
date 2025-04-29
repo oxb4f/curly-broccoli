@@ -3,7 +3,7 @@ import useBooksService from '../../../hooks/useBooksService';
 import Skeleton from '../../core/Skeleton/Skeleton';
 import ChangeableStats from '../../core/Stats/Changeable/Changeable';
 
-const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
+const BookStats = ({ bookId, stats, isOwn, className = '' }) => {
   const { edit } = useBooksService();
 
   const itemClasses = 'size-7 transition-all ';
@@ -48,7 +48,7 @@ const BookStats = ({ bookId, stats, isPublic, className = '' }) => {
   return stats ? (
     <ChangeableStats
       className={className}
-      items={[...items.common, ...(isPublic ? items.public : items.private)]}
+      items={[...items.common, ...(isOwn ? items.private : items.public)]}
     />
   ) : (
     <Skeleton type="text" />

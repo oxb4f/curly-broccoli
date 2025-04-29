@@ -9,7 +9,7 @@ const ROUTES = {
   },
   MAIN: {
     ROOT: `/${MAIN_ROOT}`,
-    PROFILE: `profile`,
+    PROFILE: `/profile`,
     BOOK: {
       ROOT: `/${BOOK_ROOT}`,
       PRIVATE: {
@@ -20,7 +20,8 @@ const ROUTES = {
       PUBLIC: { ROOT: `/${BOOK_ROOT}/public` },
       CREATE: `/${BOOK_ROOT}/create`
     },
-    SEARCH: `search`
+    SEARCH: `/search`,
+    USERS: `/users`
   },
   SETTINGS: {
     ROOT: `/${SETTINGS_ROOT}`,

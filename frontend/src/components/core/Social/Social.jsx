@@ -3,7 +3,7 @@ import InstagramIcon from '@/assets/svgs/instagram.svg?react';
 import Navigation from '../Navigation/Navigation';
 import Skeleton from '../Skeleton/Skeleton';
 
-const Social = ({ social, className = '' }) => {
+const Social = ({ social, isLoading, className = '' }) => {
   const getProperIcon = (socialName) => {
     switch (socialName.toLowerCase()) {
       case 'telegram':
@@ -31,12 +31,12 @@ const Social = ({ social, className = '' }) => {
 
   return (
     <>
-      {social ? (
+      {isLoading ? (
+        <Skeleton type="rounded" width="1.75rem" height="1.75rem" className={className} />
+      ) : (
         Boolean(navigation.items.length) && (
           <Navigation list={navigation} className={`stroke-pr-main ${className}`} />
         )
-      ) : (
-        <Skeleton type="rounded" width="1.75rem" height="1.75rem" />
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import BookPhoto from '../../../../components/core/Book/Photo/Photo';
-import { useBook } from '../Provider/Provider';
+import { useBook } from '../../../../components/core/Book/Provider/Provider';
 import BookReadingTracker from '../../../../components/core/Book/Reading/Tracker';
 import BookReadingRoadMap from '../../../../components/core/Book/Reading/RoadMap';
 

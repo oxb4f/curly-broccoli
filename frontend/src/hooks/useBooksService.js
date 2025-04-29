@@ -3,9 +3,11 @@ import { uploadImage } from '../services/api/image';
 import useNavigatedMutation from './useNavigatedMutation';
 import { useQueryClient } from '@tanstack/react-query';
 import QUERY_KEYS from '../constants/queryKeys';
+import { useSession } from '../components/core/SessionProvider/SessionProvider';
 
 const useBooksService = () => {
   const queryClient = useQueryClient();
+  const { user } = useSession();
 
   const { mutateAsync: create } = useNavigatedMutation({
     mutationFn: async (inputData) => {
@@ -37,9 +39,12 @@ const useBooksService = () => {
       return response;
     },
     onSuccess: (bookData) => {
-      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE, bookData.id], () => bookData);
+      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE, bookData.id], () => ({
+        ...bookData,
+        userId: user.id
+      }));
 
-      queryClient.setQueryData(QUERY_KEYS.BOOKS.PRIVATE, (oldBookData) => {
+      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE, user.id], (oldBookData) => {
         if (!oldBookData?.pages) return;
 
         return {
@@ -56,13 +61,21 @@ const useBooksService = () => {
   const { mutateAsync: remove } = useNavigatedMutation({
     mutationFn: bookApi.removeBook,
     onSuccess: () => {
-      queryClient.invalidateQueries(QUERY_KEYS.BOOKS.PRIVATE);
+      queryClient.invalidateQueries([...QUERY_KEYS.BOOKS.PRIVATE, user.id]);
     }
   });
 
-  const add = async (id) => {
-    await bookApi.addBook(id);
-  };
+  const { mutateAsync: add } = useNavigatedMutation({
+    mutationFn: bookApi.addBook,
+    onSuccess: (newBookData, publicBookId) => {
+      console.log(newBookData);
+      queryClient.invalidateQueries([...QUERY_KEYS.BOOKS.PUBLIC, publicBookId]);
+      // queryClient.setQueryData([...QUERY_KEYS.BOOKS.PUBLIC, publicBookId], (oldBookData) => {
+      //   console.log(oldBookData);
+      //   console.log(bookData);
+      // });
+    }
+  });
 
   return { create, edit, remove, add };
 };

@@ -1,6 +1,6 @@
 import DropDown from '../../core/DropDown/DropDown';
 import Logo from '../../core/Logo/Logo';
-import ProfilePhoto from '../../core/Profile/Photo/Photo';
+import UserImage from '../../core/User/Image/Image';
 import Sidebar from '../../core/Sidebar/Sidebar';
 import Navigation from '../../core/Navigation/Navigation';
 import NavigationLink from '../../core/Navigation/Link/Link';
@@ -9,7 +9,8 @@ import {
   BookOpenIcon,
   MagnifyingGlassIcon,
   Cog8ToothIcon,
-  ArrowLeftStartOnRectangleIcon
+  ArrowLeftStartOnRectangleIcon,
+  UsersIcon
 } from '@heroicons/react/24/outline';
 import ROUTES from '../../../constants/routes';
 import { useSession } from '@/components/core/SessionProvider/SessionProvider';
@@ -47,6 +48,13 @@ const MainSidebar = ({ className = '' }) => {
             linkProps: {
               to: ROUTES.MAIN.BOOK.ROOT,
               children: <BookOpenIcon />
+            }
+          },
+          {
+            name: 'users',
+            linkProps: {
+              to: ROUTES.MAIN.USERS,
+              children: <UsersIcon />
             }
           },
           {
@@ -90,7 +98,7 @@ const MainSidebar = ({ className = '' }) => {
           to: '/profile',
           className: profileLinkClasses,
           children: (
-            <ProfilePhoto imageUrl={user?.imageUrl} isLoading={isPending} className="size-full" />
+            <UserImage imageUrl={user?.imageUrl} isLoading={isPending} className="size-full" />
           )
         }
       }

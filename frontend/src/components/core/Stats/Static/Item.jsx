@@ -1,9 +1,9 @@
 const StaticStatsItem = ({ name, count, className = '', children }) => {
   return (
-    <li className={className} title={name}>
-      {Number.isFinite(count) && <p className="font-bold text-center break-words">{count}</p>}
-      <p className={`text-center break-words`}>{children}</p>
-    </li>
+    <div className={className} title={name}>
+      <dt className={`text-center break-words`}>{children}</dt>
+      {Number.isFinite(count) && <dd className="font-bold text-center break-words">{count}</dd>}
+    </div>
   );
 };
 
