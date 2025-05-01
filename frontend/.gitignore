@@ -18,6 +18,7 @@ docker/minio
 
 # Editor directories and files
 .vscode/*
+jsconfig.json
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -27,4 +28,4 @@ docker/minio
 *.sln
 *.sw?
 profile-photo*
-dumpfile.sql
+etc/db/

@@ -1,0 +1,35 @@
+:root {
+  --project-main-color: #00d7e7;
+  --project-main-color-soft: #8ddfe3;
+  --project-main-color-mute: #00727a;
+
+  --project-secondary-color: #bf7af0;
+  --project-secondary-color-soft: #ca97ef;
+  --project-secondary-color-mute: #d3b8e9;
+
+  --project-bg-main-color: #000000;
+  --project-bg-main-color-inverted: #ededed;
+  --project-bg-secondary-color: #1a1a1a;
+  --project-bg-secondary-color-inverted: #4d4d4d;
+  --project-bg-tertiary-color: #2a2a2a;
+  --project-bg-tertiary-color-inverted: #666666;
+
+  --project-border-color: rgba(255, 255, 255, 0.14);
+
+  --project-text-color: #ededed;
+  --project-text-color-darker: #a1a1a1;
+  --project-text-color-inverted: #000000;
+
+  --project-error-color: #eb4848;
+  --project-error-color-soft: #e78b8b;
+
+  --project-important-color: #eb4848;
+  --project-important-color-soft: #e78b8b;
+  --project-important-color-mute: #972424;
+
+  --project-rating-color: #fffb00;
+  --project-rating-color-mute: #ffa600;
+
+  --project-font: 'Roboto', sans-serif;
+  --project-logo-font: 'Pacifico', cursive;
+}

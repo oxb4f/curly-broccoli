@@ -1,0 +1,31 @@
+@utility description {
+  color: var(--color-pr-text-darker);
+}
+
+@utility hint {
+  color: var(--color-pr-text-darker);
+}
+
+@utility link {
+  color: var(--color-pr-main);
+  cursor: pointer;
+}
+
+@utility sidebar {
+  grid-area: sidebar;
+  @apply sticky top-0;
+}
+
+@utility main {
+  grid-area: main;
+  @apply min-h-screen px-5 md:px-20;
+}
+
+@utility content {
+  @apply size-full flex justify-center px-20;
+}
+
+@utility footer {
+  grid-area: footer;
+  @apply border-pr-border bg-pr-bg-secondary;
+}

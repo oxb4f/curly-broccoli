@@ -1,83 +1,51 @@
-.slide-enter-active {
-  transition: all 0.1s ease-out;
-}
-
-.slide-leave-active {
-  transition: all 0.1s ease-out;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  transform: translateY(-5px);
-  opacity: 0;
-}
-
-@keyframes authorization-window-slide {
-  from {
-    transform: translateX(100%);
+@theme {
+  @keyframes slideInFromRightFull {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
-  to {
-    transform: translateX(0);
+
+  @keyframes slideInFromLeftThird {
+    from {
+      transform: translateX(-33%);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
-}
 
-@keyframes authorization-scale {
-  from {
-    transform: scale(1);
+  @keyframes fadedSlideInFromTopFull {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  to {
-    transform: scale(1.01);
+
+  @keyframes bump {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.01);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
-}
 
-@keyframes app-banner-slide {
-  from {
-    transform: translateX(-25%);
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
   }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes show-user-options {
-  from {
-    height: 0;
-  }
-  to {
-    height: 100%;
-  }
-}
-
-.authorization {
-  animation: 0.3s ease-out 2 alternate authorization-scale;
-}
-
-.authorization__window {
-  animation: 0.8s ease-in-out 0.6s both authorization-window-slide;
-}
-
-.app-banner__animation {
-  animation: 0.8s ease-in-out 0.6s both app-banner-slide;
-}
-
-.input {
-  transition: border-color 0.1s ease-out;
-  transition: box-shadow 0.15s ease-out;
-}
-
-.navigation__icon {
-  transition: transform 0.1s ease-out;
-}
-
-.sidebar__user-profile .profile-photo {
-  transition: all 0.1s ease-out;
-}
-
-.navigation__link:before,
-.navigation__link::after {
-  transition: transform 0.1s ease-out;
-}
-
-.options {
-  transition: grid-template-rows 0.3s ease-out;
 }

@@ -1,0 +1,38 @@
+@theme {
+  --color-pr-main: var(--project-main-color);
+  --color-pr-main-soft: var(--project-main-color-soft);
+  --color-pr-main-mute: var(--project-main-color-mute);
+  --color-pr-bg-main: var(--project-bg-main-color);
+  --color-pr-bg-main-inverted: var(--project-bg-main-color-inverted);
+  --color-pr-bg-secondary: var(--project-bg-secondary-color);
+  --color-pr-bg-secondary-inverted: var(--project-bg-secondary-color-inverted);
+  --color-pr-bg-tertiary: var(--project-bg-tertiary-color);
+  --color-pr-bg-tertiary-inverted: var(--project-bg-tertiary-color-inverted);
+  --color-pr-border: var(--project-border-color);
+  --color-pr-text: var(--project-text-color);
+  --color-pr-text-darker: var(--project-text-color-darker);
+  --color-pr-text-inverted: var(--project-text-color-inverted);
+  --color-pr-error: var(--project-error-color);
+  --color-pr-error-soft: var(--project-error-color-soft);
+  --color-pr-important: var(--project-important-color);
+  --color-pr-important-soft: var(--project-important-color-soft);
+  --color-pr-important-mute: var(--project-important-color-mute);
+  --color-pr-rating: var(--project-rating-color);
+  --color-pr-rating-mute: var(--project-rating-color-mute);
+
+  --font-pr-main: var(--project-font);
+  --font-pr-logo: var(--project-logo-font);
+
+  --border-width-1: 1px;
+
+  --grid-template-rows-hide: min-content 0fr;
+  --grid-template-rows-show: min-content 1fr;
+
+  --animate-slide-in-from-right-full: slideInFromRightFull 0.8s ease-in-out 0.6s both;
+  --animate-slide-in-from-left-1\/3: slideInFromLeftThird 0.8s ease-in-out 0.6s both;
+  --animate-faded-slide-in-from-top-full: fadedSlideInFromTopFull 0.2s ease-out;
+  --animate-bump: bump 0.6s ease-out;
+  --animate-shimmer: shimmer 1.5s linear infinite;
+
+  --breakpoint-xs: 30rem;
+}
