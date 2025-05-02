@@ -79,7 +79,8 @@ HTTP 200
 [Asserts]
 jsonpath "$.total" == 2
 jsonpath "$.data" count == 2
-jsonpath "$.data[*].fromUserId" includes {{user1_id}}
+jsonpath "$.data[*].fromUser" count >= 1
+jsonpath "$.data[*].fromUser.id" includes {{user1_id}}
 jsonpath "$.data[*].toUserId" includes {{user3_id}}
 jsonpath "$.data[*].payload" count >= 1
 jsonpath "$.data[0].payload" exists
@@ -122,7 +123,8 @@ HTTP 200
 [Asserts]
 jsonpath "$.total" == 3
 jsonpath "$.data" count == 3
-jsonpath "$.data[*].fromUserId" includes {{user1_id}}
+jsonpath "$.data[*].fromUser" count >= 1
+jsonpath "$.data[*].fromUser.id" includes {{user1_id}}
 jsonpath "$.data[*].toUserId" includes {{user3_id}}
 jsonpath "$.data[*].payload" count >= 1
 jsonpath "$.data[0].payload" exists
@@ -156,7 +158,8 @@ HTTP 200
 [Asserts]
 jsonpath "$.total" == 4
 jsonpath "$.data" count == 4
-jsonpath "$.data[*].fromUserId" includes {{user1_id}}
+jsonpath "$.data[*].fromUser" count >= 1
+jsonpath "$.data[*].fromUser.id" includes {{user1_id}}
 jsonpath "$.data[*].toUserId" includes {{user3_id}}
 jsonpath "$.data[*].payload" count >= 1
 jsonpath "$.data[0].payload" exists

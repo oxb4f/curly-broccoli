@@ -26,7 +26,7 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 			numberOfPages: userBook.profile.numberOfPages,
 			isbn: userBook.profile.isbn,
 			isReadingTrackerStarted: userBook.isReadingTrackerStarted,
-            userId: userBook.userId
+			userId: userBook.userId,
 		})),
 		total,
 	});

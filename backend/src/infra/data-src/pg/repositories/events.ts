@@ -1,10 +1,10 @@
-import { and, count } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import type {
 	ListEventsDto,
 	ListEventsFilter,
 } from "../../../../services/events/repository";
 import type { EventsRepository } from "../../../../services/events/repository";
-import { events } from "../schema";
+import { events, users } from "../schema";
 import { BaseRepository } from "./base";
 
 export class PgEventsRepository
@@ -33,6 +33,7 @@ export class PgEventsRepository
 		const query = this._connection
 			.select()
 			.from(events)
+			.innerJoin(users, eq(users.id, events.fromUserId))
 			.where(and(...this.transformObjectIntoEqSequence(filter, events)))
 			.$dynamic();
 
@@ -44,12 +45,18 @@ export class PgEventsRepository
 
 		data = result.map((row) => {
 			return {
-				id: row.id,
-				name: row.name,
-				payload: row.payload,
-				toUserId: row.toUserId,
-				fromUserId: row.fromUserId,
-				createdAt: row.createdAt,
+				id: row.events.id,
+				name: row.events.name,
+				payload: row.events.payload,
+				toUserId: row.events.toUserId,
+				fromUser: {
+				    id: row.users.id,
+                    username: row.users.username,
+                    firstName: row.users.firstName,
+                    lastName: row.users.lastName,
+                    imageUrl: row.users.imageUrl,
+				},
+				createdAt: row.events.createdAt,
 			};
 		});
 

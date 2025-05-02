@@ -24,7 +24,7 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 			name: event.name,
 			payload: event.payload,
 			toUserId: event.toUserId,
-			fromUserId: event.fromUserId,
+			fromUser: event.fromUser,
 			createdAt: event.createdAt,
 		})),
 		total: events.total,

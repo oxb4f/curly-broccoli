@@ -1,17 +1,20 @@
 import { z } from "zod";
 import {
+	url,
 	date,
 	id,
 	limit,
 	offset,
 	orderDirection,
 	orderField,
+	username,
 } from "../../common/validation/schema";
 import {
 	type DtoShape,
 	createInputDto,
 	createOutputDto,
 } from "../../dtos/factory";
+import { firstName, lastName } from "../../users/common/validation/schema";
 
 export type InShape = DtoShape<typeof ListDtoIn>;
 export type OutShape = DtoShape<typeof ListDtoOut>;
@@ -35,7 +38,13 @@ export const ListDtoOut = createOutputDto(
 				name: z.string(),
 				payload: z.any(),
 				toUserId: id,
-				fromUserId: id,
+				fromUser: z.object({
+					id: id,
+					username: username.nullable(),
+					firstName: firstName.nullable(),
+					lastName: lastName.nullable(),
+					imageUrl: url.nullable(),
+				}),
 				createdAt: date,
 			}),
 		),

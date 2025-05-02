@@ -1,4 +1,4 @@
-import type { Title, Description } from "../../book-profile";
+import type { Description, Title } from "../../book-profile";
 import type { Id } from "../../types/id";
 import type { ImageUrl } from "../../user";
 import { BaseEvent, type EventConstructorPayload } from "../base";

@@ -1,10 +1,10 @@
 import assert from "node:assert";
+import { ReadingTrackerStartEvent } from "../../../entities/events/reading-trackers/reading-tracker-start-event";
 import { ReadingTracker, STATE } from "../../../entities/reading-tracker";
 import { ServiceError } from "../../errors/error";
+import { followersEventsFactory } from "../../events/factories/followers-events";
 import { makeService } from "../../make-service";
 import { CreateDtoIn, CreateDtoOut, type InShape, type OutShape } from "./dto";
-import { followersEventsFactory } from "../../events/factories/followers-events";
-import { ReadingTrackerStartEvent } from "../../../entities/events/reading-trackers/reading-tracker-start-event";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 	const getUserDto = await context.usersRepository.get({

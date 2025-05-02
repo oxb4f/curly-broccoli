@@ -8,7 +8,7 @@ export type ReadingTrackerStartEventPayload = {
 	profile: {
 		title: Title;
 		imageUrl: ImageUrl;
-        description: Description;
+		description: Description;
 	};
 	userBookId: Id;
 };

@@ -54,7 +54,7 @@ export class PgUserBooksRepository
 				isbn: result[0].book_profiles.isbn,
 			},
 			isRead: result[0].user_books.isRead,
-            userId: result[0].user_books.userId
+			userId: result[0].user_books.userId,
 		};
 	}
 
