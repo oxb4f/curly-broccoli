@@ -1,4 +1,4 @@
-import type { Title } from "../../book-profile";
+import type { Description, Title } from "../../book-profile";
 import type { Id } from "../../types/id";
 import type { ImageUrl } from "../../user";
 import { BaseEvent, type EventConstructorPayload } from "../base";
@@ -8,6 +8,7 @@ export type ReadingTrackerStartEventPayload = {
 	profile: {
 		title: Title;
 		imageUrl: ImageUrl;
+        description: Description;
 	};
 	userBookId: Id;
 };
