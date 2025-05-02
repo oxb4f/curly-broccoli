@@ -1,5 +1,5 @@
 import { Base, type CreatedAt, type UpdatedAt } from "./base";
-import { BookProfile, type BookProfileData } from "./bookProfile";
+import { BookProfile, type BookProfileData } from "./book-profile";
 import type { MaybeNumberId } from "./types/id";
 
 export type IsPublic = boolean;

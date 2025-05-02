@@ -72,11 +72,15 @@ export const userBooks = pgTable(
 	"user_books",
 	{
 		...base,
-		bookId: bigint("book_id", { mode: "number" }).references(() => books.id),
-		userId: bigint("user_id", { mode: "number" }).references(() => users.id),
-		bookProfileId: bigint("book_profile_id", { mode: "number" }).references(
-			() => bookProfiles.id,
-		),
+		bookId: bigint("book_id", { mode: "number" })
+			.references(() => books.id)
+			.notNull(),
+		userId: bigint("user_id", { mode: "number" })
+			.references(() => users.id)
+			.notNull(),
+		bookProfileId: bigint("book_profile_id", { mode: "number" })
+			.references(() => bookProfiles.id)
+			.notNull(),
 		isFavorite: boolean("is_favorite").notNull().default(false),
 		isRead: boolean("is_read").notNull().default(false),
 		rating: integer("rating"),
@@ -129,4 +133,20 @@ export const followers = pgTable(
 	(followers) => [
 		index("user_follower_idx").on(followers.userId, followers.followerId),
 	],
+);
+
+export const events = pgTable(
+	"events",
+	{
+		...base,
+		name: varchar("name", { length: 255 }).notNull(),
+		payload: json("payload").notNull(),
+		toUserId: bigint("to_user_id", { mode: "number" })
+			.references(() => users.id)
+			.notNull(),
+		fromUserId: bigint("from_user_id", { mode: "number" })
+			.references(() => users.id)
+			.notNull(),
+	},
+	(events) => [index("name_to_user_id_idx").on(events.name, events.toUserId)],
 );

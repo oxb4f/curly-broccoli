@@ -7,7 +7,7 @@ import type {
 	Isbn,
 	NumberOfPages,
 	Title,
-} from "../../entities/bookProfile";
+} from "../../entities/book-profile";
 import type { Id } from "../../entities/types/id";
 import type {
 	IsFavorite,
@@ -24,11 +24,11 @@ import type {
 
 export type GetBookFilter = {
 	id: Id;
-    isAddedByUserId?: Id;
+	isAddedByUserId?: Id;
 };
 
 export type ListBookFilter = {
-    isAddedByUserId?: Id;
+	isAddedByUserId?: Id;
 	limit?: number | null;
 	offset?: number | null;
 	orderDirection?: OrderDirection | null;
@@ -41,13 +41,13 @@ export type ListUserBookFilter = {
 	orderDirection?: OrderDirection | null;
 	orderField?: string | null;
 	userId: Id;
-    checkIsReadingTrackerStarted?: boolean;
+	checkIsReadingTrackerStarted?: boolean;
 };
 
 export type GetBookDto = {
 	id: Id;
 	isPublic: boolean;
-    isPrivateAdded: boolean;
+	isPrivateAdded: boolean;
 	profile: {
 		id: Id;
 		title: Title;
@@ -114,6 +114,7 @@ export interface UserBooksListDto {
 		};
 		isRead: IsRead;
 		isReadingTrackerStarted: boolean;
+		userId: Id;
 	}[];
 	total: number;
 }
@@ -140,6 +141,7 @@ export type GetUserBookDto = {
 		isbn: Isbn;
 	};
 	isRead: IsRead;
+	userId: Id;
 };
 
 export type UserBookUpdateData = {

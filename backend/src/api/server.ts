@@ -5,6 +5,7 @@ import { configPlugin } from "./plugins/config";
 import { contextPlugin } from "./plugins/context";
 import { accessesRoute } from "./routes/accesses";
 import { booksRoute } from "./routes/books";
+import { eventsRoute } from "./routes/events";
 import { followersRoute } from "./routes/followers";
 import { imagesRoute } from "./routes/images";
 import { pingRoute } from "./routes/ping";
@@ -24,6 +25,7 @@ export const app = new Elysia()
 	.use(booksRoute)
 	.use(readingTrackersRoute)
 	.use(followersRoute)
+	.use(eventsRoute)
 	.use(
 		swagger({
 			path: "/docs",
@@ -40,6 +42,7 @@ export const app = new Elysia()
 					{ name: "Books" },
 					{ name: "Reading Trackers" },
 					{ name: "Followers" },
+					{ name: "Events" },
 				],
 			},
 		}),

@@ -1,9 +1,11 @@
 import assert from "node:assert";
 import { Book } from "../../../../entities/book";
-import { BookProfile } from "../../../../entities/bookProfile";
+import { BookProfile } from "../../../../entities/book-profile";
+import { UserBooksAddEvent } from "../../../../entities/events/user-books/user-books-add-event";
 import { User } from "../../../../entities/user";
 import { UserBook } from "../../../../entities/userBook";
 import { ServiceError } from "../../../errors/error";
+import { followersEventsFactory } from "../../../events/factories/followers-events";
 import { makeService } from "../../../make-service";
 import { AddDtoIn, AddDtoOut, type InShape, type OutShape } from "./dto";
 
@@ -44,6 +46,21 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 			profile: bookProfile,
 		}),
 		user: await User.from(getUserDto),
+	});
+
+	await followersEventsFactory({
+		userId: getUserDto.id,
+		context,
+		eventGeneratorFn: ({ follower, user }) =>
+			new UserBooksAddEvent({
+				toUserId: follower.id,
+				fromUserId: user.id,
+				profile: {
+					title: bookProfile.getTitle(),
+					imageUrl: bookProfile.getImageUrl(),
+				},
+				userBookId: userBook.getId(),
+			}),
 	});
 
 	await context.userBooksRepository.create(userBook);

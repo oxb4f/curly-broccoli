@@ -1,6 +1,6 @@
 import { Base, type CreatedAt, type UpdatedAt } from "./base";
 import { EntityValidationError } from "./errors/validation";
-import { ReadingRecord } from "./readingRecord";
+import { ReadingRecord } from "./reading-record";
 import type { Id, MaybeNumberId } from "./types/id";
 
 export const STATE = {

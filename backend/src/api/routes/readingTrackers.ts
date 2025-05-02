@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import Elysia, { t } from "elysia";
-import changeStateService from "../../services/readingTracker/change-state/action";
-import listReadingTrackerService from "../../services/readingTracker/list/action";
-import startReadingTrackerService from "../../services/readingTracker/start/action";
+import changeStateService from "../../services/reading-tracker/change-state/action";
+import listReadingTrackerService from "../../services/reading-tracker/list/action";
+import startReadingTrackerService from "../../services/reading-tracker/start/action";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 

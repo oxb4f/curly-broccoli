@@ -1,6 +1,6 @@
 import { Base, type CreatedAt, type UpdatedAt } from "./base";
 import type { Book } from "./book";
-import { BookProfile, type BookProfileData } from "./bookProfile";
+import { BookProfile, type BookProfileData } from "./book-profile";
 import type { MaybeNumberId } from "./types/id";
 import type { User } from "./user";
 

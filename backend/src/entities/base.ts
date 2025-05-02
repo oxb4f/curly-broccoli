@@ -2,6 +2,11 @@ import type { Id, MaybeNumberId } from "./types/id";
 
 export type CreatedAt = Date | undefined;
 export type UpdatedAt = Date | undefined;
+export type ConstructorPayload = {
+	id?: MaybeNumberId;
+	createdAt?: CreatedAt;
+	updatedAt?: UpdatedAt;
+};
 
 export abstract class Base {
 	protected _id: Id;
@@ -10,14 +15,10 @@ export abstract class Base {
 
 	abstract toPlainObject(): Record<string, any>;
 
-	protected constructor({
-		id,
-		createdAt,
-		updatedAt,
-	}: { id: MaybeNumberId; createdAt: CreatedAt; updatedAt: UpdatedAt }) {
-		this._id = id ?? Base._generateUniqueId();
-		this._createdAt = createdAt ?? new Date();
-		this._updatedAt = updatedAt ?? new Date();
+	protected constructor(payload: ConstructorPayload) {
+		this._id = payload.id ?? Base._generateUniqueId();
+		this._createdAt = payload.createdAt ?? new Date();
+		this._updatedAt = payload.updatedAt ?? new Date();
 	}
 
 	protected static _generateUniqueId() {

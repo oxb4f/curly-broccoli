@@ -67,7 +67,7 @@ export const context = {
 } satisfies Context;
 
 export const userFixture1 = {
-    id: 1,
+	id: 1,
 	firstName: "John",
 	lastName: "Doe",
 	username: "test",

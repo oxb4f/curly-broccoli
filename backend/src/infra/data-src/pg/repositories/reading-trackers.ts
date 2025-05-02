@@ -1,6 +1,6 @@
 import { and, count, eq, inArray } from "drizzle-orm";
-import { ReadingRecord, type State } from "../../../../entities/readingRecord";
-import type { ReadingTracker } from "../../../../entities/readingTracker";
+import { ReadingRecord, type State } from "../../../../entities/reading-record";
+import type { ReadingTracker } from "../../../../entities/reading-tracker";
 import type {
 	ExistsArgs,
 	GetReadingTrackerFilter,
@@ -8,7 +8,7 @@ import type {
 	ListReadingTrackerFilter,
 	ReadingTrackerUpdateData,
 	ReadingTrackersRepository,
-} from "../../../../services/readingTracker/repository";
+} from "../../../../services/reading-tracker/repository";
 import { readingRecords, readingTrackers, userBooks } from "../schema";
 import { BaseRepository } from "./base";
 

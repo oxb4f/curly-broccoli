@@ -3,11 +3,13 @@ import { Elysia } from "elysia";
 import { getConnection } from "../../infra/data-src/pg/connection";
 import { PgAccessesRepository } from "../../infra/data-src/pg/repositories/accesses";
 import { PgBooksRepository } from "../../infra/data-src/pg/repositories/books";
+import { PgEventsRepository } from "../../infra/data-src/pg/repositories/events";
 import { PgFollowersRepository } from "../../infra/data-src/pg/repositories/followers";
 import { PgImagesRepository } from "../../infra/data-src/pg/repositories/images";
-import { PgReadingTrackersRepository } from "../../infra/data-src/pg/repositories/readingTrackers";
-import { PgUserBooksRepository } from "../../infra/data-src/pg/repositories/userBooks";
+import { PgReadingTrackersRepository } from "../../infra/data-src/pg/repositories/reading-trackers";
+import { PgUserBooksRepository } from "../../infra/data-src/pg/repositories/user-books";
 import { PgUsersRepository } from "../../infra/data-src/pg/repositories/users";
+import { DbEventDispatcher } from "../../infra/event-dispatcher/dispatcher";
 import { createStorage } from "../../infra/file-storage/factory";
 import type { Context } from "../../services/context";
 import { configPlugin } from "./config";
@@ -39,7 +41,9 @@ export const contextPlugin = new Elysia({ name: "contextPlugin" })
 					dbConnection,
 				),
 				followersRepository: new PgFollowersRepository(dbConnection),
+				eventsRepository: new PgEventsRepository(dbConnection),
 				fileStorage: createStorage(),
+				eventDispatcher: new DbEventDispatcher(dbConnection),
 			} satisfies Context,
 		};
 	});

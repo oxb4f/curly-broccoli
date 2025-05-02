@@ -1,10 +1,12 @@
+import type { BaseEvent } from "../entities/events/base";
 import type { Config } from "../infra/config";
 import type { AccessesRepository } from "./accesses/repository";
 import type { BooksRepository } from "./books/repository";
 import type { UserBooksRepository } from "./books/repository";
+import type { EventsRepository } from "./events/repository";
 import type { FollowersRepository } from "./followers/repository";
 import type { ImagesRepository } from "./images/repository";
-import type { ReadingTrackersRepository } from "./readingTracker/repository";
+import type { ReadingTrackersRepository } from "./reading-tracker/repository";
 import type { UsersRepository } from "./users/repository";
 
 export type FileStoragePutPayload = {
@@ -25,8 +27,13 @@ export interface FileStorage {
 	get(payload: FileStorageGetPayload): Promise<File>;
 }
 
+export interface EventDispatcher {
+	dispatch(event: BaseEvent): Promise<void>;
+}
+
 export interface Context {
 	config: Config;
+	eventDispatcher: EventDispatcher;
 	fileStorage: FileStorage;
 	usersRepository: UsersRepository;
 	accessesRepository: AccessesRepository;
@@ -35,4 +42,5 @@ export interface Context {
 	userBooksRepository: UserBooksRepository;
 	readingTrackersRepository: ReadingTrackersRepository;
 	followersRepository: FollowersRepository;
+	eventsRepository: EventsRepository;
 }

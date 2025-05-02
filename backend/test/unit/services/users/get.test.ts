@@ -40,10 +40,12 @@ test("Unit test: User Get Service", () => {
 
 	describe("should throw an error if user does not exist", async () => {
 		context.usersRepository.get = mock().mockImplementation(({ id }) =>
-			id ? null : {
-				...userFixture1,
-				access: createdAccessFixture1,
-			},
+			id
+				? null
+				: {
+						...userFixture1,
+						access: createdAccessFixture1,
+					},
 		);
 
 		await expect(
