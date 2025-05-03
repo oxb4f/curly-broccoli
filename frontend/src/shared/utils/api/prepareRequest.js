@@ -63,6 +63,19 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
         default:
           return;
       }
+    case 'events':
+      switch (apiAction) {
+        case 'get':
+          return {
+            params: {
+              orderField: data.orderField,
+              orderDirection: data.orderDirection,
+              limit: data.limit
+            }
+          };
+        default:
+          return;
+      }
     case 'books':
       switch (apiAction) {
         case 'get':

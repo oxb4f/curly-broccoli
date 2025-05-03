@@ -14,7 +14,7 @@
   --project-bg-tertiary-color: #2a2a2a;
   --project-bg-tertiary-color-inverted: #666666;
 
-  --project-border-color: rgba(255, 255, 255, 0.14);
+  --project-border-color: rgb(46, 46, 46);
 
   --project-text-color: #ededed;
   --project-text-color-darker: #a1a1a1;

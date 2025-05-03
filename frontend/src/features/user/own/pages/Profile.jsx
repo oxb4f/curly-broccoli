@@ -1,7 +1,7 @@
 import UserOverview from '@user/shared/components/Overview';
 import { useSession } from '@app/providers/SessionProvider';
 import BookInfiniteQueryWrapper from '@book/shared/components/InfiniteQueryWrapper';
-import BookPrivateOwnCatalog from '@book/private/own/components/Catalog';
+import BookOwnCatalog from '@book/own/components/Catalog';
 
 const OwnProfilePage = () => {
   const { user, isPending } = useSession();
@@ -13,7 +13,7 @@ const OwnProfilePage = () => {
       </header>
       <section>
         <BookInfiniteQueryWrapper userId={user?.id}>
-          {(books) => <BookPrivateOwnCatalog items={books} />}
+          {(books) => <BookOwnCatalog items={books} />}
         </BookInfiniteQueryWrapper>
       </section>
     </section>

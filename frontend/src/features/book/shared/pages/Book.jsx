@@ -78,7 +78,7 @@ const BookPage = () => {
         className="w-full min-w-96 max-w-full flex flex-col-reverse gap-7 text-2xl
         lg:max-w-lg lg:flex-col lg:py-4"
       >
-        <BookInfo data={book?.info} />
+        <BookInfo data={book?.info} isLoading={isPending} />
         {isOwn && (
           <div className={'flex justify-between'}>
             <BookStats

@@ -1,5 +1,4 @@
-const BookPrivateCatalogControls = ({
-  isOwn,
+const BookOwnCatalogControls = ({
   isSelectionEnabled,
   isAllSelected,
   toggleSelectionCallback,
@@ -25,15 +24,14 @@ const BookPrivateCatalogControls = ({
       ) : (
         <>
           <button className={controlButtonClasses}>Filter</button>
-          {isOwn && (
-            <button className={controlButtonClasses} onClick={toggleSelectionCallback}>
-              Edit all
-            </button>
-          )}
+
+          <button className={controlButtonClasses} onClick={toggleSelectionCallback}>
+            Edit all
+          </button>
         </>
       )}
     </div>
   );
 };
 
-export default BookPrivateCatalogControls;
+export default BookOwnCatalogControls;

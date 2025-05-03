@@ -2,13 +2,13 @@ import calculateAge from '../date/calculateAge';
 import formatDate from '../date/formatDate';
 import clearEmptyFields from '../object/clearEmptyFields';
 
-const processResponse = (data, apiEndpoint) => {
+const processResponse = (responseData, apiEndpoint) => {
   switch (apiEndpoint) {
     case 'users': {
-      if (data.users)
+      if (responseData.users)
         return {
-          ...data,
-          users: data.users.map((user) => processResponse(user, 'users'))
+          ...responseData,
+          users: responseData.users.map((user) => processResponse(user, 'users'))
         };
 
       const getPersonalInfo = (userData) => {
@@ -24,7 +24,7 @@ const processResponse = (data, apiEndpoint) => {
         };
       };
 
-      const { firstName, lastName, birthday, ...rest } = data;
+      const { firstName, lastName, birthday, ...rest } = responseData;
       const formatedBirthday = birthday?.split('T')?.[0] ?? null;
       const personalInfo = getPersonalInfo({ firstName, lastName, birthday: formatedBirthday });
       const clearedData = clearEmptyFields({ ...rest, personalInfo });
@@ -45,7 +45,7 @@ const processResponse = (data, apiEndpoint) => {
         rating,
         review,
         ...otherInfo
-      } = data;
+      } = responseData;
 
       if (books) {
         return { ...otherInfo, books: books.map((book) => processResponse(book, 'books')) };
@@ -66,21 +66,49 @@ const processResponse = (data, apiEndpoint) => {
     }
     case 'images': {
       return {
-        imageUrl: data.url
+        imageUrl: responseData.url
       };
     }
     case 'followers': {
       return {
-        followersId: data.id,
-        followed: Boolean(data.id)
+        followersId: responseData.id,
+        followed: Boolean(responseData.id)
+      };
+    }
+    case 'events': {
+      const { data, ...rest } = responseData;
+
+      return {
+        ...rest,
+        events: data.map(({ id, name, createdAt, fromUser, payload, ...rest }) => {
+          switch (name) {
+            case 'user_books.add': {
+              const { userBookId, profile } = payload;
+              return {
+                eventDetails: { id, createdAt, type: 'book', action: 'add' },
+                addedBook: { ...profile, id: userBookId },
+                fromUser: processResponse(fromUser, 'users')
+              };
+            }
+            case 'followers.create': {
+              return {
+                eventDetails: { id, createdAt, type: 'user', action: 'follow' },
+                followedUser: processResponse(payload.user, 'users'),
+                fromUser: processResponse(fromUser, 'users')
+              };
+            }
+            default:
+              return { payload, fromUser, createdAt, name, ...rest };
+          }
+        })
       };
     }
     case 'reading-trackers': {
-      if (data.trackers) {
+      if (responseData.trackers) {
         const dateSet = new Set();
         const formattedTrackers = [];
 
-        for (const tracker of data.trackers) {
+        for (const tracker of responseData.trackers) {
           const datetime = new Date(tracker.finishedAt);
           const date = `${datetime.getDate()}${datetime.getMonth()}${datetime.getFullYear()}`;
           const defaultFormat = processResponse(tracker, 'reading-trackers');
@@ -103,26 +131,29 @@ const processResponse = (data, apiEndpoint) => {
         }
 
         return {
-          ...data,
+          ...responseData,
           trackers: formattedTrackers
         };
       }
 
       return {
-        ...data,
+        ...responseData,
         state: {
-          isReading: data.state === 'reading',
-          isPaused: data.state === 'paused',
-          isFinished: data.state === 'finished',
-          isStarted: data.state === 'reading' || data.state === 'paused'
+          isReading: responseData.state === 'reading',
+          isPaused: responseData.state === 'paused',
+          isFinished: responseData.state === 'finished',
+          isStarted: responseData.state === 'reading' || responseData.state === 'paused'
         },
-        readingRecords: data.readingRecords.map((record) => ({
+        readingRecords: responseData.readingRecords.map((record) => ({
           ...record,
           totalMinutesDuration: formatDate(new Date(record.duration), {
             minute: 'total'
           })
         })),
-        totalDuration: data.readingRecords.reduce((result, record) => result + record.duration, 0)
+        totalDuration: responseData.readingRecords.reduce(
+          (result, record) => result + record.duration,
+          0
+        )
       };
     }
   }

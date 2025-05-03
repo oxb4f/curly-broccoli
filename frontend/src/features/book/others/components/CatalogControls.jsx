@@ -1,4 +1,4 @@
-const BookPublicCatalogControls = () => {
+const BookOthersCatalogControls = () => {
   const controlButtonClasses = 'p-2 rounded-md bg-pr-bg-secondary hover:bg-pr-bg-tertiary';
 
   return (
@@ -8,4 +8,4 @@ const BookPublicCatalogControls = () => {
   );
 };
 
-export default BookPublicCatalogControls;
+export default BookOthersCatalogControls;

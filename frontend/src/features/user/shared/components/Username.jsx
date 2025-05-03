@@ -1,10 +1,10 @@
 import Skeleton from '@shared/components/ui/Skeleton';
 
-const UserUsername = ({ username, isLoading, className = '' }) => {
+const UserUsername = ({ username, isLoading, short, className = '', as: Tag = 'span' }) => {
   return (
-    <h2 className={`break-words ${className}`}>
+    <Tag className={`break-words ${short ? 'max-w-24 truncate' : ''} ${className}`}>
       {isLoading ? <Skeleton type="text" /> : username}
-    </h2>
+    </Tag>
   );
 };
 

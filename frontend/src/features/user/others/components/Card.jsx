@@ -9,28 +9,31 @@ const UserCard = ({ user, isLoading, className = '' }) => {
 
   return (
     <article
-      className={`relative grid grid-cols-[5rem_1fr] grid-rows-[1fr_1fr] px-4 py-3 gap-x-4 gap-y-2 rounded-lg 
-        md:grid-rows-[9rem_2rem_auto] md:grid-cols-1
-        hover:bg-pr-bg-secondary ${className}`}
+      className={`relative grid grid-rows-[1fr_1fr] grid-cols-[5rem_1fr] gap-x-4 gap-y-2 px-4 py-3 text-2xl 
+        hover:bg-pr-bg-secondary 
+        md:grid-rows-[9rem_2rem_auto] md:grid-cols-1 md:text-xl md:text-center 
+             ${className}`}
     >
       <NavigationLink to={`${ROUTES.MAIN.USERS}/${user?.id}`} className="absolute inset-0 z-10" />
       <UserImage
-        className="justify-self-center row-span-full
+        className="justify-self-center self-center row-span-full h-full
         md:row-span-1"
         imageUrl={user?.imageUrl}
         isLoading={isLoading}
       />
       <UserUsername
-        className="self-end max-w-full text-2xl truncate text-start 
-        md:text-xl md:text-center"
+        className="self-end max-w-full"
         username={user?.username}
         isLoading={isLoading}
+        as="h2"
+        short
       />
       <UserPersonalInfo
         personalInfo={[user?.personalInfo?.calculated?.fullName]}
         isLoading={isLoading}
-        className="col-start-2 col-end-full truncate text-lg text-start
-        md:col-start-1 md:text-center md:text-sm"
+        className="col-start-2 col-end-full max-w-full text-lg
+        md:col-start-1 md:text-sm"
+        short
       />
 
       {/* <section className="flex justify-center">

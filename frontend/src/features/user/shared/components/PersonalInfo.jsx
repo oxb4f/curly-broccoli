@@ -1,9 +1,9 @@
 import Skeleton from '@shared/components/ui/Skeleton';
 
-const UserPersonalInfo = ({ personalInfo, isLoading, className = '' }) => {
+const UserPersonalInfo = ({ personalInfo, isLoading, short, className = '' }) => {
   const personalInfoValues = Object.values(personalInfo ?? {});
   return (
-    <p className={`break-words description ${className}`}>
+    <p className={`break-words description ${short ? 'max-w-32 truncate' : ''} ${className}`}>
       {isLoading ? (
         <Skeleton type={'text'} />
       ) : (

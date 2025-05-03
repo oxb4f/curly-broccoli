@@ -1,5 +1,6 @@
 const USERS_ALL = 'users';
 const BOOKS_ALL = 'books';
+const EVENTS_ALL = 'events';
 const READING_TRACKERS_ALL = 'reading-trackers';
 
 const QUERY_KEYS = {
@@ -12,6 +13,9 @@ const QUERY_KEYS = {
     ALL: [BOOKS_ALL],
     PRIVATE: [BOOKS_ALL, 'private'],
     PUBLIC: [BOOKS_ALL, 'public']
+  },
+  EVENTS: {
+    ALL: [EVENTS_ALL]
   },
   READING_TRACKERS: {
     ALL: [READING_TRACKERS_ALL],

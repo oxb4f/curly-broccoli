@@ -20,10 +20,11 @@ import UserImageSettingsPage from '@settings/pages/UserImage';
 import OthersProfilePage from '@user/others/pages/Profile';
 import OtherUsersPage from '@user/others/pages/Users';
 import BookPage from '@book/shared/pages/Book';
-import BookCreatePage from '@book/private/own/pages/Create';
-import BookEditPage from '@book/private/own/pages/Edit';
-import BookReadPage from '@book/private/own/pages/Read';
-import PublicBooksPage from '@book/public/pages/Books';
+import BookCreatePage from '@book/own/pages/Create';
+import BookEditPage from '@book/own/pages/Edit';
+import BookReadPage from '@book/own/pages/Read';
+import OthersBooksPage from '@book/others/pages/Books';
+import EventsPage from '@features/events/pages/Events';
 
 const queryClient = new QueryClient();
 
@@ -43,7 +44,7 @@ function App() {
                   </ProtectedRoute>
                 }
               >
-                <Route index element={<Navigate to={ROUTES.MAIN.PROFILE} replace />} />
+                <Route index element={<EventsPage />} />
                 <Route path={ROUTES.MAIN.PROFILE} element={<OwnProfilePage />} />
                 <Route path={ROUTES.MAIN.BOOK.CREATE} element={<BookCreatePage />} />
                 <Route
@@ -68,7 +69,7 @@ function App() {
                 >
                   <Route index element={<BookPage />} />
                 </Route>
-                <Route path={ROUTES.MAIN.SEARCH} element={<PublicBooksPage />} />
+                <Route path={ROUTES.MAIN.SEARCH} element={<OthersBooksPage />} />
                 <Route path={ROUTES.MAIN.USERS} element={<OtherUsersPage />} />
                 <Route
                   path={`${ROUTES.MAIN.USERS}/:userId`}

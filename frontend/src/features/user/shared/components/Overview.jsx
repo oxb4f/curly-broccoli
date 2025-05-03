@@ -29,6 +29,7 @@ const UserOverview = ({ user, isLoading, className = '' }) => {
         className="min-w-16 max-h-24 overflow-y-auto text-2xl"
         username={user?.username}
         isLoading={isLoading}
+        as="h2"
       />
 
       <UserPersonalInfo

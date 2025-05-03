@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import useBookSelection from '../hooks/useBooksSelection';
-import BookPrivateCatalogControls from '@book/private/shared/components/CatalogControls';
-import BookPrivateOwnList from './List';
+import BookOwnCatalogControls from '@book/own/components/CatalogControls';
+import BookOwnList from './List';
 import useBookService from '@book/shared/hooks/useBookService';
 
-const BookPrivateOwnCatalog = ({ items = [] }) => {
+const BookOwnCatalog = ({ items = [] }) => {
   const { selectedBooks, isAllSelected, select, selectAll } = useBookSelection(items);
 
   const { remove } = useBookService();
@@ -21,15 +21,14 @@ const BookPrivateOwnCatalog = ({ items = [] }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <BookPrivateCatalogControls
-        isOwn
+      <BookOwnCatalogControls
         isSelectionEnabled={editMode}
         isAllSelected={isAllSelected}
         toggleSelectionCallback={toggleEditMode}
         selectAllCallback={selectAll}
         removeBooksCallback={handleRemove}
       />
-      <BookPrivateOwnList
+      <BookOwnList
         items={items}
         isSelectionEnabled={editMode}
         isItemSelected={(id) => selectedBooks.has(id)}
@@ -39,4 +38,4 @@ const BookPrivateOwnCatalog = ({ items = [] }) => {
   );
 };
 
-export default BookPrivateOwnCatalog;
+export default BookOwnCatalog;

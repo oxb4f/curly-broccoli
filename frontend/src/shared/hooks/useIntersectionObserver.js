@@ -1,6 +1,11 @@
 import { useCallback, useRef } from 'react';
 
-const useIntersectionObserver = (callback, deps = []) => {
+const useIntersectionObserver = (
+  onEnter,
+  deps = [],
+  onLeave = null,
+  rootMargin = '0px 0px 0px 0px'
+) => {
   const observer = useRef(null);
 
   const shouldObserve = deps.every(Boolean);
@@ -23,16 +28,20 @@ const useIntersectionObserver = (callback, deps = []) => {
 
       observer.current?.disconnect();
 
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) callback();
-      });
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) onEnter();
+          if (!entries[0].isIntersecting && onLeave) onLeave();
+        },
+        { rootMargin }
+      );
 
       if (element) {
         observer.current.observe(element);
-        if (isVisible(element)) callback();
+        if (isVisible(element)) onEnter();
       }
     },
-    [callback, shouldObserve, isVisible]
+    [onEnter, shouldObserve, isVisible]
   );
 
   return ref;

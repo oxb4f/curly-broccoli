@@ -1,6 +1,6 @@
-import BookPublicCard from './Card';
+import BookOthersCard from '@book/others/components/Card';
 
-const BookPublicList = ({ items = [], className = '' }) => {
+const BookOthersList = ({ isPrivate, items = [], className = '' }) => {
   return (
     <ul
       className={`w-full grid grid-cols-1 gap-4 
@@ -11,11 +11,11 @@ const BookPublicList = ({ items = [], className = '' }) => {
     >
       {items.map((item) => (
         <li key={item.id} className="relative h-24 md:h-60">
-          <BookPublicCard data={item} />
+          <BookOthersCard data={item} className="size-full" isPrivate={isPrivate} />
         </li>
       ))}
     </ul>
   );
 };
 
-export default BookPublicList;
+export default BookOthersList;

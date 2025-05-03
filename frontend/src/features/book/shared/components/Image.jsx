@@ -1,24 +1,23 @@
 import { BookOpenIcon } from '@heroicons/react/24/solid';
+import StringParallaxSection from '@shared/components/ui/StringParallaxSection';
 
-const BookImage = ({ imageUrl, className = '' }) => {
-  return (
-    <figure className={`relative flex justify-center items-center overflow-hidden ${className}`}>
-      {imageUrl ? (
-        <>
-          <div
-            className="absolute inset-0 scale-105 blur-xs bg-cover bg-center"
-            style={{ backgroundImage: `url(${imageUrl})` }}
-          />
-          <img
-            src={imageUrl}
-            alt="Book image"
-            className="size-full text-center object-contain z-0"
-          />
-        </>
-      ) : (
-        <BookOpenIcon className="size-full" />
-      )}
-    </figure>
+const BookImage = ({ imageUrl, parallax, foregroundImageClasses = '', className = '' }) => {
+  return imageUrl ? (
+    <StringParallaxSection
+      imageUrl={imageUrl}
+      visiblePercentageBoundaries={10}
+      slowdownMultiplier={parallax ? 4 : 0}
+      as="figure"
+      className={`flex justify-center items-center ${className}`}
+    >
+      <img
+        src={imageUrl}
+        alt="Book image"
+        className={`w-full h-min max-h-full align-top text-center object-contain z-0 ${foregroundImageClasses}`}
+      />
+    </StringParallaxSection>
+  ) : (
+    <BookOpenIcon className="size-full" />
   );
 };
 

@@ -15,9 +15,9 @@ const formatDate = (date, formatParameters, locale = 'uk-UA') => {
       date.getFullYear() === yesterday.getFullYear();
 
     const time = formatParameters.timeStyle
-      ? new Intl.DateTimeFormat(locale, {
+      ? `at ${new Intl.DateTimeFormat(locale, {
           timeStyle: formatParameters.timeStyle
-        }).format(date)
+        }).format(date)}`
       : '';
 
     if (isToday) {

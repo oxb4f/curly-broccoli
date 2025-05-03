@@ -1,7 +1,7 @@
-import BookPrivateCard from '@book/private/shared/components/Card';
+import BookOwnCard from '@book/own/components/Card';
 import BookCreateLink from './CreateLink';
 
-const BookPrivateOwnList = ({
+const BookOwnList = ({
   items = [],
   isSelectionEnabled,
   isItemSelected,
@@ -24,8 +24,8 @@ const BookPrivateOwnList = ({
         <BookCreateLink className="size-full" />
       </li>
       {items.map((item) => (
-        <li key={item.id} className="relative h-24 md:h-60">
-          <BookPrivateCard data={item} isOwn />
+        <li key={item.id} className="relative h-24 md:h-64">
+          <BookOwnCard data={item} className="size-full" />
           {isSelectionEnabled && (
             <label
               className="absolute top-1 left-1 size-6 rounded-full border-1 border-pr-main bg-pr-bg-main z-10 transition-all
@@ -47,4 +47,4 @@ const BookPrivateOwnList = ({
   );
 };
 
-export default BookPrivateOwnList;
+export default BookOwnList;

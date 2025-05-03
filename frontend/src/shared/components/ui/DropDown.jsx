@@ -6,7 +6,7 @@ import {
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
 
-const DropDown = ({ openingDirection, children, className = '' }) => {
+const DropDown = ({ openingDirection, visibleSlot, children, arrowSize = '5', className = '' }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   const getArrows = (direction) => {
@@ -38,9 +38,12 @@ const DropDown = ({ openingDirection, children, className = '' }) => {
         isHidden ? 'grid-rows-hide' : 'grid-rows-show'
       } transition-[grid-template-rows] overflow-hidden ${className}`}
     >
-      <button className="w-full flex justify-center" onClick={changeVisibility}>
-        <HidingButtonIcon className="size-5" />
-      </button>
+      <div className="pt-2">
+        <button className="w-full flex justify-center" onClick={changeVisibility}>
+          <HidingButtonIcon className={`size-${arrowSize}`} />
+        </button>
+        {visibleSlot}
+      </div>
       {children}
     </div>
   );
