@@ -6,7 +6,7 @@ const BookImage = ({ imageUrl, parallax, foregroundImageClasses = '', className 
     <StringParallaxSection
       imageUrl={imageUrl}
       visiblePercentageBoundaries={10}
-      slowdownMultiplier={parallax ? 4 : 0}
+      slowdownMultiplier={parallax ? 5 : 0}
       as="figure"
       className={`flex justify-center items-center ${className}`}
     >

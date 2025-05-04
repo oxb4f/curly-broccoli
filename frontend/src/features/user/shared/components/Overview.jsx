@@ -1,17 +1,11 @@
-import { useSession } from '@app/providers/SessionProvider';
 import UserStats from './Stats';
 import UserUsername from './Username';
 import UserImage from './Image';
 import UserPersonalInfo from './PersonalInfo';
 import Social from '@shared/components/ui/Social';
-import useFollowService from '@following/hooks/useFollowService';
+import FollowButton from '@following/components/FollowButton';
 
-const UserOverview = ({ user, isLoading, className = '' }) => {
-  const { follow, unfollow } = useFollowService(user);
-  const { user: sessionUser } = useSession();
-
-  const isOwn = user?.id === sessionUser?.id;
-
+const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
   if (!user && !isLoading) return;
 
   return (
@@ -39,18 +33,7 @@ const UserOverview = ({ user, isLoading, className = '' }) => {
       />
 
       <div className="w-full col-start-2 row-start-4 grid max-md:grid-rows-[1fr_auto] md:grid-cols-[1fr_auto] gap-4">
-        {!isOwn && !isLoading && (
-          <button
-            className={`w-full p-2 rounded-2xl border-1 border-pr-main hover:border-pr-main-soft active:border-pr-main-mute md:py-1 transition-all ${
-              user.followed
-                ? 'text-pr-main hover:text-pr-main-soft active:text-pr-main-mute'
-                : 'text-pr-bg-main bg-pr-main hover:bg-pr-main-soft active:bg-pr-main-mute'
-            }`}
-            onClick={async () => (user.followed ? await unfollow() : await follow())}
-          >
-            {user.followed ? 'Unfollow' : 'Follow'}
-          </button>
-        )}
+        {!isOwn && <FollowButton targetUser={user} isLoading={isLoading} />}
 
         <Social
           className="self-center justify-self-center md:justify-self-start min-w-7 max-w-full"

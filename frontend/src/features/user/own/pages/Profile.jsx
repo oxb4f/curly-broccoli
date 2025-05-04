@@ -9,7 +9,7 @@ const OwnProfilePage = () => {
   return (
     <section className="size-full py-5 grid gap-3 grid-rows-[min-content_1fr]">
       <header className="flex flex-col items-center gap-4">
-        <UserOverview user={user} isLoading={isPending} className="flex flex-col gap-2" />
+        <UserOverview user={user} isLoading={isPending} className="flex flex-col gap-2" isOwn />
       </header>
       <section>
         <BookInfiniteQueryWrapper userId={user?.id}>

@@ -33,6 +33,19 @@
   --animate-faded-slide-in-from-top-full: fadedSlideInFromTopFull 0.2s ease-out;
   --animate-bump: bump 0.6s ease-out;
   --animate-shimmer: shimmer 1.5s linear infinite;
+  --animate-blink: blink 0.7s infinite;
+  --animate-filling: filling 1s forwards;
+  --animate-filling-reverse: filling 1s reverse;
+  --animate-fade-in: fadeIn 0.2s forwards;
+  --animate-fade-out: fadeOut 0.2s forwards;
+  --animate-print-follow: printFollow 1.4s steps(1) 0.4s both, blink 0.7s infinite,
+    slideBackUnfollow 0.1s linear 2s forwards;
+  --animate-static-follow-text: printFollow 1s paused;
+  --animate-print-unfollow: printUnfollow 1.4s steps(1) 0.4s both, blink 0.7s infinite,
+    slideBackFollow 0.1s linear 2s forwards;
+  --animate-static-unfollow-text: printUnfollow 1s paused;
+  --animate-swap-colors: swapColors 0.3s 2.3s both;
+  --animate-swap-colors-reverse: swapColors 0.3s 2.3s reverse both;
 
   --breakpoint-xs: 30rem;
 }

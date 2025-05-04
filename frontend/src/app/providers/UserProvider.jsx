@@ -10,7 +10,6 @@ export const UserProvider = ({ queryKey, children }) => {
   const { userId: id } = useParams();
 
   // const isPublic = queryKey === QUERY_KEYS.BOOKS.PUBLIC;
-  console.log([...queryKey, Number(id)]);
 
   const {
     data: user,

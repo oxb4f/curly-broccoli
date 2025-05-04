@@ -28,12 +28,124 @@
     }
   }
 
-  @keyframes slideBack {
-    from {
-      transform: translateY(-100%);
+  @keyframes blink {
+    50% {
+      border-color: transparent;
     }
-    to {
-      transform: translateY(0);
+  }
+
+  @keyframes swapColors {
+    0% {
+      background-color: var(--color-pr-main);
+      color: var(--color-pr-bg-main);
+    }
+    100% {
+      background-color: var(--color-pr-bg-main);
+      color: var(--color-pr-main);
+    }
+  }
+
+  @keyframes filling {
+    0% {
+      height: 100%;
+      width: 100%;
+    }
+    50% {
+      width: auto;
+      aspect-ratio: 1 / 1;
+    }
+    100% {
+      scale: 0;
+      width: auto;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  @keyframes printFollow {
+    0% {
+      content: 'Follow';
+      margin-left: 0;
+    }
+    25% {
+      content: 'ollow';
+      margin-left: 0.5rem;
+    }
+    50% {
+      content: 'follow';
+      margin-left: 0;
+    }
+    75% {
+      content: 'nfollow';
+      margin-left: -0.5rem;
+    }
+    100% {
+      content: 'Unfollow';
+      margin-left: -1rem;
+    }
+  }
+
+  @keyframes printUnfollow {
+    0% {
+      content: 'Unfollow';
+      margin-left: 0;
+    }
+    25% {
+      content: 'nfollow';
+      margin-left: 0.5rem;
+    }
+    50% {
+      content: 'follow';
+      margin-left: 1rem;
+    }
+    75% {
+      content: 'ollow';
+      margin-left: 1.5rem;
+    }
+    100% {
+      content: 'Follow';
+      margin-left: 1rem;
+    }
+  }
+
+  @keyframes slideBackFollow {
+    0% {
+      margin-left: 0rem;
+    }
+    1% {
+      margin-left: 1rem;
+    }
+    100% {
+      margin-left: 0rem;
+    }
+  }
+
+  @keyframes slideBackUnfollow {
+    0% {
+      margin-left: 0rem;
+    }
+    1% {
+      margin-left: -1rem;
+    }
+    100% {
+      margin-left: 0rem;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
     }
   }
 

@@ -6,7 +6,7 @@ import QUERY_KEYS from '@app/query/constants/queryKeys';
 const useFollowService = (user) => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: follow } = useNavigatedMutation({
+  const { mutateAsync: follow, isPending: isFollowPending } = useNavigatedMutation({
     mutationFn: () => followersApi.followUser(user.id),
     onSuccess: (data) => {
       queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], (oldFollowers) => ({
@@ -16,7 +16,7 @@ const useFollowService = (user) => {
     }
   });
 
-  const { mutateAsync: unfollow } = useNavigatedMutation({
+  const { mutateAsync: unfollow, isPending: isUnfollowPending } = useNavigatedMutation({
     mutationFn: () => followersApi.unfollowUser(user.followersId),
     onSuccess: (data) => {
       queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], (oldFollowers) => ({
@@ -28,7 +28,9 @@ const useFollowService = (user) => {
 
   return {
     follow,
-    unfollow
+    unfollow,
+    isFollowPending,
+    isUnfollowPending
   };
 };
 

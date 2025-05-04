@@ -4,6 +4,8 @@ const Skeleton = ({ type, height, width = '100%', style = {}, className = '' }) 
       ? 'rounded-sm text-transparent stroke-current'
       : type === 'rounded'
       ? 'rounded-md'
+      : type === 'button'
+      ? 'rounded-2xl'
       : type === 'circular'
       ? 'rounded-full'
       : '';

@@ -70,7 +70,8 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
             params: {
               orderField: data.orderField,
               orderDirection: data.orderDirection,
-              limit: data.limit
+              limit: data.limit,
+              offset: data.offset
             }
           };
         default:

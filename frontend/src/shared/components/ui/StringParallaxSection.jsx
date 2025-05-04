@@ -9,11 +9,10 @@ export default function StringParallaxSection({
   as: Tag = 'div',
   className = ''
 }) {
-  const parallaxRef = useRef(null);
-  const [offset, setOffset] = useState(0);
-  const timeoutRef = useRef(null);
-
   const [enabled, setEnabled] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const parallaxRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   const ref = useIntersectionObserver(
     () => {
