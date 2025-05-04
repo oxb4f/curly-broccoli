@@ -32,20 +32,22 @@ const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
         isLoading={isLoading}
       />
 
-      <div className="w-full col-start-2 row-start-4 grid max-md:grid-rows-[1fr_auto] md:grid-cols-[1fr_auto] gap-4">
-        {!isOwn && <FollowButton targetUser={user} isLoading={isLoading} />}
+      <div className="w-full col-start-2 row-start-4 flex max-md:grid-rows-[1fr_auto] md:grid-cols-[1fr_auto] gap-4">
+        {!isOwn && <FollowButton targetUser={user} isLoading={isLoading} className="grow" />}
 
         <Social
-          className="self-center justify-self-center md:justify-self-start min-w-7 max-w-full"
+          className="self-center max-w-1/3 grow-0 justify-self-center md:justify-self-start min-w-7"
           social={user?.social}
           isLoading={isLoading}
         />
       </div>
 
       <UserStats
+        data={user?.stats}
         className="max-w-md grid grid-cols-[repeat(auto-fit,6rem)] gap-x-3
           md:max-w-lg
           lg:max-w-xl"
+        isLoading={isLoading}
       />
     </section>
   );

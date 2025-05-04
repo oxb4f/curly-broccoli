@@ -70,9 +70,18 @@ const processResponse = (responseData, apiEndpoint) => {
       };
     }
     case 'followers': {
+      const { id, result, followersCount, followingCount } = responseData;
+
+      if (id || result) {
+        return {
+          followersId: id,
+          followed: Boolean(id)
+        };
+      }
+
       return {
-        followersId: responseData.id,
-        followed: Boolean(responseData.id)
+        followersCount,
+        followingCount
       };
     }
     case 'events': {

@@ -11,13 +11,13 @@ import EventActionLabel from './ActionLabel';
 const BookEvent = ({ details, user, book, className = '' }) => {
   return (
     <article
-      className={`relative grid grid-rows-[15%_88%] rounded-xl border-pr-border overflow-hidden ${className}`}
+      className={`relative grid grid-rows-[5rem_91%] rounded-xl border-pr-border overflow-hidden sm:grid-rows-[4rem_92%] ${className}`}
     >
       <UserPlate
         user={user}
-        className="size-full pt-2 px-6 pb-3 rounded-b-none gap-x-4 bg-pr-bg-main/10 backdrop-blur-xl transition-all hover:backdrop-blur-sm z-10"
+        className="size-full pt-2 px-6 pb-3 rounded-b-none gap-x-4 bg-pr-bg-main/10 backdrop-blur-xl text-xl transition-all z-10 hover:backdrop-blur-sm sm:text-base"
         additionalSlot={
-          <span className="text-xs description">
+          <span className="description text-base sm:text-xs">
             {formatDate(new Date(details?.createdAt), {
               dateStyle: 'relative',
               timeStyle: 'short'
@@ -28,7 +28,7 @@ const BookEvent = ({ details, user, book, className = '' }) => {
       <NavigationLink
         to={`${ROUTES.MAIN.BOOK.PRIVATE.ROOT}/${book.id}`}
         title={`Open book ${book.title}`}
-        className="size-full transition-transform -translate-y-3 hover:scale-105"
+        className="-mt-3 size-full transition-transform hover:scale-105"
       >
         <BookImage
           imageUrl={book?.imageUrl}
@@ -48,19 +48,22 @@ const BookEvent = ({ details, user, book, className = '' }) => {
       </section>
       <DropDown
         openingDirection="top"
-        className="absolute bottom-0 pb-2 bg-pr-bg-main/50 backdrop-blur-xl z-10 sm:hidden"
+        className="absolute bottom-0 pb-2 rounded-[inherit] bg-pr-bg-main/50 backdrop-blur-xl z-10 sm:hidden"
         arrowSize="6"
         visibleSlot={
-          <BookTitle title={book?.title} as="h2" className="text-base text-center truncate" />
+          <BookTitle title={book?.title} as="h2" className="text-lg text-center truncate" />
         }
       >
         <BookDescription
           description={book?.description || 'Description has not added yet'}
           as="p"
-          className="min-h-0 px-3 line-clamp-3 break-words"
+          className="min-h-0 px-3 line-clamp-3 text-lg break-words"
         />
       </DropDown>
-      <EventActionLabel action={details.action} className="absolute top-5 right-8 z-10" />
+      <EventActionLabel
+        action={details.action}
+        className="absolute top-6 right-8 text-xl z-10 sm:text-sm"
+      />
     </article>
   );
 };

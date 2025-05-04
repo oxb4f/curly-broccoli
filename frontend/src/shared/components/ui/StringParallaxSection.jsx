@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function StringParallaxSection({
   imageUrl,
-  slowdownMultiplier,
+  speedMultiplier,
   children,
   visiblePercentageBoundaries: boundries = 50,
   as: Tag = 'div',
@@ -18,7 +18,7 @@ export default function StringParallaxSection({
     () => {
       setEnabled(true);
     },
-    [slowdownMultiplier],
+    [speedMultiplier],
     () => {
       setOffset(0);
       setEnabled(false);
@@ -35,7 +35,10 @@ export default function StringParallaxSection({
         const deltaY = currentY - lastScrollY;
         lastScrollY = currentY;
 
-        const newOffset = Math.max(Math.min(deltaY * 5, boundries), -boundries);
+        const newOffset = Math.max(
+          Math.min((deltaY * 0.1 * 100 * speedMultiplier) / boundries, boundries),
+          -boundries
+        );
 
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => setOffset(0), 100);
@@ -44,7 +47,7 @@ export default function StringParallaxSection({
       }
     };
 
-    if (slowdownMultiplier !== 0) window.addEventListener('scroll', handleScroll);
+    if (speedMultiplier !== 0) window.addEventListener('scroll', handleScroll);
     return () => {
       clearTimeout(timeoutRef.current);
       window.removeEventListener('scroll', handleScroll);
@@ -57,11 +60,11 @@ export default function StringParallaxSection({
         ref={parallaxRef}
         style={{
           backgroundImage: `url(${imageUrl})`,
-          '--element-offset': `${offset}%`,
-          transitionDuration: `${1000 * slowdownMultiplier}ms`
+          '--parallax-offset': `${offset}%`,
+          '--parallax-transition-duration': `${1 / speedMultiplier}s`
         }}
-        className={`absolute w-full blur-xs bg-cover bg-center transition-transform ease-out translate-y-[var(--element-offset)] ${
-          slowdownMultiplier === 0 ? 'h-full scale-105' : 'h-screen'
+        className={`absolute w-full blur-xs bg-cover bg-center translate-y-(--parallax-offset) transition-transform duration-(--parallax-transition-duration) ease-out transform-gpu ${
+          speedMultiplier === 0 ? 'h-full scale-105' : 'h-screen'
         }`}
       />
       {children}

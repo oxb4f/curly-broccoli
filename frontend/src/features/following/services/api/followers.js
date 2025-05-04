@@ -16,7 +16,7 @@ const getUserFollowersCount = async (userId) => {
   const response = await api.get(`followers/count`, requestPayload);
   console.log(response);
 
-  // return processResponse(response, 'users');
+  return processResponse(response, 'followers');
 };
 
 const followUser = async (userId) => {

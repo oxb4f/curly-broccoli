@@ -7,6 +7,7 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUser } from '@user/shared/services/api/user';
 import QUERY_KEYS from '@app/query/constants/queryKeys';
+import { getUserFollowersCount } from '@following/services/api/followers';
 
 const SessionContext = createContext(null);
 
@@ -24,6 +25,15 @@ export default function SessionProvider({ queryKey, children }) {
     enabled: Boolean(credentials),
     refetchOnWindowFocus: false
   });
+
+  const { data: followingStats, isFollowingStatsPending } = useQuery({
+    queryKey: [...queryKey, 'followingStats'],
+    queryFn: () => getUserFollowersCount(credentials?.id),
+    enabled: !isPending && Boolean(user),
+    refetchOnWindowFocus: false
+  });
+
+  console.log(followingStats);
 
   console.log(user);
 
@@ -55,8 +65,8 @@ export default function SessionProvider({ queryKey, children }) {
   return (
     <SessionContext.Provider
       value={{
-        user,
-        isPending,
+        user: { ...user, stats: { ...followingStats } },
+        isPending: isPending || isFollowingStatsPending,
         error,
         hasCredentials: Boolean(credentials),
         storeUserSession,

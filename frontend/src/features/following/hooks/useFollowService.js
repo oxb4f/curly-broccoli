@@ -9,6 +9,14 @@ const useFollowService = (user) => {
   const { mutateAsync: follow, isPending: isFollowPending } = useNavigatedMutation({
     mutationFn: () => followersApi.followUser(user.id),
     onSuccess: (data) => {
+      queryClient.setQueryData(
+        [...QUERY_KEYS.USERS.OWN, 'followingStats'],
+        ({ followingCount, ...rest }) => ({
+          ...rest,
+          followingCount: followingCount + 1
+        })
+      );
+
       queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], (oldFollowers) => ({
         ...oldFollowers,
         ...data
@@ -19,6 +27,14 @@ const useFollowService = (user) => {
   const { mutateAsync: unfollow, isPending: isUnfollowPending } = useNavigatedMutation({
     mutationFn: () => followersApi.unfollowUser(user.followersId),
     onSuccess: (data) => {
+      queryClient.setQueryData(
+        [...QUERY_KEYS.USERS.OWN, 'followingStats'],
+        ({ followingCount, ...rest }) => ({
+          ...rest,
+          followingCount: followingCount - 1
+        })
+      );
+
       queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], (oldFollowers) => ({
         ...oldFollowers,
         ...data

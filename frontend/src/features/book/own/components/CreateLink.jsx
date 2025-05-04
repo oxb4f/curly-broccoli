@@ -6,9 +6,9 @@ const BookCreateLink = ({ className = '' }) => {
   return (
     <NavigationLink
       to={ROUTES.MAIN.BOOK.CREATE}
-      className={`group relative flex justify-center items-center border-2 border-pr-bg-secondary rounded-md bg-pr-bg-secondary transition-colors 
+      className={`group relative flex justify-center items-center border-2 border-pr-bg-secondary bg-pr-bg-secondary transition-colors will-change-contents
             hover:border-pr-text 
-            before:content-[''] before:absolute before:inset-0 before:rounded-md before:bg-pr-bg-main before:scale-100 before:transition-transform 
+            before:content-[''] before:absolute before:inset-0 before:rounded-[inherit] before:bg-pr-bg-main before:scale-100 before:transition-transform 
             lg:hover:before:scale-0 ${className}`}
     >
       <PlusIcon

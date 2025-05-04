@@ -6,7 +6,7 @@ const BookOthersList = ({ isPrivate, items = [], className = '' }) => {
       className={`w-full grid grid-cols-1 gap-4 
         md:grid-cols-2 
         lg:grid-cols-4 
-        xl:grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]
+        xl:grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]
         ${className}`}
     >
       {items.map((item) => (

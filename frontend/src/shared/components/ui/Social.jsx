@@ -32,7 +32,7 @@ const Social = ({ social, isLoading, className = '' }) => {
   return (
     <>
       {isLoading ? (
-        <Skeleton type="rounded" width="1.75rem" height="1.75rem" className={className} />
+        <Skeleton type="rounded" height="1.75rem" className={className} />
       ) : (
         Boolean(navigation.items.length) && (
           <Navigation list={navigation} className={`stroke-pr-main ${className}`} />

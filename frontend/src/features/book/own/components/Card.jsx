@@ -8,7 +8,7 @@ import NavigationLink from '@shared/components/navigation/Link';
 const BookOwnCard = ({ data, className = '' }) => {
   return (
     <article
-      className={`relative grid grid-cols-[minmax(8rem,30%)_minmax(auto,70%)] grid-rows-1 md:grid-cols-1 rounded-3xl border-pr-border overflow-hidden ${className}`}
+      className={`relative grid grid-cols-[minmax(8rem,30%)_minmax(auto,70%)] grid-rows-1 md:grid-cols-1 border-pr-border overflow-hidden ${className}`}
     >
       <NavigationLink
         to={`${ROUTES.MAIN.BOOK.PRIVATE.ROOT}/${data.id}`}
