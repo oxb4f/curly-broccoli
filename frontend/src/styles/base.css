@@ -1,6 +1,6 @@
 @layer base {
   html {
-    @apply text-xs font-pr-main sm:text-sm md:text-base;
+    @apply text-base font-pr-main;
   }
 
   body {

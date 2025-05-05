@@ -10,11 +10,11 @@ const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
 
   return (
     <section
-      className={`flex flex-col items-center max-w-2xs grid-cols-[1fr_20rem] grid-rows-[repeat(4,auto)] gap-x-8 gap-y-3
-				md:max-w-2xl md:grid ${className}`}
+      className={`flex flex-col items-center w-full max-w-xs grid-cols-[1fr_2fr] grid-rows-[repeat(4,auto)] gap-x-8 gap-y-3
+				md:max-w-lg md:grid ${className}`}
     >
       <UserImage
-        className="size-44 row-span-full col-start-1 justify-self-center"
+        className="min-w-44 max-w-52 row-span-full col-start-1 justify-self-center"
         imageUrl={user?.imageUrl}
         isLoading={isLoading}
       />
@@ -32,7 +32,7 @@ const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
         isLoading={isLoading}
       />
 
-      <div className="w-full col-start-2 row-start-4 flex max-md:grid-rows-[1fr_auto] md:grid-cols-[1fr_auto] gap-4">
+      <div className="w-full col-start-2 row-start-4 flex flex-col md:flex-row gap-4">
         {!isOwn && <FollowButton targetUser={user} isLoading={isLoading} className="grow" />}
 
         <Social
@@ -42,13 +42,7 @@ const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
         />
       </div>
 
-      <UserStats
-        data={user?.stats}
-        className="max-w-md grid grid-cols-[repeat(auto-fit,6rem)] gap-x-3
-          md:max-w-lg
-          lg:max-w-xl"
-        isLoading={isLoading}
-      />
+      <UserStats stats={user?.stats} userId={user?.id} className="w-full" isLoading={isLoading} />
     </section>
   );
 };

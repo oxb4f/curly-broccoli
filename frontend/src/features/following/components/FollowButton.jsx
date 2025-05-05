@@ -37,10 +37,9 @@ const FollowButton = ({ targetUser, isLoading, className = '' }) => {
     <Skeleton height="2rem" width="100%" type="button" />
   ) : (
     <button
-      className={`relative group rounded-2xl border-1 border-pr-main bg-pr-main text-lg transition-all overflow-hidden
+      className={`relative group rounded-2xl border-1 border-pr-main bg-pr-main transition-all overflow-hidden
 				hover:border-pr-main-soft active:border-pr-main
 				disabled:cursor-default disabled:opacity-100 disabled:hover:border-pr-main 
-				md:text-base
 				${className}`}
       onClick={handleClick}
       disabled={isPending || isAnimated}

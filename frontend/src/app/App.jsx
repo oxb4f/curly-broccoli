@@ -25,6 +25,8 @@ import BookEditPage from '@book/own/pages/Edit';
 import BookReadPage from '@book/own/pages/Read';
 import OthersBooksPage from '@book/others/pages/Books';
 import EventsPage from '@features/events/pages/Events';
+import FollowersPage from '@following/pages/Followers';
+import FollowingPage from '@following/pages/Following';
 
 const queryClient = new QueryClient();
 
@@ -71,6 +73,8 @@ function App() {
                 </Route>
                 <Route path={ROUTES.MAIN.SEARCH} element={<OthersBooksPage />} />
                 <Route path={ROUTES.MAIN.USERS} element={<OtherUsersPage />} />
+                <Route path={`${ROUTES.MAIN.FOLLOWERS}/:userId`} element={<FollowersPage />} />
+                <Route path={`${ROUTES.MAIN.FOLLOWINGS}/:userId`} element={<FollowingPage />} />
                 <Route
                   path={`${ROUTES.MAIN.USERS}/:userId`}
                   element={

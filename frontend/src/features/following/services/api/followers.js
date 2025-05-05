@@ -7,7 +7,16 @@ const getUserFollowers = async (userId, params) => {
   const response = await api.get(`followers/followers`, requestPayload);
   console.log(response);
 
-  // return processResponse(response, 'users');
+  return processResponse(response, 'followers');
+};
+
+const getUserFollowing = async (userId, params) => {
+  const requestPayload = prepareRequest({ userId, ...params }, 'followers', 'get');
+
+  const response = await api.get(`followers/following`, requestPayload);
+  console.log(response);
+
+  return processResponse(response, 'followers');
 };
 
 const getUserFollowersCount = async (userId) => {
@@ -37,4 +46,4 @@ const unfollowUser = async (followId) => {
   return processResponse(response, 'followers');
 };
 
-export { getUserFollowers, getUserFollowersCount, followUser, unfollowUser };
+export { getUserFollowers, getUserFollowing, getUserFollowersCount, followUser, unfollowUser };

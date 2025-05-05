@@ -6,6 +6,7 @@ export default function StringParallaxSection({
   speedMultiplier,
   children,
   visiblePercentageBoundaries: boundries = 50,
+  tensionSensivity = 0.4,
   as: Tag = 'div',
   className = ''
 }) {
@@ -35,10 +36,7 @@ export default function StringParallaxSection({
         const deltaY = currentY - lastScrollY;
         lastScrollY = currentY;
 
-        const newOffset = Math.max(
-          Math.min((deltaY * 0.1 * 100 * speedMultiplier) / boundries, boundries),
-          -boundries
-        );
+        const newOffset = Math.max(Math.min(deltaY * tensionSensivity, boundries), -boundries);
 
         clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => setOffset(0), 100);

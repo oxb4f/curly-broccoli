@@ -1,19 +1,19 @@
 import InfiniteQuery from '@app/query/components/InfiniteQuery';
 import UserList from '@user/others/components/List';
 import QUERY_KEYS from '@app/query/constants/queryKeys';
-import { getUserFollowers } from '@following/services/api/followers';
+import { getUserFollowing } from '@following/services/api/followers';
 import { useParams } from 'react-router';
 
-const FollowersPage = () => {
+const FollowingPage = () => {
   const { userId } = useParams();
-  const transformData = (data) => data.followers;
+  const transformData = (data) => data.following;
 
   return (
     <section className="size-full">
-      <h1 className="py-5 px-3 text-pr-text text-5xl md:text-4xl">Followers</h1>
+      <h1 className="py-5 px-3 text-pr-text text-5xl md:text-4xl">Following</h1>
       <InfiniteQuery
-        callback={(offset) => getUserFollowers(userId, { offset, limit: 10 })}
-        keys={[...QUERY_KEYS.FOLLOWERS.ALL, userId]}
+        callback={(offset) => getUserFollowing(userId, { offset, limit: 10 })}
+        keys={[...QUERY_KEYS.FOLLOWING.ALL, userId]}
         dataTransformer={transformData}
         offset={10}
       >
@@ -23,4 +23,4 @@ const FollowersPage = () => {
   );
 };
 
-export default FollowersPage;
+export default FollowingPage;

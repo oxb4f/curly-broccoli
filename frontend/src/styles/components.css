@@ -18,7 +18,7 @@
 
 @utility main {
   grid-area: main;
-  @apply min-h-screen px-5 md:px-20;
+  @apply min-h-screen px-5 lg:px-20;
 }
 
 @utility content {

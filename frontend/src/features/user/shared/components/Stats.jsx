@@ -2,8 +2,8 @@ import ROUTES from '@app/router/constants/routes';
 import Navigation from '@shared/components/navigation/Navigation';
 import StaticStatsItem from '@shared/components/ui/stats/static/Item';
 
-const UserStats = ({ data, isLoading, className = '' }) => {
-  const stats = {
+const UserStats = ({ stats, userId, isLoading, className = '' }) => {
+  const navigationItems = {
     items: [
       {
         name: 'books read',
@@ -19,9 +19,9 @@ const UserStats = ({ data, isLoading, className = '' }) => {
       {
         name: 'followers',
         linkProps: {
-          to: ROUTES.MAIN.PROFILE,
+          to: `${ROUTES.MAIN.FOLLOWERS}/${userId}`,
           children: (
-            <StaticStatsItem isLoading={isLoading} count={data?.followersCount}>
+            <StaticStatsItem isLoading={isLoading} count={stats?.followersCount}>
               followers
             </StaticStatsItem>
           )
@@ -30,9 +30,9 @@ const UserStats = ({ data, isLoading, className = '' }) => {
       {
         name: 'following',
         linkProps: {
-          to: ROUTES.MAIN.PROFILE,
+          to: `${ROUTES.MAIN.FOLLOWINGS}/${userId}`,
           children: (
-            <StaticStatsItem isLoading={isLoading} count={data?.followingCount}>
+            <StaticStatsItem isLoading={isLoading} count={stats?.followingCount}>
               following
             </StaticStatsItem>
           )
@@ -43,10 +43,10 @@ const UserStats = ({ data, isLoading, className = '' }) => {
       className: 'flex justify-evenly'
     },
     linksClasses: 'block p-2',
-    itemsClasses: 'size-full rounded-xl hover:bg-pr-bg-secondary active:bg-pr-bg-tertiary'
+    itemsClasses: 'rounded-xl hover:bg-pr-bg-secondary active:bg-pr-bg-tertiary'
   };
 
-  return <Navigation list={stats} />;
+  return <Navigation list={navigationItems} className={className} />;
 };
 
 export default UserStats;

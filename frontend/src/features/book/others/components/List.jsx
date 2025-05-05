@@ -5,7 +5,7 @@ const BookOthersList = ({ isPrivate, items = [], className = '' }) => {
     <ul
       className={`w-full grid grid-cols-1 gap-4 
         md:grid-cols-2 
-        lg:grid-cols-4 
+        lg:grid-cols-3 
         xl:grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]
         ${className}`}
     >

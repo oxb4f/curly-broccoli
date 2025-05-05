@@ -70,7 +70,15 @@ const processResponse = (responseData, apiEndpoint) => {
       };
     }
     case 'followers': {
-      const { id, result, followersCount, followingCount } = responseData;
+      const { data, id, result, followersCount, followingCount, ...rest } = responseData;
+
+      if (data) {
+        return {
+          followers: data.map((item) => processResponse(item.follower, 'users')),
+          following: data.map((item) => processResponse(item.user, 'users')),
+          ...rest
+        };
+      }
 
       if (id || result) {
         return {

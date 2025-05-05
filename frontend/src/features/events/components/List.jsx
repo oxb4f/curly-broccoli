@@ -7,13 +7,13 @@ const EventList = ({ items }) => {
   return (
     <ul className="flex flex-col justify-center items-center gap-3">
       {items.map(({ eventDetails, fromUser, addedBook, followedUser }) => (
-        <li key={eventDetails.id} className="w-full sm:w-xl">
+        <li key={eventDetails.id} className="w-full sm:w-lg md:w-xl">
           {eventDetails.type === 'book' ? (
             <BookEvent
               details={eventDetails}
               user={fromUser}
               book={addedBook}
-              className="h-[60vh]"
+              className="h-[60vh] sm:h-96"
             />
           ) : eventDetails.type === 'user' ? (
             <FollowEvent user={fromUser} followedUser={followedUser} className="h-12" />

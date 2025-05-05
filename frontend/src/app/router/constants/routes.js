@@ -21,7 +21,9 @@ const ROUTES = {
       CREATE: `/${BOOK_ROOT}/create`
     },
     SEARCH: `/search`,
-    USERS: `/users`
+    USERS: `/users`,
+    FOLLOWERS: '/followers',
+    FOLLOWINGS: '/followings'
   },
   SETTINGS: {
     ROOT: `/${SETTINGS_ROOT}`,

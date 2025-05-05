@@ -1,6 +1,8 @@
 const USERS_ALL = 'users';
 const BOOKS_ALL = 'books';
 const EVENTS_ALL = 'events';
+const FOLLOWERS_ALL = 'followers';
+const FOLLOWING_ALL = 'following';
 const READING_TRACKERS_ALL = 'reading-trackers';
 
 const QUERY_KEYS = {
@@ -16,6 +18,12 @@ const QUERY_KEYS = {
   },
   EVENTS: {
     ALL: [EVENTS_ALL]
+  },
+  FOLLOWERS: {
+    ALL: [FOLLOWERS_ALL]
+  },
+  FOLLOWING: {
+    ALL: [FOLLOWING_ALL]
   },
   READING_TRACKERS: {
     ALL: [READING_TRACKERS_ALL],
