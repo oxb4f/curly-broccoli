@@ -38,12 +38,12 @@ const EditUserInfoForm = ({ userCurrentData, isPending }) => {
     socials: {
       fields: {
         telegram: {
-          type: 'text',
+          type: 'url',
           placeholder: 'Telegram',
           value: userCurrentData?.social?.telegram
         },
         instagram: {
-          type: 'text',
+          type: 'url',
           placeholder: 'Instagram',
           value: userCurrentData?.social?.instagram
         }
@@ -52,7 +52,7 @@ const EditUserInfoForm = ({ userCurrentData, isPending }) => {
     },
     setSettings: {
       type: 'submit',
-      value: 'Set settings'
+      children: 'Set settings'
     }
   };
 

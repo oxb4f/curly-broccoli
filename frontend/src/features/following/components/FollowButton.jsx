@@ -37,7 +37,7 @@ const FollowButton = ({ targetUser, isLoading, className = '' }) => {
     <Skeleton height="2rem" width="100%" type="button" />
   ) : (
     <button
-      className={`relative group rounded-2xl border-1 border-pr-main bg-pr-main transition-all overflow-hidden
+      className={`relative group rounded-2xl border-1 border-pr-main transition-all overflow-hidden
 				hover:border-pr-main-soft active:border-pr-main
 				disabled:cursor-default disabled:opacity-100 disabled:hover:border-pr-main 
 				${className}`}
@@ -45,38 +45,31 @@ const FollowButton = ({ targetUser, isLoading, className = '' }) => {
       disabled={isPending || isAnimated}
     >
       <div
-        className={`size-full flex justify-center items-center px-3 py-1 rounded-[inherit] ${
-          showFollowedInitialState
-            ? 'bg-pr-bg-main text-pr-main transition-colors group-hover:text-pr-main-soft group-active:text-pr-main'
-            : showUnfollowedInitialState
-            ? 'bg-pr-main text-pr-bg-main transition-colors group-hover:bg-pr-main-soft group-active:bg-pr-main'
-            : ''
-        }
-					${
-            isAnimatingAfterFollow
-              ? 'animate-swap-colors'
-              : isAnimatingAfterUnfollow
-              ? 'animate-swap-colors-reverse'
-              : ''
-          }
+        className={`size-full flex justify-center items-center px-3 py-1 rounded-[inherit]
+            ${
+              isAnimatingAfterUnfollow
+                ? 'animate-swap-colors-reverse'
+                : isAnimatingAfterFollow
+                ? 'animate-swap-colors'
+                : isFollowed
+                ? 'bg-pr-bg-main text-pr-main transition-colors group-hover:text-pr-main-soft group-active:text-pr-main'
+                : !isFollowed
+                ? 'bg-pr-main text-pr-bg-main transition-colors group-hover:bg-pr-main-soft group-active:bg-pr-main'
+                : ''
+            }
+            ${isAnimated ? 'animation-running' : 'animation-paused'}
 				`}
       >
         <span
           className={`
-				${
-          showFollowedInitialState
-            ? 'after:animate-static-unfollow-text'
-            : showUnfollowedInitialState
-            ? 'after:animate-static-follow-text'
-            : ''
-        }
-					${
-            isAnimatingAfterFollow
-              ? 'after:animate-print-follow after:border-l-1 after:border-pr-text-inverted'
-              : isAnimatingAfterUnfollow
-              ? 'after:animate-print-unfollow after:border-l-1 after:border-pr-text'
-              : ''
-          }
+            ${
+              showFollowedInitialState || isAnimatingAfterUnfollow
+                ? 'after:animate-print-unfollow after:border-pr-text'
+                : showUnfollowedInitialState || isAnimatingAfterFollow
+                ? 'after:animate-print-follow after:border-pr-text-inverted'
+                : ''
+            }
+            ${isAnimated ? 'after:animation-running after:border-l-1' : 'after:animation-paused'}
 					`}
         ></span>
       </div>
@@ -85,3 +78,33 @@ const FollowButton = ({ targetUser, isLoading, className = '' }) => {
 };
 
 export default FollowButton;
+
+// ${
+//   showFollowedInitialState
+//     ? 'bg-pr-bg-main text-pr-main transition-colors group-hover:text-pr-main-soft group-active:text-pr-main'
+//     : showUnfollowedInitialState
+//     ? 'bg-pr-main text-pr-bg-main transition-colors group-hover:bg-pr-main-soft group-active:bg-pr-main'
+//     : ''
+// }
+//   ${
+//     isAnimatingAfterFollow
+//       ? 'animate-swap-colors'
+//       : isAnimatingAfterUnfollow
+//       ? 'animate-swap-colors-reverse'
+//       : ''
+//   }
+
+// ${
+//   showFollowedInitialState
+//     ? 'after:animate-static-unfollow-text'
+//     : showUnfollowedInitialState
+//     ? 'after:animate-static-follow-text'
+//     : ''
+// }
+//   ${
+//     isAnimatingAfterFollow
+//       ? 'after:animate-print-follow after:border-l-1 after:border-pr-text-inverted'
+//       : isAnimatingAfterUnfollow
+//       ? 'after:animate-print-unfollow after:border-l-1 after:border-pr-text'
+//       : ''
+//   }

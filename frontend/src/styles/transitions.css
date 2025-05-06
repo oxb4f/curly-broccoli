@@ -108,24 +108,12 @@
   }
 
   @keyframes slideBackFollow {
-    0% {
-      margin-left: 0rem;
-    }
-    1% {
-      margin-left: 1rem;
-    }
     100% {
       margin-left: 0rem;
     }
   }
 
   @keyframes slideBackUnfollow {
-    0% {
-      margin-left: 0rem;
-    }
-    1% {
-      margin-left: -1rem;
-    }
     100% {
       margin-left: 0rem;
     }

@@ -80,7 +80,7 @@ const BookEditForm = ({ className = '' }) => {
         },
         addBook: {
           type: 'submit',
-          value: 'Edit book'
+          children: 'Edit book'
         }
       },
       className: 'flex flex-col gap-2 min-w-96'

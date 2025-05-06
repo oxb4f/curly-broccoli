@@ -14,7 +14,11 @@ const UserCard = ({ user, isLoading, className = '' }) => {
         md:grid-rows-[9rem_2rem_auto] md:grid-cols-1 md:text-center 
              ${className}`}
     >
-      <NavigationLink to={`${ROUTES.MAIN.USERS}/${user?.id}`} className="absolute inset-0 z-10" />
+      <NavigationLink
+        to={`${ROUTES.MAIN.USERS}/${user?.id}`}
+        className="absolute inset-0 z-10"
+        title={`Go to ${user?.username} profile page`}
+      />
       <UserImage
         className="justify-self-center self-center row-span-full h-full
         md:row-span-1"
@@ -22,18 +26,16 @@ const UserCard = ({ user, isLoading, className = '' }) => {
         isLoading={isLoading}
       />
       <UserUsername
-        className="self-start max-w-full text-lg sm:self-end"
+        className="self-start max-w-full text-lg truncate sm:self-end"
         username={user?.username}
         isLoading={isLoading}
         as="h2"
-        short
       />
       <UserPersonalInfo
         personalInfo={[user?.personalInfo?.calculated?.fullName]}
         isLoading={isLoading}
-        className="self-end col-start-2 col-end-full max-w-full
+        className="self-end col-start-2 col-end-full max-w-full truncate 
         md:col-start-1 "
-        short
       />
 
       {/* <section className="flex justify-center">

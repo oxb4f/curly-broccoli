@@ -22,8 +22,11 @@ const BookCreateForm = ({ className = '' }) => {
     description: {
       fields: {
         title: {
-          type: 'text',
-          placeholder: 'Title'
+          type: 'search',
+          placeholder: 'Title',
+          placeholderClassName: 'z-50',
+          className: 'focus:rounded-b-none',
+          dropdownClassName: 'rounded-b-xl bg-pr-main/5 backdrop-blur-sm origin-top'
         },
         author: {
           type: 'text',
@@ -53,7 +56,7 @@ const BookCreateForm = ({ className = '' }) => {
         },
         addBook: {
           type: 'submit',
-          value: 'Add book'
+          children: 'Add book'
         }
       },
       className: 'flex flex-col gap-2 min-w-96'

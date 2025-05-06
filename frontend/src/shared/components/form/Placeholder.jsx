@@ -1,15 +1,25 @@
+import { mergeCn } from '@shared/utils';
+
 const FormPlaceholder = ({
   value,
   children,
   className = 'bg-pr-bg-main peer-focus:text-pr-main'
 }) => {
   return (
-    <label className="relative size-full">
+    <label className="group relative size-full">
       {children}
       <span
-        className={`absolute -top-2.5 left-2 px-1 transition-all text-[0.8em] text-pr-main-soft select-none
-          peer-not-focus:peer-placeholder-shown:translate-y-4.5 peer-not-focus:peer-placeholder-shown:text-base peer-not-focus:peer-placeholder-shown:text-pr-text-darker peer-not-focus:peer-placeholder-shown:cursor-text
-      		${className}`}
+        className={mergeCn(
+          `absolute top-0 left-0 translate-x-2 -translate-y-3 px-1 text-[0.8em] text-pr-main-soft transition-all select-none  pointer-events-none
+
+          group-[&:has(:focus)]:text-pr-main
+
+          group-[&:has(:not(:focus):placeholder-shown)]:translate-y-2
+          group-[&:has(:not(:focus):placeholder-shown)]:text-base
+          group-[&:has(:not(:focus):placeholder-shown)]:text-pr-text-darker
+          group-[&:has(:not(:focus):placeholder-shown)]:cursor-text`,
+          className
+        )}
       >
         {value}
       </span>

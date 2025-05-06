@@ -16,7 +16,7 @@ const AuthSignInForm = () => {
     },
     submit: {
       type: 'submit',
-      value: 'Sign in'
+      children: 'Sign in'
     }
   };
 

@@ -3,12 +3,12 @@ import UserImage from '@user/shared/components/Image';
 import NavigationLink from '@shared/components/navigation/Link';
 import ROUTES from '@app/router/constants/routes';
 
-const UserPlate = ({ user, isLoading, additionalSlot, className = '' }) => {
+const UserInlineCard = ({ user, isLoading, additionalSlot, className = '' }) => {
   if (isLoading) return;
 
   return (
     <article
-      className={`relative grid grid-cols-[min-content_minmax(0,70%)] px-2 py-1 gap-x-2 rounded-lg
+      className={`relative grid grid-cols-[min-content_1fr] px-2 py-1 gap-x-3 rounded-lg
 				${additionalSlot ? 'grid-rows-[min-content_1fr]' : 'grid-rows-1'}
          ${className}`}
       title={`Go to ${user?.username} profile page`}
@@ -19,10 +19,14 @@ const UserPlate = ({ user, isLoading, additionalSlot, className = '' }) => {
         imageUrl={user?.imageUrl}
         isLoading={isLoading}
       />
-      <UserUsername className="self-center" username={user?.username} isLoading={isLoading} short />
+      <UserUsername
+        className="self-center truncate"
+        username={user?.username}
+        isLoading={isLoading}
+      />
       {additionalSlot}
     </article>
   );
 };
 
-export default UserPlate;
+export default UserInlineCard;

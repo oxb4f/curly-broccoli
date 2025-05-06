@@ -6,3 +6,5 @@ export { default as formatKey } from './object/formatKey';
 
 export { default as prepareRequest } from './api/prepareRequest';
 export { default as processResponse } from './api/processResponse';
+
+export { default as mergeCn } from './className/merge';

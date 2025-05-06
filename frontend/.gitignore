@@ -29,3 +29,4 @@ jsconfig.json
 *.sw?
 profile-photo*
 etc/db/
+project_structure.text

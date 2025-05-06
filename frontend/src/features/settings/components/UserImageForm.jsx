@@ -31,7 +31,7 @@ const EditUserImageForm = () => {
           },
           confirm: {
             type: 'submit',
-            value: 'confirm',
+            children: 'confirm',
             className:
               'bg-pr-bg-secondary! text-pr-text rounded-none rounded-xs! transition-all hover:enabled:bg-pr-bg-tertiary!'
           }

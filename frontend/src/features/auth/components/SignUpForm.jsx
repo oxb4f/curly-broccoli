@@ -17,7 +17,7 @@ const AuthSignUpForm = () => {
     },
     submit: {
       type: 'submit',
-      value: 'Sign up'
+      children: 'Sign up'
     }
   };
 

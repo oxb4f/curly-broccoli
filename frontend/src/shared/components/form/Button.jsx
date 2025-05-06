@@ -1,17 +1,25 @@
+import { mergeCn } from '@shared/utils';
 import { memo } from 'react';
-import Input from '@shared/components/ui/inputs/Input';
 
 const FormButton = memo(
   ({ button, isDisabled }) => {
     const commonProps = {
       ...button,
-      className: `peer w-full h-10 px-2 rounded-md placeholder:opacity-0 cursor-pointer font-bold bg-pr-main text-pr-bg-main enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute
-      ${button?.className ?? ''}`
+      className: mergeCn(
+        `w-full h-10 px-2 rounded-md placeholder:opacity-0 cursor-pointer font-bold bg-pr-main text-pr-bg-main 
+        enabled:hover:bg-pr-main-soft enabled:active:bg-pr-main-mute`,
+        button?.className ?? ''
+      )
     };
 
-    if (button.type === 'button') return <Input {...commonProps} />;
+    if (button.type === 'submit')
+      return (
+        <button {...commonProps} disabled={isDisabled}>
+          {button.children}
+        </button>
+      );
 
-    return <Input {...commonProps} disabled={isDisabled} />;
+    return <button {...commonProps}>{button.children}</button>;
   },
   (prevProps, nextProps) => {
     return prevProps.isDisabled === nextProps.isDisabled;

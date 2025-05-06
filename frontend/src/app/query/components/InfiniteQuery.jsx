@@ -35,7 +35,7 @@ const InfiniteQuery = ({
       {!data ? null : typeof children === 'function' ? children(data) : children}
       <div
         ref={lastElementRef}
-        className={`size-full p-4 flex justify-center items-center bg-pr-bg-main ${
+        className={`w-full h-auto flex justify-center items-center bg-transparent ${
           isLoading ? 'absolute inset-0' : ''
         }`}
       >

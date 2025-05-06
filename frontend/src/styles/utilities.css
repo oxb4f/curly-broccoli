@@ -35,6 +35,18 @@
   );
 }
 
+@utility animation-paused {
+  animation-play-state: paused;
+}
+
+@utility animation-running {
+  animation-play-state: running;
+}
+
+@utility animation-reverse {
+  animation-direction: reverse;
+}
+
 @utility screen-reader-only {
   position: absolute;
   inset: 0;

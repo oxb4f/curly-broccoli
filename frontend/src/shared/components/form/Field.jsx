@@ -1,7 +1,9 @@
 import { memo } from 'react';
+import FormPlaceholder from './Placeholder';
 import Input from '@shared/components/ui/inputs/Input';
 import Textarea from '@shared/components/ui/inputs/Textarea';
-import FormPlaceholder from './Placeholder';
+import SearchInput from '@shared/components/ui/inputs/Search';
+import { mergeCn } from '@shared/utils';
 
 const FormField = memo(
   ({ field, value, onChange }) => {
@@ -18,28 +20,35 @@ const FormField = memo(
       );
     }
 
+    const { placeholderClassName, ...restProps } = field;
+
     const commonProps = {
-      ...field,
-      className: `peer w-full h-10 px-2 rounded-md placeholder:opacity-0 ${
+      ...restProps,
+      className: mergeCn(
+        `w-full h-10 px-2 rounded-md placeholder:opacity-0 
+      ${
         field.type === 'textarea'
           ? 'py-2 border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
           : field.type === 'range'
           ? 'accent-pr-main cursor-pointer'
           : 'border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
-      } ${field?.className ?? ''}`
+      } `,
+        field?.className ?? ''
+      )
     };
 
-    let inputElement = <Input {...commonProps} value={value ?? ''} onChange={handleChange} />;
+    let InputElement = Input;
 
-    if (field.type === 'textarea')
-      inputElement = <Textarea {...commonProps} value={value ?? ''} onChange={handleChange} />;
+    if (field.type === 'textarea') InputElement = Textarea;
+
+    if (field.type === 'search') InputElement = SearchInput;
 
     return (
       <FormPlaceholder
         value={field.placeholder}
-        className="text-pr-main-soft bg-pr-bg-main peer-focus:text-pr-main"
+        className={`text-pr-main-soft bg-pr-bg-main ${placeholderClassName ?? ''}`}
       >
-        {inputElement}
+        {<InputElement {...commonProps} value={value ?? ''} onChange={handleChange} />}
       </FormPlaceholder>
     );
   },
