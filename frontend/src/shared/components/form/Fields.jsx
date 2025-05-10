@@ -28,7 +28,13 @@ const FormFields = ({ fields, values, errors, allFieldsRequired, onFieldChange }
         isDisabled={allFieldsRequired && Object.values(values).some((value) => !value)}
       />
     ) : (
-      <FormItem key={name} hint={params.hint} error={errors[name]} isHintVisible={!values[name]}>
+      <FormItem
+        key={name}
+        hint={params.hint}
+        error={errors[name]}
+        isHintVisible={!values[name]}
+        disableHint={params.disableHint}
+      >
         <FormField field={{ name, ...params }} value={values[name]} onChange={onFieldChange} />
       </FormItem>
     );

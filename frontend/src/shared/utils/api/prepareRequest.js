@@ -2,6 +2,16 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
   switch (apiEndpoint) {
     case 'users':
       switch (apiAction) {
+        case 'getAll': {
+          return {
+            params: {
+              limit: data.limit,
+              offset: data.offset,
+              orderField: data.orderField,
+              orderDirection: data.orderDirection
+            }
+          };
+        }
         case 'signIn':
           return {
             username: data.username,

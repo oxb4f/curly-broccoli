@@ -46,6 +46,7 @@
   --animate-static-unfollow-text: printUnfollow 1s paused;
   --animate-swap-colors: swapColors 0.3s 2.3s both;
   --animate-swap-colors-reverse: swapColors 0.3s 2.3s reverse both;
+  --animate-slide-in: slideIn 0.3s both;
 
   --breakpoint-xs: 30rem;
 }

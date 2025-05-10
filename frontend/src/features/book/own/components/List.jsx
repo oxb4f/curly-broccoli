@@ -11,9 +11,9 @@ const BookOwnList = ({
   return (
     <ul
       className={`w-full grid grid-cols-1 gap-4 
-        md:grid-cols-2 
-        lg:grid-cols-3 
-        xl:grid-cols-[repeat(auto-fill,minmax(12rem,1fr))]
+        sm:grid-cols-2 
+        md:grid-cols-3 
+        lg:grid-cols-[repeat(auto-fill,minmax(14rem,1fr))]
         ${className}`}
     >
       <li
@@ -24,7 +24,7 @@ const BookOwnList = ({
         <BookCreateLink className="size-full rounded-[inherit]" />
       </li>
       {items.map((item) => (
-        <li key={item.id} className="relative h-24 rounded-3xl md:h-64">
+        <li key={item.id} className="relative h-24 rounded-3xl sm:h-64">
           <BookOwnCard data={item} className="size-full rounded-[inherit]" />
           {isSelectionEnabled && (
             <label

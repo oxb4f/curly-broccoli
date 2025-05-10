@@ -119,6 +119,12 @@
     }
   }
 
+  @keyframes slideIn {
+    100% {
+      translate: 0 100%;
+    }
+  }
+
   @keyframes fadeIn {
     0% {
       opacity: 1;

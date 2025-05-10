@@ -1,4 +1,6 @@
-const FormHint = ({ value, error, isVisible }) => {
+const FormHint = ({ value, error, isVisible, disable }) => {
+  if (disable) return null;
+
   const key = error || (isVisible && value ? value : null);
 
   return (

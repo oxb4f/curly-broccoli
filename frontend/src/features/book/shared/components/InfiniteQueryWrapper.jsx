@@ -2,10 +2,10 @@ import QUERY_KEYS from '@app/query/constants/queryKeys';
 import { getPrivateBooks, getPublicBooks } from '../services/api/book';
 import InfiniteQuery from '@app/query/components/InfiniteQuery';
 
-const BookInfiniteQueryWrapper = ({ userId, children }) => {
+const BookInfiniteQueryWrapper = ({ userId, children, sortParams = [] }) => {
   const queryFn = userId
-    ? (offset) => getPrivateBooks(userId, { offset })
-    : (offset) => getPublicBooks({ offset });
+    ? (offset) => getPrivateBooks(userId, { offset, ...sortParams })
+    : (offset) => getPublicBooks({ offset, ...sortParams });
 
   const queryKeys = userId
     ? [...QUERY_KEYS.BOOKS.PRIVATE, Number(userId)]
@@ -21,6 +21,7 @@ const BookInfiniteQueryWrapper = ({ userId, children }) => {
       keys={queryKeys}
       dataTransformer={transformData}
       options={queryOptions}
+      parameters={[...Object.values(sortParams)]}
     >
       {(books) => children(books)}
     </InfiniteQuery>

@@ -4,6 +4,7 @@ import Input from '@shared/components/ui/inputs/Input';
 import Textarea from '@shared/components/ui/inputs/Textarea';
 import SearchInput from '@shared/components/ui/inputs/Search';
 import { mergeCn } from '@shared/utils';
+import Select from '../ui/inputs/Select';
 
 const FormField = memo(
   ({ field, value, onChange }) => {
@@ -37,11 +38,14 @@ const FormField = memo(
       )
     };
 
-    let InputElement = Input;
-
-    if (field.type === 'textarea') InputElement = Textarea;
-
-    if (field.type === 'search') InputElement = SearchInput;
+    const InputElement =
+      field.type === 'textarea'
+        ? Textarea
+        : field.type === 'search'
+        ? SearchInput
+        : field.type === 'select'
+        ? Select
+        : Input;
 
     return (
       <FormPlaceholder

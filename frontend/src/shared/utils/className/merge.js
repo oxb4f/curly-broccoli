@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 
-const mergeCn = (defaultClassName, newClassName) => {
-  return twMerge(defaultClassName, newClassName);
+const mergeCn = (...classNames) => {
+  return twMerge(...classNames);
 };
 
 export default mergeCn;

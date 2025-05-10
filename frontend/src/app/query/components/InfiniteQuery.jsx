@@ -9,10 +9,13 @@ const InfiniteQuery = ({
   children,
   offset = 15,
   initialOffset = 0,
+  parameters = [],
   options = {}
 }) => {
+  console.log(parameters);
+
   let { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: keys,
+    queryKey: [...keys, ...parameters],
     queryFn: ({ pageParam }) => callback(pageParam),
     getNextPageParam: (lastPage, _, lastPageParam) => {
       const cursor = lastPageParam + Number(offset);
@@ -28,10 +31,9 @@ const InfiniteQuery = ({
   });
 
   const lastElementRef = useIntersectionObserver(fetchNextPage, [hasNextPage]);
-  console.dir(data);
 
   return (
-    <div className={`relative flex-col ${isLoading ? 'size-full' : ''}`}>
+    <div className={`relative flex-col size-full ${isLoading ? 'size-full' : ''}`}>
       {!data ? null : typeof children === 'function' ? children(data) : children}
       <div
         ref={lastElementRef}

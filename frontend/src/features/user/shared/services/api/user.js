@@ -12,8 +12,11 @@ const getUser = async (id) => {
   return processResponse(response, 'users');
 };
 
-const getUsers = async () => {
-  const response = await api.get('users');
+const getUsers = async (params) => {
+  const requestPayload = prepareRequest(params, 'users', 'getAll');
+  console.log(requestPayload);
+
+  const response = await api.get('users', requestPayload);
   console.log(response);
 
   return processResponse(response, 'users');

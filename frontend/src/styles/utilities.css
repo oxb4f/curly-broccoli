@@ -52,3 +52,18 @@
   inset: 0;
   opacity: 0;
 }
+
+@utility grid-cols-auto-fill {
+  grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
+}
+
+@utility grid-cols-auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+}
+
+@custom-variant is-open {
+  &[data-open='true'],
+  &:where([data-open='true'] *) {
+    @slot;
+  }
+}
