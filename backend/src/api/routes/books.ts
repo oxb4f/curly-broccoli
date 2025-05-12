@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import Elysia, { t } from "elysia";
+import Elysia, { type InferContext } from "elysia";
 import createBookService from "../../services/books/create/action";
 import deleteUserBookService from "../../services/books/private/delete/action";
 import getUserBookService from "../../services/books/private/get/action";
@@ -8,8 +8,11 @@ import updateUserBookService from "../../services/books/private/update/action";
 import addBookService from "../../services/books/public/add/action";
 import getBookService from "../../services/books/public/get/action";
 import listBooksService from "../../services/books/public/list/action";
+import quickSearchBookService from "../../services/books/public/search/quick/action";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
+import { ensureRequestContext } from "../utils/ensure-request-context";
+import { prepareServiceHandlerPayload } from "./utils";
 
 export const booksRoute = new Elysia({ name: "booksRoute" })
 	.use(contextPlugin)
@@ -21,362 +24,160 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 	.decorate("updateUserBookService", updateUserBookService)
 	.decorate("deleteUserBookService", deleteUserBookService)
 	.decorate("addBookService", addBookService)
+	.decorate("quickSearchBookService", quickSearchBookService)
 	.group("/books", (app) =>
-		app.guard((app) =>
-			app
-				.use(createJwtAuthGuard())
-				.post(
-					"/",
-					async ({ body, context, createBookService, store }) => {
-						assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-						const result = await createBookService({
+		app.guard((app) => {
+			app.get(
+				"/quick-search",
+				...ensureRequestContext<InferContext<typeof app>, any>(
+					async (ctx) => {
+						return ctx.quickSearchBookService({
 							dto: {
-								accessId: store.jwtAuthGuardPayload.payload.accessId,
-								...body,
+								...prepareServiceHandlerPayload(ctx),
 							},
-							context,
+							context: ctx.context,
 						});
-
-						return result;
 					},
-					{
-						tags: ["Books"],
-						body: t.Object({
-							title: t.String({
-								description: "Title",
-							}),
-							author: t.String({
-								description: "Author",
-							}),
-							numberOfPages: t.Number({
-								description: "Number of pages",
-							}),
-							description: t.String({
-								description: "Description",
-							}),
-							genre: t.String({
-								description: "Genre",
-							}),
-							isbn: t.String({
-								description: "ISBN",
-							}),
-							imageUrl: t.String({
-								description: "Image URL",
-							}),
-						}),
-					},
-				)
-				.group("/public", (app) =>
-					app
-						.post(
-							"/add/:bookId",
-							async ({ params, context, addBookService, store }) => {
-								assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-								const result = await addBookService({
-									dto: {
-										accessId: store.jwtAuthGuardPayload.payload.accessId,
-										bookId: params.bookId,
-									},
-									context,
-								});
-
-								return result;
-							},
-							{
-								tags: ["Books"],
-								params: t.Object({
-									bookId: t.Number({
-										description: "Book ID",
-									}),
-								}),
-							},
-						)
-						.get(
-							"/",
-							async ({ query, context, listBooksService, store }) => {
-								assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-								const result = await listBooksService({
-									dto: {
-										...query,
-										accessId: store.jwtAuthGuardPayload.payload.accessId,
-									} as any,
-									context,
-								});
-
-								return result;
-							},
-							{
-								tags: ["Books"],
-								query: t.Object({
-									orderDirection: t.Optional(
-										t.Nullable(
-											t.Enum({
-												asc: "asc",
-												desc: "desc",
-											}),
-										),
-									),
-									orderField: t.Optional(
-										t.Nullable(
-											t.String({
-												description: "Order field",
-											}),
-										),
-									),
-									limit: t.Optional(
-										t.Nullable(
-											t.Number({
-												description: "Limit",
-												default: 10,
-											}),
-										),
-									),
-									offset: t.Optional(
-										t.Nullable(
-											t.Number({
-												description: "Offset",
-												default: 0,
-											}),
-										),
-									),
-								}),
-							},
-						)
-						.get(
-							"/:id",
-							async ({ params, context, getBookService, store }) => {
-								assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-								const result = await getBookService({
-									dto: {
-										accessId: store.jwtAuthGuardPayload.payload.accessId,
-										bookId: params.id,
-									},
-									context,
-								});
-
-								return result;
-							},
-							{
-								tags: ["Books"],
-								params: t.Object({
-									id: t.Number({
-										description: "Book ID",
-									}),
-								}),
-							},
-						),
-				)
-				.group("/private", (app) =>
-					app
-						.get(
-							"/",
-							async ({ query, context, listUserBooksService, store }) => {
-								assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-								const result = await listUserBooksService({
-									dto: {
-										accessId: store.jwtAuthGuardPayload.payload.accessId,
-										...query,
-									} as any,
-									context,
-								});
-
-								return result;
-							},
-							{
-								tags: ["Books"],
-								query: t.Object({
-									userId: t.Number({
-										description: "User id",
-									}),
-									orderDirection: t.Optional(
-										t.Nullable(
-											t.Enum(
-												{
-													asc: "asc",
-													desc: "desc",
-												},
-												{ description: "Order direction" },
-											),
-										),
-									),
-									orderField: t.Optional(
-										t.Nullable(
-											t.String({
-												description: "Order field",
-											}),
-										),
-									),
-									limit: t.Optional(
-										t.Nullable(
-											t.Number({
-												description: "Limit",
-												default: 10,
-											}),
-										),
-									),
-									offset: t.Optional(
-										t.Nullable(
-											t.Number({
-												description: "Offset",
-												default: 0,
-											}),
-										),
-									),
-								}),
-							},
-						)
-						.get(
-							"/:id",
-							async ({ params, context, getUserBookService, store }) => {
-								assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-								const result = await getUserBookService({
-									dto: {
-										bookId: params.id,
-									},
-									context,
-								});
-
-								return result;
-							},
-							{
-								tags: ["Books"],
-								params: t.Object({
-									id: t.Number({
-										description: "Book ID",
-									}),
-								}),
-							},
-						)
-						.patch(
-							"/:id",
-							async ({
-								params,
-								body,
-								context,
-								updateUserBookService,
-								store,
-							}) => {
-								assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-								const result = await updateUserBookService({
-									dto: {
-										accessId: store.jwtAuthGuardPayload.payload.accessId,
-										bookId: params.id,
-										...body,
-									},
-									context,
-								});
-
-								return result;
-							},
-							{
-								tags: ["Books"],
-								params: t.Object({
-									id: t.Number({
-										description: "Book ID",
-									}),
-								}),
-								body: t.Object({
-									title: t.Optional(
-										t.String({
-											description: "Title",
-										}),
-									),
-									description: t.Optional(
-										t.Nullable(
-											t.String({
-												description: "Description",
-											}),
-										),
-									),
-									author: t.Optional(
-										t.String({
-											description: "Author",
-										}),
-									),
-									genre: t.Optional(
-										t.Nullable(
-											t.String({
-												description: "Genre",
-											}),
-										),
-									),
-									imageUrl: t.Optional(
-										t.Nullable(
-											t.String({
-												description: "Image URL",
-											}),
-										),
-									),
-									numberOfPages: t.Optional(
-										t.Number({
-											description: "Number of pages",
-										}),
-									),
-									isbn: t.Optional(
-										t.Nullable(
-											t.String({
-												description: "ISBN",
-											}),
-										),
-									),
-									isFavorite: t.Optional(
-										t.Boolean({
-											description: "Is favorite",
-										}),
-									),
-									isRead: t.Optional(
-										t.Boolean({
-											description: "Is read",
-										}),
-									),
-									rating: t.Optional(
-										t.Nullable(
-											t.Number({
-												description: "Rating",
-											}),
-										),
-									),
-									review: t.Optional(
-										t.Nullable(
-											t.String({
-												description: "Review",
-											}),
-										),
-									),
-								}),
-							},
-						)
-						.delete(
-							"/:id",
-							async ({ params, context, deleteUserBookService, store }) => {
-								assert(store.jwtAuthGuardPayload.payload?.accessId);
-
-								const result = await deleteUserBookService({
-									dto: {
-										accessId: store.jwtAuthGuardPayload.payload.accessId,
-										bookId: params.id,
-									},
-									context,
-								});
-
-								return result;
-							},
-							{
-								tags: ["Books"],
-								params: t.Object({
-									id: t.Number({
-										description: "Book ID",
-									}),
-								}),
-							},
-						),
 				),
-		),
+			);
+
+			const appWithJwtGuard = app.use(createJwtAuthGuard());
+
+			appWithJwtGuard.post(
+				"/",
+				...ensureRequestContext<InferContext<typeof appWithJwtGuard>, any>(
+					async (ctx) => {
+						assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+						return ctx.createBookService({
+							dto: {
+								accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+								...prepareServiceHandlerPayload(ctx),
+							},
+							context: ctx.context,
+						});
+					},
+				),
+			);
+
+			appWithJwtGuard.group("/public", (app) =>
+				app
+					.post(
+						"/add/:bookId",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.addBookService({
+									dto: {
+										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					)
+					.get(
+						"/",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.listBooksService({
+									dto: {
+										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					)
+					.get(
+						"/:bookId",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.getBookService({
+									dto: {
+										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					),
+			);
+
+			return appWithJwtGuard.group("/private", (app) =>
+				app
+					.get(
+						"/",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.listUserBooksService({
+									dto: {
+										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					)
+					.get(
+						"/:bookId",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.getUserBookService({
+									dto: {
+										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					)
+					.patch(
+						"/:bookId",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.updateUserBookService({
+									dto: {
+										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					)
+					.delete(
+						"/:bookId",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.deleteUserBookService({
+									dto: {
+										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					),
+			);
+		}),
 	);

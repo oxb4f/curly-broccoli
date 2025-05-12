@@ -41,6 +41,13 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 
 	assert(access, "Assert must be created");
 
+	await context.search.indexUser({
+		userId: String(user.getId()),
+		username: user.getUsername(),
+		firstName: user.getFirstName() ?? "",
+		lastName: user.getLastName() ?? "",
+	});
+
 	return CreateUserDtoOut.create({
 		id: user.getId(),
 		username: user.getUsername(),

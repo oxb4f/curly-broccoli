@@ -28,6 +28,7 @@ export type GetBookFilter = {
 };
 
 export type ListBookFilter = {
+    id?: Id[];
 	isAddedByUserId?: Id;
 	limit?: number | null;
 	offset?: number | null;

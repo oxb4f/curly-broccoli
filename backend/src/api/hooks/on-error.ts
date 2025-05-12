@@ -11,8 +11,6 @@ export function onError<E extends Error = Error>(
 	error: E,
 	set: Context["set"],
 ) {
-	console.trace(error);
-
 	return match(error as any)
 		.with({ constructor: ServiceError }, (e: any) => {
 			set.status = match(e)
@@ -51,6 +49,7 @@ export function onError<E extends Error = Error>(
 		})
 		.otherwise(() => {
 			set.status = 500;
+
 			return getErrorResponse({ type: "INTERNAL_SERVER_ERROR" });
 		});
 }

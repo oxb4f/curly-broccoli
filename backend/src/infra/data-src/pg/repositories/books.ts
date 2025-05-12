@@ -1,4 +1,4 @@
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, count, eq, inArray, sql } from "drizzle-orm";
 import type { Book } from "../../../../entities/book";
 import type {
 	BookUpdateData,
@@ -84,6 +84,10 @@ export class PgBooksRepository
 		this.addLimit(query, filter.limit);
 		this.addOffset(query, filter.offset);
 		this.addOrder(query, books, filter.orderDirection, filter.orderField);
+
+        if (filter.id?.length) {
+            query.where(inArray(books.id, filter.id));
+        }
 
 		const result = await query.execute();
 

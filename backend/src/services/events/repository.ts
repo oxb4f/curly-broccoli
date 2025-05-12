@@ -1,7 +1,7 @@
 import type { CreatedAt } from "../../entities/base";
 import type { BaseEvent } from "../../entities/events/base";
 import type { Id } from "../../entities/types/id";
-import { FirstName, LastName, Username } from "../../entities/user";
+import type { FirstName, LastName, Username } from "../../entities/user";
 import type { BaseRepository, OrderDirection } from "../base-repository";
 import type { RepositoryTypes } from "../base-repository";
 
@@ -22,10 +22,10 @@ export type ListEventsDto = {
 		toUserId: Id;
 		fromUser: {
 			id: Id;
-            username: Username;
+			username: Username;
 			firstName: FirstName;
 			lastName: LastName;
-			imageUrl:  string | null;
+			imageUrl: string | null;
 		};
 		createdAt: CreatedAt;
 	}[];

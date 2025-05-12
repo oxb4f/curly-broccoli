@@ -55,6 +55,14 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 
 	await context.userBooksRepository.create(userBook);
 
+	await context.search.indexBook({
+		bookId: String(book.getId()),
+		title: profile.getTitle(),
+		author: profile.getAuthor(),
+		description: profile.getDescription() ?? "",
+		genre: profile.getGenre() ?? "",
+	});
+
 	return CreateDtoOut.create({
 		id: book.getId(),
 		title: profile.getTitle(),

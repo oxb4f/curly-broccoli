@@ -55,6 +55,7 @@ export type UserUpdateData = {
 };
 
 export type ListUserFilter = {
+    id?: Id[];
 	followedByUserId?: Id;
 	notId?: Id;
 	limit?: number;

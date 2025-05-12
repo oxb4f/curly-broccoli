@@ -1,6 +1,7 @@
-import Elysia, { t } from "elysia";
+import Elysia, { type InferContext } from "elysia";
 import getPingService from "../../services/ping/get/action";
 import { contextPlugin } from "../plugins/context";
+import { ensureRequestContext } from "../utils/ensure-request-context";
 
 export const pingRoute = new Elysia({ name: "pingRoute" })
 	.use(contextPlugin)
@@ -9,22 +10,14 @@ export const pingRoute = new Elysia({ name: "pingRoute" })
 		app.guard((app) =>
 			app.get(
 				"/",
-				async ({ query, getPingService, context }) => {
-					const result = await getPingService({
-						dto: { ping: query.ping },
-						context,
-					});
-
-					return result;
-				},
-				{
-					tags: ["Ping"],
-					query: t.Object({
-						ping: t.String({
-							description: "Ping value",
-						}),
-					}),
-				},
+				...ensureRequestContext<InferContext<typeof app>, any>(
+					async ({ query, getPingService, context }) => {
+						return getPingService({
+							dto: { ping: query?.ping! },
+							context,
+						});
+					},
+				),
 			),
 		),
 	);

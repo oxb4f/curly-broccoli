@@ -1,4 +1,4 @@
-import { and, count, eq, not, sql } from "drizzle-orm";
+import { and, count, eq, inArray, not, sql } from "drizzle-orm";
 import { Access, type AccessHashedPayload } from "../../../../entities/access";
 import type { Social, User } from "../../../../entities/user";
 import type {
@@ -51,11 +51,17 @@ export class PgUsersRepository
 		this.addOffset(query, filter.offset);
 		this.addOrder(query, users, filter.orderDirection, filter.orderField);
 
+        const where = [];
+
 		if (filter.notId) {
-			query.where(not(eq(users.id, filter.notId)));
+            where.push(not(eq(users.id, filter.notId)));
 		}
 
-		const result = await query.execute();
+        if (filter.id?.length) {
+            where.push(inArray(users.id, filter.id));
+        }
+
+		const result = await query.where(and(...where)).execute();
 
 		data = result.map((row) => {
 			return {

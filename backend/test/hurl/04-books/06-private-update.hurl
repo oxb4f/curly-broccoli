@@ -49,12 +49,12 @@ Content-Type: application/json
     "author": "0406{{rn}}{{rs}}author2",
     "genre": "0406{{rn}}{{rs}}genre2",
     "isFavorite": true,
+    "isRead": true,
     "rating": 4,
     "review": "0406{{rn}}{{rs}}review2",
     "imageUrl": "https://example.com/image2.png",
     "numberOfPages": 200,
-    "isbn": "0406{{rn}}{{rs}}isbn2",
-    "isRead": true
+    "isbn": "0406{{rn}}{{rs}}isbn2"
 }
 
 HTTP 200
