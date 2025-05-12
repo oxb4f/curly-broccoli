@@ -9,7 +9,19 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 
 	assert(getUserDto, "User not found");
 
+    let usersIdsBySearchTerm: number[] = [];
+
+    if (dto.searchTerm) {
+        const users = await context.search.searchUsers({
+            term: dto.searchTerm,
+            size: dto.limit ?? 10,
+        });
+
+        usersIdsBySearchTerm = users.items.map((user) => Number(user.id));
+    }
+
 	const listDto = await context.usersRepository.list({
+        ...(usersIdsBySearchTerm.length ? { id: usersIdsBySearchTerm } : {}),
 		notId: dto.notId,
 		followedByUserId: getUserDto.id,
 		limit: dto.limit,

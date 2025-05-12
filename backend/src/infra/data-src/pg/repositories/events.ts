@@ -50,11 +50,11 @@ export class PgEventsRepository
 				payload: row.events.payload,
 				toUserId: row.events.toUserId,
 				fromUser: {
-				    id: row.users.id,
-                    username: row.users.username,
-                    firstName: row.users.firstName,
-                    lastName: row.users.lastName,
-                    imageUrl: row.users.imageUrl,
+					id: row.users.id,
+					username: row.users.username,
+					firstName: row.users.firstName,
+					lastName: row.users.lastName,
+					imageUrl: row.users.imageUrl,
 				},
 				createdAt: row.events.createdAt,
 			};

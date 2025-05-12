@@ -24,6 +24,8 @@ export const orderDirection = z.enum(["asc", "desc"]).readonly().default("asc");
 
 export const orderField = z.enum(["id", "createdAt", "updatedAt"]);
 
+export const searchTerm = z.string().min(1).max(255).readonly();
+
 export function getEnumValues<
 	T extends z.ZodEnum<any>,
 	K extends keyof T["Values"],

@@ -6,8 +6,9 @@ GIT_COMMIT ?= $(shell git rev-parse --short HEAD)
 DOCKER_TAG ?= ${GIT_BRANCH}-${GIT_COMMIT}
 APP_IMAGE ?= ${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${APP_NAME}:${DOCKER_TAG}
 DOCKER_FILE ?= build/Dockerfile
-DOCKER_COMPOSE ?= deployment/docker-compose.dev.yml
+DOCKER_COMPOSE ?= deployment/docker-compose.yml
 ENV_FILE ?= .env.dev
+PROFILE ?= dev ## Docker Compose profile to use
 
 RN := $(shell echo $$(( RANDOM % 9 + 1 ))`seq -w 0 8 | shuf | tr -d '\n' | head -c 9`)
 RS := $(shell openssl rand -base64 10 | tr -dc 'a-zA-Z0-9' | head -c 10)
@@ -46,10 +47,10 @@ endif
 	DOCKER_BUILDKIT=1 docker build $(PULL_FLAG) $(NO_CACHE_FLAG) --tag ${APP_IMAGE} --file ${DOCKER_FILE} --target ${TARGET} .
 
 run: env stop ## Start the application using Docker Compose
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} up -d
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} $(if $(PROFILE),--profile $(PROFILE),) up -d
 
 stop: env ## Stop the application using Docker Compose
-	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} down --volumes
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} down --volumes
 
 hurl: ## Run hurl tests against the application
 	@hurl \
@@ -72,24 +73,21 @@ logs: env ## Display container last logs
 logs-follow: env ## Display container last logs
 	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} logs --follow
 
-dev: build run logs-follow ## Start the application using Docker Compose
+dev: build ## Start the application in development mode
+	$(MAKE) run PROFILE=dev
+	$(MAKE) logs-follow
+
+watch: env stop ## Start the application with Docker Compose watch
+	APP_IMAGE=${APP_IMAGE} ENV_FILE=${ENV_FILE} docker compose --file ${DOCKER_COMPOSE} --project-name ${APP_NAME} --profile dev watch
 
 help: ## Display this help message
 	@echo "Usage: make [target] [FLAGS]"
 	@echo ""
-	@echo "$(BLUE)Targets:$(RESET)"
-	@awk 'BEGIN {FS = ":.*?## "; print "$(GREEN)"} /^[a-zA-Z_-]+:.*?## / {printf "  %-10s $(WHITE)%s$(RESET)\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@echo "Targets:"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
 	@echo ""
-	@echo "$(BLUE)Flags:$(RESET)"
-	@awk 'BEGIN {target=""} \
-		/^# @target/ {target=$$3; next} \
-		/##/ && target!="" { \
-			split($$1, arr, "?"); var=arr[1]; \
-			desc=substr($$0, index($$0, "##") + 3); \
-			if (!printed[target]++) { \
-				printf "\n${GREEN}Flags for '" target "' target:${RESET}\n"; \
-			} \
-			printf "  ${BLUE}%s=true${RESET}   - ${WHITE}%s${RESET}\n", var, desc \
-		} \
-		/^$$/ {target=""}' $(MAKEFILE_LIST)
-
+	@echo "Flags:"
+	@echo "  PROFILE=<profile>  Docker Compose profile to use (dev, db, elastic, storage, all)"
+	@echo "  PULL=true          Pull the latest base image before building"
+	@echo "  NO_CACHE=true      Build the image without using cache"
+	@echo "  ENV_FILE=<file>    Environment file to use (default: .env.dev)"

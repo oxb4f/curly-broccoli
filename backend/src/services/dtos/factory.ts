@@ -35,9 +35,7 @@ export function createInputDto<T>(schema: z.ZodType<T>): Dto<T> {
 }
 
 export function createOutputDto<T>(schema: z.ZodType<T>): Dto<T> {
-	return createDto(schema, (error) => {
-		console.trace({ error });
-
+	return createDto(schema, () => {
 		ServiceError.throw(ServiceError.ERROR_TYPE.WRONG_INTERNAL_STATE, {
 			message: "Validation error",
 			details: [],

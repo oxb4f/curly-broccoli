@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@bogeychan/elysia-logger": "^0.1.8",
+		"@elastic/elasticsearch": "^9.0.1",
 		"@elysiajs/bearer": "^1.2.0",
 		"@elysiajs/swagger": "^1.2.2",
 		"bcrypt": "^5.1.1",
@@ -19,6 +20,7 @@
 		"drizzle-orm": "^0.42.0",
 		"elysia": "^1.2.25",
 		"fast-jwt": "^6.0.1",
+		"pino": "^9.6.0",
 		"postgres": "^3.4.5",
 		"ts-pattern": "^5.7.0",
 		"zod": "^3.24.3"

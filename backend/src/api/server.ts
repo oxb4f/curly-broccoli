@@ -1,4 +1,3 @@
-import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { onError } from "./hooks/on-error";
 import { configPlugin } from "./plugins/config";
@@ -26,27 +25,6 @@ export const app = new Elysia()
 	.use(readingTrackersRoute)
 	.use(followersRoute)
 	.use(eventsRoute)
-	.use(
-		swagger({
-			path: "/docs",
-			documentation: {
-				info: {
-					title: "API Documentation",
-					version: "0.0.0",
-				},
-				tags: [
-					{ name: "Accesses" },
-					{ name: "Users" },
-					{ name: "Ping" },
-					{ name: "Images" },
-					{ name: "Books" },
-					{ name: "Reading Trackers" },
-					{ name: "Followers" },
-					{ name: "Events" },
-				],
-			},
-		}),
-	)
 	.listen({ port: process.env.APP_PORT }, () =>
 		console.log(`🦊 Elysia is running at :${process.env.APP_PORT}`),
 	);

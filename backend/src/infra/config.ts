@@ -25,6 +25,12 @@ export interface Config {
 	AWS_REGION: string;
 	AWS_S3_ENDPOINT: string;
 	FILE_STORAGE_DEFAULT_BUCKET_NAME: string;
+
+	SEARCH_TYPE: string;
+
+	ELASTICSEARCH_USERNAME: string;
+	ELASTICSEARCH_PASSWORD: string;
+	ELASTICSEARCH_URL: string;
 }
 
 export class ConfigValidationError extends Error {
@@ -66,11 +72,23 @@ export const configSchema = z.object({
 	AWS_SECRET_ACCESS_KEY: z.string(),
 	AWS_REGION: z.string(),
 	AWS_S3_ENDPOINT: z.string(),
+
+	SEARCH_TYPE: z.enum(["elastic"]),
+
+	ELASTICSEARCH_USERNAME: z.string(),
+	ELASTICSEARCH_PASSWORD: z.string(),
+	ELASTICSEARCH_URL: z.string().url(),
 });
+
+let config: Config;
 
 export function load(): Config {
 	try {
-		return configSchema.parse(process.env);
+		if (config) return config;
+
+		config = configSchema.parse(process.env);
+
+		return config;
 	} catch (error: any) {
 		const formattedError = error.format() as Record<
 			string,

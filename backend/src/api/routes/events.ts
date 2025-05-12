@@ -1,69 +1,33 @@
 import assert from "node:assert/strict";
-import Elysia, { t } from "elysia";
+import Elysia, { type InferContext } from "elysia";
 import listEventsService from "../../services/events/list/action";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
+import { ensureRequestContext } from "../utils/ensure-request-context";
+import { prepareServiceHandlerPayload } from "./utils";
 
 export const eventsRoute = new Elysia({ name: "eventsRoute" })
 	.use(contextPlugin)
 	.decorate("listEventsService", listEventsService)
-	.group("/events", (app) =>
-		app.guard((app) =>
-			app.use(createJwtAuthGuard()).get(
-				"/",
-				async ({ query, listEventsService, context, store }) => {
-					assert(store.jwtAuthGuardPayload.payload?.accessId);
+	.group("/events", (app) => {
+		const appWithJwtGuard = app.use(createJwtAuthGuard());
 
-					const result = await listEventsService({
+		appWithJwtGuard.get(
+			"/",
+			...ensureRequestContext<InferContext<typeof appWithJwtGuard>, any>(
+				async (ctx) => {
+					assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+					return ctx.listEventsService({
 						dto: {
-							accessId: store.jwtAuthGuardPayload.payload.accessId,
-							fromUserId: query.fromUserId,
-							orderDirection: query.orderDirection,
-							orderField: query.orderField as any,
-							limit: query.limit,
-							offset: query.offset,
+							accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
+							...prepareServiceHandlerPayload(ctx),
 						},
-						context,
+						context: ctx.context,
 					});
-
-					return result;
-				},
-				{
-					tags: ["Events"],
-					query: t.Object({
-						fromUserId: t.Optional(
-							t.Number({
-								description: "From user id",
-							}),
-						),
-						orderDirection: t.Optional(
-							t.Enum(
-								{
-									asc: "asc",
-									desc: "desc",
-								},
-								{ description: "Order direction" },
-							),
-						),
-						orderField: t.Optional(
-							t.String({
-								description: "Order field",
-							}),
-						),
-						limit: t.Optional(
-							t.Number({
-								description: "Limit",
-								default: 10,
-							}),
-						),
-						offset: t.Optional(
-							t.Number({
-								description: "Offset",
-								default: 0,
-							}),
-						),
-					}),
 				},
 			),
-		),
-	);
+		);
+
+		return appWithJwtGuard;
+	});

@@ -58,6 +58,13 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		},
 	);
 
+	await context.search.updateUserIndex({
+		userId: String(user.getId()),
+		username: user.getUsername(),
+		firstName: user.getFirstName() ?? "",
+		lastName: user.getLastName() ?? "",
+	});
+
 	return UpdateUserDtoOut.create({
 		id: user.getId(),
 		username: user.getUsername(),

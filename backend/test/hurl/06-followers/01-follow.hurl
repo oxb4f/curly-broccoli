@@ -59,4 +59,4 @@ Content-Type: application/json
     "userId": 999999
 }
 
-HTTP 500
+HTTP 422

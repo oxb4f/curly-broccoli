@@ -8,6 +8,7 @@ import {
 	orderDirection,
 	orderField,
 	username,
+    searchTerm,
 } from "../../common/validation/schema";
 import {
 	type DtoShape,
@@ -25,6 +26,7 @@ export type OutShape = DtoShape<typeof ListDtoOut>;
 
 export const ListDtoIn = createInputDto(
 	z.object({
+		searchTerm: searchTerm.optional(),
 		notId: id.optional(),
 		accessId: id,
 		limit: limit.optional().default(10),

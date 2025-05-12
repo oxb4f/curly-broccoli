@@ -159,3 +159,16 @@ Authorization: Bearer {{jwtAccess2}}
 HTTP 200
 [Asserts]
 jsonpath "$.books[?(@.id == {{bookId}})].isPrivateAdded" includes true
+
+# List books with search term
+GET {{API_BASE}}/books/public
+Authorization: Bearer {{jwtAccess2}}
+[QueryStringParams]
+searchTerm: book1
+orderField: id
+limit: 8
+
+HTTP 200
+[Asserts]
+jsonpath "$.books[*].title" includes "0403{{rn}}{{rs}}book1"
+jsonpath "$.books[*]" count == 8
