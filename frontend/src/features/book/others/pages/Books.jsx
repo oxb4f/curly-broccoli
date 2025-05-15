@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import BookOthersCatalog from '../components/Catalog';
 import BookInfiniteQueryWrapper from '@book/shared/components/InfiniteQueryWrapper';
 import SearchPanel from '@shared/components/ui/SearchPanel';
@@ -26,7 +25,7 @@ const OthersBooksPage = () => {
   ];
 
   return (
-    <section className="size-full flex flex-col items-center">
+    <section className="size-full flex flex-col pt-10 items-center">
       <SearchPanel sortCategories={sortCategories} className="max-w-3xl">
         {(sortParams) => (
           <BookInfiniteQueryWrapper sortParams={sortParams}>

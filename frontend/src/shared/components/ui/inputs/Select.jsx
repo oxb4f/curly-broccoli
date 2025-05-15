@@ -1,6 +1,7 @@
 import { mergeCn } from '@shared/utils';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
+import FloatingLabel from '../FloatingLabel';
 
 const MAX_SELECT_COLUMNS_COUNT = 4;
 
@@ -11,7 +12,9 @@ const Select = ({
   icon,
   value,
   onChange,
+  label,
   className = '',
+  labelClassName = '',
   containerClassName = '',
   optionsClassName = '',
   iconClassName = '',
@@ -21,7 +24,6 @@ const Select = ({
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
   const selectRef = useRef(null);
-  console.log(value);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
 
@@ -96,7 +98,7 @@ const Select = ({
             style={{
               position: 'absolute',
               inset: 0,
-              display: 'grid',
+              display: selectedIndex < 0 ? 'none' : 'grid',
               gridTemplateColumns: `repeat(${Math.min(
                 options.length,
                 MAX_SELECT_COLUMNS_COUNT
@@ -137,10 +139,17 @@ const Select = ({
   }
 
   return (
-    <div
-      ref={ref}
+    <FloatingLabel
+      innerRef={ref}
+      label={label}
       className={mergeCn(`relative z-20 is-open:rounded-b-none`, containerClassName)}
+      labelClassName={mergeCn(
+        `is-open:text-pr-main 
+        not-is-selected:top-1/2 not-is-selected:-translate-y-1/2 not-is-selected:text-[110%] not-is-selected:text-pr-text-darker not-is-selected:bg-transparent`,
+        labelClassName
+      )}
       data-open={isOpen}
+      data-selected={Boolean(value)}
     >
       <select
         ref={selectRef}
@@ -161,11 +170,11 @@ const Select = ({
         type="button"
         onClick={toggleOpen}
         className={mergeCn(
-          'block size-full pr-12 py-2 text-left transition-all truncate',
+          'block size-full pr-12 py-2 text-left transition-all truncate is-open:rounded-t-xl is-open:rounded-b-none',
           className
         )}
       >
-        {options[selectedIndex]?.label || 'Select...'}
+        {options[selectedIndex]?.label}
       </button>
 
       <div
@@ -175,7 +184,10 @@ const Select = ({
       </div>
 
       <ul
-        className={mergeCn(`absolute w-full -z-10 transition-all`, dropdownClassName)}
+        className={mergeCn(
+          `absolute w-full rounded-b-xl -z-10 transition-all scale-0 opacity-0 is-open:scale-100 is-open:opacity-100`,
+          dropdownClassName
+        )}
         role="listbox"
       >
         {options.map((option) => (
@@ -189,7 +201,7 @@ const Select = ({
           </li>
         ))}
       </ul>
-    </div>
+    </FloatingLabel>
   );
 };
 

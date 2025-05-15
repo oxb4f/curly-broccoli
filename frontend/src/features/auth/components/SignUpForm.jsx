@@ -8,11 +8,11 @@ const AuthSignUpForm = () => {
   const fields = {
     username: {
       type: 'text',
-      placeholder: 'Username'
+      label: 'Username'
     },
     password: {
       type: 'password',
-      placeholder: 'Password',
+      label: 'Password',
       hint: '*Minimum 8 characters'
     },
     submit: {

@@ -1,7 +1,7 @@
 import { BookOpenIcon } from '@heroicons/react/24/solid';
 import StringParallaxSection from '@shared/components/ui/StringParallaxSection';
 
-const BookImage = ({ imageUrl, parallax, foregroundImageClasses = '', className = '' }) => {
+const BookImage = ({ imageUrl, parallax, foregroundImageClassName = '', className = '' }) => {
   return imageUrl ? (
     <StringParallaxSection
       imageUrl={imageUrl}
@@ -13,7 +13,7 @@ const BookImage = ({ imageUrl, parallax, foregroundImageClasses = '', className 
       <img
         src={imageUrl}
         alt="Book image"
-        className={`w-full h-min max-h-full align-top text-center object-contain z-0 ${foregroundImageClasses}`}
+        className={`w-full h-min max-h-full align-top text-center object-contain z-0 ${foregroundImageClassName}`}
       />
     </StringParallaxSection>
   ) : (

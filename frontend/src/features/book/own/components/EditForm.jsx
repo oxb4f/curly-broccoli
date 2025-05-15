@@ -44,24 +44,24 @@ const BookEditForm = ({ className = '' }) => {
       fields: {
         title: {
           type: 'text',
-          placeholder: 'Title',
+          label: 'Title',
           value: book?.info?.title
         },
         author: {
           type: 'text',
-          placeholder: 'Author',
+          label: 'Author',
           value: book?.info?.author
         },
         other: {
           fields: {
             numberOfPages: {
               type: 'number',
-              placeholder: 'Number of pages',
+              label: 'Number of pages',
               value: book?.info?.other?.numberOfPages
             },
             genre: {
               type: 'text',
-              placeholder: 'Genre',
+              label: 'Genre',
               value: book?.info?.other?.genre
             }
           },
@@ -69,12 +69,12 @@ const BookEditForm = ({ className = '' }) => {
         },
         isbn: {
           type: 'text',
-          placeholder: 'Isbn',
+          label: 'Isbn',
           value: book?.info?.other?.isbn
         },
         description: {
           type: 'textarea',
-          placeholder: 'Description',
+          label: 'Description',
           className: 'min-h-40 max-h-72',
           value: book?.info?.other?.description
         },

@@ -23,35 +23,36 @@ const BookCreateForm = ({ className = '' }) => {
       fields: {
         title: {
           type: 'search',
-          placeholder: 'Title',
-          placeholderClassName: 'z-50',
-          className: 'focus:rounded-b-none',
-          dropdownClassName: 'rounded-b-xl bg-pr-main/5 backdrop-blur-sm origin-top'
+          label: 'Title',
+          labelClassName: 'z-50',
+          className: 'transition-all',
+          dropdownClassName: 'bg-pr-main/5 backdrop-blur-md origin-top scale-x-100 transition-all',
+          dropdownItemsClassName: 'hover:bg-pr-main/10'
         },
         author: {
           type: 'text',
-          placeholder: 'Author'
+          label: 'Author'
         },
         info: {
           fields: {
             numberOfPages: {
               type: 'number',
-              placeholder: 'Number of pages'
+              label: 'Number of pages'
             },
             genre: {
               type: 'text',
-              placeholder: 'Genre'
+              label: 'Genre'
             }
           },
           className: 'flex gap-3'
         },
         isbn: {
           type: 'text',
-          placeholder: 'Isbn'
+          label: 'Isbn'
         },
         description: {
           type: 'textarea',
-          placeholder: 'Description',
+          label: 'Description',
           className: 'min-h-40 max-h-72'
         },
         addBook: {

@@ -33,20 +33,20 @@ const BookEvent = ({ details, user, book, className = '' }) => {
         <BookImage
           imageUrl={book?.imageUrl}
           className="h-full sm:justify-start sm:py-0 "
-          foregroundImageClasses="sm:h-full sm:pl-4 sm:max-w-2xs md:max-w-xs"
+          foregroundImageClassName="sm:h-full sm:pl-4 sm:max-w-2xs md:max-w-xs"
           parallax
         />
       </NavigationLink>
 
       <section
-        className="hidden absolute right-4 top-1/2 min-h-1/4 max-h-2/3 pt-2 pb-4 rounded-xl bg-pr-bg-main/50 backdrop-blur-xl -translate-y-1/3 overflow-hidden 
+        className="hidden absolute right-4 top-1/2 min-h-1/4 max-h-2/3 pt-1 px-3 pb-4 rounded-xl bg-pr-bg-main/50 backdrop-blur-xl -translate-y-1/3 overflow-hidden 
 			sm:block sm:w-48 md:w-52"
       >
-        <BookTitle title={book?.title} as="h2" className="text-lg text-center truncate" />
+        <BookTitle title={book?.title} as="h2" className="px-1 text-lg text-center truncate" />
         <BookDescription
           description={book?.description || 'Description has not added yet'}
           as="p"
-          className="px-3 text-sm line-clamp-[9] break-words"
+          className="text-sm line-clamp-[9] break-words"
         />
       </section>
       <DropDown

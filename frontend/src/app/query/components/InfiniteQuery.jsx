@@ -38,7 +38,7 @@ const InfiniteQuery = ({
       <div
         ref={lastElementRef}
         className={`w-full h-auto flex justify-center items-center bg-transparent ${
-          isLoading ? 'absolute inset-0' : ''
+          isLoading ? 'absolute inset-0' : isFetchingNextPage ? 'py-4' : ''
         }`}
       >
         {(isLoading || isFetchingNextPage) && (

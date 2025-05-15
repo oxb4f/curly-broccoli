@@ -67,3 +67,10 @@
     @slot;
   }
 }
+
+@custom-variant is-selected {
+  &[data-selected='true'],
+  &:where([data-selected='true'] *) {
+    @slot;
+  }
+}

@@ -4,7 +4,7 @@ import BookOthersList from './List';
 
 const BookOthersCatalog = ({ isPrivate, items = [], className = '' }) => {
   return (
-    <div className={mergeCn('size-full flex flex-col gap-4', className)}>
+    <div className={mergeCn('flex flex-col gap-4', className)}>
       <BookOthersCatalogControls />
       <BookOthersList items={items} isPrivate={isPrivate} />
     </div>

@@ -13,19 +13,19 @@ const EditUserInfoForm = ({ userCurrentData, isPending }) => {
   const fields = {
     username: {
       type: 'text',
-      placeholder: 'Username',
+      label: 'Username',
       value: userCurrentData?.username
     },
     fullName: {
       fields: {
         firstName: {
           type: 'text',
-          placeholder: 'First name',
+          label: 'First name',
           value: userCurrentData?.personalInfo?.firstName
         },
         lastName: {
           type: 'text',
-          placeholder: 'Last name',
+          label: 'Last name',
           value: userCurrentData?.personalInfo?.lastName
         }
       },
@@ -39,12 +39,12 @@ const EditUserInfoForm = ({ userCurrentData, isPending }) => {
       fields: {
         telegram: {
           type: 'url',
-          placeholder: 'Telegram',
+          label: 'Telegram',
           value: userCurrentData?.social?.telegram
         },
         instagram: {
           type: 'url',
-          placeholder: 'Instagram',
+          label: 'Instagram',
           value: userCurrentData?.social?.instagram
         }
       },

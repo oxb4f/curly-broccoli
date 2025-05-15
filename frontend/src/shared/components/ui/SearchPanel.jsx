@@ -25,12 +25,12 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
       search: {
         type: 'search',
         disableHint: true,
-        placeholder: 'Search',
-        placeholderClassName: 'left-14 top-1 -translate-y-4 z-50',
+        label: 'Search',
+        labelClassName: 'left-14 z-50',
         className: `h-12 pl-16 pr-4 bg-pr-bg-main/5 backdrop-blur-xl rounded-4xl transition-all 
-        is-open:rounded-t-xl is-open:rounded-b-none is-open:bg-pr-bg-main/5`,
-        dropdownClassName: 'rounded-b-xl bg-pr-main/5 backdrop-blur-2xl origin-top-left',
-        itemsClassName: 'rounded-2xl hover:bg-pr-main/10'
+        is-open:bg-pr-bg-main/5`,
+        dropdownClassName: 'bg-pr-main/5 backdrop-blur-2xl transition-transform origin-top-left',
+        dropdownItemsClassName: 'hover:bg-pr-main/10'
       }
     }),
     []
@@ -39,13 +39,13 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
 
   const sortProps = useMemo(
     () => ({
-      className:
-        'h-full pl-5 rounded-3xl border-1 border-pr-main-mute text-pr-main-soft is-open:rounded-t-xl is-open:rounded-b-none is-open:border-pr-main is-open:text-pr-main ',
+      className: `h-full pl-5 rounded-3xl border-1 border-pr-main-mute text-pr-main-soft 
+        is-open:border-pr-main is-open:text-pr-main`,
+      labelClassName: 'left-2 bg-pr-bg-main',
       containerClassName: `hidden size-full transition-all
-		lg:block lg:w-full`,
+		  lg:block lg:w-full`,
       optionsClassName: 'rounded-2xl hover:bg-pr-main/10',
-      dropdownClassName:
-        'px-1 py-2 bg-pr-main/5 backdrop-blur-xl rounded-b-lg scale-0 opacity-0 is-open:scale-100 is-open:opacity-100',
+      dropdownClassName: 'px-1 py-2 bg-pr-main/5 backdrop-blur-xl rounded-b-lg',
       iconClassName: 'text-pr-main-soft is-open:text-pr-main',
       onChange: (event) =>
         setSortValue((prev) => ({ ...prev, [event.target.name]: event.target.value }))
@@ -72,7 +72,7 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
         <Form
           fields={searchFields}
           className="peer w-full transition-transform z-30 
-          lg:w-6/10 lg:[transition:width_0.3s,translate_0.3s_0.3s] lg:will-change-[width]
+          lg:w-6/10 lg:[transition:width_0.3s,translate_0.3s_0.3s]
 				  has-is-open:w-full has-is-open:translate-y-full"
           allFieldsRequired
         />
@@ -86,6 +86,7 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
               <Select
                 key={`${sortCategory.name}-desktop`}
                 name={sortCategory.name}
+                label={sortCategory.label}
                 value={sortValue[sortCategory.name]}
                 options={sortCategory.options}
                 {...sortProps}

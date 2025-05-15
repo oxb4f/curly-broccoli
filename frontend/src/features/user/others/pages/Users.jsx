@@ -14,6 +14,7 @@ const OtherUsersPage = () => {
           {
             name: 'orderDirection',
             value: 'desc',
+            label: 'Direction',
             options: [
               { value: 'desc', label: 'Last created' },
               { value: 'asc', label: 'First created' }

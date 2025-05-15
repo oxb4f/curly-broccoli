@@ -8,11 +8,11 @@ const AuthSignInForm = () => {
   const fields = {
     username: {
       type: 'text',
-      placeholder: 'Username'
+      label: 'Username'
     },
     password: {
       type: 'password',
-      placeholder: 'Password'
+      label: 'Password'
     },
     submit: {
       type: 'submit',

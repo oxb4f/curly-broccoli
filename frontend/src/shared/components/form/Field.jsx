@@ -1,13 +1,13 @@
 import { memo } from 'react';
-import FormPlaceholder from './Placeholder';
 import Input from '@shared/components/ui/inputs/Input';
 import Textarea from '@shared/components/ui/inputs/Textarea';
 import SearchInput from '@shared/components/ui/inputs/Search';
 import { mergeCn } from '@shared/utils';
 import Select from '../ui/inputs/Select';
+import FormHint from './Hint';
 
 const FormField = memo(
-  ({ field, value, onChange }) => {
+  ({ field, hint, value, onChange }) => {
     const handleChange = (event) => {
       field.onChange?.(event.target.value);
       onChange(field.name, event.target.value);
@@ -21,10 +21,8 @@ const FormField = memo(
       );
     }
 
-    const { placeholderClassName, ...restProps } = field;
-
     const commonProps = {
-      ...restProps,
+      ...field,
       className: mergeCn(
         `w-full h-10 px-2 rounded-md placeholder:opacity-0 
       ${
@@ -35,7 +33,8 @@ const FormField = memo(
           : 'border border-pr-main-mute bg-pr-bg-main hover:border-pr-main-soft focus:border-pr-main focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-offset-pr-bg-main focus:ring-pr-main-soft'
       } `,
         field?.className ?? ''
-      )
+      ),
+      labelClassName: mergeCn('text-pr-main-soft bg-pr-bg-main', field?.labelClassName)
     };
 
     const InputElement =
@@ -47,20 +46,26 @@ const FormField = memo(
         ? Select
         : Input;
 
+    console.log('hint.error', hint.error);
+
     return (
-      <FormPlaceholder
-        value={field.placeholder}
-        className={`text-pr-main-soft bg-pr-bg-main ${placeholderClassName ?? ''}`}
-      >
-        {<InputElement {...commonProps} value={value ?? ''} onChange={handleChange} />}
-      </FormPlaceholder>
+      <div className="w-full flex flex-col">
+        <InputElement {...commonProps} value={value ?? ''} onChange={handleChange} />
+        <FormHint
+          value={hint.value}
+          error={hint.error}
+          isVisible={hint.isVisible}
+          disabled={hint.disabled}
+        />
+      </div>
     );
   },
   (prevProps, nextProps) => {
     return (
       prevProps.value === nextProps.value &&
-      prevProps.error === nextProps.error &&
-      prevProps.isSubmitDisabled === nextProps.isSubmitDisabled &&
+      prevProps.hint.error === nextProps.hint.error &&
+      prevProps.hint.isVisible === nextProps.hint.isVisible &&
+      prevProps.hint.disabled === nextProps.hint.disabled &&
       prevProps.field.element === nextProps.field.element
     );
   }
