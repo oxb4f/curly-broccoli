@@ -3,7 +3,7 @@ import UserUsername from './Username';
 import UserImage from './Image';
 import UserPersonalInfo from './PersonalInfo';
 import Social from '@shared/components/ui/Social';
-import FollowButton from '@following/components/FollowButton';
+import FollowButton from '@features/follows/components/FollowButton';
 
 const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
   if (!user && !isLoading) return;

@@ -13,9 +13,9 @@ const UserList = ({ users = [], className = '' }) => {
       {users.map((user) => (
         <li
           key={user.id}
-          className="relative h-20 md:h-60 border-1 border-pr-border rounded-3xl overflow-hidden"
+          className="relative h-20 md:h-60 rounded-3xl ring-1 ring-pr-border overflow-hidden"
         >
-          <UserCard user={user} className="size-full rounded-[inherit]" />
+          <UserCard user={user} className="size-full rounded-[inherit] " />
         </li>
       ))}
     </ul>

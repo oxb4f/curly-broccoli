@@ -25,8 +25,8 @@ import BookEditPage from '@book/own/pages/Edit';
 import BookReadPage from '@book/own/pages/Read';
 import OthersBooksPage from '@book/others/pages/Books';
 import EventsPage from '@features/events/pages/Events';
-import FollowersPage from '@following/pages/Followers';
-import FollowingPage from '@following/pages/Following';
+import FollowersPage from '@features/follows/pages/Followers';
+import FollowingPage from '@features/follows/pages/Following';
 
 const queryClient = new QueryClient();
 

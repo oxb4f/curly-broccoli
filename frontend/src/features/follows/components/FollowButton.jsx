@@ -1,4 +1,4 @@
-import useFollowService from '@following/hooks/useFollowService';
+import useFollowService from '@features/follows/hooks/useFollowService';
 import Skeleton from '@shared/components/ui/Skeleton';
 import { useCallback, useRef, useState } from 'react';
 
@@ -37,31 +37,27 @@ const FollowButton = ({ targetUser, isLoading, className = '' }) => {
     <Skeleton height="2rem" width="100%" type="button" />
   ) : (
     <button
-      className={`relative group rounded-2xl border-1 border-pr-main transition-all overflow-hidden
+      className={`relative size-full flex justify-center items-center px-3 py-1 rounded-2xl border-1 border-pr-main transition-all overflow-hidden
 				hover:border-pr-main-soft active:border-pr-main
 				disabled:cursor-default disabled:opacity-100 disabled:hover:border-pr-main 
+        ${
+          isAnimatingAfterUnfollow
+            ? 'animate-swap-colors-reverse'
+            : isAnimatingAfterFollow
+            ? 'animate-swap-colors'
+            : isFollowed
+            ? 'bg-pr-bg-main text-pr-main transition-colors hover:text-pr-main-soft active:text-pr-main'
+            : !isFollowed
+            ? 'bg-pr-main text-pr-bg-main transition-colors hover:bg-pr-main-soft active:bg-pr-main'
+            : ''
+        }
+        ${isAnimated ? 'animation-running' : 'animation-paused'}
 				${className}`}
       onClick={handleClick}
       disabled={isPending || isAnimated}
     >
-      <div
-        className={`size-full flex justify-center items-center px-3 py-1 rounded-[inherit]
-            ${
-              isAnimatingAfterUnfollow
-                ? 'animate-swap-colors-reverse'
-                : isAnimatingAfterFollow
-                ? 'animate-swap-colors'
-                : isFollowed
-                ? 'bg-pr-bg-main text-pr-main transition-colors group-hover:text-pr-main-soft group-active:text-pr-main'
-                : !isFollowed
-                ? 'bg-pr-main text-pr-bg-main transition-colors group-hover:bg-pr-main-soft group-active:bg-pr-main'
-                : ''
-            }
-            ${isAnimated ? 'animation-running' : 'animation-paused'}
-				`}
-      >
-        <span
-          className={`
+      <span
+        className={`
             ${
               showFollowedInitialState || isAnimatingAfterUnfollow
                 ? 'after:animate-print-unfollow after:border-pr-text'
@@ -71,8 +67,7 @@ const FollowButton = ({ targetUser, isLoading, className = '' }) => {
             }
             ${isAnimated ? 'after:animation-running after:border-l-1' : 'after:animation-paused'}
 					`}
-        ></span>
-      </div>
+      ></span>
     </button>
   );
 };
