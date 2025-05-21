@@ -22,7 +22,7 @@ const BookOthersList = ({
       {items.map((item) => (
         <li
           key={item.id}
-          className={`rounded-3xl w-full ${
+          className={`rounded-3xl size-full ${
             variant === 'default' ? 'h-24 sm:h-60' : variant === 'inline' ? 'h-16' : ''
           } ${itemsClassName}`}
         >

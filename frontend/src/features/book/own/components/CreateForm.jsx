@@ -3,6 +3,7 @@ import BookImageUpload from './ImageUpload';
 import useBookService from '@book/shared/hooks/useBookService';
 import BookOthersList from '@book/others/components/List';
 import { quickSearchPublicBooks } from '@book/shared/services/api/book';
+import QUERY_KEYS from '@app/query/constants/queryKeys';
 
 const BookCreateForm = ({ className = '' }) => {
   const { create } = useBookService();
@@ -28,6 +29,7 @@ const BookCreateForm = ({ className = '' }) => {
           label: 'Title',
           queryOptions: {
             select: (data) => data.books,
+            queryKey: QUERY_KEYS.BOOKS.PUBLIC,
             queryFn: (value) => quickSearchPublicBooks({ term: value })
           },
           children: (books) => (

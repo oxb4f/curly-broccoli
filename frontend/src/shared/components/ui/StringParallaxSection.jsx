@@ -61,7 +61,7 @@ export default function StringParallaxSection({
           '--parallax-offset': `${offset}%`,
           '--parallax-transition-duration': `${1 / speedMultiplier}s`
         }}
-        className={`absolute w-full bg-cover bg-center translate-y-(--parallax-offset) transition-transform duration-(--parallax-transition-duration) ease-out transform-gpu blur-xs ${
+        className={`absolute w-full bg-cover bg-center translate-y-(--parallax-offset) transition-transform duration-(--parallax-transition-duration) ease-out transform-gpu blur-[2px] -z-10 ${
           speedMultiplier === 0 ? 'h-full scale-105' : 'h-screen'
         }`}
       />

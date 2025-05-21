@@ -25,10 +25,10 @@ const BookOwnList = ({
       </li>
       {items.map((item) => (
         <li key={item.id} className="relative h-24 rounded-3xl sm:h-64">
-          <BookOwnCard data={item} className="absolute inset-0" />
+          <BookOwnCard data={item} className="size-full" />
           {isSelectionEnabled && (
             <label
-              className="absolute top-1 left-1 size-6 rounded-full border-1 border-pr-main bg-pr-bg-main z-10 transition-all
+              className="absolute top-2 left-2 size-7 rounded-full border-1 border-pr-main bg-pr-bg-main z-10 transition-all
               before:block before:size-full before:clip-check before:bg-pr-main hover:before:block not-has-checked:before:hidden hover:not-has-checked:before:opacity-50"
             >
               <input

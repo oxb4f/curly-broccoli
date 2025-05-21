@@ -7,8 +7,8 @@ import NavigationLink from '@shared/components/navigation/Link';
 const BookOthersCard = ({ data, isPrivate, className = '' }) => {
   return (
     <article
-      className={`size-full grid grid-cols-[8rem_minmax(12rem,1fr)] grid-rows-1 gap-x-2 rounded-[inherit] overflow-hidden isolate
-      sm:grid-rows-[80%_20%] sm:grid-cols-1 sm:gap-x-0 
+      className={`grid grid-cols-[8rem_minmax(12rem,1fr)] grid-rows-1 gap-x-2 rounded-[inherit] overflow-hidden isolate
+      sm:max-w-[99.9%] sm:grid-rows-[80%_20%] sm:grid-cols-1 sm:gap-x-0 
       ${className}`}
     >
       <NavigationLink

@@ -13,7 +13,7 @@ const BookImage = ({ imageUrl, parallax, foregroundImageClassName = '', classNam
       <img
         src={imageUrl}
         alt="Book image"
-        className={`w-full h-min max-h-full align-top text-center object-contain z-0 ${foregroundImageClassName}`}
+        className={`w-full h-min max-h-full align-top text-center object-contain ${foregroundImageClassName}`}
       />
     </StringParallaxSection>
   ) : (
