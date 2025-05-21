@@ -4,15 +4,33 @@ import Select from '@shared/components/ui/inputs/Select';
 import React, { useMemo, useState } from 'react';
 import { mergeCn } from '@shared/utils';
 
-const SearchPanel = ({ sortCategories, children, className = '' }) => {
-  const initialValue = useMemo(() => {
+const SearchPanel = ({
+  sortCategories,
+  searchQueryOptions,
+  renderSearchResults,
+  renderSortResults,
+  className = ''
+}) => {
+  const initialSortValue = useMemo(() => {
     return sortCategories.reduce((acc, category) => {
       acc[category.name] = category.value;
       return acc;
     }, {});
   }, [sortCategories]);
 
-  const [sortValue, setSortValue] = useState(initialValue);
+  const [searchParameters, setSearchParameters] = useState({
+    searchTerm: '',
+    sort: initialSortValue
+  });
+
+  const handleSearch = (values) => {
+    console.log(values);
+
+    setSearchParameters((prev) => ({
+      ...prev,
+      searchTerm: values.search
+    }));
+  };
 
   const searchFields = useMemo(
     () => ({
@@ -26,16 +44,17 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
         type: 'search',
         disableHint: true,
         label: 'Search',
+        queryOptions: searchQueryOptions,
+        children: renderSearchResults,
         labelClassName: 'left-14 z-50',
         className: `h-12 pl-16 pr-4 bg-pr-bg-main/5 backdrop-blur-xl rounded-4xl transition-all 
         is-open:bg-pr-bg-main/5`,
-        dropdownClassName: 'bg-pr-main/5 backdrop-blur-2xl transition-transform origin-top-left',
-        dropdownItemsClassName: 'hover:bg-pr-main/10'
+        dropdownClassName: 'bg-pr-main/5 backdrop-blur-2xl transition-transform origin-top-left'
       }
     }),
     []
   );
-  console.log(sortValue);
+  console.log(searchParameters);
 
   const sortProps = useMemo(
     () => ({
@@ -48,7 +67,10 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
       dropdownClassName: 'px-1 py-2 bg-pr-main/5 backdrop-blur-xl rounded-b-lg',
       iconClassName: 'text-pr-main-soft is-open:text-pr-main',
       onChange: (event) =>
-        setSortValue((prev) => ({ ...prev, [event.target.name]: event.target.value }))
+        setSearchParameters((prev) => ({
+          ...prev,
+          sort: { ...prev.sort, [event.target.name]: event.target.value }
+        }))
     }),
     []
   );
@@ -71,6 +93,7 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
       >
         <Form
           fields={searchFields}
+          onSubmit={handleSearch}
           className="peer w-full transition-transform z-30 
           lg:w-6/10 lg:[transition:width_0.3s,translate_0.3s_0.3s]
 				  has-is-open:w-full has-is-open:translate-y-full"
@@ -87,14 +110,14 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
                 key={`${sortCategory.name}-desktop`}
                 name={sortCategory.name}
                 label={sortCategory.label}
-                value={sortValue[sortCategory.name]}
+                value={searchParameters.sort[sortCategory.name]}
                 options={sortCategory.options}
                 {...sortProps}
               />
               <Select
                 key={`${sortCategory.name}-inline`}
                 name={sortCategory.name}
-                value={sortValue[sortCategory.name]}
+                value={searchParameters.sort[sortCategory.name]}
                 options={sortCategory.options}
                 variant="inline"
                 {...inlineSortProps}
@@ -103,7 +126,7 @@ const SearchPanel = ({ sortCategories, children, className = '' }) => {
           ))}
         </div>
       </div>
-      {typeof children === 'function' ? children(sortValue) : children}
+      {renderSortResults(searchParameters)}
     </>
   );
 };

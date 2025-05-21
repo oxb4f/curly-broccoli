@@ -12,6 +12,13 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
             }
           };
         }
+        case 'quick-search': {
+          return {
+            params: {
+              term: data.term
+            }
+          };
+        }
         case 'signIn':
           return {
             username: data.username,
@@ -90,7 +97,23 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
     case 'books':
       switch (apiAction) {
         case 'get':
-          return { params: data };
+          return {
+            params: {
+              userId: data.userId,
+              searchTerm: data.searchTerm || undefined,
+              orderDirection: data.orderDirection,
+              orderField: data.orderField,
+              offset: data.offset,
+              limit: data.limit
+            }
+          };
+        case 'quick-search': {
+          return {
+            params: {
+              term: data.term
+            }
+          };
+        }
         case 'create':
           return {
             title: data.title,

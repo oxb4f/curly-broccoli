@@ -19,6 +19,7 @@
   --color-pr-important-mute: var(--project-important-color-mute);
   --color-pr-rating: var(--project-rating-color);
   --color-pr-rating-mute: var(--project-rating-color-mute);
+  --color-pr-selection: var(--project-selection-color);
 
   --font-pr-main: var(--project-font);
   --font-pr-logo: var(--project-logo-font);

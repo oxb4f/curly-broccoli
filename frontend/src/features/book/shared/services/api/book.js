@@ -20,6 +20,7 @@ const getPublicBooks = async (params = {}) => {
     'books',
     'get'
   );
+  console.log(requestPayload);
 
   const response = await api.get(`books/public/`, requestPayload);
   console.log(response);
@@ -47,8 +48,19 @@ const getPrivateBooks = async (userId, params = {}) => {
     'books',
     'get'
   );
+  console.log(requestPayload);
 
   const response = await api.get(`books/private/`, requestPayload);
+  console.log(response);
+
+  return processResponse(response, 'books');
+};
+
+const quickSearchPublicBooks = async (params) => {
+  const requestPayload = prepareRequest(params, 'books', 'quick-search');
+  console.log(requestPayload);
+
+  const response = await api.get('books/quick-search', requestPayload);
   console.log(response);
 
   return processResponse(response, 'books');
@@ -91,6 +103,7 @@ export {
   getPublicBook,
   getPrivateBooks,
   getPrivateBook,
+  quickSearchPublicBooks,
   createBook,
   editBook,
   removeBook,

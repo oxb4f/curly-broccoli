@@ -22,6 +22,16 @@ const getUsers = async (params) => {
   return processResponse(response, 'users');
 };
 
+const quickSearchUsers = async (params) => {
+  const requestPayload = prepareRequest(params, 'users', 'quick-search');
+  console.log(requestPayload);
+
+  const response = await api.get('users/quick-search', requestPayload);
+  console.log(response);
+
+  return processResponse(response, 'users');
+};
+
 const createUser = async (inputData) => {
   const requestPayload = prepareRequest(inputData, 'users', 'signUp');
   const response = await api.post('users', requestPayload);
@@ -48,4 +58,4 @@ const changeUserInfo = async (id, inputData) => {
   return processResponse(response, 'users');
 };
 
-export { getUser, getUsers, createUser, signInUser, changeUserInfo };
+export { getUser, getUsers, createUser, signInUser, changeUserInfo, quickSearchUsers };

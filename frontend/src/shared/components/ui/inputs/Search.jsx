@@ -1,23 +1,39 @@
-import InfiniteQuery from '@app/query/components/InfiniteQuery';
+import { useQuery } from '@tanstack/react-query';
 import QUERY_KEYS from '@app/query/constants/queryKeys';
-import { getUsers } from '@user/shared/services/api/user';
-import UserInlineList from '@user/others/components/InlineList';
 import { mergeCn } from '@shared/utils';
 import { useEffect, useRef, useState } from 'react';
 import FloatingLabel from '../FloatingLabel';
+import Spinner from '../Spinner';
+import useDebounce from '@shared/hooks/useDebounce';
 
 const SearchInput = ({
   label,
+  children,
+  queryOptions = {},
   className = '',
   labelClassName = '',
   containerClassName = '',
   dropdownClassName = '',
-  dropdownItemsClassName = '',
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
-  const transformData = (data) => data.users;
+  const debouncedSearchValue = useDebounce(props.value, 300);
+  const isQueryEnabled = debouncedSearchValue.length > 3;
+
+  const handleDropdownInteraction = (event) => {
+    event.stopPropagation();
+  };
+
+  const { data, isPending, isFetching } = useQuery({
+    ...queryOptions,
+    queryFn: () => queryOptions.queryFn?.(debouncedSearchValue),
+    queryKey: [...QUERY_KEYS.SEARCH.ALL, ...queryOptions.queryKey, debouncedSearchValue],
+    gcTime: 5 * 60 * 1000,
+    enabled: isQueryEnabled,
+    retry: 0
+  });
+  console.log(data);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -28,10 +44,6 @@ const SearchInput = ({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const handleDropdownInteraction = (event) => {
-    event.stopPropagation();
-  };
 
   return (
     <FloatingLabel
@@ -55,25 +67,22 @@ const SearchInput = ({
       />
       <div
         className={mergeCn(
-          `absolute w-full max-h-80 rounded-b-xl overflow-y-auto scale-0 opacity-0 is-open:scale-100 is-open:opacity-100 is-open:-z-10`,
+          `absolute w-full min-h-48 flex justify-center items-center rounded-b-xl overflow-clip scale-0 opacity-0 is-open:scale-100 is-open:opacity-100 is-open:-z-10`,
           dropdownClassName
         )}
         onClick={handleDropdownInteraction}
       >
-        <InfiniteQuery
-          callback={getUsers}
-          keys={QUERY_KEYS.USERS.OTHERS}
-          dataTransformer={transformData}
-        >
-          {(users) => (
-            <UserInlineList
-              users={users.splice(0, 4)}
-              className="px-2 py-6"
-              itemsClassName={mergeCn('rounded-2xl', dropdownItemsClassName)}
-              onClick={(e) => e.stopPropagation()}
-            />
-          )}
-        </InfiniteQuery>
+        {props.value?.length < 4 ? (
+          <span className="description">Type at least 4 letters</span>
+        ) : !isPending && data?.length === 0 ? (
+          <span className="description">Didn`t find anything</span>
+        ) : isFetching ? (
+          <Spinner className="size-1/2" />
+        ) : typeof children === 'function' ? (
+          children(data)
+        ) : (
+          children
+        )}
       </div>
     </FloatingLabel>
   );

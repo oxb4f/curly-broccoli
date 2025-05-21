@@ -1,6 +1,8 @@
 import Form from '@shared/components/form/Form';
 import BookImageUpload from './ImageUpload';
 import useBookService from '@book/shared/hooks/useBookService';
+import BookOthersList from '@book/others/components/List';
+import { quickSearchPublicBooks } from '@book/shared/services/api/book';
 
 const BookCreateForm = ({ className = '' }) => {
   const { create } = useBookService();
@@ -24,10 +26,21 @@ const BookCreateForm = ({ className = '' }) => {
         title: {
           type: 'search',
           label: 'Title',
+          queryOptions: {
+            select: (data) => data.books,
+            queryFn: (value) => quickSearchPublicBooks({ term: value })
+          },
+          children: (books) => (
+            <BookOthersList
+              variant="inline"
+              items={books}
+              className="max-h-56 px-2 py-6 overflow-y-auto"
+              itemsClassName="rounded-2xl hover:bg-pr-main/10"
+            />
+          ),
           labelClassName: 'z-50',
           className: 'transition-all',
-          dropdownClassName: 'bg-pr-main/5 backdrop-blur-md origin-top scale-x-100 transition-all',
-          dropdownItemsClassName: 'hover:bg-pr-main/10'
+          dropdownClassName: 'bg-pr-main/5 backdrop-blur-md origin-top scale-x-100 transition-all'
         },
         author: {
           type: 'text',
@@ -44,7 +57,7 @@ const BookCreateForm = ({ className = '' }) => {
               label: 'Genre'
             }
           },
-          className: 'flex gap-3'
+          className: 'flex gap-4'
         },
         isbn: {
           type: 'text',

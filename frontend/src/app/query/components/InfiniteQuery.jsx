@@ -9,18 +9,17 @@ const InfiniteQuery = ({
   children,
   offset = 15,
   initialOffset = 0,
-  parameters = [],
   options = {}
 }) => {
-  console.log(parameters);
+  console.log(keys);
 
   let { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: [...keys, ...parameters],
+    queryKey: keys,
     queryFn: ({ pageParam }) => callback(pageParam),
     getNextPageParam: (lastPage, _, lastPageParam) => {
       const cursor = lastPageParam + Number(offset);
 
-      if (lastPage.total <= cursor) return;
+      if (lastPage.total < cursor) return;
 
       return cursor;
     },
