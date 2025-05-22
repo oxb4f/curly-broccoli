@@ -7,6 +7,7 @@ const InfiniteQuery = ({
   keys,
   dataTransformer,
   children,
+  placeholder = '',
   offset = 15,
   initialOffset = 0,
   options = {}
@@ -32,8 +33,14 @@ const InfiniteQuery = ({
   const lastElementRef = useIntersectionObserver(fetchNextPage, [hasNextPage]);
 
   return (
-    <div className={`relative flex-col size-full ${isLoading ? 'size-full' : ''}`}>
-      {!data ? null : typeof children === 'function' ? children(data) : children}
+    <div className={'relative size-full'}>
+      {!data?.length && !isLoading ? (
+        <div className="size-full flex justify-center items-center description">{placeholder}</div>
+      ) : !data ? null : typeof children === 'function' ? (
+        children(data)
+      ) : (
+        children
+      )}
       <div
         ref={lastElementRef}
         className={`w-full h-auto flex justify-center items-center bg-transparent ${

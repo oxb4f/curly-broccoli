@@ -8,7 +8,7 @@ const BookOthersCard = ({ data, isPrivate, className = '' }) => {
   return (
     <article
       className={`grid grid-cols-[8rem_minmax(12rem,1fr)] grid-rows-1 gap-x-2 rounded-[inherit] overflow-hidden isolate
-      sm:max-w-[99.9%] sm:grid-rows-[80%_20%] sm:grid-cols-1 sm:gap-x-0 
+      sm:grid-rows-[80%_20%] sm:grid-cols-1 sm:gap-x-0 
       ${className}`}
     >
       <NavigationLink
@@ -25,7 +25,7 @@ const BookOthersCard = ({ data, isPrivate, className = '' }) => {
       </NavigationLink>
       <div
         className="flex flex-col justify-center w-full pr-3 gap-2 bg-pr-bg-main/30 backdrop-blur-xl
-       sm:p-2 sm:-mt-[10%]"
+       sm:p-2 sm:w-[100.3%] sm:-mt-[10%]"
       >
         <BookInfo className="max-h-24 text-base text-center truncate" data={data.info} short />
         <BookStats

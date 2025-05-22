@@ -17,6 +17,7 @@ const EventsPage = () => {
         keys={QUERY_KEYS.EVENTS.ALL}
         dataTransformer={transformData}
         offset={5}
+        placeholder="No activity from followers yet"
       >
         {(events) => <EventList items={events} />}
       </InfiniteQuery>

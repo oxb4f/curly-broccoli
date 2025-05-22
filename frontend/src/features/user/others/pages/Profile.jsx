@@ -12,8 +12,8 @@ const OthersProfilePage = () => {
         <UserOverview user={user} isLoading={isPending} />
       </header>
       <section>
-        <BookInfiniteQueryWrapper userId={user?.id}>
-          {(books) => <BookOthersCatalog items={books} isPrivate />}
+        <BookInfiniteQueryWrapper userId={user?.id} isUserLoading={isPending}>
+          {(books) => <BookOthersCatalog items={books} className="size-full" isPrivate />}
         </BookInfiniteQueryWrapper>
       </section>
     </section>

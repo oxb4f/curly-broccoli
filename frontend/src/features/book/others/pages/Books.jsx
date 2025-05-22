@@ -50,7 +50,7 @@ const OthersBooksPage = () => {
             searchTerm={searchParams.searchTerm}
             sortParams={searchParams.sort}
           >
-            {(books) => <BookOthersCatalog items={books} />}
+            {(books) => <BookOthersCatalog items={books} className="size-full" />}
           </BookInfiniteQueryWrapper>
         )}
       />

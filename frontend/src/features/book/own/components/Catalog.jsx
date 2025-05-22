@@ -4,7 +4,7 @@ import BookOwnCatalogControls from '@book/own/components/CatalogControls';
 import BookOwnList from './List';
 import useBookService from '@book/shared/hooks/useBookService';
 
-const BookOwnCatalog = ({ items = [] }) => {
+const BookOwnCatalog = ({ items = [], className = '' }) => {
   const { selectedBooks, isAllSelected, select, selectAll } = useBookSelection(items);
 
   const { remove } = useBookService();
@@ -20,7 +20,7 @@ const BookOwnCatalog = ({ items = [] }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className={`flex flex-col gap-4 py-4 ${className}`}>
       <BookOwnCatalogControls
         isSelectionEnabled={editMode}
         isAllSelected={isAllSelected}

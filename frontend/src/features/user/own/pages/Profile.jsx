@@ -12,8 +12,8 @@ const OwnProfilePage = () => {
         <UserOverview user={user} isLoading={isPending} className="flex flex-col gap-2" isOwn />
       </header>
       <section>
-        <BookInfiniteQueryWrapper userId={user?.id}>
-          {(books) => <BookOwnCatalog items={books} />}
+        <BookInfiniteQueryWrapper userId={user?.id} isUserLoading={isPending}>
+          {(books) => <BookOwnCatalog items={books} className="size-full" />}
         </BookInfiniteQueryWrapper>
       </section>
     </section>

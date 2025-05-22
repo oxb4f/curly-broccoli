@@ -79,7 +79,7 @@ const SearchPanel = ({
     () => ({
       ...sortProps,
       className: 'h-full px-2 rounded-3xl  bg-pr-main/30',
-      containerClassName: `h-full rounded-3xl transition-all 
+      containerClassName: `h-fit flex-1 min-w-fit rounded-3xl transition-all 
 		lg:hidden`,
       optionsClassName: 'rounded-3xl text-pr-text hover:font-bold'
     }),
@@ -89,7 +89,10 @@ const SearchPanel = ({
   return (
     <>
       <div
-        className={mergeCn('relative max-w-2xl w-full h-min flex flex-col lg:flex-row', className)}
+        className={mergeCn(
+          'relative max-w-2xl w-full h-min flex flex-col gap-y-4 lg:flex-row',
+          className
+        )}
       >
         <Form
           fields={searchFields}
@@ -100,8 +103,8 @@ const SearchPanel = ({
           allFieldsRequired
         />
         <div
-          className="w-full flex gap-4 transition-all duration-300
-          lg:absolute lg:right-0 lg:w-4/10 lg:h-full lg:pl-4
+          className="w-full flex gap-4 flex-wrap transition-all duration-300
+          lg:absolute lg:right-0 lg:w-4/10 lg:h-full lg:pl-4 lg:flex-nowrap
           lg:peer-has-is-open:translate-x-full lg:peer-has-is-open:opacity-0 lg:peer-has-is-open:pointer-events-none"
         >
           {sortCategories.map((sortCategory) => (

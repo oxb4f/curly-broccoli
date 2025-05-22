@@ -14,7 +14,7 @@ const BookOthersList = ({
         variant === 'default'
           ? `sm:grid-cols-2 
         md:grid-cols-3 
-        lg:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]`
+        lg:grid-cols-[repeat(auto-fill,minmax(14rem,1fr))]`
           : ''
       }
         ${className}`}

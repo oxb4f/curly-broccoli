@@ -1,8 +1,25 @@
 import QUERY_KEYS from '@app/query/constants/queryKeys';
 import { getPrivateBooks, getPublicBooks } from '../services/api/book';
 import InfiniteQuery from '@app/query/components/InfiniteQuery';
+import Spinner from '@shared/components/ui/Spinner';
 
-const BookInfiniteQueryWrapper = ({ userId, children, searchTerm = '', sortParams = [] }) => {
+const BookInfiniteQueryWrapper = ({
+  userId,
+  isUserLoading,
+  children,
+  searchTerm = '',
+  sortParams = []
+}) => {
+  console.log(userId);
+
+  if (isUserLoading && userId === undefined) {
+    return (
+      <div className={'size-full flex flex-col justify-center items-center'}>
+        <Spinner className={'size-20 border-8'} />
+      </div>
+    );
+  }
+
   const queryFn = userId
     ? (offset) => getPrivateBooks(userId, { offset, ...sortParams })
     : (offset) => getPublicBooks({ offset, searchTerm, ...sortParams });
@@ -21,6 +38,7 @@ const BookInfiniteQueryWrapper = ({ userId, children, searchTerm = '', sortParam
       keys={[queryKeys, ...Object.values(sortParams), searchTerm]}
       dataTransformer={transformData}
       options={queryOptions}
+      placeholder="No books found"
     >
       {(books) => children(books)}
     </InfiniteQuery>
