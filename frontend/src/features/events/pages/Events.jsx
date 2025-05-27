@@ -7,7 +7,7 @@ const EventsPage = () => {
   const transformData = (data) => data.events;
 
   return (
-    <section className="size-full">
+    <section className="h-full">
       <InfiniteQuery
         callback={(offset) => {
           console.log(offset);

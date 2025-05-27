@@ -30,7 +30,7 @@ const InfiniteQuery = ({
     ...options
   });
 
-  const lastElementRef = useIntersectionObserver(fetchNextPage, [hasNextPage]);
+  const lastElementRef = useIntersectionObserver({ deps: [hasNextPage], onEnter: fetchNextPage });
 
   return (
     <div className={'relative size-full'}>

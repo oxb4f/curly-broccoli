@@ -9,7 +9,7 @@ const UserInfoSettingsPage = () => {
   const { user, isPending } = useSession();
 
   return (
-    <section className="size-full flex flex-col gap-8 justify-center items-center">
+    <section className="h-full flex flex-col gap-8 justify-center items-center">
       <div className="relative size-fit">
         <UserImage className="size-44" imageUrl={user?.imageUrl} isLoading={isPending} />
         <NavigationLink

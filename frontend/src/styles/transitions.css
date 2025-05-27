@@ -155,6 +155,66 @@
     }
   }
 
+  @keyframes filterCheckFade {
+    0%,
+    100% {
+      translate: -50% 0;
+    }
+    15%,
+    90% {
+      translate: 0 0;
+    }
+  }
+
+  @keyframes filterTextFade {
+    0%,
+    5%,
+    98%,
+    100% {
+      opacity: 0;
+    }
+    10%,
+    90% {
+      opacity: 1;
+    }
+  }
+
+  /* prettier-ignore */
+  @keyframes filtersContainer {
+    0% {
+      grid-template-rows: 0fr 1fr;
+    }
+    50% {
+      grid-template-rows: 0fr 0fr;
+    }
+    100% {
+      grid-template-rows: 1fr 0fr;
+    }
+  }
+
+  @keyframes filtersContainerReverse {
+    0% {
+      grid-template-rows: 1fr 0fr;
+    }
+    50% {
+      grid-template-rows: 0fr 0fr;
+    }
+    100% {
+      grid-template-rows: 0fr 1fr;
+    }
+  }
+
+  @keyframes hiddingFadeIn {
+    0% {
+      display: flex;
+      opacity: 1;
+    }
+    100% {
+      display: none;
+      opacity: 0;
+    }
+  }
+
   @keyframes shimmer {
     0% {
       transform: translateX(-100%);

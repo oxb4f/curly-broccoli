@@ -61,9 +61,46 @@
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 }
 
+@utility inset-ring-l-* {
+  box-shadow: inset calc(--value(integer) * 1.5px) 0 0 -1px var(--project-inset-ring-color);
+}
+
+@utility layout-base {
+  display: grid;
+  grid-template-columns: [full-width-start] 2rem [content-start] 1fr [content-end] 2rem [full-width-end];
+
+  > * {
+    grid-column: content;
+  }
+
+  @media (width >= 64rem) {
+    grid-template-columns: [full-width-start] 4rem [content-start] 1fr [content-end] 4rem [full-width-end];
+  }
+}
+
+@utility layout-content {
+  grid-column: content;
+}
+
+@utility layout-full-width {
+  grid-column: full-width;
+}
+
+/* prettier-ignore */
+@utility scrollbar-color-* {
+  scrollbar-color: --value(--color-*) --modifier(--color-*, [color]);
+}
+
 @custom-variant is-open {
   &[data-open='true'],
   &:where([data-open='true'] *) {
+    @slot;
+  }
+}
+
+@custom-variant is-initial {
+  &[data-initial='true'],
+  &:where([data-initial='true'] *) {
     @slot;
   }
 }

@@ -48,6 +48,10 @@
   --animate-swap-colors: swapColors 0.3s 2.3s both;
   --animate-swap-colors-reverse: swapColors 0.3s 2.3s reverse both;
   --animate-slide-in: slideIn 0.3s both;
+  --animate-filters-container: filtersContainer forwards;
+  --animate-filters-container-reverse: filtersContainerReverse forwards;
+  --animate-filter-check-fade: filterCheckFade forwards;
+  --animate-filter-text-fade: filterTextFade forwards;
 
   --breakpoint-xs: 30rem;
 }

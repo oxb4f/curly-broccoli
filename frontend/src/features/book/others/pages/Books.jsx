@@ -28,7 +28,7 @@ const OthersBooksPage = () => {
   ];
 
   return (
-    <section className="size-full flex flex-col pt-10 items-center">
+    <section className="flex flex-col pt-10 items-center">
       <SearchPanel
         className="max-w-3xl"
         sortCategories={sortCategories}

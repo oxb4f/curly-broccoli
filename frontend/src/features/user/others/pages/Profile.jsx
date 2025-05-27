@@ -7,7 +7,7 @@ const OthersProfilePage = () => {
   const { user, isPending } = useUser();
 
   return (
-    <section className="size-full py-5 grid gap-3 grid-rows-[min-content_1fr]">
+    <section className="h-full py-5 grid gap-3 grid-rows-[min-content_1fr]">
       <header className="flex flex-col items-center gap-4">
         <UserOverview user={user} isLoading={isPending} />
       </header>

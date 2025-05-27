@@ -1,14 +1,20 @@
+import FilterButton from '@shared/components/ui/buttons/Filter';
+import FiltersContainer from '@shared/components/ui/FiltersContainer';
+import FiltersController from '@shared/components/ui/FiltersController';
+
 const BookOwnCatalogControls = ({
   isSelectionEnabled,
   isAllSelected,
   toggleSelectionCallback,
   selectAllCallback,
-  removeBooksCallback
+  removeBooksCallback,
+  openFilters,
+  className = ''
 }) => {
   const controlButtonClasses = 'p-2 rounded-md bg-pr-bg-secondary hover:bg-pr-bg-tertiary';
 
   return (
-    <div className="flex justify-end gap-2">
+    <div className={`flex justify-end gap-2 ${className}`}>
       {isSelectionEnabled ? (
         <>
           <button className={controlButtonClasses} onClick={selectAllCallback}>
@@ -23,7 +29,7 @@ const BookOwnCatalogControls = ({
         </>
       ) : (
         <>
-          <button className={controlButtonClasses}>Filter</button>
+          <FilterButton className="self-center size-8" onClick={openFilters} />
 
           <button className={controlButtonClasses} onClick={toggleSelectionCallback}>
             Edit all

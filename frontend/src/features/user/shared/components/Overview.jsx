@@ -5,11 +5,11 @@ import UserPersonalInfo from './PersonalInfo';
 import Social from '@shared/components/ui/Social';
 import FollowButton from '@features/follows/components/FollowButton';
 
-const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
+const UserOverview = ({ user, isLoading, isOwn, as: Tag = 'article', className = '' }) => {
   if (!user && !isLoading) return;
 
   return (
-    <section
+    <Tag
       className={`flex flex-col items-center w-full max-w-xs grid-cols-[1fr_2fr] grid-rows-[repeat(4,auto)] gap-x-8 gap-y-3
 				md:max-w-lg md:grid ${className}`}
     >
@@ -43,7 +43,7 @@ const UserOverview = ({ user, isLoading, isOwn, className = '' }) => {
       </div>
 
       <UserStats stats={user?.stats} userId={user?.id} className="w-full" isLoading={isLoading} />
-    </section>
+    </Tag>
   );
 };
 

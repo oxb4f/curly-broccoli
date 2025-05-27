@@ -7,7 +7,7 @@ const BookReadPage = () => {
   const { book } = useBook();
 
   return (
-    <section className="size-full flex flex-col gap-x-5 gap-y-2 justify-around">
+    <section className="flex flex-col gap-x-5 gap-y-2 justify-around">
       <BookImage imageUrl={book?.imageUrl} className="w-full h-[30vh]" />
 
       <BookReadingTracker bookId={book?.id} />

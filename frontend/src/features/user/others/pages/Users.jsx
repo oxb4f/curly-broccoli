@@ -9,7 +9,7 @@ const OtherUsersPage = () => {
   const transformData = (data) => data.users;
 
   return (
-    <section className="size-full flex flex-col items-center py-4 gap-4">
+    <section className="h-full flex flex-col items-center py-4 gap-4">
       <SearchPanel
         className="max-w-xl"
         sortCategories={[

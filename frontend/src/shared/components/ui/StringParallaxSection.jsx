@@ -15,17 +15,17 @@ export default function StringParallaxSection({
   const parallaxRef = useRef(null);
   const timeoutRef = useRef(null);
 
-  const ref = useIntersectionObserver(
-    () => {
+  const ref = useIntersectionObserver({
+    deps: [speedMultiplier],
+    onEnter: () => {
       setEnabled(true);
     },
-    [speedMultiplier],
-    () => {
+    onLeave: () => {
       setOffset(0);
       setEnabled(false);
     },
-    '500px 0px 500px 0px'
-  );
+    rootMargin: '500px 0px 500px 0px'
+  });
 
   useEffect(() => {
     let lastScrollY = window.scrollY;

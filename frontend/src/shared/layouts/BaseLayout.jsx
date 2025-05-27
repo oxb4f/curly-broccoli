@@ -1,8 +1,8 @@
 const BaseLayout = ({ sidebar: Sidebar, main: Main, footer: Footer }) => {
   return (
     <>
-      {<Sidebar className="sidebar" />}
-      <main className="main">{Main && <Main />}</main>
+      {Sidebar && <Sidebar className="sidebar" />}
+      {Main && <Main />}
       {Footer && <footer className="footer">{Footer}</footer>}
     </>
   );

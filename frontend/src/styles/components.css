@@ -11,21 +11,23 @@
   cursor: pointer;
 }
 
-@utility sidebar {
-  grid-area: sidebar;
-  @apply sticky top-0;
-}
+@layer components {
+  .sidebar {
+    grid-area: sidebar;
+    @apply sticky top-0;
+  }
 
-@utility main {
-  grid-area: main;
-  @apply min-h-screen px-5 lg:px-20;
-}
+  .main {
+    grid-area: main;
+    @apply layout-base min-h-screen py-4;
+  }
 
-@utility content {
-  @apply size-full flex justify-center px-20;
-}
+  .content {
+    @apply size-full flex justify-center px-20;
+  }
 
-@utility footer {
-  grid-area: footer;
-  @apply border-pr-border bg-pr-bg-secondary;
+  .footer {
+    grid-area: footer;
+    @apply border-pr-border bg-pr-bg-secondary;
+  }
 }
