@@ -1,3 +1,4 @@
+import queryString from "node:querystring";
 import { Elysia } from "elysia";
 import { onError } from "./hooks/on-error";
 import { configPlugin } from "./plugins/config";
@@ -12,6 +13,9 @@ import { readingTrackersRoute } from "./routes/readingTrackers";
 import { usersRoute } from "./routes/users";
 
 export const app = new Elysia()
+    .onTransform((ctx) => {
+        ctx.query = queryString.parse(new URL(ctx.request.url).search.slice(1)) as Record<string, string | string[] | undefined>;
+    })
 	.onError(({ error, set }) => {
 		return onError(error as Error, set);
 	})

@@ -7,6 +7,7 @@ import {
 	offset,
 	orderDirection,
 	orderField,
+    searchTerm,
 } from "../../../common/validation/schema";
 import {
 	type DtoShape,
@@ -25,10 +26,28 @@ import {
 export type InShape = DtoShape<typeof ListDtoIn>;
 export type OutShape = DtoShape<typeof ListDtoOut>;
 
-const orderFieldValues = [...getEnumValues(orderField), "isFavorite", "isRead"];
+const orderFieldValues = [...getEnumValues(orderField), "isFavorite", "isRead", "numberOfPages", "genre", "author"];
 
 export const ListDtoIn = createInputDto(
 	z.object({
+        genre: z.preprocess(
+			(val) => {
+				if (val === undefined || val === null) return [];
+				return Array.isArray(val) ? val : [val];
+			},
+			z.array(genre),
+		).optional().default([]),
+		author: z.preprocess(
+			(val) => {
+				if (val === undefined || val === null) return [];
+				return Array.isArray(val) ? val : [val];
+			},
+			z.array(author),
+		).optional().default([]),
+        numberOfPagesMin: numberOfPages.optional(),
+        numberOfPagesMax: numberOfPages.optional(),
+        isRead: z.boolean().optional(),
+        isFavorite: z.boolean().optional(),
 		userId: id,
 		limit: limit.optional().nullable().default(10),
 		offset: offset.optional().nullable().default(0),

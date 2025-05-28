@@ -9,6 +9,8 @@ import addBookService from "../../services/books/public/add/action";
 import getBookService from "../../services/books/public/get/action";
 import listBooksService from "../../services/books/public/list/action";
 import quickSearchBookService from "../../services/books/public/search/quick/action";
+import getFiltersService from "../../services/books/public/filters/action";
+import getPrivateFiltersService from "../../services/books/private/filters/action";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 import { ensureRequestContext } from "../utils/ensure-request-context";
@@ -25,8 +27,21 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 	.decorate("deleteUserBookService", deleteUserBookService)
 	.decorate("addBookService", addBookService)
 	.decorate("quickSearchBookService", quickSearchBookService)
+    .decorate("getFiltersService", getFiltersService)
+    .decorate("getPrivateFiltersService", getPrivateFiltersService)
 	.group("/books", (app) =>
 		app.guard((app) => {
+            app.get(
+                "/filters",
+                ...ensureRequestContext<InferContext<typeof app>, any>(
+                    async (ctx) => {
+                        return ctx.getFiltersService({
+                            context: ctx.context,
+                        });
+                    },
+                ),
+            );
+
 			app.get(
 				"/quick-search",
 				...ensureRequestContext<InferContext<typeof app>, any>(
@@ -115,6 +130,21 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 			return appWithJwtGuard.group("/private", (app) =>
 				app
 					.get(
+						"/filters",
+						...ensureRequestContext<InferContext<typeof app>, any>(
+							async (ctx) => {
+								assert(ctx.store.jwtAuthGuardPayload.payload?.accessId);
+
+								return ctx.getPrivateFiltersService({
+									dto: {
+										...prepareServiceHandlerPayload(ctx),
+									},
+									context: ctx.context,
+								});
+							},
+						),
+					)
+					.get(
 						"/",
 						...ensureRequestContext<InferContext<typeof app>, any>(
 							async (ctx) => {
@@ -122,7 +152,6 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 
 								return ctx.listUserBooksService({
 									dto: {
-										accessId: ctx.store.jwtAuthGuardPayload.payload.accessId,
 										...prepareServiceHandlerPayload(ctx),
 									},
 									context: ctx.context,

@@ -7,6 +7,7 @@ import {
 	orderDirection,
 	orderField,
     searchTerm,
+    getEnumValues,
 } from "../../../common/validation/schema";
 import {
 	type DtoShape,
@@ -25,18 +26,36 @@ import {
 export type InShape = DtoShape<typeof ListDtoIn>;
 export type OutShape = DtoShape<typeof ListDtoOut>;
 
+const orderFieldValues = [...getEnumValues(orderField), "numberOfPages"];
+
 export const ListDtoIn = createInputDto(
 	z.object({
+		genre: z.preprocess(
+			(val) => {
+				if (val === undefined || val === null) return [];
+				return Array.isArray(val) ? val : [val];
+			},
+			z.array(genre),
+		).optional().default([]),
+		author: z.preprocess(
+			(val) => {
+				if (val === undefined || val === null) return [];
+				return Array.isArray(val) ? val : [val];
+			},
+			z.array(author),
+		).optional().default([]),
+        numberOfPagesMin: numberOfPages.optional(),
+        numberOfPagesMax: numberOfPages.optional(),
 		searchTerm: searchTerm.optional(),
 		accessId: id,
 		limit: limit.optional().nullable().default(10),
 		offset: offset.optional().nullable().default(0),
 		orderDirection: orderDirection.optional().nullable().default("desc"),
-		orderField: orderField
+		orderField: z
+			.enum(orderFieldValues as [string, ...string[]])
 			.optional()
 			.nullable()
-			.default("createdAt")
-			.readonly(),
+			.default("createdAt"),
 	}),
 );
 

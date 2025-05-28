@@ -3,6 +3,12 @@ import { type InShape, ListDtoIn, ListDtoOut, type OutShape } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 	const { data, total } = await context.userBooksRepository.list({
+        genre: dto.genre as string[],
+        author: dto.author as string[],
+        numberOfPagesMin: dto.numberOfPagesMin,
+        numberOfPagesMax: dto.numberOfPagesMax,
+        isRead: dto.isRead,
+        isFavorite: dto.isFavorite,
 		limit: dto.limit,
 		offset: dto.offset,
 		userId: dto.userId,
