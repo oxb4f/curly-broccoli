@@ -9,8 +9,8 @@ const UserInfoSettingsPage = () => {
   const { user, isPending } = useSession();
 
   return (
-    <section className="h-full flex flex-col gap-8 justify-center items-center">
-      <div className="relative size-fit">
+    <main className="main content-rows-[.6fr_1fr] gap-y-6">
+      <div className="justify-self-center self-end relative flex">
         <UserImage className="size-44" imageUrl={user?.imageUrl} isLoading={isPending} />
         <NavigationLink
           to={ROUTES.SETTINGS.PHOTO}
@@ -20,8 +20,12 @@ const UserInfoSettingsPage = () => {
         </NavigationLink>
       </div>
 
-      <EditUserInfoForm userCurrentData={user} isPending={isPending} />
-    </section>
+      <EditUserInfoForm
+        userCurrentData={user}
+        isPending={isPending}
+        className="justify-self-center self-start max-w-2xl"
+      />
+    </main>
   );
 };
 

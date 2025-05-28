@@ -5,7 +5,7 @@ import ROUTES from '@app/router/constants/routes';
 import UserImageUpload from './UserImageUpload';
 import useOwnUserService from '@user/own/hooks/useOwnUserService';
 
-const EditUserImageForm = () => {
+const EditUserImageForm = ({ className = '' }) => {
   const { changePhoto } = useOwnUserService();
   const imageCropperRef = useRef(null);
   const navigate = useNavigate();
@@ -18,30 +18,26 @@ const EditUserImageForm = () => {
 
   const fields = useMemo(
     () => ({
-      controlPanel: {
-        fields: {
-          back: {
-            type: 'button',
-            value: 'back',
-            className:
-              'bg-pr-bg-secondary! text-pr-text rounded-none rounded-xs! transition-all hover:enabled:bg-pr-bg-tertiary!',
-            onClick: () => {
-              navigate(ROUTES.SETTINGS.PROFILE);
-            }
-          },
-          confirm: {
-            type: 'submit',
-            children: 'confirm',
-            className:
-              'bg-pr-bg-secondary! text-pr-text rounded-none rounded-xs! transition-all hover:enabled:bg-pr-bg-tertiary!'
-          }
-        },
-        className: 'flex gap-1 rounded-lg overflow-hidden'
+      back: {
+        type: 'button',
+        children: 'back',
+        className:
+          'bg-pr-bg-secondary! text-pr-text rounded-none rounded-xs rounded-l-lg transition-all hover:enabled:bg-pr-bg-tertiary!',
+        onClick: () => {
+          navigate(-1);
+        }
+      },
+      confirm: {
+        type: 'submit',
+        children: 'confirm',
+        className:
+          'bg-pr-bg-secondary! text-pr-text rounded-none rounded-xs rounded-e-lg transition-all hover:enabled:bg-pr-bg-tertiary!'
       },
       photo: {
         element: UserImageUpload,
         props: {
-          imageCropperRef
+          imageCropperRef,
+          className: 'col-span-full'
         }
       }
     }),
@@ -50,7 +46,7 @@ const EditUserImageForm = () => {
 
   return (
     <Form
-      className="max-w-min min-w-fit h-screen py-2 grid grid-rows-[auto_1fr] gap-2"
+      className={`grid grid-rows-[auto_1fr] grid-cols-2 gap-1 ${className}`}
       fields={fields}
       onSubmit={handleOnSubmit}
       allFieldsRequired={true}

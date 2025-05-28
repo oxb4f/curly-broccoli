@@ -47,6 +47,12 @@
   animation-direction: reverse;
 }
 
+/* prettier-ignore */
+@utility animation-duration-* {
+  animation-duration: calc(--value(integer, [integer]) * 1ms);
+  animation-duration: --value([*]);
+}
+
 @utility screen-reader-only {
   position: absolute;
   inset: 0;
@@ -67,14 +73,18 @@
 
 @utility layout-base {
   display: grid;
-  grid-template-columns: [full-width-start] 2rem [content-start] 1fr [content-end] 2rem [full-width-end];
+  grid-template-columns: [full-width-start] 1rem [content-start] 1fr [content-end] 1rem [full-width-end];
+  grid-auto-rows: auto;
 
   > * {
     grid-column: content;
+    display: grid;
   }
 
   @media (width >= 64rem) {
-    grid-template-columns: [full-width-start] 4rem [content-start] 1fr [content-end] 4rem [full-width-end];
+    grid-template-columns:
+      [full-width-start] 4rem [content-start] repeat(var(--content-cols, 1), 1fr)
+      [content-end] 4rem [full-width-end];
   }
 }
 
@@ -84,6 +94,29 @@
 
 @utility layout-full-width {
   grid-column: full-width;
+}
+
+@utility layout-content-height {
+  padding-block: 1rem;
+}
+
+@utility layout-full-height {
+  padding-block: 0;
+}
+
+/* prettier-ignore */
+@utility content-cols-* {
+  --content-cols: --value(integer, [integer]);
+
+  > * {
+    grid-template-columns: subgrid;
+  }
+}
+
+/* prettier-ignore */
+@utility content-rows-* {
+  grid-template-rows: repeat(--value(integer, [integer]), 1fr);
+  grid-template-rows: --value([*]);
 }
 
 /* prettier-ignore */

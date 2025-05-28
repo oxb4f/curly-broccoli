@@ -9,9 +9,9 @@ const OtherUsersPage = () => {
   const transformData = (data) => data.users;
 
   return (
-    <section className="h-full flex flex-col items-center py-4 gap-4">
+    <main className="main content-rows-[auto_1fr] gap-y-4">
       <SearchPanel
-        className="max-w-xl"
+        className="justify-self-center max-w-xl"
         sortCategories={[
           {
             name: 'orderDirection',
@@ -47,7 +47,7 @@ const OtherUsersPage = () => {
           </InfiniteQuery>
         )}
       />
-    </section>
+    </main>
   );
 };
 

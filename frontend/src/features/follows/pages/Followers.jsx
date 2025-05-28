@@ -9,7 +9,7 @@ const FollowersPage = () => {
   const transformData = (data) => data.followers;
 
   return (
-    <section>
+    <main className="main content-rows-[auto_1fr]">
       <h1 className="py-5 px-3 text-pr-text text-5xl md:text-4xl">Followers</h1>
       <InfiniteQuery
         callback={(offset) => getUserFollowers(userId, { offset, limit: 10 })}
@@ -19,7 +19,7 @@ const FollowersPage = () => {
       >
         {(users) => <UserList users={users} />}
       </InfiniteQuery>
-    </section>
+    </main>
   );
 };
 

@@ -49,7 +49,7 @@
   }
 
   * {
-    scrollbar-color: var(--project-bg-secondary-color) var(--project-bg-main-color);
+    scrollbar-color: var(--project-scroll-color) transparent;
   }
 
   *::-webkit-scrollbar-track {

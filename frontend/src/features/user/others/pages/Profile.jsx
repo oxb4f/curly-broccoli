@@ -7,16 +7,15 @@ const OthersProfilePage = () => {
   const { user, isPending } = useUser();
 
   return (
-    <section className="h-full py-5 grid gap-3 grid-rows-[min-content_1fr]">
+    <main className="main content-rows-[auto_1fr]">
       <header className="flex flex-col items-center gap-4">
         <UserOverview user={user} isLoading={isPending} />
       </header>
-      <section>
-        <BookInfiniteQueryWrapper userId={user?.id} isUserLoading={isPending}>
-          {(books) => <BookOthersCatalog items={books} className="size-full" isPrivate />}
-        </BookInfiniteQueryWrapper>
-      </section>
-    </section>
+
+      <BookInfiniteQueryWrapper userId={user?.id} isUserLoading={isPending}>
+        {(books) => <BookOthersCatalog items={books} isPrivate className="py-4" />}
+      </BookInfiniteQueryWrapper>
+    </main>
   );
 };
 

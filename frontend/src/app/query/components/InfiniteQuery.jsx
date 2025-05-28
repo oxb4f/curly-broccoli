@@ -10,7 +10,8 @@ const InfiniteQuery = ({
   placeholder = '',
   offset = 15,
   initialOffset = 0,
-  options = {}
+  options = {},
+  className = ''
 }) => {
   console.log(keys);
 
@@ -33,11 +34,13 @@ const InfiniteQuery = ({
   const lastElementRef = useIntersectionObserver({ deps: [hasNextPage], onEnter: fetchNextPage });
 
   return (
-    <div className={'relative size-full'}>
-      {!data?.length && !isLoading ? (
-        <div className="size-full flex justify-center items-center description">{placeholder}</div>
-      ) : !data ? null : typeof children === 'function' ? (
+    <div className={`relative size-full ${className}`}>
+      {!data ? null : typeof children === 'function' ? (
         children(data)
+      ) : !data?.length && !isLoading ? (
+        <div className="size-full flex justify-center items-center description text-center">
+          {placeholder}
+        </div>
       ) : (
         children
       )}

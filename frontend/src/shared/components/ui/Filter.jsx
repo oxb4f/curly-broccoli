@@ -7,42 +7,44 @@ const Filter = ({ filter, onChange, value = [], variant = 'default', className =
   return variant === 'default' ? (
     <fieldset
       className={mergeCn(
-        `group transition-shadow [--project-inset-ring-color:var(--project-main-color-mute)] inset-ring-l-1 size-full flex flex-col py-4 gap-y-5 overflow-y-auto scrollbar-color-pr-main-mute/[transparent] has-checked:scrollbar-color-pr-main/[transparent]
+        `group relative py-4 transition-shadow [--project-inset-ring-color:var(--project-main-color-mute)] inset-ring-l-1
 					has-checked:[--project-inset-ring-color:var(--project-main-color)]`,
         className
       )}
     >
       <legend
-        className="-translate-y-1/2 -translate-x-2 text-pr-main-mute transition-colors
+        className="absolute top-0 left-0 -translate-y-full -translate-x-2 text-pr-main-mute transition-colors
 				group-has-checked:text-pr-main"
       >
         {filter.legend}
       </legend>
 
-      {filter.options?.map((option) => (
-        <label
-          key={option.value}
-          className="relative size-fit px-4 text-base/tight select-none transition-colors cursor-pointer break-all
+      <div className="size-full py-4 flex flex-col gap-y-5 overflow-y-auto scrollbar-color-pr-main-mute/[transparent] has-checked:scrollbar-color-pr-main/[transparent]">
+        {filter.options?.map((option) => (
+          <label
+            key={option.value}
+            className="relative size-fit px-4 text-base/tight select-none transition-colors cursor-pointer break-all
 						has-checked:text-pr-main
         "
-        >
-          <input
-            type="checkbox"
-            name={filter.name}
-            value={option.value}
-            onChange={onChange}
-            className="appearance-none peer"
-            checked={value.includes(option.value)}
-          />
-          <span className="animate-filter-text-fade [animation-timeline:view()] [animation-range:cover]">
-            {option.label}
-          </span>
-          <div
-            className="absolute -left-3 top-0.5 size-4 border-1 border-pr-main bg-pr-bg-main -translate-x-1/2 rotate-45 transition-transform
+          >
+            <input
+              type="checkbox"
+              name={filter.name}
+              value={option.value}
+              onChange={onChange}
+              className="appearance-none peer"
+              checked={value.includes(option.value)}
+            />
+            <span className="animate-filter-text-fade [animation-timeline:view()] [animation-range:cover]">
+              {option.label}
+            </span>
+            <div
+              className="absolute -left-3 top-0.5 size-4 border-1 border-pr-main bg-pr-bg-main -translate-x-1/2 rotate-45 transition-transform
               peer-checked:translate-0 peer-checked:animate-filter-check-fade peer-checked:[animation-timeline:view()] peer-checked:[animation-range:cover]"
-          ></div>
-        </label>
-      ))}
+            ></div>
+          </label>
+        ))}
+      </div>
     </fieldset>
   ) : variant === 'inline-choosen' ? (
     value?.map((item) => {

@@ -58,45 +58,41 @@ const BookPage = () => {
   const navigation = {
     items: navigationItems[isOwn ? 'own' : 'others'],
     props: {
-      className: 'flex gap-1 rounded-lg text-base overflow-hidden'
+      className: 'flex gap-1 text-base'
     },
-    itemsClasses: 'flex-1',
-    linksClasses:
-      'block size-full px-4 py-2 rounded-xs bg-pr-bg-secondary text-center transition-all hover:bg-pr-bg-tertiary'
+    itemsClasses:
+      'flex-1 rounded-xs border-1 border-pr-border bg-pr-bg-secondary transition-all hover:bg-pr-bg-tertiary first:rounded-l-lg last:rounded-r-lg overflow-clip',
+    linksClasses: 'block size-full px-4 py-2 text-center'
   };
 
   return (
-    <section
-      className="flex flex-col gap-x-5 gap-y-2 justify-center
-      lg:flex-row"
-    >
-      <BookImage
-        imageUrl={book?.imageUrl}
-        className="grow-0 w-full h-[90vh] lg:max-w-2xl lg:h-screen"
-      />
-      <div
-        className="w-full min-w-96 max-w-full flex flex-col-reverse gap-7 text-2xl
-        lg:max-w-lg lg:flex-col lg:py-4"
-      >
-        <BookInfo data={book?.info} isLoading={isPending} />
-        {isOwn && (
-          <div className={'flex justify-between'}>
-            <BookStats
-              bookId={book?.id}
-              stats={book?.stats}
-              className="flex flex-row-reverse gap-3"
-              isOwn
-            />
-            <BookRating id={book?.id} initialRating={book?.stats?.rating} isLoading={isPending} />
-          </div>
-        )}
+    <main className="main layout-full-height content-cols-2 ">
+      <div className="gap-4">
+        <BookImage imageUrl={book?.imageUrl} className="w-full h-[90vh] lg:max-w-2xl lg:h-screen" />
+        <div
+          className="layout-full-height w-full min-w-96 max-w-full flex flex-col-reverse gap-7 text-2xl
+        lg:layout-content-height lg:max-w-lg lg:flex-col"
+        >
+          <BookInfo data={book?.info} isLoading={isPending} />
+          {isOwn && (
+            <form className={'flex justify-between'}>
+              <BookStats
+                bookId={book?.id}
+                stats={book?.stats}
+                className="flex flex-row-reverse gap-3"
+                isOwn
+              />
+              <BookRating id={book?.id} initialRating={book?.stats?.rating} isLoading={isPending} />
+            </form>
+          )}
 
-        <Navigation list={navigation} />
-        {/* <BookEditLink /> */}
-        {/* <BookActions /> */}
-        {/* <Comments /> */}
+          <Navigation list={navigation} />
+          {/* <BookEditLink /> */}
+          {/* <BookActions /> */}
+          {/* <Comments /> */}
+        </div>
       </div>
-    </section>
+    </main>
   );
 };
 

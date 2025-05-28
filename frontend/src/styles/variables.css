@@ -9,12 +9,12 @@
 
   --project-bg-main-color: #000000;
   --project-bg-main-color-inverted: #ededed;
-  --project-bg-secondary-color: #1a1a1a;
+  --project-bg-secondary-color: rgb(13, 13, 13);
   --project-bg-secondary-color-inverted: #4d4d4d;
-  --project-bg-tertiary-color: #2a2a2a;
+  --project-bg-tertiary-color: rgb(20, 20, 20);
   --project-bg-tertiary-color-inverted: #666666;
 
-  --project-border-color: rgb(46, 46, 46);
+  --project-border-color: rgb(41, 41, 41);
 
   --project-text-color: #ededed;
   --project-text-color-darker: #a1a1a1;
@@ -31,6 +31,8 @@
   --project-rating-color-mute: #ffa600;
 
   --project-selection-color: rgba(0, 215, 231, 0.2);
+
+  --project-scroll-color: #1a1a1a;
 
   --project-font: 'Roboto', sans-serif;
   --project-logo-font: 'Pacifico', cursive;

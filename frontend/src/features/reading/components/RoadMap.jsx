@@ -8,28 +8,28 @@ const BookReadingRoadMap = ({ bookId, className = '' }) => {
 
   return (
     <section
-      className={`rounded-md border-1 border-pr-border overflow-hidden scrollbar-track-rounded ${className}`}
+      className={`grid grid-rows-[auto_1fr] overflow-y-auto scrollbar-color-pr-main/[transparent] ${className}`}
     >
-      <div className="size-full p-3 overflow-y-auto">
-        <h1 className="text-2xl">Road map</h1>
-        <InfiniteQuery
-          callback={(offset) => {
-            console.log(offset);
+      <h1 className="mb-4 text-2xl font-bold">Road map</h1>
 
-            return getTrackers(bookId, {
-              offset,
-              limit: 5,
-              state: 'finished'
-            });
-          }}
-          keys={[...QUERY_KEYS.READING_TRACKERS.FINISHED, bookId]}
-          dataTransformer={transformData}
-          offset={5}
-          options={{ enabled: Boolean(bookId) }}
-        >
-          {(trackersList) => <BookReadingRecordsList list={trackersList} />}
-        </InfiniteQuery>
-      </div>
+      <InfiniteQuery
+        callback={(offset) => {
+          console.log(offset);
+
+          return getTrackers(bookId, {
+            offset,
+            limit: 5,
+            state: 'finished'
+          });
+        }}
+        keys={[...QUERY_KEYS.READING_TRACKERS.FINISHED, bookId]}
+        dataTransformer={transformData}
+        offset={5}
+        options={{ enabled: Boolean(bookId) }}
+        placeholder="Start reading to see progress"
+      >
+        {(trackersList) => <BookReadingRecordsList list={trackersList} />}
+      </InfiniteQuery>
     </section>
   );
 };

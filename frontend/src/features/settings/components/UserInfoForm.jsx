@@ -2,7 +2,7 @@ import AsyncForm from '@shared/components/form/AsyncForm';
 import ROUTES from '@app/router/constants/routes';
 import useOwnUserService from '@user/own/hooks/useOwnUserService';
 
-const EditUserInfoForm = ({ userCurrentData, isPending }) => {
+const EditUserInfoForm = ({ userCurrentData, isPending, className = '' }) => {
   const { changeInfo } = useOwnUserService();
   if (!userCurrentData && !isPending) return;
 
@@ -62,7 +62,7 @@ const EditUserInfoForm = ({ userCurrentData, isPending }) => {
 
   return (
     <AsyncForm
-      className="w-full min-w-80 max-w-2xl grid gap-y-2"
+      className={`w-full min-w-sm grid grid-cols-1 gap-y-2 ${className}`}
       fields={fields}
       onSubmit={handleSubmit}
       isLoading={isPending}

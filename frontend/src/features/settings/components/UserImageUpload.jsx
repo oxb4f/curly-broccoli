@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import DropZone from '@shared/components/ui/DropZone';
 import ImageCropper from '@image-cropper/components/ImageCropper';
 
-const UserImageUpload = ({ value, onChange, imageCropperRef }) => {
+const UserImageUpload = ({ value, onChange, imageCropperRef, className }) => {
   const imageUrl = value ? URL.createObjectURL(value) : null;
 
   const handleOnDrop = (file) => {
@@ -18,13 +18,13 @@ const UserImageUpload = ({ value, onChange, imageCropperRef }) => {
   }, [imageUrl]);
 
   return (
-    <div className="size-full flex justify-center">
+    <div className={`size-full flex justify-center ${className}`}>
       {imageUrl ? (
         <>
           <ImageCropper innerRef={imageCropperRef} className="size-full" imageUrl={imageUrl} />
         </>
       ) : (
-        <DropZone onDropHandler={handleOnDrop} className="h-full min-w-96 max-w-md rounded-md" />
+        <DropZone onDropHandler={handleOnDrop} className="h-full w-full min-w-96 rounded-md" />
       )}
     </div>
   );

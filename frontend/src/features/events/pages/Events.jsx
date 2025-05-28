@@ -7,7 +7,7 @@ const EventsPage = () => {
   const transformData = (data) => data.events;
 
   return (
-    <section className="h-full">
+    <main className="main">
       <InfiniteQuery
         callback={(offset) => {
           console.log(offset);
@@ -19,9 +19,11 @@ const EventsPage = () => {
         offset={5}
         placeholder="No activity from followers yet"
       >
-        {(events) => <EventList items={events} />}
+        {(events) => (
+          <EventList items={events} className="size-full flex flex-col items-center gap-y-4" />
+        )}
       </InfiniteQuery>
-    </section>
+    </main>
   );
 };
 

@@ -19,7 +19,7 @@
 
   .main {
     grid-area: main;
-    @apply layout-base min-h-screen py-4;
+    @apply layout-base layout-content-height min-h-screen;
   }
 
   .content {

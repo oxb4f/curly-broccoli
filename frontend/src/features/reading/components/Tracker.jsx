@@ -7,6 +7,7 @@ import useUnmount from '@shared/hooks/useUnmount';
 import { getTrackers } from '@reading/services/api/readingTrackers';
 import QUERY_KEYS from '@app/query/constants/queryKeys';
 import useBackForwardFix from '@app/router/hooks/useBackForwardFix';
+import Skeleton from '@shared/components/ui/Skeleton';
 
 const BookReadingTracker = ({ bookId, className = '' }) => {
   const { start, pause, resume, finish, pauseInBackground } = useReadingTrackersService(bookId);
@@ -75,34 +76,40 @@ const BookReadingTracker = ({ bookId, className = '' }) => {
     : 'start';
 
   return (
-    <div className={`relative flex justify-center items-center gap-7 text-2xl ${className}`}>
-      {!isPending && (
+    <section
+      className={`min-w-max grid grid-rows-[1fr_1fr] justify-center items-center transition-[grid-template-columns] text-[clamp(3rem,5lvw,6rem)] ${
+        tracker?.state?.isStarted ? 'grid-cols-[1fr_1fr]' : 'grid-cols-[0fr_1fr]'
+      } ${className}`}
+    >
+      {!isPending ? (
         <Timer
           initialSeconds={tracker?.totalDuration / 1000}
           isStarted={tracker?.state?.isReading}
           isStopped={tracker?.state?.isFinished}
-          className={`absolute top-1/2 -mt-4 -z-10 ${
+          className={`col-span-full text-center font-mono font-bold tracking-tight ${
             tracker?.state?.isStarted
-              ? `translate-x-full text-pr-text transition-all ${
-                  tracker?.state?.isReading ? 'animate-pulse' : ''
-                }`
-              : 'text-transparent'
+              ? `text-pr-text transition-all ${tracker?.state?.isReading ? 'animate-pulse' : ''}`
+              : ''
           }`}
         />
+      ) : (
+        <Skeleton type="text" className="col-span-full" />
       )}
       <PlayButton
         action="stop"
         onClick={() => handleDispatch('finish')}
-        className={`absolute scale-75 ${
-          tracker?.state?.isStarted ? '-translate-x-[110%]' : 'opacity-0 -z-10'
+        className={`size-[clamp(3rem,5lvw,6rem)] justify-self-center min-w-0 overflow-clip ${
+          tracker?.state?.isStarted ? '' : 'opacity-0 -z-10 size-0! border-0!'
         }`}
       />
       <PlayButton
         action={nextAction}
         onClick={() => handleDispatch(nextAction)}
-        className={nextAction === 'pause' ? 'animate-pulse' : ''}
+        className={`size-[clamp(3rem,5lvw,6rem)] justify-self-center ${
+          nextAction === 'pause' ? 'animate-pulse' : ''
+        }`}
       />
-    </div>
+    </section>
   );
 };
 

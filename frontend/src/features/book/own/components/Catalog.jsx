@@ -20,7 +20,7 @@ const BookOwnCatalog = ({ items = [], className = '' }) => {
   };
 
   return (
-    <div className={`flex flex-col gap-4 py-4 ${className}`}>
+    <div className={`flex flex-col gap-4 ${className}`}>
       {/* <BookOwnCatalogControls
         isSelectionEnabled={editMode}
         isAllSelected={isAllSelected}

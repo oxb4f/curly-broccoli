@@ -4,9 +4,9 @@ const BookEditPage = () => {
   // const params = useParams();
 
   return (
-    <section className="py-10 flex justify-center">
-      <BookEditForm />
-    </section>
+    <main className="main">
+      <BookEditForm className="justify-self-center" />
+    </main>
   );
 };
 

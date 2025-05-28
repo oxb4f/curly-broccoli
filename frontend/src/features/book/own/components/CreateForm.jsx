@@ -83,7 +83,7 @@ const BookCreateForm = ({ className = '' }) => {
 
   return (
     <Form
-      className="size-full max-w-4xl grid grid-rows-[60vh_auto] gap-4 xl:grid-cols-[24rem_1fr] xl:grid-rows-[90vh]"
+      className={`size-full max-w-4xl grid grid-rows-[60vh_auto] gap-4 xl:grid-cols-[24rem_1fr] xl:grid-rows-[90vh] ${className}`}
       fields={fields}
       onSubmit={handleOnSubmit}
     />

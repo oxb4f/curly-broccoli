@@ -28,9 +28,9 @@ const OthersBooksPage = () => {
   ];
 
   return (
-    <section className="flex flex-col pt-10 items-center">
+    <main className="main content-rows-[auto_1fr] gap-y-4">
       <SearchPanel
-        className="max-w-3xl"
+        className="justify-self-center max-w-3xl"
         sortCategories={sortCategories}
         searchQueryOptions={{
           queryFn: (value) => quickSearchPublicBooks({ term: value }),
@@ -50,11 +50,11 @@ const OthersBooksPage = () => {
             searchTerm={searchParams.searchTerm}
             sortParams={searchParams.sort}
           >
-            {(books) => <BookOthersCatalog items={books} className="size-full" />}
+            {(books) => <BookOthersCatalog items={books} />}
           </BookInfiniteQueryWrapper>
         )}
       />
-    </section>
+    </main>
   );
 };
 

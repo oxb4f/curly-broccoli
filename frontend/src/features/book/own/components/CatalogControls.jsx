@@ -1,6 +1,4 @@
 import FilterButton from '@shared/components/ui/buttons/Filter';
-import FiltersContainer from '@shared/components/ui/FiltersContainer';
-import FiltersController from '@shared/components/ui/FiltersController';
 
 const BookOwnCatalogControls = ({
   isSelectionEnabled,

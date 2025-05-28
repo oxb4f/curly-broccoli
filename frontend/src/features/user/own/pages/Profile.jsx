@@ -106,7 +106,7 @@ const OwnProfilePage = () => {
   };
 
   return (
-    <main className="main size-full grid-rows-[auto_auto_auto_1fr]">
+    <main className="main content-rows-[auto_auto_auto_1fr]">
       <header ref={headerRef} className="flex justify-center">
         <UserOverview user={user} isLoading={isPending} className="flex flex-col gap-2" isOwn />
       </header>
@@ -121,7 +121,7 @@ const OwnProfilePage = () => {
       />
 
       <BookInfiniteQueryWrapper userId={user?.id} isUserLoading={isPending}>
-        {(books) => <BookOwnCatalog items={books} />}
+        {(books) => <BookOwnCatalog items={books} className="py-4" />}
       </BookInfiniteQueryWrapper>
     </main>
   );

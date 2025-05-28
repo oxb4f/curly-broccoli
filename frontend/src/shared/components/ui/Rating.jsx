@@ -3,7 +3,7 @@ import { StarIcon } from '@heroicons/react/24/outline';
 
 const Rating = ({
   initialRating,
-  legendText,
+  headerText,
   onChange,
   maxStars = 5,
   isRow = true,
@@ -20,8 +20,8 @@ const Rating = ({
   };
 
   return (
-    <fieldset className={className}>
-      {legendText && <legend>{legendText}</legend>}
+    <div className={className}>
+      {headerText && <h3>{headerText}</h3>}
       <div className={`flex ${isRow ? 'flex-row-reverse' : 'flex-col-reverse'}`}>
         {ratingArray.map((ratingValue) => (
           <label
@@ -46,7 +46,7 @@ const Rating = ({
           </label>
         ))}
       </div>
-    </fieldset>
+    </div>
   );
 };
 

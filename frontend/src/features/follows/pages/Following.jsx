@@ -9,7 +9,7 @@ const FollowingPage = () => {
   const transformData = (data) => data.following;
 
   return (
-    <section className="size-full">
+    <main className="main content-rows-[auto_1fr]">
       <h1 className="py-5 px-3 text-pr-text text-5xl md:text-4xl">Following</h1>
       <InfiniteQuery
         callback={(offset) => getUserFollowing(userId, { offset, limit: 10 })}
@@ -19,7 +19,7 @@ const FollowingPage = () => {
       >
         {(users) => <UserList users={users} />}
       </InfiniteQuery>
-    </section>
+    </main>
   );
 };
 

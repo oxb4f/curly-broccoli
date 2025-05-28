@@ -4,9 +4,9 @@ const BookCreatePage = () => {
   // const params = useParams();
 
   return (
-    <section className="py-10 flex justify-center">
-      <BookCreateForm />
-    </section>
+    <main className="main">
+      <BookCreateForm className="justify-self-center" />
+    </main>
   );
 };
 
