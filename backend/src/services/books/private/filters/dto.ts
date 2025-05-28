@@ -1,15 +1,11 @@
 import { z } from "zod";
+import { id } from "../../../common/validation/schema";
 import {
 	type DtoShape,
+	createInputDto,
 	createOutputDto,
-    createInputDto
 } from "../../../dtos/factory";
-import {
-	author,
-	genre,
-	numberOfPages,
-} from "../../common/validation/schema";
-import { id } from "../../../common/validation/schema";
+import { author, genre, numberOfPages } from "../../common/validation/schema";
 
 export type InShape = DtoShape<typeof FiltersDtoIn>;
 export type OutShape = DtoShape<typeof FiltersDtoOut>;

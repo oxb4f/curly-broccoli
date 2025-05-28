@@ -1,11 +1,17 @@
-import type { FileStorage } from "../../services/context";
+import type { Search } from "../../services/context";
 import { load } from "../config";
+import { ElasticSearch } from "./elastic/search";
 
-export function createSearch(): FileStorage {
+export async function createSearch(): Promise<Search | never> {
 	const config = load();
 
 	if (config.SEARCH_TYPE === "elastic") {
-		return new AwsS3FileStorage(config);
+		const elasticSearch = new ElasticSearch(config);
+
+		await elasticSearch.createBookIndex();
+		await elasticSearch.createUserIndex();
+
+		return elasticSearch;
 	}
 
 	throw new Error(`Unsupported search type: ${config.SEARCH_TYPE}`);

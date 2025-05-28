@@ -16,14 +16,21 @@ export abstract class BaseRepository {
 
 	protected addOrder<T extends PgSelect>(
 		qb: T,
-		table: PgTable<any>,
+		tables: PgTable<any>[],
 		orderDirection?: MaybeEmptyValue<OrderDirection>,
 		orderField?: MaybeEmptyValue<string>,
 	): T {
 		if (!(orderDirection && orderField)) return qb;
 
-		const tableColumns = getTableColumns(table);
-		const column = tableColumns[orderField as keyof typeof tableColumns];
+		const tableColumnsPerTableArray = tables.map(getTableColumns);
+		let column: SQL<unknown> | undefined;
+
+		for (const tableColumns of tableColumnsPerTableArray) {
+			column = tableColumns[orderField as keyof typeof tableColumns];
+
+			if (column) break;
+		}
+
 		if (!column) return qb;
 
 		return qb.orderBy(ORDER_DIRECTION_MAP[orderDirection](column));

@@ -80,7 +80,7 @@ export class PgReadingTrackersRepository
 		this.addOffset(query, filter.offset);
 		this.addOrder(
 			query,
-			readingTrackers,
+			[readingTrackers],
 			filter.orderDirection,
 			filter.orderField,
 		);

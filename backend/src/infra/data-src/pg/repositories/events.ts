@@ -39,7 +39,7 @@ export class PgEventsRepository
 
 		this.addLimit(query, filter.limit);
 		this.addOffset(query, filter.offset);
-		this.addOrder(query, events, filter.orderDirection, filter.orderField);
+		this.addOrder(query, [events], filter.orderDirection, filter.orderField);
 
 		const result = await query.execute();
 

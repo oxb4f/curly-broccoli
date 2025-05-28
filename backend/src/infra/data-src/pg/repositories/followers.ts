@@ -68,7 +68,7 @@ export class PgFollowersRepository
 
 		this.addLimit(query, filter.limit);
 		this.addOffset(query, filter.offset);
-		this.addOrder(query, followers, filter.orderDirection, filter.orderField);
+		this.addOrder(query, [followers], filter.orderDirection, filter.orderField);
 
 		const followersResult = await query.execute();
 

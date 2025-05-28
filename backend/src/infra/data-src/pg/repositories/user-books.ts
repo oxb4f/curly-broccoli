@@ -1,6 +1,20 @@
-import { and, count, eq, sql } from "drizzle-orm";
+import {
+	type SQL,
+	and,
+	asc,
+	count,
+	eq,
+	gte,
+	inArray,
+	lte,
+	max,
+	min,
+	sql,
+} from "drizzle-orm";
+import type { Author, Genre } from "../../../../entities/book-profile";
 import type { UserBook } from "../../../../entities/userBook";
 import type {
+	FiltersDto,
 	GetUserBookFilter,
 	ListUserBookFilter,
 	UserBookUpdateData,
@@ -54,7 +68,7 @@ export class PgUserBooksRepository
 				isbn: result[0].book_profiles.isbn,
 			},
 			isRead: result[0].user_books.isRead,
-            userId: result[0].user_books.userId
+			userId: result[0].user_books.userId,
 		};
 	}
 
@@ -64,6 +78,8 @@ export class PgUserBooksRepository
 		let data: UserBooksListDto["data"] = [];
 
 		if (!total) return { data, total };
+
+		const filters = this.applyFilters(filter);
 
 		const query = this._connection
 			.select({
@@ -79,13 +95,21 @@ export class PgUserBooksRepository
 				}),
 			})
 			.from(userBooks)
-			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
-			.where(eq(userBooks.userId, filter.userId))
+			.innerJoin(bookProfiles, and(...filters.bookProfilesInnerJoinOn))
 			.$dynamic();
+
+		if (filters.where.length) {
+			query.where(and(...filters.where));
+		}
 
 		this.addLimit(query, filter.limit);
 		this.addOffset(query, filter.offset);
-		this.addOrder(query, userBooks, filter.orderDirection, filter.orderField);
+		this.addOrder(
+			query,
+			[userBooks, bookProfiles],
+			filter.orderDirection,
+			filter.orderField,
+		);
 
 		const result = await query.execute();
 
@@ -117,13 +141,71 @@ export class PgUserBooksRepository
 	}
 
 	private async getTotal(filter: ListUserBookFilter) {
-		const result = await this._connection
+		const query = this._connection
 			.select({ total: count() })
 			.from(userBooks)
-			.where(eq(userBooks.userId, filter.userId))
-			.execute();
+			.$dynamic();
+
+		const filters = this.applyFilters(filter);
+
+		if (filters.where.length) {
+			query.where(and(...filters.where));
+		}
+
+		if (filters.bookProfilesInnerJoinOn.length) {
+			query.innerJoin(bookProfiles, and(...filters.bookProfilesInnerJoinOn));
+		}
+
+		const result = await query.execute();
 
 		return result[0]?.total ?? 0;
+	}
+
+	private applyFilters(filter: ListUserBookFilter) {
+		const filters = {
+			where: [] as SQL[],
+			bookProfilesInnerJoinOn: [
+				eq(bookProfiles.id, userBooks.bookProfileId),
+			] as SQL<unknown>[],
+		};
+
+		if (typeof filter.isRead === "boolean") {
+			filters.where.push(eq(userBooks.isRead, filter.isRead));
+		}
+
+		if (typeof filter.isFavorite === "boolean") {
+			filters.where.push(eq(userBooks.isFavorite, filter.isFavorite));
+		}
+
+		if (filter.userId) {
+			filters.where.push(eq(userBooks.userId, filter.userId));
+		}
+
+		if (filter.genre?.length) {
+			filters.bookProfilesInnerJoinOn.push(
+				inArray(bookProfiles.genre, filter.genre as string[]),
+			);
+		}
+
+		if (filter.author?.length) {
+			filters.bookProfilesInnerJoinOn.push(
+				inArray(bookProfiles.author, filter.author),
+			);
+		}
+
+		if (filter.numberOfPagesMin) {
+			filters.bookProfilesInnerJoinOn.push(
+				gte(bookProfiles.numberOfPages, filter.numberOfPagesMin),
+			);
+		}
+
+		if (filter.numberOfPagesMax) {
+			filters.bookProfilesInnerJoinOn.push(
+				lte(bookProfiles.numberOfPages, filter.numberOfPagesMax),
+			);
+		}
+
+		return filters;
 	}
 
 	async create(userBook: UserBook) {
@@ -218,5 +300,67 @@ export class PgUserBooksRepository
 				.where(eq(bookProfiles.id, result[0].bookProfileId))
 				.execute();
 		}
+	}
+
+	async getFilters(filter: GetUserBookFilter): Promise<FiltersDto> {
+		if (!filter.userId) {
+			return {
+				genres: [],
+				authors: [],
+				numberOfPagesMin: 0,
+				numberOfPagesMax: 0,
+				total: 0,
+			};
+		}
+
+		const distinctGenres = await this._connection
+			.select({
+				genres: sql<
+					Genre[]
+				>`DISTINCT ON (book_profiles.genre) book_profiles.genre`,
+			})
+			.from(userBooks)
+			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
+			.where(eq(userBooks.userId, filter.userId))
+			.orderBy(asc(bookProfiles.genre))
+			.execute();
+
+		const distinctAuthors = await this._connection
+			.select({
+				authors: sql<
+					Author[]
+				>`DISTINCT ON (book_profiles.author) book_profiles.author`,
+			})
+			.from(userBooks)
+			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
+			.where(eq(userBooks.userId, filter.userId))
+			.orderBy(asc(bookProfiles.author))
+			.execute();
+
+		const numberOfPages = await this._connection
+			.select({
+				minNumberOfPages: min(bookProfiles.numberOfPages),
+				maxNumberOfPages: max(bookProfiles.numberOfPages),
+			})
+			.from(userBooks)
+			.innerJoin(bookProfiles, eq(userBooks.bookProfileId, bookProfiles.id))
+			.where(eq(userBooks.userId, filter.userId))
+			.execute();
+
+		const total = await this._connection
+			.select({
+				total: count(),
+			})
+			.from(userBooks)
+			.where(eq(userBooks.userId, filter.userId))
+			.execute();
+
+		return {
+			genres: distinctGenres.flatMap((row) => row.genres),
+			authors: distinctAuthors.flatMap((row) => row.authors),
+			numberOfPagesMin: numberOfPages[0]?.minNumberOfPages ?? 0,
+			numberOfPagesMax: numberOfPages[0]?.maxNumberOfPages ?? 0,
+			total: total[0]?.total ?? 0,
+		};
 	}
 }

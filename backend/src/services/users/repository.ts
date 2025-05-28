@@ -37,6 +37,9 @@ export interface GetUserDto {
 	access: Access;
 	followed?: boolean | null;
 	followersId?: number | null;
+	numberOfReadBooks: number;
+	numberOfFollowing: number;
+	numberOfFollowers: number;
 }
 
 export type UserUpdateData = {
@@ -55,7 +58,7 @@ export type UserUpdateData = {
 };
 
 export type ListUserFilter = {
-    id?: Id[];
+	id?: Id[];
 	followedByUserId?: Id;
 	notId?: Id;
 	limit?: number;

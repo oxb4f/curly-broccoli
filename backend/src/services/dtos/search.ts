@@ -35,14 +35,14 @@ export interface BookSearchQuery extends SearchQuery {
 	author?: string;
 	description?: string;
 	genre?: string;
-    size?: number;
+	size?: number;
 }
 
 export interface UserSearchQuery extends SearchQuery {
 	firstName?: string;
 	lastName?: string;
 	username?: string;
-    size?: number;
+	size?: number;
 }
 
 export interface BookIndexData {

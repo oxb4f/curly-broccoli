@@ -12,7 +12,7 @@ import { PgUsersRepository } from "../../infra/data-src/pg/repositories/users";
 import { DbEventDispatcher } from "../../infra/event-dispatcher/dispatcher";
 import { createStorage } from "../../infra/file-storage/factory";
 import { defaultServiceLogger } from "../../infra/logger";
-import { ElasticSearch } from "../../infra/search/elastic/search";
+import { createSearch } from "../../infra/search/factory";
 import type { Context } from "../../services/context";
 import { configPlugin } from "./config";
 
@@ -31,11 +31,6 @@ export const contextPlugin = new Elysia({ name: "contextPlugin" })
 
 		const dbConnection = await getConnection(dbCredentials);
 
-		const elasticSearch = new ElasticSearch(config);
-
-		await elasticSearch.createBookIndex();
-		await elasticSearch.createUserIndex();
-
 		return {
 			context: {
 				config,
@@ -52,7 +47,7 @@ export const contextPlugin = new Elysia({ name: "contextPlugin" })
 				fileStorage: createStorage(),
 				eventDispatcher: new DbEventDispatcher(dbConnection),
 				logger: defaultServiceLogger,
-				search: elasticSearch,
+				search: await createSearch(),
 			} satisfies Context,
 		};
 	});

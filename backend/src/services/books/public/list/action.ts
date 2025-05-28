@@ -9,23 +9,23 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 
 	assert(getUserDto, "User not found");
 
-    let booksIdsBySearchTerm: number[] = [];
+	let booksIdsBySearchTerm: number[] = [];
 
-    if (dto.searchTerm) {
-        const books = await context.search.searchBooks({
-            term: dto.searchTerm,
-            size: dto.limit ?? 10,
-        });
+	if (dto.searchTerm) {
+		const books = await context.search.searchBooks({
+			term: dto.searchTerm,
+			size: dto.limit ?? 10,
+		});
 
-        booksIdsBySearchTerm = books.items.map((book) => Number(book.id));
-    }
+		booksIdsBySearchTerm = books.items.map((book) => Number(book.id));
+	}
 
 	const { data, total } = await context.booksRepository.list({
-        ...(booksIdsBySearchTerm.length ? { id: booksIdsBySearchTerm } : {}),
-        genre: dto.genre as string[],
-        author: dto.author as string[],
-        numberOfPagesMin: dto.numberOfPagesMin,
-        numberOfPagesMax: dto.numberOfPagesMax,
+		...(booksIdsBySearchTerm.length ? { id: booksIdsBySearchTerm } : {}),
+		genre: dto.genre as string[],
+		author: dto.author as string[],
+		numberOfPagesMin: dto.numberOfPagesMin,
+		numberOfPagesMax: dto.numberOfPagesMax,
 		isAddedByUserId: getUserDto.id,
 		limit: dto.limit,
 		offset: dto.offset,

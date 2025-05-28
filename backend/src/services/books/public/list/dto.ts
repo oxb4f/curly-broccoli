@@ -1,13 +1,13 @@
 import { z } from "zod";
 import {
 	url,
+	getEnumValues,
 	id,
 	limit,
 	offset,
 	orderDirection,
 	orderField,
-    searchTerm,
-    getEnumValues,
+	searchTerm,
 } from "../../../common/validation/schema";
 import {
 	type DtoShape,
@@ -30,22 +30,22 @@ const orderFieldValues = [...getEnumValues(orderField), "numberOfPages"];
 
 export const ListDtoIn = createInputDto(
 	z.object({
-		genre: z.preprocess(
-			(val) => {
+		genre: z
+			.preprocess((val) => {
 				if (val === undefined || val === null) return [];
 				return Array.isArray(val) ? val : [val];
-			},
-			z.array(genre),
-		).optional().default([]),
-		author: z.preprocess(
-			(val) => {
+			}, z.array(genre))
+			.optional()
+			.default([]),
+		author: z
+			.preprocess((val) => {
 				if (val === undefined || val === null) return [];
 				return Array.isArray(val) ? val : [val];
-			},
-			z.array(author),
-		).optional().default([]),
-        numberOfPagesMin: numberOfPages.optional(),
-        numberOfPagesMax: numberOfPages.optional(),
+			}, z.array(author))
+			.optional()
+			.default([]),
+		numberOfPagesMin: numberOfPages.optional(),
+		numberOfPagesMax: numberOfPages.optional(),
 		searchTerm: searchTerm.optional(),
 		accessId: id,
 		limit: limit.optional().nullable().default(10),

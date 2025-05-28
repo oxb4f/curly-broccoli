@@ -2,15 +2,15 @@ import assert from "node:assert/strict";
 import Elysia, { type InferContext } from "elysia";
 import createBookService from "../../services/books/create/action";
 import deleteUserBookService from "../../services/books/private/delete/action";
+import getPrivateFiltersService from "../../services/books/private/filters/action";
 import getUserBookService from "../../services/books/private/get/action";
 import listUserBooksService from "../../services/books/private/list/action";
 import updateUserBookService from "../../services/books/private/update/action";
 import addBookService from "../../services/books/public/add/action";
+import getFiltersService from "../../services/books/public/filters/action";
 import getBookService from "../../services/books/public/get/action";
 import listBooksService from "../../services/books/public/list/action";
 import quickSearchBookService from "../../services/books/public/search/quick/action";
-import getFiltersService from "../../services/books/public/filters/action";
-import getPrivateFiltersService from "../../services/books/private/filters/action";
 import { createJwtAuthGuard } from "../guards/jwt-auth";
 import { contextPlugin } from "../plugins/context";
 import { ensureRequestContext } from "../utils/ensure-request-context";
@@ -27,33 +27,29 @@ export const booksRoute = new Elysia({ name: "booksRoute" })
 	.decorate("deleteUserBookService", deleteUserBookService)
 	.decorate("addBookService", addBookService)
 	.decorate("quickSearchBookService", quickSearchBookService)
-    .decorate("getFiltersService", getFiltersService)
-    .decorate("getPrivateFiltersService", getPrivateFiltersService)
+	.decorate("getFiltersService", getFiltersService)
+	.decorate("getPrivateFiltersService", getPrivateFiltersService)
 	.group("/books", (app) =>
 		app.guard((app) => {
-            app.get(
-                "/filters",
-                ...ensureRequestContext<InferContext<typeof app>, any>(
-                    async (ctx) => {
-                        return ctx.getFiltersService({
-                            context: ctx.context,
-                        });
-                    },
-                ),
-            );
+			app.get(
+				"/filters",
+				...ensureRequestContext<InferContext<typeof app>, any>(async (ctx) => {
+					return ctx.getFiltersService({
+						context: ctx.context,
+					});
+				}),
+			);
 
 			app.get(
 				"/quick-search",
-				...ensureRequestContext<InferContext<typeof app>, any>(
-					async (ctx) => {
-						return ctx.quickSearchBookService({
-							dto: {
-								...prepareServiceHandlerPayload(ctx),
-							},
-							context: ctx.context,
-						});
-					},
-				),
+				...ensureRequestContext<InferContext<typeof app>, any>(async (ctx) => {
+					return ctx.quickSearchBookService({
+						dto: {
+							...prepareServiceHandlerPayload(ctx),
+						},
+						context: ctx.context,
+					});
+				}),
 			);
 
 			const appWithJwtGuard = app.use(createJwtAuthGuard());

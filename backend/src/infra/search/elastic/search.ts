@@ -39,7 +39,6 @@ export class ElasticSearch implements Search {
 
 	constructor(private readonly _config: Config) {
 		this._client = new Client({
-
 			node: this._config.ELASTICSEARCH_URL,
 			Connection: HttpConnection,
 			auth: {
@@ -221,8 +220,8 @@ export class ElasticSearch implements Search {
 		const searchBody: any = {
 			query: {
 				bool: {
-					should: []
-				}
+					should: [],
+				},
 			},
 			size: query.size ? query.size : 5,
 			sort: ["_score", { createdAt: "desc" }],
@@ -245,7 +244,7 @@ export class ElasticSearch implements Search {
 					operator: "or",
 					tie_breaker: 0.3,
 					fuzziness: "AUTO",
-				}
+				},
 			});
 		}
 

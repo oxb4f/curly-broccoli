@@ -15,14 +15,17 @@ export type ServiceAction<
 function createServiceProxy<
 	InputType extends Record<string, any>,
 	OutputType extends Record<string, any>,
->(action: ServiceAction<InputType, OutputType>, dtoIn: InputDto<InputType>) {
+>(action: ServiceAction<InputType, OutputType>, dtoIn?: InputDto<InputType>) {
 	return new Proxy(action, {
 		async apply(
 			target: ServiceAction<InputType, OutputType>,
 			thisArg: unknown,
 			[arg]: [{ dto: InputType; context: Context }],
 		) {
-			arg.dto = await dtoIn.create(arg.dto);
+			if (arg.dto && dtoIn) {
+				arg.dto = await dtoIn.create(arg.dto);
+			}
+
 			return target.call(thisArg, arg);
 		},
 	});
@@ -31,6 +34,6 @@ function createServiceProxy<
 export function makeService<
 	InputType extends Record<string, any>,
 	OutputType extends Record<string, any>,
->(action: ServiceAction<InputType, OutputType>, dtoIn: InputDto<InputType>) {
+>(action: ServiceAction<InputType, OutputType>, dtoIn?: InputDto<InputType>) {
 	return createServiceProxy(action, dtoIn);
 }

@@ -39,5 +39,8 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		imageUrl: getUserDto.imageUrl,
 		followed: getUserDto.followed ?? null,
 		followersId: getUserDto.followersId ?? null,
+		numberOfReadBooks: getUserDto.numberOfReadBooks,
+		numberOfFollowing: getUserDto.numberOfFollowing,
+		numberOfFollowers: getUserDto.numberOfFollowers,
 	});
 }, GetUserDtoIn);

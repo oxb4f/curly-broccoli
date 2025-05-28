@@ -13,9 +13,11 @@ import { readingTrackersRoute } from "./routes/readingTrackers";
 import { usersRoute } from "./routes/users";
 
 export const app = new Elysia()
-    .onTransform((ctx) => {
-        ctx.query = queryString.parse(new URL(ctx.request.url).search.slice(1)) as Record<string, string | string[] | undefined>;
-    })
+	.onTransform((ctx) => {
+		ctx.query = queryString.parse(
+			new URL(ctx.request.url).search.slice(1),
+		) as Record<string, string | string[] | undefined>;
+	})
 	.onError(({ error, set }) => {
 		return onError(error as Error, set);
 	})

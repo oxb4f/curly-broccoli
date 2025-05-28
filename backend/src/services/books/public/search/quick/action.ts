@@ -1,9 +1,9 @@
 import { makeService } from "../../../../make-service";
 import {
-	QuickSearchDtoIn,
-	QuickSearchDtoOut,
 	type InShape,
 	type OutShape,
+	QuickSearchDtoIn,
+	QuickSearchDtoOut,
 } from "./dto";
 
 export default makeService<InShape, OutShape>(async ({ dto, context }) => {

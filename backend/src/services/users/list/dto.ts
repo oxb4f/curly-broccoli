@@ -7,8 +7,8 @@ import {
 	offset,
 	orderDirection,
 	orderField,
+	searchTerm,
 	username,
-    searchTerm,
 } from "../../common/validation/schema";
 import {
 	type DtoShape,

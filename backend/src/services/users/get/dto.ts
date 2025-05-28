@@ -28,5 +28,8 @@ export const GetUserDtoOut = createOutputDto(
 		imageUrl: url.nullable(),
 		followed: z.boolean().nullable(),
 		followersId: z.number().nullable(),
+		numberOfReadBooks: z.number(),
+		numberOfFollowing: z.number(),
+		numberOfFollowers: z.number(),
 	}),
 );

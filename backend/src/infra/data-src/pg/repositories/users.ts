@@ -1,4 +1,4 @@
-import { and, count, eq, inArray, not, sql } from "drizzle-orm";
+import { and, count, eq, inArray, not, or, sql } from "drizzle-orm";
 import { Access, type AccessHashedPayload } from "../../../../entities/access";
 import type { Social, User } from "../../../../entities/user";
 import type {
@@ -10,7 +10,7 @@ import type {
 	UserUpdateData,
 	UsersRepository,
 } from "../../../../services/users/repository";
-import { accesses, followers, users } from "../schema";
+import { accesses, followers, userBooks, users } from "../schema";
 import { BaseRepository } from "./base";
 
 export type SelectUser = typeof users.$inferSelect;
@@ -49,17 +49,17 @@ export class PgUsersRepository
 
 		this.addLimit(query, filter.limit);
 		this.addOffset(query, filter.offset);
-		this.addOrder(query, users, filter.orderDirection, filter.orderField);
+		this.addOrder(query, [users], filter.orderDirection, filter.orderField);
 
-        const where = [];
+		const where = [];
 
 		if (filter.notId) {
-            where.push(not(eq(users.id, filter.notId)));
+			where.push(not(eq(users.id, filter.notId)));
 		}
 
-        if (filter.id?.length) {
-            where.push(inArray(users.id, filter.id));
-        }
+		if (filter.id?.length) {
+			where.push(inArray(users.id, filter.id));
+		}
 
 		const result = await query.where(and(...where)).execute();
 
@@ -189,20 +189,53 @@ export class PgUsersRepository
 		if (!record?.users?.id) return null;
 
 		let followersId: number | null = null;
+		let numberOfReadBooks = 0;
+		let numberOfFollowing = 0;
+		let numberOfFollowers = 0;
 
-		if (filter.followedByUserId && filter.id) {
-			const followersResult = await this._connection
-				.select({ id: followers.id })
+		if (filter.id) {
+			const followersWithFollowings = await this._connection
+				.select({
+					id: followers.id,
+					userId: followers.userId,
+					followerId: followers.followerId,
+				})
 				.from(followers)
 				.where(
-					and(
-						eq(followers.followerId, filter.followedByUserId),
+					or(
+						eq(followers.followerId, filter.id),
 						eq(followers.userId, filter.id),
 					),
 				)
 				.execute();
 
-			followersId = followersResult?.[0]?.id ?? null;
+			if (filter.followedByUserId) {
+				followersId =
+					followersWithFollowings.find(
+						(follower) =>
+							follower.userId === filter.id &&
+							follower.followerId === filter.followedByUserId,
+					)?.id ?? null;
+			}
+
+			numberOfFollowers = followersWithFollowings.filter(
+				(follower) => follower.userId === filter.id,
+			).length;
+
+			numberOfFollowing = followersWithFollowings.filter(
+				(follower) => follower.followerId === filter.id,
+			).length;
+
+			numberOfReadBooks =
+				(
+					await this._connection
+						.select({ value: count() })
+						.from(userBooks)
+						.where(
+							and(eq(userBooks.userId, filter.id), eq(userBooks.isRead, true)),
+						)
+						.execute()
+				)[0]?.value ?? 0;
 		}
 
 		return {
@@ -212,6 +245,9 @@ export class PgUsersRepository
 			access: await Access.fromHashed(record.accesses as AccessHashedPayload),
 			followed: Number.isInteger(followersId),
 			followersId,
+			numberOfReadBooks,
+			numberOfFollowing,
+			numberOfFollowers,
 		};
 	}
 

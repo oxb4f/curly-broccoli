@@ -28,11 +28,11 @@ export type GetBookFilter = {
 };
 
 export type ListBookFilter = {
-    id?: Id[];
-    genre?: Genre[];
-    author?: Author[];
-    numberOfPagesMin?: number;
-    numberOfPagesMax?: number;
+	id?: Id[];
+	genre?: Genre[];
+	author?: Author[];
+	numberOfPagesMin?: number;
+	numberOfPagesMax?: number;
 	isAddedByUserId?: Id;
 	limit?: number | null;
 	offset?: number | null;
@@ -47,12 +47,12 @@ export type ListUserBookFilter = {
 	orderField?: string | null;
 	userId: Id;
 	checkIsReadingTrackerStarted?: boolean;
-    genre?: Genre[];
-    author?: Author[];
-    numberOfPagesMin?: number;
-    numberOfPagesMax?: number;
-    isRead?: boolean;
-    isFavorite?: boolean;
+	genre?: Genre[];
+	author?: Author[];
+	numberOfPagesMin?: number;
+	numberOfPagesMax?: number;
+	isRead?: boolean;
+	isFavorite?: boolean;
 };
 
 export type GetBookDto = {
@@ -92,11 +92,11 @@ export type BooksListDto = {
 export type BookUpdateData = { isPublic?: boolean };
 
 export type FiltersDto = {
-    genres: Genre[];
-    authors: Author[];
-    numberOfPagesMin: number;
-    numberOfPagesMax: number;
-    total: number;
+	genres: Genre[];
+	authors: Author[];
+	numberOfPagesMin: number;
+	numberOfPagesMax: number;
+	total: number;
 };
 
 export interface BooksRepository
@@ -114,7 +114,7 @@ export interface BooksRepository
 	list(filter: ListBookFilter): Promise<BooksListDto>;
 	get(filter: GetBookFilter): Promise<GetBookDto | null>;
 	update(filter: GetBookFilter, book: BookUpdateData): Promise<void>;
-    getFilters(): Promise<FiltersDto>;
+	getFilters(): Promise<FiltersDto>;
 }
 
 export interface UserBooksListDto {
@@ -134,7 +134,7 @@ export interface UserBooksListDto {
 		};
 		isRead: IsRead;
 		isReadingTrackerStarted: boolean;
-        userId: Id
+		userId: Id;
 	}[];
 	total: number;
 }
@@ -161,7 +161,7 @@ export type GetUserBookDto = {
 		isbn: Isbn;
 	};
 	isRead: IsRead;
-    userId: Id
+	userId: Id;
 };
 
 export type UserBookUpdateData = {
@@ -200,5 +200,5 @@ export interface UserBooksRepository
 		userBook: UserBookUpdateData,
 	): Promise<void>;
 	delete(filter: GetUserBookFilter): Promise<void>;
-    getFilters(filter: GetUserBookFilter): Promise<FiltersDto>;
+	getFilters(filter: GetUserBookFilter): Promise<FiltersDto>;
 }

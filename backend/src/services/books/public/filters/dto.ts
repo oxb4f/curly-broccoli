@@ -1,13 +1,6 @@
 import { z } from "zod";
-import {
-	type DtoShape,
-	createOutputDto,
-} from "../../../dtos/factory";
-import {
-	author,
-	genre,
-	numberOfPages,
-} from "../../common/validation/schema";
+import { type DtoShape, createOutputDto } from "../../../dtos/factory";
+import { author, genre, numberOfPages } from "../../common/validation/schema";
 
 export type OutShape = DtoShape<typeof FiltersDtoOut>;
 

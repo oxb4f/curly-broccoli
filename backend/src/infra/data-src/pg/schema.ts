@@ -57,16 +57,25 @@ export const books = pgTable("books", {
 	isPublic: boolean("is_public").notNull().default(false),
 });
 
-export const bookProfiles = pgTable("book_profiles", {
-	...base,
-	title: varchar("title", { length: 255 }).notNull(),
-	description: text("description"),
-	author: varchar("author", { length: 255 }).notNull(),
-	genre: varchar("genre", { length: 255 }),
-	numberOfPages: integer("number_of_pages").notNull(),
-	isbn: varchar("isbn", { length: 255 }),
-	imageUrl: varchar("image_url", { length: 255 }),
-});
+export const bookProfiles = pgTable(
+	"book_profiles",
+	{
+		...base,
+		title: varchar("title", { length: 255 }).notNull(),
+		description: text("description"),
+		author: varchar("author", { length: 255 }).notNull(),
+		genre: varchar("genre", { length: 255 }),
+		numberOfPages: integer("number_of_pages").notNull(),
+		isbn: varchar("isbn", { length: 255 }),
+		imageUrl: varchar("image_url", { length: 255 }),
+	},
+	(bookProfiles) => [
+		index("genre_idx").on(bookProfiles.genre),
+		index("author_idx").on(bookProfiles.author),
+		index("author_genre_idx").on(bookProfiles.author, bookProfiles.genre),
+		index("isbn_idx").on(bookProfiles.isbn),
+	],
+);
 
 export const userBooks = pgTable(
 	"user_books",
