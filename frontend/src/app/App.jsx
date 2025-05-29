@@ -52,7 +52,7 @@ function App() {
                 <Route
                   path={`${ROUTES.MAIN.BOOK.PRIVATE.ROOT}/:bookId`}
                   element={
-                    <BookProvider queryKey={QUERY_KEYS.BOOKS.PRIVATE}>
+                    <BookProvider queryKey={QUERY_KEYS.BOOKS.PRIVATE.BOOK}>
                       <Outlet />
                     </BookProvider>
                   }
@@ -64,7 +64,7 @@ function App() {
                 <Route
                   path={`${ROUTES.MAIN.BOOK.PUBLIC.ROOT}/:bookId`}
                   element={
-                    <BookProvider queryKey={QUERY_KEYS.BOOKS.PUBLIC}>
+                    <BookProvider queryKey={QUERY_KEYS.BOOKS.PUBLIC.BOOK} isPublic>
                       <Outlet />
                     </BookProvider>
                   }

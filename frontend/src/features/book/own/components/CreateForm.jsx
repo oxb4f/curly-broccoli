@@ -29,7 +29,7 @@ const BookCreateForm = ({ className = '' }) => {
           label: 'Title',
           queryOptions: {
             select: (data) => data.books,
-            queryKey: QUERY_KEYS.BOOKS.PUBLIC,
+            queryKey: QUERY_KEYS.BOOKS.PUBLIC.LIST,
             queryFn: (value) => quickSearchPublicBooks({ term: value })
           },
           children: (books) => (

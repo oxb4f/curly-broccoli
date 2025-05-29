@@ -2,8 +2,6 @@ import { mergeCn } from '@shared/utils';
 import { XCircleIcon } from '@heroicons/react/24/outline';
 
 const Filter = ({ filter, onChange, value = [], variant = 'default', className = '' }) => {
-  console.log(value);
-
   return variant === 'default' ? (
     <fieldset
       className={mergeCn(

@@ -1,6 +1,6 @@
 const BookReadingRecordsList = ({ list }) => {
   return (
-    <ul className="relative pl-6 before:absolute before:left-1 before:top-1 before:block before:w-1 before:h-full before:bg-pr-main before:translate-x-1/2">
+    <ul className="relative h-fit pl-6 before:absolute before:left-1 before:top-1 before:block before:w-1 before:h-full before:bg-pr-main before:translate-x-1/2">
       {list.map((tracker, index) => (
         <li
           key={tracker.id}

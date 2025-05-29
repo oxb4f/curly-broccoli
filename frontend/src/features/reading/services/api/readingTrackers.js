@@ -48,15 +48,18 @@ const finishTracker = async (id, bookId) => {
 // FIXME: move to api
 const pauseTrackerInBackground = async (id, bookId) => {
   const user = getUserFromStorage();
-  const response = await fetch(`http://localhost/api/books/${bookId}/readingTrackers/${id}/pause`, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${user.jwt.access}`
-    },
-    credentials: 'include',
-    keepalive: true
-  });
+
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/books/${bookId}/readingTrackers/${id}/pause`,
+    {
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${user.jwt.access}`
+      },
+      credentials: 'include',
+      keepalive: true
+    }
+  );
 
   if (response.ok) {
     let json = await response.json();

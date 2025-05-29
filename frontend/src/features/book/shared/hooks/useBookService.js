@@ -38,18 +38,37 @@ const useBookService = () => {
 
       return response;
     },
-    onSuccess: (bookData) => {
-      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE, bookData.id], () => ({
-        ...bookData,
-        userId: user.id
-      }));
+    onSuccess: (bookData, variables) => {
+      console.log(variables);
 
-      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE, user.id], (oldBookData) => {
-        if (!oldBookData?.pages) return;
+      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE.BOOK, bookData.id], (oldBookData) => {
+        if (!oldBookData) return;
 
         return {
-          ...oldBookData,
-          pages: oldBookData.pages.map((page) => ({
+          ...bookData,
+          userId: user.id
+        };
+      });
+
+      queryClient.setQueryData(QUERY_KEYS.USERS.OWN, (oldUserData) => {
+        if (!oldUserData || !Object.keys(variables.inputData).includes('isRead')) return;
+        console.log(oldUserData, bookData);
+
+        return {
+          ...oldUserData,
+          stats: {
+            ...oldUserData.stats,
+            readBooksCount: oldUserData.stats.readBooksCount + (bookData.stats.isRead ? 1 : -1)
+          }
+        };
+      });
+
+      queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE.LIST, user.id], (oldBookList) => {
+        if (!oldBookList?.pages) return;
+
+        return {
+          ...oldBookList,
+          pages: oldBookList.pages.map((page) => ({
             ...page,
             books: page.books.map((book) => (book.id === bookData.id ? bookData : book))
           }))
@@ -61,7 +80,10 @@ const useBookService = () => {
   const { mutateAsync: remove } = useNavigatedMutation({
     mutationFn: bookApi.removeBook,
     onSuccess: () => {
-      queryClient.invalidateQueries([...QUERY_KEYS.BOOKS.PRIVATE, user.id]);
+      queryClient.invalidateQueries({
+        queryKey: [...QUERY_KEYS.BOOKS.PRIVATE.LIST, user.id],
+        exact: true
+      });
     }
   });
 
@@ -69,7 +91,10 @@ const useBookService = () => {
     mutationFn: bookApi.addBook,
     onSuccess: (newBookData, publicBookId) => {
       console.log(newBookData);
-      queryClient.invalidateQueries([...QUERY_KEYS.BOOKS.PUBLIC, publicBookId]);
+      queryClient.invalidateQueries({
+        queryKey: [...QUERY_KEYS.BOOKS.PUBLIC.BOOK, publicBookId],
+        exact: true
+      });
       // queryClient.setQueryData([...QUERY_KEYS.BOOKS.PUBLIC, publicBookId], (oldBookData) => {
       //   console.log(oldBookData);
       //   console.log(bookData);

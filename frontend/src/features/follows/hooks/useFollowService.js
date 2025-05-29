@@ -9,56 +9,46 @@ const useFollowService = (user) => {
   const { mutateAsync: follow, isPending: isFollowPending } = useNavigatedMutation({
     mutationFn: () => followsApi.followUser(user.id),
     onSuccess: (data) => {
-      queryClient.setQueryData(
-        [...QUERY_KEYS.USERS.OWN, ...QUERY_KEYS.FOLLOWS.COUNT],
-        ({ followingCount, ...rest }) => ({
-          ...rest,
-          followingCount: followingCount + 1
-        })
-      );
+      console.log(data);
 
-      queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], (oldFollowers) => ({
-        ...oldFollowers,
-        ...data
+      queryClient.setQueryData(QUERY_KEYS.USERS.OWN, ({ stats, ...rest }) => ({
+        ...rest,
+        stats: {
+          ...stats,
+          followingCount: stats.followingCount + 1
+        }
       }));
 
-      queryClient.setQueryData(
-        [...QUERY_KEYS.USERS.OTHERS, user.id, ...QUERY_KEYS.FOLLOWS.COUNT],
-        ({ followersCount, ...rest }) => {
-          return {
-            ...rest,
-            followersCount: followersCount + 1
-          };
+      queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], ({ stats, ...rest }) => ({
+        ...rest,
+        ...data,
+        stats: {
+          ...stats,
+          followersCount: stats.followersCount + 1
         }
-      );
+      }));
     }
   });
 
   const { mutateAsync: unfollow, isPending: isUnfollowPending } = useNavigatedMutation({
     mutationFn: () => followsApi.unfollowUser(user.followersId),
     onSuccess: (data) => {
-      queryClient.setQueryData(
-        [...QUERY_KEYS.USERS.OWN, ...QUERY_KEYS.FOLLOWS.COUNT],
-        ({ followingCount, ...rest }) => ({
-          ...rest,
-          followingCount: followingCount - 1
-        })
-      );
-
-      queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], (oldFollowers) => ({
-        ...oldFollowers,
-        ...data
+      queryClient.setQueryData(QUERY_KEYS.USERS.OWN, ({ stats, ...rest }) => ({
+        ...rest,
+        stats: {
+          ...stats,
+          followingCount: stats.followingCount - 1
+        }
       }));
 
-      queryClient.setQueryData(
-        [...QUERY_KEYS.USERS.OTHERS, user.id, ...QUERY_KEYS.FOLLOWS.COUNT],
-        ({ followersCount, ...rest }) => {
-          return {
-            ...rest,
-            followersCount: followersCount - 1
-          };
+      queryClient.setQueryData([...QUERY_KEYS.USERS.OTHERS, user.id], ({ stats, ...rest }) => ({
+        ...rest,
+        ...data,
+        stats: {
+          ...stats,
+          followersCount: stats.followersCount - 1
         }
-      );
+      }));
     }
   });
 

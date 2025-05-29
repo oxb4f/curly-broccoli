@@ -34,7 +34,7 @@ const OthersBooksPage = () => {
         sortCategories={sortCategories}
         searchQueryOptions={{
           queryFn: (value) => quickSearchPublicBooks({ term: value }),
-          queryKey: QUERY_KEYS.BOOKS.PUBLIC,
+          queryKey: QUERY_KEYS.BOOKS.PUBLIC.LIST,
           select: (data) => data.books
         }}
         renderSearchResults={(books) => (

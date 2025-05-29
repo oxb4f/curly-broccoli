@@ -34,20 +34,24 @@ const InfiniteQuery = ({
   const lastElementRef = useIntersectionObserver({ deps: [hasNextPage], onEnter: fetchNextPage });
 
   return (
-    <div className={`relative size-full ${className}`}>
-      {!data ? null : typeof children === 'function' ? (
-        children(data)
-      ) : !data?.length && !isLoading ? (
+    <div
+      className={`size-full grid grid-rows-[1fr_auto] ${
+        isLoading ? 'grid-rows-[0fr_1fr]' : ''
+      } ${className}`}
+    >
+      {data && !data?.length && !isLoading ? (
         <div className="size-full flex justify-center items-center description text-center">
           {placeholder}
         </div>
+      ) : !data ? null : typeof children === 'function' ? (
+        children(data)
       ) : (
         children
       )}
       <div
         ref={lastElementRef}
         className={`w-full h-auto flex justify-center items-center bg-transparent ${
-          isLoading ? 'absolute inset-0' : isFetchingNextPage ? 'py-4' : ''
+          isFetchingNextPage ? 'py-4' : ''
         }`}
       >
         {(isLoading || isFetchingNextPage) && (

@@ -88,6 +88,8 @@ const editBook = async (id, inputData) => {
 };
 
 const removeBook = async (id) => {
+  console.log(id);
+
   await api.delete(`books/private/${id}`);
 };
 

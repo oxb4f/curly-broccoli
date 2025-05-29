@@ -25,8 +25,10 @@ const BookInfiniteQueryWrapper = ({
     : (offset) => getPublicBooks({ offset, searchTerm, ...sortParams });
 
   const queryKeys = userId
-    ? [...QUERY_KEYS.BOOKS.PRIVATE, Number(userId)]
-    : QUERY_KEYS.BOOKS.PUBLIC;
+    ? [...QUERY_KEYS.BOOKS.PRIVATE.LIST, Number(userId)]
+    : [...QUERY_KEYS.BOOKS.PUBLIC.LIST, ...Object.values(sortParams), searchTerm];
+
+  console.log(queryKeys);
 
   const transformData = (data) => data.books;
 
@@ -35,7 +37,7 @@ const BookInfiniteQueryWrapper = ({
   return (
     <InfiniteQuery
       callback={queryFn}
-      keys={[queryKeys, ...Object.values(sortParams), searchTerm]}
+      keys={queryKeys}
       dataTransformer={transformData}
       options={queryOptions}
       placeholder="No books found"

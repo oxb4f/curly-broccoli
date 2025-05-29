@@ -33,8 +33,6 @@ const useIntersectionObserver = ({
 
       observer.current = new IntersectionObserver(
         (entries) => {
-          console.log(entries[0].intersectionRatio);
-
           if (entries[0].intersectionRatio < 1 && onStick) onStick();
           if (entries[0].isIntersecting && onEnter) onEnter();
           if (!entries[0].isIntersecting && onLeave) onLeave();

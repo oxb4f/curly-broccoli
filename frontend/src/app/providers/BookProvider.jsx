@@ -2,17 +2,15 @@ import { createContext, useContext } from 'react';
 import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { getPrivateBook, getPublicBook } from '@book/shared/services/api/book';
-import QUERY_KEYS from '@app/query/constants/queryKeys';
 import { useSession } from './SessionProvider';
 
 const BookContext = createContext(null);
 
-export const BookProvider = ({ queryKey, children }) => {
+export const BookProvider = ({ queryKey, isPublic, children }) => {
   const { bookId: id } = useParams();
-
-  const isPublic = queryKey === QUERY_KEYS.BOOKS.PUBLIC;
-  console.log([...queryKey, Number(id)]);
   const { user: sessionUser, isPending: isSessionUserPending } = useSession();
+
+  console.log([...queryKey, Number(id)]);
 
   const {
     data: book,

@@ -65,7 +65,7 @@ const useReadingTrackersService = (bookId) => {
   });
 
   const { mutate: pauseInBackground } = useNavigatedMutation({
-    mutationFn: async (id) => await readingTrackersApi.pauseTrackerInBackground(id, bookId),
+    mutationFn: (id) => readingTrackersApi.pauseTrackerInBackground(id, bookId),
     onSuccess: (newTrackerData) => {
       console.log(newTrackerData);
       // queryClient.invalidateQueries([...QUERY_KEYS.READING_TRACKERS.ALL, bookId]);

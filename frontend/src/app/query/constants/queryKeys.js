@@ -13,8 +13,16 @@ const QUERY_KEYS = {
   },
   BOOKS: {
     ALL: [BOOKS_ALL],
-    PRIVATE: [BOOKS_ALL, 'private'],
-    PUBLIC: [BOOKS_ALL, 'public']
+    PRIVATE: {
+      ALL: [BOOKS_ALL, 'private'],
+      LIST: [BOOKS_ALL, 'private', 'list'],
+      BOOK: [BOOKS_ALL, 'private', 'book']
+    },
+    PUBLIC: {
+      ALL: [BOOKS_ALL, 'public'],
+      LIST: [BOOKS_ALL, 'public', 'list'],
+      BOOK: [BOOKS_ALL, 'public', 'book']
+    }
   },
   EVENTS: {
     ALL: [EVENTS_ALL]
@@ -22,8 +30,7 @@ const QUERY_KEYS = {
   FOLLOWS: {
     ALL: [FOLLOWS_ALL],
     FOLLOWERS: [FOLLOWS_ALL, 'followers'],
-    FOLLOWING: [FOLLOWS_ALL, 'following'],
-    COUNT: [FOLLOWS_ALL, 'count']
+    FOLLOWING: [FOLLOWS_ALL, 'following']
   },
   SEARCH: {
     ALL: [SEARCH_ALL]

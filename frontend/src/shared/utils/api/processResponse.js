@@ -24,10 +24,26 @@ const processResponse = (responseData, apiEndpoint) => {
         };
       };
 
-      const { firstName, lastName, birthday, ...rest } = responseData;
+      const {
+        firstName,
+        lastName,
+        birthday,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfReadBooks,
+        ...rest
+      } = responseData;
       const formatedBirthday = birthday?.split('T')?.[0] ?? null;
       const personalInfo = getPersonalInfo({ firstName, lastName, birthday: formatedBirthday });
-      const clearedData = clearEmptyFields({ ...rest, personalInfo });
+      const clearedData = clearEmptyFields({
+        ...rest,
+        personalInfo,
+        stats: {
+          followersCount: numberOfFollowers,
+          followingCount: numberOfFollowing,
+          readBooksCount: numberOfReadBooks
+        }
+      });
 
       return clearedData;
     }

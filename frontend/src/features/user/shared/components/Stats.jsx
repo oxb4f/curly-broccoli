@@ -10,7 +10,11 @@ const UserStats = ({ stats, userId, isLoading, className = '' }) => {
         linkProps: {
           to: ROUTES.MAIN.PROFILE,
           children: (
-            <StaticStatsItem isLoading={isLoading} count={1} className="size-full">
+            <StaticStatsItem
+              isLoading={isLoading}
+              count={stats?.readBooksCount}
+              className="size-full"
+            >
               books read
             </StaticStatsItem>
           )
