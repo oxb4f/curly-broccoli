@@ -10,8 +10,6 @@ const EventsPage = () => {
     <main className="main">
       <InfiniteQuery
         callback={(offset) => {
-          console.log(offset);
-
           return getEvents({ offset, limit: 5 });
         }}
         keys={QUERY_KEYS.EVENTS.ALL}

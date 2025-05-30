@@ -2,8 +2,6 @@ import BookEvent from './Book';
 import FollowEvent from './Follow';
 
 const EventList = ({ items, className = '' }) => {
-  console.log(items);
-
   return (
     <ul className={className}>
       {items.map(({ eventDetails, fromUser, addedBook, followedUser }) => (

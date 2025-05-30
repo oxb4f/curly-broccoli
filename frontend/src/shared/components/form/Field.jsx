@@ -15,9 +15,17 @@ const FormField = memo(
 
     if (field.element) {
       return (
-        <field.element value={value ?? ''} onChange={handleChange} {...field.props}>
-          {field.props?.children}
-        </field.element>
+        <div className="w-full grid grid-rows-[1fr_auto]">
+          <field.element value={value ?? ''} onChange={handleChange} {...field.props}>
+            {field.props?.children}
+          </field.element>
+          <FormHint
+            value={hint.value}
+            error={hint.error}
+            isVisible={hint.isVisible}
+            disabled={hint.disabled}
+          />
+        </div>
       );
     }
 
@@ -46,10 +54,8 @@ const FormField = memo(
         ? Select
         : Input;
 
-    console.log('hint.error', hint.error);
-
     return (
-      <div className="w-full flex flex-col">
+      <div className="w-full grid grid-rows-[1fr_auto]">
         <InputElement {...commonProps} value={value ?? ''} onChange={handleChange} />
         <FormHint
           value={hint.value}

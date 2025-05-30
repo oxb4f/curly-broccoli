@@ -17,7 +17,6 @@ const AsyncForm = ({ isLoading, fields, className = '', ...props }) => {
           <Skeleton key={index} type="rounded" className={field.props?.className} width="none" />
         );
       }
-      console.log(key);
 
       return (
         <Skeleton

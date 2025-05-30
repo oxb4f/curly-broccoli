@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 
 const useReactiveForm = (fields, onSubmit) => {
   const flattenObject = useCallback(
@@ -58,6 +58,8 @@ const useReactiveForm = (fields, onSubmit) => {
     setValues(initialValues);
     setErrors({});
   };
+
+  useEffect(resetForm, [initialValues]);
 
   return {
     values,

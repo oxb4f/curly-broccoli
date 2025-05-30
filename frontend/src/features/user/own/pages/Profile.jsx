@@ -99,8 +99,6 @@ const OwnProfilePage = () => {
     rootMargin: '370px 0px 0px 0px'
   });
 
-  console.log(filterValues);
-
   const handleFiltersOpen = () => {
     setIsFiltersOpen((prev) => !prev);
   };

@@ -10,8 +10,6 @@ export const BookProvider = ({ queryKey, isPublic, children }) => {
   const { bookId: id } = useParams();
   const { user: sessionUser, isPending: isSessionUserPending } = useSession();
 
-  console.log([...queryKey, Number(id)]);
-
   const {
     data: book,
     isPending: isBookPending,
@@ -24,7 +22,6 @@ export const BookProvider = ({ queryKey, isPublic, children }) => {
 
   const isPending = isBookPending || isSessionUserPending;
   const isOwn = !isPending && book.userId === sessionUser?.id;
-  console.log(isOwn);
 
   return (
     <BookContext.Provider value={{ book, isPending, error, isOwn }}>
@@ -33,4 +30,4 @@ export const BookProvider = ({ queryKey, isPublic, children }) => {
   );
 };
 
-export const useBook = () => useContext(BookContext);
+export const useBook = () => useContext(BookContext) ?? {};

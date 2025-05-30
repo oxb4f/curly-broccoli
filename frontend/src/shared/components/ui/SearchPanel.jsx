@@ -24,8 +24,6 @@ const SearchPanel = ({
   });
 
   const handleSearch = (values) => {
-    console.log(values);
-
     setSearchParameters((prev) => ({
       ...prev,
       searchTerm: values.search
@@ -54,7 +52,6 @@ const SearchPanel = ({
     }),
     []
   );
-  console.log(searchParameters);
 
   const sortProps = useMemo(
     () => ({

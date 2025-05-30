@@ -9,7 +9,6 @@ const getEvents = async (params) => {
   );
 
   const response = await api.get(`events`, requestPayload);
-  console.log(processResponse(response, 'events'));
 
   return processResponse(response, 'events');
 };

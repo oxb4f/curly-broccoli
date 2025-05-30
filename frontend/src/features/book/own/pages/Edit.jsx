@@ -1,11 +1,9 @@
-import BookEditForm from '../components/EditForm';
+import BookUpsertForm from '../components/UpsertForm';
 
 const BookEditPage = () => {
-  // const params = useParams();
-
   return (
     <main className="main">
-      <BookEditForm className="justify-self-center" />
+      <BookUpsertForm variant="edit" className="justify-self-center" />
     </main>
   );
 };

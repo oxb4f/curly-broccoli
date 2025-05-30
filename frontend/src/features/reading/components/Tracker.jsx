@@ -19,10 +19,6 @@ const BookReadingTracker = ({ bookId, className = '' }) => {
     select: (data) => data.trackers[0]
   });
 
-  // finish(72884864276);
-
-  console.log(tracker);
-
   const handleDispatch = async (type) => {
     switch (type) {
       case 'start':
@@ -46,7 +42,6 @@ const BookReadingTracker = ({ bookId, className = '' }) => {
 
   const handleUnmount = () => {
     if (!tracker?.id || !tracker?.state?.isReading) return;
-    console.log('unmounting');
 
     pauseInBackground(tracker.id);
   };
@@ -54,20 +49,6 @@ const BookReadingTracker = ({ bookId, className = '' }) => {
   useUnmount(handleUnmount, [tracker?.state?.isReading]);
   useBeforeUnload(handleUnmount);
   useBackForwardFix();
-
-  // useEffect(() => {
-  //   const handleDocumentHidden = () => {
-  //     if (document.visibilityState === 'hidden') {
-  //       if (!tracker?.id || !tracker?.state?.isReading) return;
-  //       pauseInBackground(tracker.id);
-  //     }
-  //   };
-
-  //   document.addEventListener('visibilitychange', handleDocumentHidden);
-  //   return () => {
-  //     document.removeEventListener('visibilitychange', handleDocumentHidden);
-  //   };
-  // }, [tracker?.state?.isReading]);
 
   const nextAction = tracker?.state?.isReading
     ? 'pause'

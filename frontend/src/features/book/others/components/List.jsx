@@ -3,6 +3,7 @@ import BookOthersInlineCard from './InlineCard';
 
 const BookOthersList = ({
   isPrivate,
+  itemClickHandler,
   variant = 'default',
   items = [],
   className = '',
@@ -29,7 +30,12 @@ const BookOthersList = ({
           {variant === 'default' ? (
             <BookOthersCard data={item} className="size-full" isPrivate={isPrivate} />
           ) : variant === 'inline' ? (
-            <BookOthersInlineCard data={item} className="size-full" isPrivate={isPrivate} />
+            <BookOthersInlineCard
+              data={item}
+              onClick={itemClickHandler}
+              className="size-full"
+              isPrivate={isPrivate}
+            />
           ) : null}
         </li>
       ))}

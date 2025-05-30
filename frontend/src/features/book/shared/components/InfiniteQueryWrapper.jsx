@@ -10,8 +10,6 @@ const BookInfiniteQueryWrapper = ({
   searchTerm = '',
   sortParams = []
 }) => {
-  console.log(userId);
-
   if (isUserLoading && userId === undefined) {
     return (
       <div className={'size-full flex flex-col justify-center items-center'}>
@@ -27,8 +25,6 @@ const BookInfiniteQueryWrapper = ({
   const queryKeys = userId
     ? [...QUERY_KEYS.BOOKS.PRIVATE.LIST, Number(userId)]
     : [...QUERY_KEYS.BOOKS.PUBLIC.LIST, ...Object.values(sortParams), searchTerm];
-
-  console.log(queryKeys);
 
   const transformData = (data) => data.books;
 

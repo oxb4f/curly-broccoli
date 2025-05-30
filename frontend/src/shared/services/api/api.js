@@ -56,7 +56,6 @@ api.interceptors.response.use(
       }
 
       const newTokens = await refreshRequest;
-      console.log(newTokens);
 
       const newUserData = { ...user, jwt: newTokens };
 

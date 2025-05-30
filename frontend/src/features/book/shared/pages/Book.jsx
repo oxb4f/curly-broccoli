@@ -11,9 +11,6 @@ const BookPage = () => {
   const { book, isPending, isOwn } = useBook();
   const { remove, add } = useBookService();
 
-  console.dir(book);
-  console.log(isOwn);
-
   const navigationItems = {
     own: [
       {
@@ -68,7 +65,10 @@ const BookPage = () => {
   return (
     <main className="main layout-full-height content-cols-2 ">
       <div className="gap-4">
-        <BookImage imageUrl={book?.imageUrl} className="w-full h-[90vh] lg:max-w-2xl lg:h-screen" />
+        <BookImage
+          imageUrl={book?.imageUrl}
+          className="justify-self-end w-full h-[90vh] lg:max-w-2xl lg:h-screen"
+        />
         <div
           className="layout-full-height w-full min-w-96 max-w-full flex flex-col-reverse gap-7 text-2xl
         lg:layout-content-height lg:max-w-lg lg:flex-col"

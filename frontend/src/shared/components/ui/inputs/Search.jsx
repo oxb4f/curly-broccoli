@@ -33,7 +33,6 @@ const SearchInput = ({
     enabled: isQueryEnabled,
     retry: 0
   });
-  console.log(data);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

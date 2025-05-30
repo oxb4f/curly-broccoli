@@ -189,6 +189,11 @@ const processResponse = (responseData, apiEndpoint) => {
         )
       };
     }
+    case 'references': {
+      return {
+        bookGenres: responseData.bookGenres
+      };
+    }
   }
 };
 

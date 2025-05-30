@@ -6,8 +6,6 @@ const EditUserInfoForm = ({ userCurrentData, isPending, className = '' }) => {
   const { changeInfo } = useOwnUserService();
   if (!userCurrentData && !isPending) return;
 
-  console.log(userCurrentData);
-
   const commonFormGroupClasses = 'flex gap-x-5';
 
   const fields = {

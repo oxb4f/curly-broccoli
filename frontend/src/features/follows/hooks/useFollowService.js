@@ -9,8 +9,6 @@ const useFollowService = (user) => {
   const { mutateAsync: follow, isPending: isFollowPending } = useNavigatedMutation({
     mutationFn: () => followsApi.followUser(user.id),
     onSuccess: (data) => {
-      console.log(data);
-
       queryClient.setQueryData(QUERY_KEYS.USERS.OWN, ({ stats, ...rest }) => ({
         ...rest,
         stats: {

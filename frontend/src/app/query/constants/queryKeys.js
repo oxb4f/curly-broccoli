@@ -4,6 +4,7 @@ const EVENTS_ALL = 'events';
 const READING_TRACKERS_ALL = 'reading-trackers';
 const SEARCH_ALL = 'search';
 const FOLLOWS_ALL = 'follows';
+const REFERENCES_ALL = 'references';
 
 const QUERY_KEYS = {
   USERS: {
@@ -40,6 +41,9 @@ const QUERY_KEYS = {
     READING: [READING_TRACKERS_ALL, 'reading'],
     PAUSED: [READING_TRACKERS_ALL, 'paused'],
     FINISHED: [READING_TRACKERS_ALL, 'finished']
+  },
+  REFERENCES: {
+    ALL: [REFERENCES_ALL]
   }
 };
 

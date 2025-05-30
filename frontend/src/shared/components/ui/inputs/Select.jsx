@@ -8,10 +8,10 @@ const MAX_SELECT_COLUMNS_COUNT = 4;
 const Select = ({
   variant,
   name,
-  options,
   icon,
   value,
   onChange,
+  options = [],
   label,
   className = '',
   labelClassName = '',
@@ -142,7 +142,7 @@ const Select = ({
     <FloatingLabel
       innerRef={ref}
       label={label}
-      className={mergeCn(`relative z-20 is-open:rounded-b-none`, containerClassName)}
+      className={mergeCn(`relative z-10 is-open:rounded-b-none`, containerClassName)}
       labelClassName={mergeCn(
         `is-open:text-pr-main 
         not-is-selected:top-1/2 not-is-selected:-translate-y-1/2 not-is-selected:text-[110%] not-is-selected:text-pr-text-darker not-is-selected:bg-transparent`,
@@ -170,7 +170,7 @@ const Select = ({
         type="button"
         onClick={toggleOpen}
         className={mergeCn(
-          'block size-full pr-12 py-2 text-left transition-all truncate is-open:rounded-t-xl is-open:rounded-b-none',
+          'block size-full pr-12 py-2 text-left transition-all truncate is-open:rounded-t-xl z-10 is-open:rounded-b-none',
           className
         )}
       >

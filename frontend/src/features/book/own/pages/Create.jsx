@@ -1,11 +1,11 @@
-import BookCreateForm from '../components/CreateForm';
+import BookUpsertForm from '../components/UpsertForm';
 
 const BookCreatePage = () => {
   // const params = useParams();
 
   return (
     <main className="main">
-      <BookCreateForm className="justify-self-center" />
+      <BookUpsertForm variant="create" className="justify-self-center" />
     </main>
   );
 };

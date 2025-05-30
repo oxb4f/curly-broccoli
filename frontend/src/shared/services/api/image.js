@@ -3,7 +3,6 @@ import { prepareRequest, processResponse } from '@shared/utils';
 
 const uploadImage = async (inputData) => {
   const requestPayload = prepareRequest(inputData, 'images', 'upload');
-  console.log(requestPayload);
 
   const response = await api.post('images', requestPayload, {
     headers: {

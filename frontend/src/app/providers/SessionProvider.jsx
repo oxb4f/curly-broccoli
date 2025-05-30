@@ -25,14 +25,6 @@ export default function SessionProvider({ queryKey, children }) {
     refetchOnWindowFocus: false
   });
 
-  console.log(user);
-
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-    }
-  }, [user]);
-
   const storeUserSession = (userCredentials) => {
     setUserToStorage(userCredentials);
     setCredentials(userCredentials);

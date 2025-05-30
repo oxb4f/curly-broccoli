@@ -12,24 +12,17 @@ const useBookService = () => {
   const { mutateAsync: create } = useNavigatedMutation({
     mutationFn: async (inputData) => {
       const responseImage = await uploadImage({ binaryImage: inputData.image });
-      console.log(responseImage);
 
-      const response = await bookApi.createBook({ ...inputData, imageUrl: responseImage.imageUrl });
-      console.log(response);
+      await bookApi.createBook({ ...inputData, imageUrl: responseImage.imageUrl });
     }
   });
 
   const { mutateAsync: edit } = useNavigatedMutation({
     mutationFn: async ({ id, inputData }) => {
-      console.log(id, inputData);
-
       const { image, ...rest } = inputData;
 
       const responseImage =
         image instanceof Blob ? await uploadImage({ binaryImage: image }) : { imageUrl: image };
-
-      console.log(id);
-      console.log(inputData);
 
       const response = await bookApi.editBook(id, {
         ...rest,
@@ -39,8 +32,6 @@ const useBookService = () => {
       return response;
     },
     onSuccess: (bookData, variables) => {
-      console.log(variables);
-
       queryClient.setQueryData([...QUERY_KEYS.BOOKS.PRIVATE.BOOK, bookData.id], (oldBookData) => {
         if (!oldBookData) return;
 
@@ -52,7 +43,6 @@ const useBookService = () => {
 
       queryClient.setQueryData(QUERY_KEYS.USERS.OWN, (oldUserData) => {
         if (!oldUserData || !Object.keys(variables.inputData).includes('isRead')) return;
-        console.log(oldUserData, bookData);
 
         return {
           ...oldUserData,
@@ -89,16 +79,11 @@ const useBookService = () => {
 
   const { mutateAsync: add } = useNavigatedMutation({
     mutationFn: bookApi.addBook,
-    onSuccess: (newBookData, publicBookId) => {
-      console.log(newBookData);
+    onSuccess: (_, publicBookId) => {
       queryClient.invalidateQueries({
         queryKey: [...QUERY_KEYS.BOOKS.PUBLIC.BOOK, publicBookId],
         exact: true
       });
-      // queryClient.setQueryData([...QUERY_KEYS.BOOKS.PUBLIC, publicBookId], (oldBookData) => {
-      //   console.log(oldBookData);
-      //   console.log(bookData);
-      // });
     }
   });
 

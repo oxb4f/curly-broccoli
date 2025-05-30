@@ -12,35 +12,30 @@ const getTrackers = async (bookId, params = {}) => {
       ...params
     }
   });
-  console.log(response);
 
   return processResponse(response, 'reading-trackers');
 };
 
 const startTracker = async (bookId) => {
   const response = await api.post(`books/${bookId}/readingTrackers/start`);
-  console.log(response);
 
   return processResponse(response, 'reading-trackers');
 };
 
 const pauseTracker = async (id, bookId) => {
   const response = await api.post(`books/${bookId}/readingTrackers/${id}/pause`);
-  console.log(response);
 
   return processResponse(response, 'reading-trackers');
 };
 
 const resumeTracker = async (id, bookId) => {
   const response = await api.post(`books/${bookId}/readingTrackers/${id}/resume`);
-  console.log(response);
 
   return processResponse(response, 'reading-trackers');
 };
 
 const finishTracker = async (id, bookId) => {
   const response = await api.post(`books/${bookId}/readingTrackers/${id}/finish`);
-  console.log(response);
 
   return processResponse(response, 'reading-trackers');
 };
@@ -63,7 +58,6 @@ const pauseTrackerInBackground = async (id, bookId) => {
 
   if (response.ok) {
     let json = await response.json();
-    console.log(json);
     return processResponse(json, 'reading-trackers');
   }
 };

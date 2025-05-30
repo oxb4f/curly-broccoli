@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 const useBooksSelection = (items) => {
   const [selectedBooks, setSelectedBooks] = useState(new Set());
-  console.log(selectedBooks);
 
   const isAllSelected = items.length === selectedBooks.size;
 

@@ -125,8 +125,6 @@ const prepareRequest = (data, apiEndpoint, apiAction) => {
             imageUrl: data.imageUrl
           };
         case 'edit': {
-          console.log(data);
-
           return Object.fromEntries(
             Object.entries(data).map((item) => {
               item[1] ??= null;

@@ -14,8 +14,6 @@ const BookReadingRoadMap = ({ bookId, className = '' }) => {
 
       <InfiniteQuery
         callback={(offset) => {
-          console.log(offset);
-
           return getTrackers(bookId, {
             offset,
             limit: 5,

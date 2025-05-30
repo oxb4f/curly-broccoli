@@ -13,8 +13,6 @@ const InfiniteQuery = ({
   options = {},
   className = ''
 }) => {
-  console.log(keys);
-
   let { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useInfiniteQuery({
     queryKey: keys,
     queryFn: ({ pageParam }) => callback(pageParam),

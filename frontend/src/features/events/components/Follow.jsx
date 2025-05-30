@@ -1,8 +1,6 @@
 import UserInlineCard from '@user/others/components/InlineCard';
 
 const FollowEvent = ({ user, followedUser, className = '' }) => {
-  console.log(user);
-
   return (
     <article className={`flex justify-center items-center gap-1.5 ${className}`}>
       <UserInlineCard

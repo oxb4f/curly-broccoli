@@ -13,8 +13,6 @@ const Rating = ({
   const ratingArray = Array.from({ length: maxStars }, (v, k) => maxStars - k);
 
   const handleChange = (value) => {
-    console.log(value);
-
     setRating(value);
     onChange?.(value);
   };
