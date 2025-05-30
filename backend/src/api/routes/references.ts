@@ -3,7 +3,7 @@ import { API_REFERENCE } from "../../constants";
 import { contextPlugin } from "../plugins/context";
 import { ensureRequestContext } from "../utils/ensure-request-context";
 
-export const pingRoute = new Elysia({ name: "pingRoute" })
+export const referencesRoute = new Elysia({ name: "referencesRoute" })
 	.use(contextPlugin)
 	.group("/references", (app) =>
 		app.guard((app) =>

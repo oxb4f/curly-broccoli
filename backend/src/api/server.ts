@@ -11,6 +11,7 @@ import { imagesRoute } from "./routes/images";
 import { pingRoute } from "./routes/ping";
 import { readingTrackersRoute } from "./routes/readingTrackers";
 import { usersRoute } from "./routes/users";
+import { referencesRoute } from "./routes/references";
 
 export const app = new Elysia()
 	.onTransform((ctx) => {
@@ -31,6 +32,7 @@ export const app = new Elysia()
 	.use(readingTrackersRoute)
 	.use(followersRoute)
 	.use(eventsRoute)
+	.use(referencesRoute)
 	.listen({ port: process.env.APP_PORT }, () =>
 		console.log(`🦊 Elysia is running at :${process.env.APP_PORT}`),
 	);
