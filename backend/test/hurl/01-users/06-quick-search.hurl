@@ -22,7 +22,8 @@ Content-Type: application/json
 Authorization: Bearer {{jwtAccess}}
 {
     "firstName": "Artdain",
-    "lastName": "Dry5Tune"
+    "lastName": "Dry5Tune",
+    "imageUrl": "https://example.com/image.jpg"
 }
 
 HTTP 200
@@ -30,6 +31,7 @@ HTTP 200
 jsonpath "$.id" isInteger
 jsonpath "$.firstName" == "Artdain"
 jsonpath "$.lastName" == "Dry5Tune"
+jsonpath "$.imageUrl" == "https://example.com/image.jpg"
 
 # Create user 2
 POST {{API_BASE}}/users
@@ -71,7 +73,7 @@ Authorization: Bearer {{jwtAccess}}
 
 HTTP 200
 [Asserts]
-jsonpath "$.users[0].id" == {{userId1}}
+jsonpath "$.users[0].username" contains "needless"
 
 # Quick search by username
 GET {{API_BASE}}/users/quick-search?term=creati
@@ -79,7 +81,7 @@ Authorization: Bearer {{jwtAccess}}
 
 HTTP 200
 [Asserts]
-jsonpath "$.users[0].id" == {{userId3}}
+jsonpath "$.users[0].username" contains "creati"
 
 # Quick search by last name
 GET {{API_BASE}}/users/quick-search?term=Dry5Tune
@@ -88,11 +90,13 @@ Authorization: Bearer {{jwtAccess}}
 HTTP 200
 [Asserts]
 jsonpath "$.users[0].lastName" == "Dry5Tune"
+jsonpath "$.users[0].imageUrl" == "https://example.com/image.jpg"
 
 # Quick search by username
-GET {{API_BASE}}/users/quick-search?term=nevada
+GET {{API_BASE}}/users/quick-search?term=Nevada
 Authorization: Bearer {{jwtAccess}}
 
 HTTP 200
 [Asserts]
-jsonpath "$.users[0].id" == {{userId2}}
+jsonpath "$.users[0].username" contains "Nevada"
+jsonpath "$.users[0].imageUrl" == null

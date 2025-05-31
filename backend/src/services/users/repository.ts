@@ -97,4 +97,5 @@ export interface UsersRepository
 	get(filter: GetUserFilter): Promise<GetUserDto | null>;
 	exists(args: ExistsArgs): Promise<boolean>;
 	list(filter: ListUserFilter): Promise<ListUserDto>;
+	getImagesUrlByUserIds(userIds: Id[]): Promise<{ [key: string]: ImageUrl }>;
 }

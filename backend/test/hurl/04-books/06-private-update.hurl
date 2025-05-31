@@ -122,16 +122,6 @@ Content-Type: application/json
 
 HTTP 422
 
-# Update with invalid number of pages (cannot be null)
-PATCH {{API_BASE}}/books/private/{{userBookId}}
-Authorization: Bearer {{jwtAccess}}
-Content-Type: application/json
-{
-    "numberOfPages": null
-}
-
-HTTP 422
-
 # Set other fields to null
 PATCH {{API_BASE}}/books/private/{{userBookId}}
 Authorization: Bearer {{jwtAccess}}

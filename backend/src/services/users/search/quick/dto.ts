@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { id, searchTerm, username } from "../../../common/validation/schema";
+import { id, searchTerm, url, username } from "../../../common/validation/schema";
 import {
 	type DtoShape,
 	createInputDto,
@@ -24,6 +24,7 @@ export const QuickSearchDtoOut = createOutputDto(
 				username: username,
 				firstName: firstName.nullable(),
 				lastName: lastName.nullable(),
+				imageUrl: url.nullable(),
 			}),
 		),
 		total: z.number(),
