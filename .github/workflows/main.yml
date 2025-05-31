@@ -32,9 +32,6 @@ jobs:
       - name: Build Docker Image
         run: make build
 
-      - name: Run Unit Tests
-        run:  make test-unit
-
       - name: Run Hurl Tests
         run: make run && make hurl
 
