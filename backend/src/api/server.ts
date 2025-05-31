@@ -10,8 +10,8 @@ import { followersRoute } from "./routes/followers";
 import { imagesRoute } from "./routes/images";
 import { pingRoute } from "./routes/ping";
 import { readingTrackersRoute } from "./routes/readingTrackers";
-import { usersRoute } from "./routes/users";
 import { referencesRoute } from "./routes/references";
+import { usersRoute } from "./routes/users";
 
 export const app = new Elysia()
 	.onTransform((ctx) => {

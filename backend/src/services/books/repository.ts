@@ -115,6 +115,7 @@ export interface BooksRepository
 	get(filter: GetBookFilter): Promise<GetBookDto | null>;
 	update(filter: GetBookFilter, book: BookUpdateData): Promise<void>;
 	getFilters(): Promise<FiltersDto>;
+	getImagesUrlByBookIds(bookIds: Id[]): Promise<{ [key: string]: ImageUrl }>;
 }
 
 export interface UserBooksListDto {

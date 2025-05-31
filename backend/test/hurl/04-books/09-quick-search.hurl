@@ -146,6 +146,7 @@ jsonpath "$.books[0].title" contains "super_popular_non_fiction"
 jsonpath "$.books[0].description" contains "description1"
 jsonpath "$.books[0].author" contains "best_author"
 jsonpath "$.books[0].genre" contains "best_genre"
+jsonpath "$.books[0].imageUrl" == "https://example.com/image1.png"
 
 # Quick search by genre and author
 GET {{API_BASE}}/books/quick-search?term=best_genre

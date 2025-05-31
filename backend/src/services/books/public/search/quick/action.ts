@@ -11,14 +11,22 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		term: dto.term,
 	});
 
+	const bookIdToImageUrlMap =
+		await context.booksRepository.getImagesUrlByBookIds(
+			books.items.map((book) => Number(book.id)),
+		);
+
+	const booksWithImageUrl = books.items.map((book) => ({
+		id: book.id,
+		title: book.title,
+		description: book.description || null,
+		author: book.author,
+		genre: book.genre || null,
+		imageUrl: bookIdToImageUrlMap[book.id],
+	}));
+
 	return QuickSearchDtoOut.create({
-		books: books.items.map((book) => ({
-			id: book.id,
-			title: book.title,
-			description: book.description || null,
-			author: book.author,
-			genre: book.genre || null,
-		})),
+		books: booksWithImageUrl,
 		total: books.total,
 	});
 }, QuickSearchDtoIn);

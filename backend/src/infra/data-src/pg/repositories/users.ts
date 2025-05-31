@@ -1,5 +1,6 @@
 import { and, count, eq, inArray, not, or, sql } from "drizzle-orm";
 import { Access, type AccessHashedPayload } from "../../../../entities/access";
+import type { Id } from "../../../../entities/types/id";
 import type { ImageUrl, Social, User } from "../../../../entities/user";
 import type {
 	ExistsArgs,
@@ -12,7 +13,6 @@ import type {
 } from "../../../../services/users/repository";
 import { accesses, followers, userBooks, users } from "../schema";
 import { BaseRepository } from "./base";
-import type { Id } from "../../../../entities/types/id";
 
 export type SelectUser = typeof users.$inferSelect;
 
@@ -20,15 +20,15 @@ export class PgUsersRepository
 	extends BaseRepository
 	implements UsersRepository
 {
-    async getImagesUrlByUserIds(userIds: Id[]): Promise<{ [key: Id]: ImageUrl }> {
-        const result = await this._connection
-            .select({ id: users.id, imageUrl: users.imageUrl })
-            .from(users)
-            .where(inArray(users.id, userIds))
-            .execute();
+	async getImagesUrlByUserIds(userIds: Id[]): Promise<{ [key: Id]: ImageUrl }> {
+		const result = await this._connection
+			.select({ id: users.id, imageUrl: users.imageUrl })
+			.from(users)
+			.where(inArray(users.id, userIds))
+			.execute();
 
-        return Object.fromEntries(result.map((row) => [row.id, row.imageUrl]));
-    }
+		return Object.fromEntries(result.map((row) => [row.id, row.imageUrl]));
+	}
 
 	async list(filter: ListUserFilter): Promise<ListUserDto> {
 		const total = await this.getTotal();
@@ -292,5 +292,4 @@ export class PgUsersRepository
 
 		return and(...eqArray);
 	}
-
 }

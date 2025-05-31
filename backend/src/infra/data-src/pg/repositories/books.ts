@@ -14,6 +14,8 @@ import {
 } from "drizzle-orm";
 import type { SQL } from "drizzle-orm";
 import type { Book } from "../../../../entities/book";
+import type { ImageUrl } from "../../../../entities/book-profile";
+import type { Id } from "../../../../entities/types/id";
 import type {
 	BookUpdateData,
 	BooksListDto,
@@ -31,6 +33,19 @@ export class PgBooksRepository
 	extends BaseRepository
 	implements BooksRepository
 {
+	async getImagesUrlByBookIds(
+		bookIds: Id[],
+	): Promise<{ [key: string]: ImageUrl }> {
+		const result = await this._connection
+			.select({ id: books.id, imageUrl: bookProfiles.imageUrl })
+			.from(books)
+			.innerJoin(bookProfiles, eq(books.bookProfileId, bookProfiles.id))
+			.where(inArray(books.id, bookIds))
+			.execute();
+
+		return Object.fromEntries(result.map((row) => [row.id, row.imageUrl]));
+	}
+
 	async get(filter: GetBookFilter) {
 		const result = await this._connection
 			.select({
