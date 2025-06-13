@@ -9,6 +9,7 @@ export interface BookSearchResult extends SearchResultItem {
 	author: string;
 	description: string;
 	genre: string;
+	isbn: string;
 }
 
 export interface UserSearchResult extends SearchResultItem {
@@ -35,6 +36,7 @@ export interface BookSearchQuery extends SearchQuery {
 	author?: string;
 	description?: string;
 	genre?: string;
+	isbn?: string;
 	size?: number;
 }
 
@@ -51,6 +53,7 @@ export interface BookIndexData {
 	author: string;
 	description: string;
 	genre: string;
+	isbn: string;
 }
 
 export interface UserIndexData {

@@ -148,7 +148,7 @@ Content-Type: application/json
     "description": "A book user1 will read",
     "author": "0104{{rn}}{{rs}}readAuthor",
     "genre": "0104{{rn}}{{rs}}readGenre",
-    "isbn": "0104{{rn}}{{rs}}readIsbnUnique",
+    "isbn": "9783161484100",
     "numberOfPages": 123,
     "imageUrl": "https://example.com/readbook.png"
 }

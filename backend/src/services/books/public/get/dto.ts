@@ -31,9 +31,9 @@ export const GetDtoOut = createOutputDto(
 		description: description.nullable(),
 		author: author,
 		genre: genre.nullable(),
-		imageUrl: url.nullable(),
-		numberOfPages: numberOfPages,
 		isbn: isbn.nullable(),
+		numberOfPages: numberOfPages,
+		imageUrl: url.nullable(),
 		isPrivateAdded: z.boolean(),
 	}),
 );

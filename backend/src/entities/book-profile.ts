@@ -7,7 +7,7 @@ export type ImageUrl = string | null | undefined;
 export type Author = string;
 export type Genre = string | null | undefined;
 export type NumberOfPages = number;
-export type Isbn = string | null | undefined;
+export type Isbn = string | undefined | null;
 
 export interface BookProfileData {
 	id?: MaybeNumberId;
@@ -41,12 +41,12 @@ export class BookProfile extends Base {
 		});
 
 		this._title = payload.title;
-		this._description = payload.description;
+		this._description = payload.description ?? null;
 		this._numberOfPages = payload.numberOfPages;
-		this._imageUrl = payload.imageUrl;
+		this._imageUrl = payload.imageUrl ?? null;
 		this._author = payload.author;
-		this._genre = payload.genre;
-		this._isbn = payload.isbn;
+		this._genre = payload.genre ?? null;
+		this._isbn = payload.isbn ?? null;
 	}
 
 	static async from(payload: BookProfileData): Promise<BookProfile> {

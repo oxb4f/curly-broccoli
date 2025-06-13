@@ -27,7 +27,7 @@ export const UpdateDtoIn = createInputDto(
 		genre: genre.nullable().optional(),
 		imageUrl: url.nullable().optional(),
 		numberOfPages: numberOfPages.optional(),
-		isbn: isbn.nullable().optional(),
+		isbn: isbn.optional().nullable(),
 		isFavorite: z.boolean().optional(),
 		isRead: z.boolean().optional(),
 		rating: z.number().int().min(0).max(5).nullable().optional(),

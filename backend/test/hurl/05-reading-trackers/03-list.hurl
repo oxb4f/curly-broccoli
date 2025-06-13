@@ -20,7 +20,7 @@ Content-Type: application/json
     "description": "0503{{rn}}{{rs}}description1",
     "author": "0503{{rn}}{{rs}}author1",
     "genre": "0503{{rn}}{{rs}}genre1",
-    "isbn": "0503{{rn}}{{rs}}isbn1",
+    "isbn": "9780596520786",
     "numberOfPages": 100,
     "imageUrl": "https://example.com/image1.png"
 }
@@ -32,7 +32,7 @@ jsonpath "$.title" == "0503{{rn}}{{rs}}book1"
 jsonpath "$.description" == "0503{{rn}}{{rs}}description1"
 jsonpath "$.author" == "0503{{rn}}{{rs}}author1"
 jsonpath "$.genre" == "0503{{rn}}{{rs}}genre1"
-jsonpath "$.isbn" == "0503{{rn}}{{rs}}isbn1"
+jsonpath "$.isbn" == "9780596520786"
 jsonpath "$.numberOfPages" == 100
 jsonpath "$.imageUrl" == "https://example.com/image1.png"
 

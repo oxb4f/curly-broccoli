@@ -32,6 +32,23 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		}),
 	});
 
+	if (
+		dto.isbn &&
+		dto.isbn !== userBook.getProfile()?.getIsbn() &&
+		context.config.FEATURE_FLAG_STRICT_ISBN_CHECK
+	) {
+		const isBookWithSameIsbnExists = await context.booksRepository.exists({
+			isbn: dto.isbn,
+		});
+
+		if (isBookWithSameIsbnExists) {
+			ServiceError.throw(ServiceError.ERROR_TYPE.DUPLICATED, {
+				message: "Another book with this ISBN already exists",
+				details: [{ path: ["isbn"], message: "Not unique" }],
+			});
+		}
+	}
+
 	await userBook.update({
 		isRead: dto.isRead,
 		isFavorite: dto.isFavorite,

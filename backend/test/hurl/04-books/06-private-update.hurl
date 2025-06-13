@@ -20,7 +20,7 @@ Content-Type: application/json
     "description": "0406{{rn}}{{rs}}description1",
     "author": "0406{{rn}}{{rs}}author1",
     "genre": "0406{{rn}}{{rs}}genre1",
-    "isbn": "0406{{rn}}{{rs}}isbn1",
+    "isbn": "9780596520830",
     "numberOfPages": 100,
     "imageUrl": "https://example.com/image1.png"
 }
@@ -54,7 +54,7 @@ Content-Type: application/json
     "review": "0406{{rn}}{{rs}}review2",
     "imageUrl": "https://example.com/image2.png",
     "numberOfPages": 200,
-    "isbn": "0406{{rn}}{{rs}}isbn2"
+    "isbn": "9780596520847"
 }
 
 HTTP 200
@@ -64,7 +64,7 @@ jsonpath "$.title" == "0406{{rn}}{{rs}}book2"
 jsonpath "$.description" == "0406{{rn}}{{rs}}description2"
 jsonpath "$.author" == "0406{{rn}}{{rs}}author2"
 jsonpath "$.genre" == "0406{{rn}}{{rs}}genre2"
-jsonpath "$.isbn" == "0406{{rn}}{{rs}}isbn2"
+jsonpath "$.isbn" == "9780596520847"
 jsonpath "$.numberOfPages" == 200
 jsonpath "$.imageUrl" == "https://example.com/image2.png"
 jsonpath "$.isFavorite" == true
@@ -83,7 +83,7 @@ jsonpath "$.title" == "0406{{rn}}{{rs}}book2"
 jsonpath "$.description" == "0406{{rn}}{{rs}}description2"
 jsonpath "$.author" == "0406{{rn}}{{rs}}author2"
 jsonpath "$.genre" == "0406{{rn}}{{rs}}genre2"
-jsonpath "$.isbn" == "0406{{rn}}{{rs}}isbn2"
+jsonpath "$.isbn" == "9780596520847"
 jsonpath "$.numberOfPages" == 200
 jsonpath "$.imageUrl" == "https://example.com/image2.png"
 jsonpath "$.isFavorite" == true
@@ -97,7 +97,11 @@ Authorization: Bearer {{jwtAccess}}
 Content-Type: application/json
 {
     "title": "0406{{rn}}{{rs}}book3",
-    "description": "0406{{rn}}{{rs}}description3"
+    "description": "0406{{rn}}{{rs}}description3",
+    "author": "0406{{rn}}{{rs}}author3",
+    "genre": "0406{{rn}}{{rs}}genre3",
+    "isbn": "9780596520854",
+    "numberOfPages": 300
 }
 
 HTTP 404
@@ -129,8 +133,7 @@ Content-Type: application/json
 {
     "description": null,
     "imageUrl": null,
-    "genre": null,
-    "isbn": null
+    "genre": null
 }
 
 HTTP 200
@@ -183,3 +186,19 @@ Content-Type: application/json
 }
 
 HTTP 401
+
+# Create another book
+POST {{API_BASE}}/books
+Authorization: Bearer {{jwtAccess}}
+Content-Type: application/json
+{
+    "title": "0406{{rn}}{{rs}}book5",
+    "description": "0406{{rn}}{{rs}}description5",
+    "author": "0406{{rn}}{{rs}}author5",
+    "genre": "0406{{rn}}{{rs}}genre5",
+    "isbn": "9780596520878",
+    "numberOfPages": 500,
+    "imageUrl": "https://example.com/image1.png"
+}
+
+HTTP 200

@@ -95,7 +95,7 @@ Content-Type: application/json
     "description": "0701{{rn}}{{rs}}description1",
     "author": "0701{{rn}}{{rs}}author1",
     "genre": "0701{{rn}}{{rs}}genre1",
-    "isbn": "0701{{rn}}{{rs}}isbn1",
+    "isbn": "9780596520793",
     "numberOfPages": 100,
     "imageUrl": "https://example.com/image1.png"
 }
@@ -107,7 +107,7 @@ jsonpath "$.title" == "0701{{rn}}{{rs}}book1"
 jsonpath "$.description" == "0701{{rn}}{{rs}}description1"
 jsonpath "$.author" == "0701{{rn}}{{rs}}author1"
 jsonpath "$.genre" == "0701{{rn}}{{rs}}genre1"
-jsonpath "$.isbn" == "0701{{rn}}{{rs}}isbn1"
+jsonpath "$.isbn" == "9780596520793"
 jsonpath "$.numberOfPages" == 100
 jsonpath "$.imageUrl" == "https://example.com/image1.png"
 

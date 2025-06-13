@@ -20,6 +20,7 @@ import type {
 	BookUpdateData,
 	BooksListDto,
 	BooksRepository,
+	ExistsBookFilter,
 	FiltersDto,
 	GetBookFilter,
 	ListBookFilter,
@@ -33,6 +34,22 @@ export class PgBooksRepository
 	extends BaseRepository
 	implements BooksRepository
 {
+	async exists(filter: ExistsBookFilter) {
+		const result = await this._connection
+			.select({ id: books.id })
+			.from(books)
+			.innerJoin(
+				bookProfiles,
+				and(
+					eq(books.bookProfileId, bookProfiles.id),
+					eq(bookProfiles.isbn, filter.isbn),
+				),
+			)
+			.execute();
+
+		return result.length > 0;
+	}
+
 	async getImagesUrlByBookIds(
 		bookIds: Id[],
 	): Promise<{ [key: string]: ImageUrl }> {

@@ -22,7 +22,7 @@ delay: 500
     "description": "0402{{rn}}{{rs}}description1",
     "author": "0402{{rn}}{{rs}}author1",
     "genre": "0402{{rn}}{{rs}}genre1",
-    "isbn": "0402{{rn}}{{rs}}isbn1",
+    "isbn": "9780596520793",
     "numberOfPages": 100,
     "imageUrl": "https://example.com/image1.png"
 }
@@ -38,7 +38,7 @@ Content-Type: application/json
     "description": "0402{{rn}}{{rs}}description2",
     "author": "0402{{rn}}{{rs}}author2",
     "genre": "0402{{rn}}{{rs}}genre2",
-    "isbn": "0402{{rn}}{{rs}}isbn2",
+    "isbn": "9780596520809",
     "numberOfPages": 200,
     "imageUrl": "https://example.com/image2.png"
 }
@@ -220,7 +220,6 @@ delay: 500
     "description": "0402{{rn}}{{rs}}description3",
     "author": "0402{{rn}}{{rs}}author1",
     "genre": "0402{{rn}}{{rs}}genre3",
-    "isbn": "0402{{rn}}{{rs}}isbn3",
     "numberOfPages": 50,
     "imageUrl": "https://example.com/image3.png"
 }
@@ -237,7 +236,6 @@ delay: 500
     "description": "0402{{rn}}{{rs}}description4",
     "author": "0402{{rn}}{{rs}}author3",
     "genre": "0402{{rn}}{{rs}}genre1",
-    "isbn": "0402{{rn}}{{rs}}isbn4",
     "numberOfPages": 300,
     "imageUrl": "https://example.com/image4.png"
 }
@@ -509,7 +507,6 @@ delay: 500
     "description": "0402{{rn}}{{rs}}description5",
     "author": "0402{{rn}}{{rs}}author1",
     "genre": "0402{{rn}}{{rs}}genre1",
-    "isbn": "0402{{rn}}{{rs}}isbn5",
     "numberOfPages": 150,
     "imageUrl": "https://example.com/image5.png"
 }

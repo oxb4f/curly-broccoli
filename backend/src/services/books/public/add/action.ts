@@ -57,6 +57,7 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 				fromUserId: user.id,
 				profile: {
 					title: bookProfile.getTitle(),
+					description: bookProfile.getDescription(),
 					imageUrl: bookProfile.getImageUrl(),
 				},
 				userBookId: userBook.getId(),

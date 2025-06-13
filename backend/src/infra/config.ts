@@ -31,6 +31,8 @@ export interface Config {
 	ELASTICSEARCH_USERNAME: string;
 	ELASTICSEARCH_PASSWORD: string;
 	ELASTICSEARCH_URL: string;
+
+	FEATURE_FLAG_STRICT_ISBN_CHECK: boolean;
 }
 
 export class ConfigValidationError extends Error {
@@ -78,6 +80,8 @@ export const configSchema = z.object({
 	ELASTICSEARCH_USERNAME: z.string(),
 	ELASTICSEARCH_PASSWORD: z.string(),
 	ELASTICSEARCH_URL: z.string().url(),
+
+	FEATURE_FLAG_STRICT_ISBN_CHECK: z.string().transform((val) => val === "true"),
 });
 
 let config: Config;

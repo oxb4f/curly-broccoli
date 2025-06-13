@@ -22,6 +22,10 @@ import type {
 	RepositoryTypes,
 } from "../base-repository";
 
+export type ExistsBookFilter = {
+	isbn: NonNullable<Isbn>;
+};
+
 export type GetBookFilter = {
 	id: Id;
 	isAddedByUserId?: Id;
@@ -110,6 +114,7 @@ export interface BooksRepository
 			BookUpdateData
 		>
 	> {
+	exists(filter: ExistsBookFilter): Promise<boolean>;
 	create(book: Book): Promise<void>;
 	list(filter: ListBookFilter): Promise<BooksListDto>;
 	get(filter: GetBookFilter): Promise<GetBookDto | null>;

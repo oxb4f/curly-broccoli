@@ -23,6 +23,7 @@ type BookDocument = {
 	author: string;
 	description: string;
 	genre: string;
+	isbn: string;
 	createdAt: string | Date;
 };
 
@@ -105,6 +106,12 @@ export class ElasticSearch implements Search {
 								type: "text",
 								analyzer: "ngram_analyzer",
 							},
+						},
+					},
+					isbn: {
+						type: "text",
+						fields: {
+							ngram: { type: "text", analyzer: "ngram_analyzer" },
 						},
 					},
 					createdAt: { type: "date" },
@@ -236,6 +243,8 @@ export class ElasticSearch implements Search {
 						"title.ngram^1.5",
 						"author^2",
 						"author.ngram^1",
+						"isbn^2",
+						"isbn.ngram^1",
 						"description",
 						"genre^1.5",
 						"genre.ngram^0.75",
@@ -270,6 +279,12 @@ export class ElasticSearch implements Search {
 			searchBody.query.bool.should.push({ match: { genre: query.genre } });
 		}
 
+		if (query.isbn) {
+			searchBody.query.bool.should.push({
+				match: { isbn: { query: query.isbn, boost: 2 } },
+			});
+		}
+
 		if (searchBody.query.bool.should.length === 0) {
 			searchBody.query = { match_all: {} };
 		}
@@ -296,6 +311,7 @@ export class ElasticSearch implements Search {
 				author: hit._source.author,
 				description: hit._source.description,
 				genre: hit._source.genre,
+				isbn: hit._source.isbn,
 				createdAt:
 					hit._source.createdAt instanceof Date
 						? hit._source.createdAt

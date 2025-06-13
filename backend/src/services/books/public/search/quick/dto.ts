@@ -9,6 +9,7 @@ import {
 	author,
 	description,
 	genre,
+	isbn,
 	title,
 } from "../../../common/validation/schema";
 
@@ -29,6 +30,7 @@ export const QuickSearchDtoOut = createOutputDto(
 				title: title,
 				description: description.nullable(),
 				author: author,
+				isbn: isbn.nullable(),
 				genre: genre.nullable(),
 				imageUrl: url.nullable(),
 			}),

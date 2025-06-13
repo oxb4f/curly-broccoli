@@ -20,7 +20,7 @@ Content-Type: application/json
     "description": "0408{{rn}}{{rs}}description1",
     "author": "0408{{rn}}{{rs}}author1",
     "genre": "0408{{rn}}{{rs}}genre1",
-    "isbn": "0408{{rn}}{{rs}}isbn1",
+    "isbn": "9780596520700",
     "numberOfPages": 100,
     "imageUrl": "https://example.com/image1.png"
 }

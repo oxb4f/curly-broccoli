@@ -26,7 +26,7 @@ export const CreateDtoIn = createInputDto(
 		genre: genre.nullable().optional(),
 		imageUrl: url.nullable().optional(),
 		numberOfPages: numberOfPages,
-		isbn: isbn.nullable().optional(),
+		isbn: isbn.optional().nullable(),
 	}),
 );
 

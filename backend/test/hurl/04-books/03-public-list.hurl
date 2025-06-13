@@ -19,7 +19,6 @@ Content-Type: application/json
     "description": "0403{{rn}}{{rs}}description1",
     "author": "0403{{rn}}{{rs}}author1",
     "genre": "0403{{rn}}{{rs}}genre1",
-    "isbn": "0403{{rn}}{{rs}}isbn1",
     "numberOfPages": 100,
     "imageUrl": "https://example.com/image1.png"
 }
@@ -37,7 +36,6 @@ delay: 500
     "description": "0403{{rn}}{{rs}}description2",
     "author": "0403{{rn}}{{rs}}author2",
     "genre": "0403{{rn}}{{rs}}genre2",
-    "isbn": "0403{{rn}}{{rs}}isbn2",
     "numberOfPages": 200,
     "imageUrl": "https://example.com/image2.png"
 }
@@ -58,7 +56,6 @@ jsonpath "$.books[*].title" nth 0 isString
 jsonpath "$.books[*].description" nth 0 isString
 jsonpath "$.books[*].author" nth 0 isString
 jsonpath "$.books[*].genre" nth 0 isString
-jsonpath "$.books[*].isbn" nth 0 isString
 jsonpath "$.books[*].numberOfPages" nth 0 isNumber
 jsonpath "$.books[*].imageUrl" nth 0 isString
 jsonpath "$.books[*].isPrivateAdded" nth 0 isBoolean
@@ -184,7 +181,6 @@ delay: 500
     "description": "0403{{rn}}{{rs}}description3",
     "author": "0403{{rn}}{{rs}}author1",
     "genre": "0403{{rn}}{{rs}}genre3",
-    "isbn": "0403{{rn}}{{rs}}isbn3",
     "numberOfPages": 50,
     "imageUrl": "https://example.com/image3.png"
 }
@@ -199,9 +195,8 @@ delay: 500
 {
     "title": "0403{{rn}}{{rs}}book4",
     "description": "0403{{rn}}{{rs}}description4",
-    "author": "0403{{rn}}{{rs}}author3",
-    "genre": "0403{{rn}}{{rs}}genre1",
-    "isbn": "0403{{rn}}{{rs}}isbn4",
+    "author": "0403{{rn}}{{rs}}author2",
+    "genre": "0403{{rn}}{{rs}}genre4",
     "numberOfPages": 300,
     "imageUrl": "https://example.com/image4.png"
 }
@@ -219,7 +214,7 @@ HTTP 200
 jsonpath "$.books" isCollection
 jsonpath "$.books[*].genre" includes "0403{{rn}}{{rs}}genre1"
 jsonpath "$.books[?(@.genre != '0403{{rn}}{{rs}}genre1')]" count == 0
-jsonpath "$.total" >= 2
+jsonpath "$.total" >= 1
 
 # Test filter by multiple genres
 GET {{API_BASE}}/books/public

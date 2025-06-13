@@ -54,7 +54,7 @@ Content-Type: application/json
     "description": "0411{{rn}}{{rs}}description1",
     "author": "0411{{rn}}{{rs}}author1",
     "genre": "0411{{rn}}{{rs}}genre1",
-    "isbn": "0411{{rn}}{{rs}}isbn1",
+    "isbn": "9780596520755",
     "numberOfPages": 100,
     "imageUrl": "https://example.com/image1.png"
 }
@@ -91,7 +91,7 @@ delay: 500
     "description": "0411{{rn}}{{rs}}description2",
     "author": "0411{{rn}}{{rs}}author2",
     "genre": "0411{{rn}}{{rs}}genre2",
-    "isbn": "0411{{rn}}{{rs}}isbn2",
+    "isbn": "9780596520762",
     "numberOfPages": 250,
     "imageUrl": "https://example.com/image2.png"
 }
@@ -130,7 +130,7 @@ delay: 500
     "description": "0411{{rn}}{{rs}}description3",
     "author": "0411{{rn}}{{rs}}author1",
     "genre": "0411{{rn}}{{rs}}genre3",
-    "isbn": "0411{{rn}}{{rs}}isbn3",
+    "isbn": "9780596520779",
     "numberOfPages": 1,
     "imageUrl": "https://example.com/image3.png"
 }
@@ -170,7 +170,7 @@ delay: 500
     "description": "0411{{rn}}{{rs}}description4",
     "author": "0411{{rn}}{{rs}}author3",
     "genre": "0411{{rn}}{{rs}}genre4",
-    "isbn": "0411{{rn}}{{rs}}isbn4",
+    "isbn": "9780596520786",
     "numberOfPages": 500,
     "imageUrl": "https://example.com/image4.png"
 }

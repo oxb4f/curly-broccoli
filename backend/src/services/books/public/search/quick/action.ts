@@ -22,6 +22,7 @@ export default makeService<InShape, OutShape>(async ({ dto, context }) => {
 		description: book.description || null,
 		author: book.author,
 		genre: book.genre || null,
+		isbn: book.isbn || null,
 		imageUrl: bookIdToImageUrlMap[book.id],
 	}));
 
